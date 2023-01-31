@@ -3,8 +3,6 @@ package com.urrecliner.chattalk;
 import static com.urrecliner.chattalk.Vars.SHOW_MESSAGE;
 import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
-import static com.urrecliner.chattalk.Vars.sounds;
-import static com.urrecliner.chattalk.Vars.varInit;
 
 import android.content.Intent;
 import android.util.Log;
@@ -25,11 +23,7 @@ public class NotificationBar {
     static long lastTime = 0;
 
     static void update(String msg) {
-        if (mContext == null) {
-            varInit = new VarInit();
-            varInit.set("NotificationBar update");
-            sounds.beepOnce(Vars.soundType.ERR.ordinal());
-        }
+
         if (timerTask != null) {
             timerTask.cancel();
             timerTask = null;

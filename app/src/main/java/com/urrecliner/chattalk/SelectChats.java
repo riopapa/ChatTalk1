@@ -18,6 +18,8 @@ import android.text.TextUtils;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.UnderlineSpan;
 
+import com.urrecliner.chattalk.Sub.AlertLine;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -197,7 +199,7 @@ public class SelectChats {
         ArrayList<String> aKeyword2 = new ArrayList<>();
         int alertSize = alertLines.size();
         for (int i = 0; i < alertSize; i++) {
-            Vars.AlertLine al = alertLines.get(i);
+            AlertLine al = alertLines.get(i);
             if (al.group.equals(chatGroup)) {
                 if (!al.who.equals(svWho)) {
                     if (al.matched == -1) { // head

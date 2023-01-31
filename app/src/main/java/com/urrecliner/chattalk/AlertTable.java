@@ -1,6 +1,5 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.Vars.AlertLine;
 import static com.urrecliner.chattalk.Vars.alertLines;
 import static com.urrecliner.chattalk.Vars.kGroupDot;
 import static com.urrecliner.chattalk.Vars.kGroupSay;
@@ -23,6 +22,8 @@ import static com.urrecliner.chattalk.Vars.tableFolder;
 import static com.urrecliner.chattalk.Vars.tableListFile;
 import static com.urrecliner.chattalk.Vars.todayFolder;
 import static com.urrecliner.chattalk.Vars.utils;
+
+import com.urrecliner.chattalk.Sub.AlertLine;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -63,8 +64,8 @@ class AlertTable {
             int matched = Integer.parseInt(strings[5].trim());
             String tSkip = strings[6].trim();
             String [] tMemos = strings[7].split("~");
-            String tMemo = tMemos[0];
-            String tMore = (tMemos.length>1) ? tMemos[1]:"";
+            String tMemo = tMemos[0].trim();
+            String tMore = (tMemos.length>1) ? tMemos[1].trim():"";
             alertLines.add(new AlertLine(tGroup, tWho, tKey1, tKey2, tTalk, matched, tSkip, tMemo, tMore));
         }
     }
@@ -151,7 +152,7 @@ class AlertTable {
         String sv = "sv";
         int[] padLen = getMaxLengths();
         StringBuilder s = new StringBuilder();
-        for (Vars.AlertLine al : alertLines) {
+        for (AlertLine al : alertLines) {
             if (!(al.group+al.who).equals(sv)) {
                 sv = al.group+al.who;
                 s.append("\n");
@@ -192,7 +193,7 @@ class AlertTable {
     static int [] getMaxLengths() {
         int [] maxLen = new int[6];
         int bl;
-        for (Vars.AlertLine al : alertLines){
+        for (AlertLine al : alertLines){
             bl = calcBytes(al.group); if (bl > maxLen[0]) maxLen[0] = bl;
             bl = calcBytes(al.who); if (bl > maxLen[1]) maxLen[1] = bl;
             bl = calcBytes(al.key1); if (bl > maxLen[2]) maxLen[2] = bl;

@@ -1,6 +1,5 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.Vars.AlertLine;
 import static com.urrecliner.chattalk.Vars.alertLines;
 import static com.urrecliner.chattalk.Vars.linePos;
 import static com.urrecliner.chattalk.Vars.mActivity;
@@ -17,6 +16,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.urrecliner.chattalk.Sub.AlertLine;
 
 public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder> {
 

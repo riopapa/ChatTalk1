@@ -9,12 +9,13 @@ import static com.urrecliner.chattalk.Vars.sounds;
 import static com.urrecliner.chattalk.Vars.utils;
 
 import com.urrecliner.chattalk.Sub.IsWhoText;
+import com.urrecliner.chattalk.Sub.WhoText;
 
 import java.util.ArrayList;
 
 class MsgKaTalk {
 
-    static ArrayList<Vars.WhoText> kkWhoTexts = new ArrayList<>();
+    static ArrayList<WhoText> kkWhoTexts = new ArrayList<>();
 
     void say(String iGroup, String iWho, String iText) {
 

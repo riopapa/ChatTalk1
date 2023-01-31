@@ -8,12 +8,14 @@ import static com.urrecliner.chattalk.Vars.sounds;
 import static com.urrecliner.chattalk.Vars.speakSwitchOn;
 import static com.urrecliner.chattalk.Vars.utils;
 
+import com.urrecliner.chattalk.Sub.AlertLine;
+
 public class MsgStock {
     String key12, sTalk, sayMore, group, who;
 
     void alert(String sText, int aIdx) {
 
-        Vars.AlertLine al = alertLines.get(aIdx);
+        AlertLine al = alertLines.get(aIdx);
         al.matched++;
         alertLines.set(aIdx, al);
         key12 = " {" + kKey1[aIdx] + "/" + kKey2[aIdx] + "}";

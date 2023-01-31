@@ -1,6 +1,5 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.Vars.AlertLine;
 import static com.urrecliner.chattalk.Vars.alertLines;
 import static com.urrecliner.chattalk.Vars.alertsAdapter;
 import static com.urrecliner.chattalk.Vars.linePos;
@@ -16,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.urrecliner.chattalk.Sub.AlertLine;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -114,8 +115,8 @@ public class EditOneAlertActivity extends AppCompatActivity {
             String matchStr = eMatched.getText().toString();
             int matchInt = matchStr.equals("") ? 0: Integer.parseInt(matchStr);
             String [] memos = eMemo.getText().toString().split("~");
-            String memo = memos[0];
-            String more = (memos.length> 1) ? memos[1] : "";
+            String memo = memos[0].trim();
+            String more = (memos.length> 1) ? memos[1].trim() : "";
             al = new AlertLine(eGroup.getText().toString(), eWho.getText().toString(),
                     eKey1.getText().toString(), eKey2.getText().toString(),
                     eTalk.getText().toString(), matchInt,

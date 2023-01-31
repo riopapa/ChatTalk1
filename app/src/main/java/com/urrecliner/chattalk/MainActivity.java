@@ -5,7 +5,6 @@ import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.topTabs;
 import static com.urrecliner.chattalk.Vars.utils;
-import static com.urrecliner.chattalk.Vars.varInit;
 
 import android.Manifest;
 import android.content.Intent;
@@ -37,6 +36,7 @@ import java.util.TimerTask;
 public class MainActivity extends AppCompatActivity {
 
     int count = 0;
+    Vars vars;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,11 +122,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        mActivity = this;
-        mContext = this;
         count = 0;
-        varInit = new VarInit();
-        varInit.set("onResume");
+        vars = new Vars();
+        vars.set(mContext, "onResume");
         aBar = getSupportActionBar();
         aBar.setIcon(R.mipmap.chat_talk_mini);
         WifiMonitor.init(mContext);

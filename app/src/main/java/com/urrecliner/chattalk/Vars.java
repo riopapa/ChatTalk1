@@ -1,17 +1,22 @@
 package com.urrecliner.chattalk;
 
+import static android.content.Context.MODE_PRIVATE;
+import static com.urrecliner.chattalk.Upload2Google.sheetQues;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioFocusRequest;
 import android.media.AudioManager;
+import android.os.Environment;
 import android.view.View;
 import android.widget.ScrollView;
 
 import androidx.appcompat.app.ActionBar;
 
 import com.google.android.material.tabs.TabLayout;
+import com.urrecliner.chattalk.Sub.AlertLine;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -85,7 +90,6 @@ public class Vars {
     static MsgKaTalk msgKaTalk = null;
     static Sounds sounds = null;
     static Utils utils = null;
-    static VarInit varInit = null;
 
     static long sharedStart, sharedFinish;
     static boolean isPhoneBusy = false;
@@ -94,23 +98,7 @@ public class Vars {
     static AlertsAdapter alertsAdapter = null;
     static TabLayout topTabs;
     static ArrayList<AlertLine> alertLines;
-    public static class AlertLine {
-        String group, who, key1, key2, talk, skip, memo, more;
-        int matched;
-        AlertLine(String group, String who, String key1, String key2, String talk, int matched, String skip,     String memo, String more) {
-            this.group = group;this.who = who;
-            this.key1 = key1;this.key2 = key2;this.talk = talk;
-            this.matched = matched; this.skip = skip; this.memo = memo; this.more = more;
-        }
-    }
 
-    public static class WhoText {
-        public String who, text;
-        public WhoText(String who, String text) {
-            this.who = who;
-            this.text = text;
-        }
-    }
 
     static String chatGroup;
     static int linePos = 999;
@@ -118,5 +106,36 @@ public class Vars {
 
     enum soundType { PRE, POST, ERR, TESLY, ONLY}
     static final int[] beepRawIds = { R.raw.a0_pre_sound, R.raw.a1_post_sound, R.raw.a2_alert, R.raw.a3_tesly, R.raw.a4_only};
+
+    void set(Context context, String msg) {
+        mContext = context;
+        sharePref = mContext.getSharedPreferences("sayText", MODE_PRIVATE);
+        sharedEditor = sharePref.edit();
+        if (mActivity != null)
+            mLayoutView = mActivity.findViewById(R.id.main_layout);
+        sharedStart = sharePref.getLong("start",0);
+        sharedFinish = sharePref.getLong("finish",0);
+        packageDirectory = new File(Environment.getExternalStorageDirectory(), "_ChatTalkLog");
+        downloadFolder = new File(Environment.getExternalStorageDirectory(), "download");
+        tableFolder = new File(downloadFolder, "_ChatTalk");
+
+        alertIndex = new AlertIndex();
+        logQueUpdate = new LogQueUpdate(mContext);
+        msgAndroid = new MsgAndroid();
+        sounds = new Sounds(); sounds.init();
+        utils = new Utils();
+        tableListFile = new TableListFile();
+        new OptionTables().readAll();
+
+        FileIO.readyPackageFolder();
+        utils.logW("Vars", "/ / "+msg+" / / \n");
+        if (sharedStart == 0)
+            utils.setTimeBoundary();
+
+        sheetQues = new ArrayList<>();
+        AlertTable.readFile();
+        AlertTable.makeArrays();
+    }
+
 
 }

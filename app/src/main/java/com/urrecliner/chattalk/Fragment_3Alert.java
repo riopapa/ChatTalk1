@@ -21,6 +21,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.urrecliner.chattalk.Sub.AlertLine;
+
 public class Fragment_3Alert extends Fragment {
 
     ViewGroup rootView;
@@ -66,7 +68,7 @@ public class Fragment_3Alert extends Fragment {
                     : ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         } else if (item.getItemId() == R.id.clear_matched_number) {
             for (int i = 0; i < alertLines.size(); i++) {
-                Vars.AlertLine al = alertLines.get(i);
+                AlertLine al = alertLines.get(i);
                 if (al.matched != -1) {
                     if (al.matched > 100)
                         al.matched = 200;

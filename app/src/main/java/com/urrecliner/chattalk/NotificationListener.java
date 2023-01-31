@@ -13,14 +13,15 @@ import static com.urrecliner.chattalk.Vars.sbnWho;
 import static com.urrecliner.chattalk.Vars.smsTextIgnores;
 import static com.urrecliner.chattalk.Vars.smsWhoIgnores;
 import static com.urrecliner.chattalk.Vars.textIgnores;
-import static com.urrecliner.chattalk.Vars.varInit;
 
 import android.content.Context;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
+import android.util.Log;
 
 import com.urrecliner.chattalk.Sub.IgnoreText;
 import com.urrecliner.chattalk.Sub.IsWhoText;
+import com.urrecliner.chattalk.Sub.WhoText;
 
 import java.util.ArrayList;
 
@@ -43,10 +44,10 @@ public class NotificationListener extends NotificationListenerService {
 
     long tesla_time = 0;
 
-    static ArrayList<Vars.WhoText> kkWhoTexts = new ArrayList<>();
-    static ArrayList<Vars.WhoText> smsWhoTexts = new ArrayList<>();
-    static ArrayList<Vars.WhoText> tgWhoTexts = new ArrayList<>();
-    static ArrayList<Vars.WhoText> whoTexts = new ArrayList<>();
+    static ArrayList<WhoText> kkWhoTexts = new ArrayList<>();
+    static ArrayList<WhoText> smsWhoTexts = new ArrayList<>();
+    static ArrayList<WhoText> tgWhoTexts = new ArrayList<>();
+    static ArrayList<WhoText> whoTexts = new ArrayList<>();
     String head;
 
     LogQueUpdate logQueUpdate;
@@ -55,12 +56,21 @@ public class NotificationListener extends NotificationListenerService {
     Sounds sounds;
     Utils utils;
     SbnBundle sbnBundle;
+    Context context;
+    Vars vars;
 
     @Override
     public void onCreate() {
-        Context context = this;
+        Log.w("notificationlistner", "onCreate()");
+        context = this;
         super.onCreate();
+        init();
+    }
+
+    void init() {
         mContext = this;
+        vars = new Vars();
+        vars.set(this, "noti Listener");
         logQueUpdate = new LogQueUpdate(this);
         msgKaTalk = new MsgKaTalk();
         msgSMS = new MsgSMS();
@@ -68,18 +78,17 @@ public class NotificationListener extends NotificationListenerService {
         utils = new Utils();
         sbnBundle = new SbnBundle();
         Upload2Google.initSheetQue();
-
     }
+
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
-        if (packageIgnoreStr == null) {
-            varInit = new VarInit();
-            varInit.set("packageIgnoreStr = null");
-        }
 
         if (sbnBundle.bypassSbn(sbn))
             return;
+
+        if (packageIgnoreStr == null)
+            init();
 
         switch (sbnPackageType) {
 
@@ -97,10 +106,7 @@ public class NotificationListener extends NotificationListenerService {
                     sounds.speakAfterBeep(" 카톡왔음 " + sbnWho + " 님이 " + utils.replaceKKHH(utils.makeEtc(sbnText, 150)));
                 } else {
                     String gs = "!"+ sbnGroup +"!";
-                    if (kGroupIgnores == null) {
-                        varInit.set("kGroupIgnores null");
-                        sounds.beepOnce(Vars.soundType.ERR.ordinal());
-                    } else if (kGroupIgnores.contains(gs))
+                    if (kGroupIgnores.contains(gs))
                         return;
                     else if (IgnoreText.contains(sbnText, kkTxtIgnores))
                         return;
