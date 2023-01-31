@@ -1,0 +1,7 @@
+<resources>
+    <dimen name="line_font_size">12sp</dimen>
+    <dimen name="alert_font_size">16sp</dimen>
+    <dimen name="table_font_size">16sp</dimen>
+    <dimen name="table_padding_size">4sp</dimen>
+    <dimen name="button_margin_size">2sp</dimen>
+</resources>

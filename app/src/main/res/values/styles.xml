@@ -1,0 +1,28 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="Theme.ChatTalk" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+    </style>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+    </style>
+
+    <style name="tab" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#D35986</item>
+    </style>
+
+    <style name="up_down_scroll_thumb">
+        <item name="android:scrollbarStyle">insideOverlay</item>
+        <item name="android:scrollbars">vertical</item>
+        <item name="android:fadeScrollbars">false</item>
+    </style>
+
+<!--    <item name="android:scrollbarThumbVertical">@drawable/up_down</item>-->
+<!--    <item name="android:scrollbarAlwaysDrawVerticalTrack">true</item>-->
+
+</resources>

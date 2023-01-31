@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#778FA8</color>
+
+    <color name="snackBarBack">#ACAFBD</color>
+    <color name="snackBarTitle">#354DE3</color>
+    <color name="snackBarText">#770B09</color>
+
+    <color name="colorLine">#DADDB9</color>
+    <color name="headLine">#EBE3B2</color>
+    <color name="lightLine">#ACAFBD</color>
+    <color name="textFore">#222233</color>
+    <color name="alertBack">#805B79A6</color>
+    <color name="alertTalk">#D81B60</color>
+    <color name="textNormal">#DDDDDD</color>
+    <color name="textEdit">#80C2D59A</color>
+    <color name="tabSelected">#0D2367</color>
+
+    <color name="tabBackSelected">#805B79A6</color>
+    <color name="tabBackUnselected">#aaDDB9</color>
+
+    <color name="keyMatchedBack">#60CFAE1D</color>
+    <color name="keyMatchedWord">#8FB68F</color>
+
+    <color name="log_head_f0">#FF611714</color>
+    <color name="log_head_b0">#CCBCCCAA</color>
+    <color name="log_line_f0">#49201F</color>
+    <color name="log_line_b0">#CCB5C1AC</color>
+    <color name="log_line_x0">#BF9B6C</color>
+    <color name="log_head_f1">#FF0A09AE</color>
+    <color name="log_head_b1">#AAB8B0D1</color>
+    <color name="log_line_f1">#3E3C8C</color>
+    <color name="log_line_b1">#AAC8C1D6</color>
+    <color name="log_line_x1">#B1A268</color>
+</resources>

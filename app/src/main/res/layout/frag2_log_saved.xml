@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fragment_saved"
+    android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+    android:orientation="vertical"
+    android:screenOrientation="landscape">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/keyword2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_weight="7"
+            android:inputType="text"
+            android:autofillHints="Enter Text to search" />
+
+        <ImageButton
+            android:id="@+id/find2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:contentDescription="@string/search"
+            android:src="@drawable/search" />
+
+        <ImageButton
+            android:id="@+id/next2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:contentDescription="@string/search"
+            android:src="@drawable/arrow_right" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scroll_2_log"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fastScrollEnabled="true"
+        android:scrollbars="vertical"
+        android:scrollbarSize="12dp"
+        style="@style/up_down_scroll_thumb"
+        >
+        <EditText
+            android:id="@+id/text_log2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:autofillHints="Table text"
+            android:focusable="false"
+            android:inputType="text|textMultiLine"
+            android:text="@string/active_say_table_list"
+            android:textAlignment="center"
+            android:textSize="14sp" />
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/t_group"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="3"
+        android:layout_height="wrap_content"
+        android:text="Group"
+        android:textSize="@dimen/alert_font_size"
+        app:layout_constraintRight_toLeftOf="@id/e_group"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/t_who"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/t_who"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="3"
+        android:layout_height="wrap_content"
+        android:text="Group Info"
+        android:textSize="@dimen/alert_font_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/e_who"
+        app:layout_constraintTop_toBottomOf="@id/t_group"
+        app:layout_constraintBottom_toTopOf="@id/t_key1"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/t_key1"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="3"
+        android:layout_height="wrap_content"
+        android:text="Skip 1"
+        android:textSize="@dimen/alert_font_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/e_key1"
+        app:layout_constraintTop_toBottomOf="@id/t_who"
+        app:layout_constraintBottom_toTopOf="@id/t_key2"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/t_key2"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="3"
+        android:layout_height="wrap_content"
+        android:text="Skip 2"
+        android:textSize="@dimen/alert_font_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/e_key2"
+        app:layout_constraintTop_toBottomOf="@id/t_key1"
+        app:layout_constraintBottom_toTopOf="@id/t_talk"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/t_talk"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="3"
+        android:layout_height="wrap_content"
+        android:text="Skip 3"
+        android:textSize="@dimen/alert_font_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/e_talk"
+        app:layout_constraintTop_toBottomOf="@id/t_key2"
+        app:layout_constraintBottom_toTopOf="@id/t_matched"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/t_matched"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="3"
+        android:layout_height="wrap_content"
+        android:text="Match"
+        android:textSize="@dimen/alert_font_size"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/e_matched"
+        app:layout_constraintTop_toBottomOf="@id/t_talk"
+        app:layout_constraintBottom_toTopOf="@id/t_skip"
+        android:gravity="center"
+        />
+
+    <TextView
+        android:id="@+id/t_skip"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Skip 4"
+        android:textSize="@dimen/alert_font_size"
+        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/e_skip"
+        app:layout_constraintTop_toBottomOf="@id/t_matched"
+        app:layout_constraintBottom_toTopOf="@id/t_memo"
+        />
+
+    <TextView
+        android:id="@+id/t_memo"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Say More"
+        android:textSize="@dimen/alert_font_size"
+        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/e_memo"
+        app:layout_constraintTop_toBottomOf="@id/t_skip"
+        />
+
+    <EditText
+        android:id="@+id/e_group"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="6"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:text="Name"
+        android:textSize="@dimen/alert_font_size"
+        app:layout_constraintLeft_toRightOf="@id/t_group"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/t_group"
+        app:layout_constraintBottom_toBottomOf="@id/t_group"
+        />
+
+    <EditText
+        android:id="@+id/e_who"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="6"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:text="Name"
+        android:textSize="@dimen/alert_font_size"
+        app:layout_constraintLeft_toRightOf="@id/t_who"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/t_who"
+        app:layout_constraintBottom_toBottomOf="@id/t_who"
+        />
+
+    <EditText
+        android:id="@+id/e_key1"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="6"
+        android:layout_height="wrap_content"
+        android:inputType="text|textMultiLine"
+        android:text="Name"
+        android:textSize="@dimen/alert_font_size"
+        app:layout_constraintLeft_toRightOf="@id/t_key1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/t_key1"
+        app:layout_constraintBottom_toBottomOf="@id/t_key1"
+        />
+
+    <EditText
+        android:id="@+id/e_key2"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="6"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:text="Key2"
+        android:textSize="@dimen/alert_font_size"
+        app:layout_constraintLeft_toRightOf="@id/t_key2"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/t_key2"
+        app:layout_constraintBottom_toBottomOf="@id/t_key2"
+        />
+
+    <EditText
+        android:id="@+id/e_talk"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="6"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:text="Talk"
+        android:textSize="@dimen/alert_font_size"
+        app:layout_constraintLeft_toRightOf="@id/t_talk"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/t_talk"
+        app:layout_constraintBottom_toBottomOf="@id/t_talk"
+        />
+
+    <EditText
+        android:id="@+id/e_matched"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="6"
+        android:layout_height="wrap_content"
+        android:inputType="numberSigned"
+        android:text="0"
+        android:textSize="@dimen/alert_font_size"
+        app:layout_constraintLeft_toRightOf="@id/t_matched"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/t_matched"
+        app:layout_constraintBottom_toBottomOf="@id/t_matched"
+        />
+
+    <EditText
+        android:id="@+id/e_skip"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="6"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:text="Skip"
+        android:textSize="@dimen/alert_font_size"
+        app:layout_constraintLeft_toRightOf="@id/t_skip"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/t_skip"
+        app:layout_constraintBottom_toBottomOf="@id/t_skip"
+        />
+
+    <EditText
+        android:id="@+id/e_memo"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="6"
+        android:layout_height="wrap_content"
+        android:inputType="text|textMultiLine"
+        android:text="Memo"
+        android:textSize="@dimen/alert_font_size"
+        app:layout_constraintLeft_toRightOf="@id/t_memo"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/t_memo"
+        app:layout_constraintBottom_toBottomOf="@id/t_memo"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

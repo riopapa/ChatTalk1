@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/one_line"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="8dp"
+    android:padding="0dp" >
+
+    <TextView
+        android:id="@+id/one_group"
+        android:layout_width="0dp"
+        android:layout_weight="3"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/textFore"
+        android:textSize="@dimen/line_font_size"
+        android:autofillHints="@string/todo"
+        android:maxLines="1"
+        />
+
+    <TextView
+        android:id="@+id/one_who"
+        android:layout_width="0dp"
+        android:layout_weight="7"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/textFore"
+        android:textSize="@dimen/line_font_size"
+        android:autofillHints="@string/todo"
+        android:maxLines="1"
+    />
+
+    <TextView
+        android:id="@+id/one_key1"
+        android:layout_width="0dp"
+        android:layout_weight="5"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/todo"
+        android:textColor="@color/textFore"
+        android:textSize="@dimen/line_font_size"
+        android:autofillHints="@string/todo"
+        />
+
+    <TextView
+        android:id="@+id/one_key2"
+        android:layout_width="0dp"
+        android:layout_weight="5"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/todo"
+        android:textColor="@color/textFore"
+        android:textSize="@dimen/line_font_size"
+        android:autofillHints="@string/todo"
+        />
+
+    <TextView
+        android:id="@+id/one_talk"
+        android:layout_width="0dp"
+        android:layout_weight="3"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/todo"
+        android:textColor="@color/textFore"
+        android:textSize="@dimen/line_font_size"
+        android:autofillHints="@string/todo"
+        android:maxLines="1"
+        android:ellipsize="end"
+        />
+
+    <TextView
+        android:id="@+id/one_matched"
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="0"
+        android:textColor="@color/textFore"
+        android:textSize="@dimen/line_font_size"
+        android:autofillHints="@string/todo"
+        />
+
+    <TextView
+        android:id="@+id/one_skip"
+        android:layout_width="0dp"
+        android:layout_weight="5"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/todo"
+        android:textColor="@color/textFore"
+        android:textSize="@dimen/line_font_size"
+        android:autofillHints="@string/todo"
+        android:maxLines="1"
+        android:ellipsize="end"
+        />
+
+    <TextView
+        android:id="@+id/one_memo"
+        android:layout_width="0dp"
+        android:layout_weight="7"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text=""
+        android:textColor="@color/textFore"
+        android:textSize="@dimen/line_font_size"
+        android:autofillHints="@string/todo"
+        android:maxLines="1"
+        android:ellipsize="end"
+        />
+</LinearLayout>

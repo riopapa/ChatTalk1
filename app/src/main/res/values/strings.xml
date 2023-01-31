@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Chat Talk</string>
+    <string name="regex_number_only">[0-9]|-()|\s</string>
+    <string name="todo">TODO</string>
+    <string name="web_sent">[Web발신]</string>
+    <string name="active_say_table_list">Active say Table List</string>
+    <string name="search">Search</string>
+</resources>

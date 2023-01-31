@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/remove_this_line"
+        android:orderInCategory="100"
+        android:icon="@drawable/line_delete1"
+        app:showAsAction="always"
+        android:title="@string/todo" />
+
+    <item
+        android:id="@+id/line_copy_add"
+        android:orderInCategory="100"
+        android:icon="@drawable/line_add"
+        app:showAsAction="always"
+        android:title="@string/todo" />
+
+    <item
+        android:id="@+id/save_table"
+        android:orderInCategory="100"
+        android:icon="@drawable/save_file"
+        app:showAsAction="always"
+        android:title="@string/todo" />
+</menu>
