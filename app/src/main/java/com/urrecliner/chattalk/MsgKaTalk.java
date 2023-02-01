@@ -3,11 +3,13 @@ package com.urrecliner.chattalk;
 import static com.urrecliner.chattalk.Vars.alertIndex;
 import static com.urrecliner.chattalk.Vars.kGroupDot;
 import static com.urrecliner.chattalk.Vars.logQueUpdate;
+import static com.urrecliner.chattalk.Vars.nineIgnores;
 import static com.urrecliner.chattalk.Vars.sharedFinish;
 import static com.urrecliner.chattalk.Vars.sharedStart;
 import static com.urrecliner.chattalk.Vars.sounds;
 import static com.urrecliner.chattalk.Vars.utils;
 
+import com.urrecliner.chattalk.Sub.IsWhoNine;
 import com.urrecliner.chattalk.Sub.IsWhoText;
 import com.urrecliner.chattalk.Sub.WhoText;
 
@@ -38,6 +40,8 @@ class MsgKaTalk {
             iText = utils.strReplace(iGroup, iText);
             NotificationBar.update(head + " "+iText);
             logQueUpdate.add(head, iText);
+            if (IsWhoNine.in(nineIgnores, iWho))
+                iText = iText.replaceAll("[0-9]","");
             iText = "단톡방 " + iGroup + " 에서 " + iWho + " 님이 " + utils.makeEtc(iText, 180);
             sounds.speakAfterBeep(utils.replaceKKHH(iText));
         }

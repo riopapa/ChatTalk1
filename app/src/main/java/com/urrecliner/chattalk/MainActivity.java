@@ -99,12 +99,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {}
         });
+        vars = new Vars();
+        mContext = this;
+        mActivity = this;
+        vars.set(mContext, "onResume");
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-//        getMenuInflater().inflate(R.menu.menu_none, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -123,8 +127,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         count = 0;
-        vars = new Vars();
-        vars.set(mContext, "onResume");
         aBar = getSupportActionBar();
         aBar.setIcon(R.mipmap.chat_talk_mini);
         WifiMonitor.init(mContext);

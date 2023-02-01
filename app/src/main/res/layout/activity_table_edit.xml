@@ -44,7 +44,6 @@
         android:inputType="text|textMultiLine"
         android:scrollbars="vertical"
         android:text="@string/active_say_table_list"
-        android:textAlignment="center"
         android:textSize="15sp" />
 
 </LinearLayout>

@@ -4,8 +4,12 @@ import static com.urrecliner.chattalk.Vars.lastChar;
 import static com.urrecliner.chattalk.Vars.logQueUpdate;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.msgKaTalk;
+import static com.urrecliner.chattalk.Vars.nineIgnores;
+import static com.urrecliner.chattalk.Vars.sbnText;
 import static com.urrecliner.chattalk.Vars.sounds;
 import static com.urrecliner.chattalk.Vars.utils;
+
+import com.urrecliner.chattalk.Sub.IsWhoNine;
 
 class MsgSMS {
 
@@ -33,6 +37,8 @@ class MsgSMS {
             mText = utils.strReplace(mWho, mText);
             logQueUpdate.add(head, mText);
             NotificationBar.update(head+" " +mText);
+            if (IsWhoNine.in(nineIgnores, mWho))
+                mText = mText.replaceAll("[0-9]", "");
             sounds.speakAfterBeep(head+" 으로부터 "+ utils.makeEtc(mText, 160));
         }
     }

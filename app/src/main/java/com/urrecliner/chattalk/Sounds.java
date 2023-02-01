@@ -76,7 +76,8 @@ class Sounds {
 
         int result = mTTS.setLanguage(Locale.getDefault());
         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-            Toast.makeText(mActivity, "Not supported Language", Toast.LENGTH_SHORT).show();
+
+//            Toast.makeText(mActivity, "Not supported Language", Toast.LENGTH_SHORT).show();
             beepOnce(Vars.soundType.ERR.ordinal());
         } else {
             mTTS.setPitch(1.2f);

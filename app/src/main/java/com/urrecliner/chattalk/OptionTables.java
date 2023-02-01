@@ -3,6 +3,7 @@ package com.urrecliner.chattalk;
 import static com.urrecliner.chattalk.Vars.kGroupIgnores;
 import static com.urrecliner.chattalk.Vars.kkTxtIgnores;
 import static com.urrecliner.chattalk.Vars.mContext;
+import static com.urrecliner.chattalk.Vars.nineIgnores;
 import static com.urrecliner.chattalk.Vars.packageIgnoreStr;
 import static com.urrecliner.chattalk.Vars.pkgFullNames;
 import static com.urrecliner.chattalk.Vars.pkgNickNames;
@@ -32,7 +33,7 @@ class OptionTables {
         smsTextIgnores =  tableListFile.read("smsTextIgnores");
         systemIgnores = tableListFile.read("systemIgnores");
         textIgnores = tableListFile.read("textIgnores");
-//        whoIgnores =  tableListFile.read("whoIgnores");
+        nineIgnores = tableListFile.read("nineIgnores");
         if (kkTxtIgnores == null || smsWhoIgnores == null || systemIgnores == null) {
             sounds.beepOnce(Vars.soundType.ERR.ordinal());
             Toast.makeText(mContext, "\nsome tables is null\n", Toast.LENGTH_LONG).show();

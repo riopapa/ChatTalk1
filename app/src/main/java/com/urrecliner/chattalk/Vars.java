@@ -58,6 +58,7 @@ public class Vars {
     static String[] smsTextIgnores = null;
     static String[] systemIgnores = null;
     static String[] textIgnores = null;
+    static String[] nineIgnores = null;
     static String nowFileName;
 
     static ScrollView scrollView1;
@@ -98,7 +99,6 @@ public class Vars {
     static AlertsAdapter alertsAdapter = null;
     static TabLayout topTabs;
     static ArrayList<AlertLine> alertLines;
-
 
     static String chatGroup;
     static int linePos = 999;

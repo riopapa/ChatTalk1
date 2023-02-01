@@ -47,7 +47,7 @@ public class Fragment_0Table extends Fragment {
         });
         topTabs.getTabAt(0).select();
 
-        rootView.findViewById(R.id.who_ignore).setOnClickListener(this::edit_table);
+        rootView.findViewById(R.id.nine_ignore).setOnClickListener(this::edit_table);
         rootView.findViewById(R.id.text_ignores).setOnClickListener(this::edit_table);
         rootView.findViewById(R.id.system_ignores).setOnClickListener(this::edit_table);
 
