@@ -36,7 +36,7 @@ class MsgSMS {
             String head = "[sms "+mWho + "]";
             mText = utils.strReplace(mWho, mText);
             logQueUpdate.add(head, mText);
-            NotificationBar.update(head+" " +mText);
+            NotificationBar.update("sms "+mWho, mText);
             if (IsWhoNine.in(nineIgnores, mWho))
                 mText = mText.replaceAll("[0-9]", "");
             sounds.speakAfterBeep(head+" 으로부터 "+ utils.makeEtc(mText, 160));
@@ -61,7 +61,7 @@ class MsgSMS {
                     String sayMsg = " 증권가 소식 " + (buySell.equals("매수") ? stockName + " "
                             + amount + " " + uPrice + "으로 샀음 " :
                             stockName + " " + amount + " " + uPrice + " 에 팔렸음 ");
-                    NotificationBar.update(sayMsg);
+                    NotificationBar.update(trade, sayMsg);
                     logQueUpdate.add("sms>"+nhStock, sayMsg);
                     FileIO.uploadStock(sGroup, mWho, stockName, buySell, mText, amount);
                     sounds.speakAfterBeep(sayMsg);
@@ -78,7 +78,7 @@ class MsgSMS {
     private void sayNormal(String mWho, String mText) {
         String head = "[sms."+ mWho + "] ";
         mText = utils.strReplace("sms", mText);
-        NotificationBar.update(head+ mText);
+        NotificationBar.update(head, mText);
         logQueUpdate.add(head, mText);
         sounds.speakAfterBeep(head + utils.makeEtc(mText, 160));
     }

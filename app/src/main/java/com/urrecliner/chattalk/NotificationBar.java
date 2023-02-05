@@ -22,7 +22,7 @@ public class NotificationBar {
     static final long LOOP_INTERVAL = 25 * 60 * 1000;
     static long lastTime = 0;
 
-    static void update(String msg) {
+    static void update(String who, String msg) {
 
         if (timerTask != null) {
             timerTask.cancel();
@@ -38,6 +38,7 @@ public class NotificationBar {
         if (mActivity != null) {
             Intent updateIntent = new Intent(mContext, NotificationService.class);
             updateIntent.putExtra("operation", SHOW_MESSAGE);
+            updateIntent.putExtra("who", who);
             updateIntent.putExtra("msg", msg);
             try {
                 mActivity.startService(updateIntent);

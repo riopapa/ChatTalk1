@@ -33,7 +33,7 @@ public class NotificationService extends Service {
     private static final int ERASER = 1013;
     private static final int STOP_SAY = 10011;
     private static final int SPEAK_ON_OFF = 1003;
-    String msgText = null;
+    String who = null, msgText = null, time = null;
 
     @Override
     public void onCreate() {
@@ -68,14 +68,19 @@ public class NotificationService extends Service {
                 speakSwitchOn = !speakSwitchOn;
                 break;
             case SHOW_MESSAGE:
+                who = Objects.requireNonNull(intent.getStringExtra("who")).replace(" ", "\u00A0");
                 msgText = Objects.requireNonNull(intent.getStringExtra("msg")).replace(" ", "\u00A0");
                 break;
             case ERASER:
                 msgText = null;
+                who = "Chat Talk..";
+
                 break;
             default:
                 break;
         }
+
+        time = new SimpleDateFormat("HH:mm", Locale.KOREA).format(new Date());
         updateRemoteViews();
         return START_STICKY;
     }
@@ -130,8 +135,8 @@ public class NotificationService extends Service {
             mRemoteViews.setViewVisibility(R.id.msg_line, View.GONE);
         } else {
             mRemoteViews.setViewVisibility(R.id.msg_line, View.VISIBLE);
-            String s = new SimpleDateFormat("HH:mm\u00A0", Locale.KOREA).format(new Date());
-            mRemoteViews.setTextViewText(R.id.msg_time, s);
+            mRemoteViews.setTextViewText(R.id.msg_time, time);
+            mRemoteViews.setTextViewText(R.id.msg_who, who);
             mRemoteViews.setTextViewText(R.id.msg_text, msgText);
         }
         mNotificationManager.notify(100,mBuilder.build());

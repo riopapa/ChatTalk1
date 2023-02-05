@@ -166,8 +166,7 @@ class AlertTable {
             s.append(m.substring(m.length()-7)).append("^");
             s.append(strPad(al.skip, (padLen[5]))).append("^");
             s.append(" ").append(al.memo);
-            if (al.more.length()> 1)
-                s.append("~").append(al.more);
+            s.append("~").append(al.more);
             s.append("\n");
         }
         FileIO.writeTextFile( tableFolder,"kTalkAlerts",s.toString());

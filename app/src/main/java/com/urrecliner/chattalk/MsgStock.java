@@ -27,7 +27,7 @@ public class MsgStock {
         Thread thisThread = new Thread(() -> {
             String head = " [" + group + "." + who + "] ";
             FileIO.uploadStock(group, who, "", sTalk, sText, key12);
-            NotificationBar.update(head + sText + key12);
+            NotificationBar.update(head, sText);
             logQueUpdate.add(head, sText + key12);
             if (speakSwitchOn || sTalk.length() > 0) {
                 String[] joins = new String[]{sTalk, group, sTalk, who,

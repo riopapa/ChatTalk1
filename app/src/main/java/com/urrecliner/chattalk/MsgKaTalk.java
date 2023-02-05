@@ -38,7 +38,7 @@ class MsgKaTalk {
         } else {
             String head = "[카톡 " + iGroup + "." + iWho + "]";
             iText = utils.strReplace(iGroup, iText);
-            NotificationBar.update(head + " "+iText);
+            NotificationBar.update(iGroup+":"+iWho, iText);
             logQueUpdate.add(head, iText);
             if (IsWhoNine.in(nineIgnores, iWho))
                 iText = iText.replaceAll("[0-9]","");

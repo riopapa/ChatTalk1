@@ -13,7 +13,7 @@ class MsgNamoo {
         }
         if (text.contains("체결")) {
             String sText = "나무App : " + text;
-            NotificationBar.update(sText);
+            NotificationBar.update("[NH나무]", sText);
             logQueUpdate.add("[NH나무] ", sText);
 
             // [나무] 매도 전량체결 기산텔레콤(035460) 100주 3,370원 주문No.125378

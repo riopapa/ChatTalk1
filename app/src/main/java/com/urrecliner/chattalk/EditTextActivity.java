@@ -24,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -181,28 +182,39 @@ public class EditTextActivity extends AppCompatActivity {
             String memo= "";
             if (fields.length > 3)  // if nothing after ^ then no array return
                 memo = fields[3];
-            String oneLine = strPad(fields[0], 38) + "^" + strPad(fields[1], 10) + " ^ "
-                    + strPad(fields[2], 4) + " ^ " + memo.trim();
+            String oneLine = strPad(fields[0], 44) + "^" +  // package full name
+                    strPad(fields[1], 12) + " ^ "           // package nick name
+                    + strPad(fields[2], 4) + " ^ "          // yyn
+                    + memo.trim();                                  // comment
             sortedText.append(oneLine).append("\n");
         }
         return sortedText.toString();
     }
 
-    static int getByteLength(String s) {
-        final String del = String.copyValueOf(new char[]{(char) Byte.parseByte("7F", 16)});
-        int byteNumber = 0;
-        for (int i = 0; i < s.length(); i++) {
-            String bite = s.substring(i,i+1);
-            byteNumber += (bite.compareTo(del)>0)? 2:1;
+//    static int getByteLength(String s) {
+//        final String del = String.copyValueOf(new char[]{(char) Byte.parseByte("7F", 16)});
+//        int byteNumber = 0;
+//        for (int i = 0; i < s.length(); i++) {
+//            String bite = s.substring(i,i+1);
+//            byteNumber += (bite.compareTo(del)>0)? 2:1;
+//        }
+//        return byteNumber;
+//    }
+
+    static int getByteLength(String str) {
+        try {
+            return str.getBytes("euc-kr").length;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
-        return byteNumber;
+        return str.length();
     }
 
     String insertClipBoard() {
         ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         ClipData pData = clipboard.getPrimaryClip();
         ClipData.Item item = pData.getItemAt(0);
-        return "\n"+item.getText().toString() + ((isPackageNames)? " ^ @ ^  ^":"");
+        return "\n"+item.getText().toString() + ((isPackageNames)? " ^ @ ^ yyn ^":"");
     }
 
 }
