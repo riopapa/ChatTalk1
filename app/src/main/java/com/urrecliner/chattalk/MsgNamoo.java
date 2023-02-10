@@ -23,7 +23,7 @@ class MsgNamoo {
                 logQueUpdate.add("[NH나무App 에러]" + words.length, text);
                 sounds.speakAfterBeep("체결 메시지 에러 " + text);
             } else {
-                String stockName = words[3].split("\\(")[0].trim();
+//                String stockName = words[3].split("\\(")[0].trim();
                 String[] joins = new String[]{ words[1], words[3], ";", words[4], words[5],
                         words[1], words[1]};
                 sText = String.join(" ", joins);

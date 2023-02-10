@@ -1,7 +1,7 @@
 package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.Vars.alertIndex;
-import static com.urrecliner.chattalk.Vars.kGroupDot;
+import static com.urrecliner.chattalk.Vars.aGroupDot;
 import static com.urrecliner.chattalk.Vars.logQueUpdate;
 import static com.urrecliner.chattalk.Vars.nineIgnores;
 import static com.urrecliner.chattalk.Vars.sharedFinish;
@@ -10,20 +10,12 @@ import static com.urrecliner.chattalk.Vars.sounds;
 import static com.urrecliner.chattalk.Vars.utils;
 
 import com.urrecliner.chattalk.Sub.IsWhoNine;
-import com.urrecliner.chattalk.Sub.IsWhoText;
-import com.urrecliner.chattalk.Sub.WhoText;
-
-import java.util.ArrayList;
 
 class MsgKaTalk {
 
-    static ArrayList<WhoText> kkWhoTexts = new ArrayList<>();
-
     void say(String iGroup, String iWho, String iText) {
 
-        if (IsWhoText.repeated(kkWhoTexts, iWho, iText))
-            return;
-        int groupPos = kGroupDot.indexOf(iGroup+"!");
+        int groupPos = aGroupDot.indexOf(iGroup+"!");
         if (groupPos > 0) {
             if (iText.length() < 8 || iText.contains("http"))
                 return;

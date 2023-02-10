@@ -33,7 +33,7 @@ public class MsgStock {
                 String[] joins = new String[]{sTalk, group, sTalk, who,
                         (sayMore.length()> 0) ? sayMore:"", sText,
                         utils.makeEtc(sText, 80)};
-                sounds.speakAfterBeep(String.join(" ", joins));
+                sounds.speakAfterBeep(String.join(" ", joins).replaceAll("[0-9]",""));
             } else {
                 sounds.beepOnce(Vars.soundType.ONLY.ordinal());
             }

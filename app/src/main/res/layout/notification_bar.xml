@@ -28,7 +28,7 @@
         <TextView
             android:id="@+id/msg_who"
             android:layout_width="0dp"
-            android:layout_weight="6"
+            android:layout_weight="9"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="8dp"
@@ -36,7 +36,7 @@
             android:textSize="14sp"
             android:textColor="@color/colorLine"
          />
-
+<!--
         <ImageView
             android:layout_width="0dp"
             android:layout_weight="2"
@@ -44,7 +44,7 @@
             android:layout_height="24dp"
             android:layout_gravity="center"
             android:src="@drawable/speak_off" />
-
+-->
         <ImageView
             android:layout_width="0dp"
             android:layout_weight="2"

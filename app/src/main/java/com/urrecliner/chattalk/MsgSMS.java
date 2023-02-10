@@ -5,7 +5,6 @@ import static com.urrecliner.chattalk.Vars.logQueUpdate;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.msgKaTalk;
 import static com.urrecliner.chattalk.Vars.nineIgnores;
-import static com.urrecliner.chattalk.Vars.sbnText;
 import static com.urrecliner.chattalk.Vars.sounds;
 import static com.urrecliner.chattalk.Vars.utils;
 
@@ -15,7 +14,7 @@ class MsgSMS {
 
     final static String trade = "체결";
     final static String jrGroup = "찌라";
-    final static String nhStock = "NH투자";
+    final static String nhStock = "NH투자증권";
 
     void say(String mWho, String mText) {
 
@@ -58,13 +57,13 @@ class MsgSMS {
                     String amount = words[4];
                     String uPrice = words[5];
                     String sGroup = lastChar + trade;
-                    String sayMsg = " 증권가 소식 " + (buySell.equals("매수") ? stockName + " "
+                    String sayMsg = (buySell.equals("매수") ? stockName + " "
                             + amount + " " + uPrice + "으로 샀음 " :
                             stockName + " " + amount + " " + uPrice + " 에 팔렸음 ");
-                    NotificationBar.update(trade, sayMsg);
+                    NotificationBar.update(trade +":"+buySell, sayMsg);
                     logQueUpdate.add("sms>"+nhStock, sayMsg);
                     FileIO.uploadStock(sGroup, mWho, stockName, buySell, mText, amount);
-                    sounds.speakAfterBeep(sayMsg);
+                    sounds.speakAfterBeep(sayMsg.replaceAll("[0-9]",""));
                 }
             } catch (Exception e) {
                 mText = "Parsing Exception_01 " + mText;

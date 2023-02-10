@@ -1,17 +1,14 @@
 package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.Vars.alertLines;
-import static com.urrecliner.chattalk.Vars.kGroupDot;
-import static com.urrecliner.chattalk.Vars.kGroupSay;
-import static com.urrecliner.chattalk.Vars.kGroupSkip1;
-import static com.urrecliner.chattalk.Vars.kGroupSkip2;
-import static com.urrecliner.chattalk.Vars.kGroupSkip3;
-import static com.urrecliner.chattalk.Vars.kGroupSkip4;
+import static com.urrecliner.chattalk.Vars.aGroupDot;
+import static com.urrecliner.chattalk.Vars.aGroupSay;
+import static com.urrecliner.chattalk.Vars.aGroupSkip1;
+import static com.urrecliner.chattalk.Vars.aGroupSkip2;
+import static com.urrecliner.chattalk.Vars.aGroupSkip3;
+import static com.urrecliner.chattalk.Vars.aGroupSkip4;
 import static com.urrecliner.chattalk.Vars.kGroupWho;
-import static com.urrecliner.chattalk.Vars.kGroupWhoDot;
-import static com.urrecliner.chattalk.Vars.kGroupWhoF;
-import static com.urrecliner.chattalk.Vars.kGroupWhoS;
-import static com.urrecliner.chattalk.Vars.kGroupWhoSaved;
+import static com.urrecliner.chattalk.Vars.aGroupWhoDot;
 import static com.urrecliner.chattalk.Vars.kKey1;
 import static com.urrecliner.chattalk.Vars.kKey2;
 import static com.urrecliner.chattalk.Vars.kSkip;
@@ -124,25 +121,26 @@ class AlertTable {
             aTalk.add(al.talk);
             aSkip.add(al.skip.equals("") ? blank:al.skip);
         }
+        sbB.append(" ");
         aGroupWhoF.add(alertLines.size()-1);
         int sz = aGroupWho.size();
-        kGroupDot = sbA.toString();
-        kGroupWhoDot = sbB.toString();
+        aGroupDot = sbA.toString();
+        aGroupWhoDot = sbB.toString();
         kGroupWho = aGroupWho.toArray(new String [sz]);
-        kGroupWhoS = aGroupWhoS.toArray(new Integer [0]);
-        kGroupWhoF = aGroupWhoF.toArray(new Integer [0]);
+        Vars.aGroupWhoS = aGroupWhoS.toArray(new Integer [0]);
+        Vars.aGroupWhoF = aGroupWhoF.toArray(new Integer [0]);
         kKey1 = aKey1.toArray(new String [sz]);   // 인식 문자 1
         kKey2 = aKey2.toArray(new String [sz]);   // 인식 문자 2
         kTalk = aTalk.toArray(new String [sz]);   // 뭐 있으면 무조건 떠들기
         kSkip = aSkip.toArray(new String [sz]);   // 무시할 문자
 
         int groupCnt = aGGroup.size();    // skip or say if this group should be talked
-        kGroupSay = aGSay.toArray(new String[groupCnt]);
-        kGroupSkip1 = aGSkip1.toArray(new String[groupCnt]);
-        kGroupSkip2 = aGSkip2.toArray(new String[groupCnt]);
-        kGroupSkip3 = aGSkip3.toArray(new String[groupCnt]);
-        kGroupSkip4 = aGSkip4.toArray(new String[groupCnt]);
-        kGroupWhoSaved = aGroupWhoSaved.toArray(new String [0]);
+        aGroupSay = aGSay.toArray(new String[groupCnt]);
+        aGroupSkip1 = aGSkip1.toArray(new String[groupCnt]);
+        aGroupSkip2 = aGSkip2.toArray(new String[groupCnt]);
+        aGroupSkip3 = aGSkip3.toArray(new String[groupCnt]);
+        aGroupSkip4 = aGSkip4.toArray(new String[groupCnt]);
+        Vars.aGroupWhoSaved = aGroupWhoSaved.toArray(new String [0]);
     }
     static void sort() {
         // group asc, who asc, matched desc

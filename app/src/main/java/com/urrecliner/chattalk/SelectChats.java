@@ -4,7 +4,7 @@ import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 import static com.urrecliner.chattalk.Vars.alertIndex;
 import static com.urrecliner.chattalk.Vars.alertLines;
 import static com.urrecliner.chattalk.Vars.chatGroup;
-import static com.urrecliner.chattalk.Vars.kGroupDot;
+import static com.urrecliner.chattalk.Vars.aGroupDot;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.replGroup;
 import static com.urrecliner.chattalk.Vars.replGroupCnt;
@@ -72,7 +72,7 @@ public class SelectChats {
         String prvTxt = "";
         SpannableString matchedSS = new SpannableString("\nMatched Lines ---\n\n");
         SpannableString selectedSS = new SpannableString("\nSelected Lines ---\n\n");
-        int groupPos = kGroupDot.indexOf(chatGroup+"!");
+        int groupPos = aGroupDot.indexOf(chatGroup+"!");
         if (groupPos < 0)
             return new SpannableString(headStr+"\nSelected Lines ---\n\n");
         for (String txt: msgLines) {

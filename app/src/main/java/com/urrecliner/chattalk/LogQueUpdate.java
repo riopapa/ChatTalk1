@@ -39,19 +39,24 @@ public class LogQueUpdate {
         logQue += "\n" + MMDDHHMM.format(new Date())
                 + header + "\n" + text+"\n";
         int len = logQue.length();
-        if (len > 20000) {   // max log que size
-            logQue = logQue.substring(5000);    // remove old 3000 bytes
+        if (len > 15000) {   // max log que size
+            logQue = logQue.substring(3000);    // remove old 3000 bytes
             logQue = logQue.substring(logQue.indexOf("\n")+1);
             if (!StringUtils.isNumeric(""+logQue.charAt(0))) {  // start with MMDD ...
                 logQue = logQue.substring(logQue.indexOf("\n")+1);
             }
-            String str = logQue.substring(0, logQue.length()/2);
-            int pos = str.lastIndexOf("\n");
-            str = str.substring(0, pos).replace("\n\n","\n");
-
-            logQue = str+"\n\n/** " + MMDDHHMM.format(new Date())
-                    +"\n---- squeezed ---\n"+logQue.substring(pos);
-            Log.w("loqQue","squeezed from "+len+" to "+logQue.length());
+            String front = logQue.substring(0, logQue.length()*2/3);
+            front = front.substring(0, front.lastIndexOf("\n"));
+            int pos = front.lastIndexOf("\n", front.length()-2);
+            if (!StringUtils.isNumeric(""+front.charAt(pos-1))) {  // start with MMDD ...
+                pos = front.lastIndexOf("\n", pos-2);
+            }
+            front = logQue.substring(0, pos).replace("\n\n","\n");
+            front = front.replace("\n\n","\n");
+            String remain = logQue.substring(pos);
+            logQue = front+"\n\n/** " + MMDDHHMM.format(new Date()) + " **/" +
+                    "\n---- squeezed to "+ (front.length()+remain.length()) + " -------" +
+                    "\n"+remain;
         }
         sharedEditor.putString("logQue", logQue);
         sharedEditor.apply();

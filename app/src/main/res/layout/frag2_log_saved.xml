@@ -62,7 +62,6 @@
             android:focusable="false"
             android:inputType="text|textMultiLine"
             android:text="@string/active_say_table_list"
-            android:textAlignment="center"
             android:textSize="14sp" />
     </ScrollView>
 

@@ -18,6 +18,8 @@ import android.widget.RemoteViews;
 
 import androidx.core.app.NotificationCompat;
 
+import com.urrecliner.chattalk.Sub.ByteLength;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -69,6 +71,8 @@ public class NotificationService extends Service {
                 break;
             case SHOW_MESSAGE:
                 who = Objects.requireNonNull(intent.getStringExtra("who")).replace(" ", "\u00A0");
+                while (ByteLength.get(who) > 17)
+                    who = who.substring(0, who.length()-1);
                 msgText = Objects.requireNonNull(intent.getStringExtra("msg")).replace(" ", "\u00A0");
                 break;
             case ERASER:
@@ -121,15 +125,15 @@ public class NotificationService extends Service {
         mBuilder.setContentIntent(stopSayPi);
         mRemoteViews.setOnClickPendingIntent(R.id.stop_now, stopSayPi);
 
-        Intent popIntent = new Intent(this, NotificationService.class);
-        popIntent.putExtra("operation", SPEAK_ON_OFF);
-        PendingIntent popPI = PendingIntent.getService(svcContext, 44, popIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
-        mBuilder.setContentIntent(popPI);
-        mRemoteViews.setOnClickPendingIntent(R.id.speak, popPI);
+//        Intent popIntent = new Intent(this, NotificationService.class);
+//        popIntent.putExtra("operation", SPEAK_ON_OFF);
+//        PendingIntent popPI = PendingIntent.getService(svcContext, 44, popIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+//        mBuilder.setContentIntent(popPI);
+//        mRemoteViews.setOnClickPendingIntent(R.id.speak, popPI);
     }
 
     private void updateRemoteViews() {
-        mRemoteViews.setImageViewResource(R.id.speak, (speakSwitchOn) ? R.drawable.speak_on: R.drawable.speak_off);
+//        mRemoteViews.setImageViewResource(R.id.speak, (speakSwitchOn) ? R.drawable.speak_on: R.drawable.speak_off);
 //        mRemoteViews.setImageViewResource(R.id.Stop_Now, R.mipmap.mute_right_now);
         if (msgText == null) {
             mRemoteViews.setViewVisibility(R.id.msg_line, View.GONE);

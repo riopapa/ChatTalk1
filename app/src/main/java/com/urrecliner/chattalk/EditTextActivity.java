@@ -1,6 +1,6 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.Vars.kGroupDot;
+import static com.urrecliner.chattalk.Vars.aGroupDot;
 import static com.urrecliner.chattalk.Vars.nowFileName;
 import static com.urrecliner.chattalk.Vars.tableFolder;
 import static com.urrecliner.chattalk.Vars.tableListFile;
@@ -95,7 +95,7 @@ public class EditTextActivity extends AppCompatActivity {
             String [] oneL = textLine.split("\\^");
             if (!oneL[0].equals(svGroup)) {
                 svGroup = oneL[0];
-                String del = (kGroupDot.indexOf(svGroup+"!") > 0) ? "":" // 없는 그룹 //";
+                String del = (aGroupDot.indexOf(svGroup+"!") > 0) ? "":" // 없는 그룹 //";
                 sb.append(dummyHead).append(svGroup).append(del).append(" ] -\n\n");    // dummy some chars between groups
             }
             sb.append(textLine).append("\n").append("\n");

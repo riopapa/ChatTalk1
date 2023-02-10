@@ -43,16 +43,16 @@ public class Vars {
     static String[] kTalk = null;
     static String[] kSkip = null;
 
-    static String kGroupDot = null;       // 1000.고선 1001.그룹
-    static String kGroupWhoDot = null;    // 1000group1.who 1001group1.who2 1002group2.who3
-    static String[] kGroupSay = null;
-    static String[] kGroupSkip1 = null;
-    static String[] kGroupSkip2 = null;
-    static String[] kGroupSkip3 = null;
-    static String[] kGroupSkip4 = null;
-    static String[] kGroupWhoSaved = null;
-    static Integer[] kGroupWhoS;
-    static Integer[] kGroupWhoF;
+    static String aGroupDot = null;       // 1000.고선 1001.그룹
+    static String aGroupWhoDot = null;    // 1000group1.who 1001group1.who2
+    static String[] aGroupSay = null;
+    static String[] aGroupSkip1 = null;
+    static String[] aGroupSkip2 = null;
+    static String[] aGroupSkip3 = null;
+    static String[] aGroupSkip4 = null;
+    static String[] aGroupWhoSaved = null;
+    static Integer[] aGroupWhoS;
+    static Integer[] aGroupWhoF;
 
     static String[] smsWhoIgnores = null;
     static String[] smsTextIgnores = null;

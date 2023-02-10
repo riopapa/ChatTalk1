@@ -21,9 +21,12 @@ import android.util.Log;
 
 import com.urrecliner.chattalk.Sub.IgnoreText;
 import com.urrecliner.chattalk.Sub.IsWhoText;
+import com.urrecliner.chattalk.Sub.MapWhoText;
 import com.urrecliner.chattalk.Sub.WhoText;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class NotificationListener extends NotificationListenerService {
 
@@ -37,6 +40,7 @@ public class NotificationListener extends NotificationListenerService {
     final String YY9 = "yy9"; //   Y    Y   N
     final String YYX = "yyx"; //   Y    Y   X exclude Group
     final String YNX = "ynx"; //   Y    N   X  no Who
+    final String YWX = "ywx"; //   Y    N   X  who should be in text
     final String YNN = "ynn"; //   Y    N   X  no Who, speak only
     final String TESLA = "ts";             // tesla only
     final String TELEGRAM = "tG";
@@ -44,7 +48,8 @@ public class NotificationListener extends NotificationListenerService {
 
     long tesla_time = 0;
 
-    static ArrayList<WhoText> kkWhoTexts = new ArrayList<>();
+    static HashMap<String, String> kkWhoTexts = new HashMap<>();
+//    static ArrayList<WhoText> kkWhoTexts = new ArrayList<>();
     static ArrayList<WhoText> smsWhoTexts = new ArrayList<>();
     static ArrayList<WhoText> tgWhoTexts = new ArrayList<>();
     static ArrayList<WhoText> whoTexts = new ArrayList<>();
@@ -80,7 +85,6 @@ public class NotificationListener extends NotificationListenerService {
         Upload2Google.initSheetQue();
     }
 
-
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
 
@@ -94,14 +98,16 @@ public class NotificationListener extends NotificationListenerService {
 
             case KATALK:
 
+                if (MapWhoText.repeated(kkWhoTexts, sbnWho, sbnText))
+                    return;
                 if (sbnGroup.equals("")) {
-                    if (IsWhoText.repeated(kkWhoTexts, sbnWho, sbnText)
-                            || kGroupIgnores.contains("!"+ sbnWho +"!")
-                            || IgnoreText.contains(sbnText, kkTxtIgnores))
+                    Log.w("WhoText "+kkWhoTexts.size(),"mWho "+sbnWho);
+                    if (kGroupIgnores.contains("!"+ sbnWho +"!") ||
+                        IgnoreText.contains(sbnText, kkTxtIgnores))
                         return;
                     String head = "{카톡!"+ sbnWho + "} ";
                     sbnText = utils.strReplace(sbnWho, utils.text2OneLine(sbnText));
-                    NotificationBar.update(head, sbnText);
+                    NotificationBar.update("카톡!"+sbnWho, sbnText);
                     logQueUpdate.add( head, sbnText);
                     sounds.speakAfterBeep(" 카톡왔음 " + sbnWho + " 님이 " + utils.replaceKKHH(utils.makeEtc(sbnText, 150)));
                 } else {
@@ -241,6 +247,17 @@ public class NotificationListener extends NotificationListenerService {
                 sbnText = utils.text2OneLine(sbnText);
                 sbnText = sbnGroup + "✓" + sbnText;
                 logQueUpdate.add(sbnPackageNick, sbnText);
+                sounds.speakAfterBeep(sbnPackageNick + " 로 부터 " + sbnText);
+                break;
+
+            case YWX: // treat who as text
+
+                if (IgnoreText.contains(sbnText, textIgnores))
+                    return;
+                sbnText = utils.text2OneLine(sbnText);
+                sbnText = sbnWho + "✓" + sbnText;
+                logQueUpdate.add(sbnPackageNick, sbnText);
+                NotificationBar.update(sbnPackageNick, sbnText);
                 sounds.speakAfterBeep(sbnPackageNick + " 로 부터 " + sbnText);
                 break;
 

@@ -1,5 +1,7 @@
 package com.urrecliner.chattalk.Sub;
 
+import android.util.Log;
+
 import com.urrecliner.chattalk.Vars;
 
 import java.util.ArrayList;
@@ -7,7 +9,7 @@ import java.util.Collections;
 
 public class IsWhoText {
 
-    public static boolean repeated(ArrayList<WhoText> whoSaysWhat, String mWho, String mText) {
+    public static boolean repeated(final ArrayList<WhoText> whoSaysWhat, String mWho, String mText) {
         if (whoSaysWhat.isEmpty()) {
             whoSaysWhat.add(new WhoText(mWho, mText));
             return false;
