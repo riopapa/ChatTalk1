@@ -26,7 +26,6 @@ import com.urrecliner.chattalk.Sub.WhoText;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class NotificationListener extends NotificationListenerService {
 
