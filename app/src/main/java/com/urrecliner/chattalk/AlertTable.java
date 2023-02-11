@@ -1,5 +1,7 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.SubFunc.sounds;
+import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.alertLines;
 import static com.urrecliner.chattalk.Vars.aGroupDot;
 import static com.urrecliner.chattalk.Vars.aGroupSay;
@@ -14,11 +16,9 @@ import static com.urrecliner.chattalk.Vars.kKey2;
 import static com.urrecliner.chattalk.Vars.kSkip;
 import static com.urrecliner.chattalk.Vars.kTalk;
 import static com.urrecliner.chattalk.Vars.lastChar;
-import static com.urrecliner.chattalk.Vars.sounds;
 import static com.urrecliner.chattalk.Vars.tableFolder;
 import static com.urrecliner.chattalk.Vars.tableListFile;
 import static com.urrecliner.chattalk.Vars.todayFolder;
-import static com.urrecliner.chattalk.Vars.utils;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
 

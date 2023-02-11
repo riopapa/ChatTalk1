@@ -1,10 +1,10 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.aBar;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.nowFileName;
 import static com.urrecliner.chattalk.Vars.topTabs;
-import static com.urrecliner.chattalk.Vars.utils;
 
 import android.app.Activity;
 import android.content.Intent;

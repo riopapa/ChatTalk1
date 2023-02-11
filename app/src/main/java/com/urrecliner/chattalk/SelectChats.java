@@ -1,6 +1,7 @@
 package com.urrecliner.chattalk;
 
 import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.alertIndex;
 import static com.urrecliner.chattalk.Vars.alertLines;
 import static com.urrecliner.chattalk.Vars.chatGroup;
@@ -11,7 +12,6 @@ import static com.urrecliner.chattalk.Vars.replGroupCnt;
 import static com.urrecliner.chattalk.Vars.replLong;
 import static com.urrecliner.chattalk.Vars.replShort;
 import static com.urrecliner.chattalk.Vars.tableListFile;
-import static com.urrecliner.chattalk.Vars.utils;
 
 import android.text.SpannableString;
 import android.text.TextUtils;

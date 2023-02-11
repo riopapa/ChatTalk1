@@ -10,8 +10,8 @@ import android.content.SharedPreferences;
 import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
-import android.widget.ScrollView;
 
 import androidx.appcompat.app.ActionBar;
 
@@ -27,7 +27,7 @@ public class Vars {
     static File downloadFolder = null;
     static File todayFolder = null;
 
-    static String toDay = "ToDay";
+    public static String toDay = "ToDay";
 
     static String packageIgnoreStr = null;    // @com.ignoring.package @com.ignored.package ...
     static ArrayList<String> pkgFullNames, pkgNickNames, pkgTypes;
@@ -61,13 +61,11 @@ public class Vars {
     static String[] nineIgnores = null;
     static String nowFileName;
 
-    static ScrollView scrollView1;
-
     static int replGroupCnt = 0;
     static String [] replGroup;
     static String [][] replLong, replShort;
 
-    static SharedPreferences sharePref;
+    public static SharedPreferences sharePref;
     static SharedPreferences.Editor sharedEditor;
 
     @SuppressLint("StaticFieldLeak")
@@ -82,19 +80,12 @@ public class Vars {
     static ActionBar aBar = null;
     static AudioManager mAudioManager = null;
     static AudioFocusRequest mFocusGain = null;
-    static boolean speakSwitchOn = false;
 
     /* module list */
     static AlertIndex alertIndex = null;
-    static LogQueUpdate logQueUpdate = null;
-    static MsgAndroid msgAndroid = null;
-    static MsgKaTalk msgKaTalk = null;
-    static Sounds sounds = null;
-    static Utils utils = null;
 
     static long sharedStart, sharedFinish;
     static boolean isPhoneBusy = false;
-    static boolean isRotate = false;
 
     static AlertsAdapter alertsAdapter = null;
     static TabLayout topTabs;
@@ -108,6 +99,7 @@ public class Vars {
     static final int[] beepRawIds = { R.raw.a0_pre_sound, R.raw.a1_post_sound, R.raw.a2_alert, R.raw.a3_tesly, R.raw.a4_only};
 
     void set(Context context, String msg) {
+        Log.w("vars","Set msg="+msg);
         mContext = context;
         sharePref = mContext.getSharedPreferences("sayText", MODE_PRIVATE);
         sharedEditor = sharePref.edit();
@@ -120,18 +112,10 @@ public class Vars {
         tableFolder = new File(downloadFolder, "_ChatTalk");
 
         alertIndex = new AlertIndex();
-        logQueUpdate = new LogQueUpdate(mContext);
-        msgAndroid = new MsgAndroid();
-        sounds = new Sounds(); sounds.init();
-        utils = new Utils();
         tableListFile = new TableListFile();
         new OptionTables().readAll();
 
         FileIO.readyPackageFolder();
-        utils.logW("Vars", "/ / "+msg+" / / \n");
-        if (sharedStart == 0)
-            utils.setTimeBoundary();
-
         sheetQues = new ArrayList<>();
         AlertTable.readFile();
         AlertTable.makeArrays();

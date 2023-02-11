@@ -1,6 +1,7 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.Vars.logQueUpdate;
+import static com.urrecliner.chattalk.SubFunc.logQueUpdate;
+import static com.urrecliner.chattalk.SubFunc.sounds;
 import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.mLayoutView;
@@ -12,7 +13,6 @@ import static com.urrecliner.chattalk.Vars.replShort;
 import static com.urrecliner.chattalk.Vars.sharePref;
 import static com.urrecliner.chattalk.Vars.sharedFinish;
 import static com.urrecliner.chattalk.Vars.sharedStart;
-import static com.urrecliner.chattalk.Vars.sounds;
 import static com.urrecliner.chattalk.Vars.toDay;
 
 import android.content.Intent;
@@ -103,7 +103,7 @@ class Utils {
         snackbar.show();
     }
 
-    static void setTimeBoundary() {
+    void setTimeBoundary() {
         final SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA);
         if (toDay.equals("ToDay"))
             logQueUpdate.readyTodayFolderIfNewDay();
@@ -192,5 +192,4 @@ class Utils {
     String text2OneLine(String mText) {
         return mText.replace("\n", "|").replace("\r", "").replace("||", "|").replace("||", "|");
     }
-
 }

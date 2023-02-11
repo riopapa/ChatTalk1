@@ -1,6 +1,7 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.Vars.msgAndroid;
+import static com.urrecliner.chattalk.SubFunc.msgAndroid;
+import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.packageIgnoreStr;
 import static com.urrecliner.chattalk.Vars.pkgFullNames;
 import static com.urrecliner.chattalk.Vars.pkgNickNames;
@@ -12,7 +13,6 @@ import static com.urrecliner.chattalk.Vars.sbnPackageType;
 import static com.urrecliner.chattalk.Vars.sbnText;
 import static com.urrecliner.chattalk.Vars.sbnWho;
 import static com.urrecliner.chattalk.Vars.systemIgnores;
-import static com.urrecliner.chattalk.Vars.utils;
 
 import android.app.Notification;
 import android.os.Bundle;

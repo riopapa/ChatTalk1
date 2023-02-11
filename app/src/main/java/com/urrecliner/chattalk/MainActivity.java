@@ -1,10 +1,11 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.aBar;
 import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
+import static com.urrecliner.chattalk.Vars.sharedStart;
 import static com.urrecliner.chattalk.Vars.topTabs;
-import static com.urrecliner.chattalk.Vars.utils;
 
 import android.Manifest;
 import android.content.Intent;
@@ -36,7 +37,8 @@ import java.util.TimerTask;
 public class MainActivity extends AppCompatActivity {
 
     int count = 0;
-    Vars vars;
+    Vars vars = null;
+    SubFunc subFunc = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), " permission OK", Toast.LENGTH_LONG).show();
             //permissions are granted - do your stuff here :)
         }
+        mContext = this;
+        mActivity = this;
 
         aBar = getSupportActionBar();
 
@@ -99,11 +103,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {}
         });
-        vars = new Vars();
-        mContext = this;
-        mActivity = this;
-        vars.set(mContext, "onResume");
-
     }
 
     @Override
@@ -127,6 +126,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         count = 0;
+        if (subFunc == null) {
+            vars = new Vars();
+            vars.set(mContext, "onResume");
+            subFunc = new SubFunc();
+        }
+        if (sharedStart == 0)
+            utils.setTimeBoundary();
         aBar = getSupportActionBar();
         aBar.setIcon(R.mipmap.chat_talk_mini);
         WifiMonitor.init(mContext);

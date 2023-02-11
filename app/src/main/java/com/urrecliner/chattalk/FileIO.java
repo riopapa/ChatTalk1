@@ -1,9 +1,9 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.Vars.logQueUpdate;
+import static com.urrecliner.chattalk.SubFunc.logQueUpdate;
+import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.packageDirectory;
 import static com.urrecliner.chattalk.Vars.todayFolder;
-import static com.urrecliner.chattalk.Vars.utils;
 
 import android.util.Log;
 

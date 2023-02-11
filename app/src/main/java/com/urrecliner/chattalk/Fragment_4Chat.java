@@ -1,9 +1,9 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.aBar;
 import static com.urrecliner.chattalk.Vars.chatGroup;
 import static com.urrecliner.chattalk.Vars.topTabs;
-import static com.urrecliner.chattalk.Vars.utils;
 
 import android.os.Bundle;
 import android.os.Environment;

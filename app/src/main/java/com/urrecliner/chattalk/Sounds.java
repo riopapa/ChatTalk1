@@ -1,12 +1,11 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.beepRawIds;
 import static com.urrecliner.chattalk.Vars.isPhoneBusy;
-import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mAudioManager;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.mFocusGain;
-import static com.urrecliner.chattalk.Vars.utils;
 
 import android.content.Context;
 import android.media.AudioDeviceInfo;
@@ -15,7 +14,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
-import android.widget.Toast;
 
 import java.util.Locale;
 import java.util.Timer;
@@ -90,7 +88,7 @@ class Sounds {
             mTTS.stop();
     }
 
-    void speakAfterBeep(String text) {
+    public void speakAfterBeep(String text) {
 
         if (isSilent())
             return;

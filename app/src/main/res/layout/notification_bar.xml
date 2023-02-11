@@ -20,7 +20,7 @@
             android:layout_weight="3"
             android:layout_height="match_parent"
             android:textSize="14sp"
-            android:text="09:12"
+            android:text="09:99"
             android:textColor="@color/colorLine"
             android:layout_gravity="center"
             android:gravity="center"

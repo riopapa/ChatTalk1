@@ -1,6 +1,7 @@
 package com.urrecliner.chattalk;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.logQue;
 import static com.urrecliner.chattalk.Vars.logSave;
 import static com.urrecliner.chattalk.Vars.mContext;
@@ -9,10 +10,8 @@ import static com.urrecliner.chattalk.Vars.sharePref;
 import static com.urrecliner.chattalk.Vars.sharedEditor;
 import static com.urrecliner.chattalk.Vars.toDay;
 import static com.urrecliner.chattalk.Vars.todayFolder;
-import static com.urrecliner.chattalk.Vars.utils;
 
 import android.content.Context;
-import android.util.Log;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -56,13 +55,14 @@ public class LogQueUpdate {
             String remain = logQue.substring(pos);
             logQue = front+"\n\n/** " + MMDDHHMM.format(new Date()) + " **/" +
                     "\n---- squeezed to "+ (front.length()+remain.length()) + " -------" +
-                    "\n"+remain;
+                    "\n"+remain +
+                    "\n---- squeezed " + MMDDHHMM.format(new Date()) + "\n";
         }
         sharedEditor.putString("logQue", logQue);
         sharedEditor.apply();
     }
 
-    void readyTodayFolderIfNewDay() {
+    public void readyTodayFolderIfNewDay() {
         String nowDay = new SimpleDateFormat("yy-MM-dd", Locale.KOREA).format(new Date());
         if (toDay.equals(nowDay))
             return;

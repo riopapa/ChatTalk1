@@ -1,9 +1,7 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.SubFunc.sounds;
 import static com.urrecliner.chattalk.Vars.SHOW_MESSAGE;
-import static com.urrecliner.chattalk.Vars.sounds;
-import static com.urrecliner.chattalk.Vars.speakSwitchOn;
-import static com.urrecliner.chattalk.Vars.utils;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -34,7 +32,6 @@ public class NotificationService extends Service {
     private RemoteViews mRemoteViews;
     private static final int ERASER = 1013;
     private static final int STOP_SAY = 10011;
-    private static final int SPEAK_ON_OFF = 1003;
     String who = null, msgText = null, time = null;
 
     @Override
@@ -54,7 +51,7 @@ public class NotificationService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (utils == null) utils = new Utils();
+
         int operation = -1;
         try {
             operation = intent.getIntExtra("operation", -1);
@@ -66,15 +63,14 @@ public class NotificationService extends Service {
             case STOP_SAY:
                 sounds.stopTTS();
                 break;
-            case SPEAK_ON_OFF:
-                speakSwitchOn = !speakSwitchOn;
-                break;
+
             case SHOW_MESSAGE:
                 who = Objects.requireNonNull(intent.getStringExtra("who")).replace(" ", "\u00A0");
                 while (ByteLength.get(who) > 17)
                     who = who.substring(0, who.length()-1);
                 msgText = Objects.requireNonNull(intent.getStringExtra("msg")).replace(" ", "\u00A0");
                 break;
+
             case ERASER:
                 msgText = null;
                 who = "Chat Talk..";
@@ -133,8 +129,7 @@ public class NotificationService extends Service {
     }
 
     private void updateRemoteViews() {
-//        mRemoteViews.setImageViewResource(R.id.speak, (speakSwitchOn) ? R.drawable.speak_on: R.drawable.speak_off);
-//        mRemoteViews.setImageViewResource(R.id.Stop_Now, R.mipmap.mute_right_now);
+
         if (msgText == null) {
             mRemoteViews.setViewVisibility(R.id.msg_line, View.GONE);
         } else {

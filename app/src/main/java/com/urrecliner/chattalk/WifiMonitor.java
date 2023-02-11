@@ -1,6 +1,6 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.Vars.utils;
+import static com.urrecliner.chattalk.SubFunc.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

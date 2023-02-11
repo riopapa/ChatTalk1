@@ -3,7 +3,6 @@ package com.urrecliner.chattalk;
 import static com.urrecliner.chattalk.Vars.aBar;
 import static com.urrecliner.chattalk.Vars.alertLines;
 import static com.urrecliner.chattalk.Vars.alertsAdapter;
-import static com.urrecliner.chattalk.Vars.isRotate;
 import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.topTabs;
 
@@ -27,6 +26,7 @@ public class Fragment_3Alert extends Fragment {
 
     ViewGroup rootView;
     RecyclerView recyclerView;
+    boolean isRotate = false;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

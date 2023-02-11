@@ -1,5 +1,7 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.SubFunc.sounds;
+import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.kGroupIgnores;
 import static com.urrecliner.chattalk.Vars.kkTxtIgnores;
 import static com.urrecliner.chattalk.Vars.mContext;
@@ -14,11 +16,9 @@ import static com.urrecliner.chattalk.Vars.replLong;
 import static com.urrecliner.chattalk.Vars.replShort;
 import static com.urrecliner.chattalk.Vars.smsTextIgnores;
 import static com.urrecliner.chattalk.Vars.smsWhoIgnores;
-import static com.urrecliner.chattalk.Vars.sounds;
 import static com.urrecliner.chattalk.Vars.systemIgnores;
 import static com.urrecliner.chattalk.Vars.tableListFile;
 import static com.urrecliner.chattalk.Vars.textIgnores;
-import static com.urrecliner.chattalk.Vars.utils;
 
 import android.widget.Toast;
 

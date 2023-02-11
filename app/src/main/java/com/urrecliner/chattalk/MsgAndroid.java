@@ -1,7 +1,7 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.Vars.logQueUpdate;
-import static com.urrecliner.chattalk.Vars.sounds;
+import static com.urrecliner.chattalk.SubFunc.logQueUpdate;
+import static com.urrecliner.chattalk.SubFunc.sounds;
 
 class MsgAndroid {
 

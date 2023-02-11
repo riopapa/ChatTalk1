@@ -1,13 +1,12 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.aBar;
 import static com.urrecliner.chattalk.Vars.logQue;
 import static com.urrecliner.chattalk.Vars.logSave;
 import static com.urrecliner.chattalk.Vars.mContext;
-import static com.urrecliner.chattalk.Vars.scrollView1;
 import static com.urrecliner.chattalk.Vars.sharedEditor;
 import static com.urrecliner.chattalk.Vars.topTabs;
-import static com.urrecliner.chattalk.Vars.utils;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -29,6 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
@@ -41,7 +41,7 @@ import org.apache.commons.lang3.StringUtils;
 public class Fragment_1Log extends Fragment {
 
     ViewGroup rootView;
-
+    ScrollView scrollView1;
     SpannableString ss, sv;
     EditText etTable, etKeyword;
     ImageView ivFind, ivClear, ivNext;

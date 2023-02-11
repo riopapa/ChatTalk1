@@ -1,7 +1,7 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.tableFolder;
-import static com.urrecliner.chattalk.Vars.utils;
 
 import java.io.File;
 import java.io.IOException;

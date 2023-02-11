@@ -1,12 +1,11 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.SubFunc.logQueUpdate;
+import static com.urrecliner.chattalk.SubFunc.sounds;
+import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.alertLines;
 import static com.urrecliner.chattalk.Vars.kKey1;
 import static com.urrecliner.chattalk.Vars.kKey2;
-import static com.urrecliner.chattalk.Vars.logQueUpdate;
-import static com.urrecliner.chattalk.Vars.sounds;
-import static com.urrecliner.chattalk.Vars.speakSwitchOn;
-import static com.urrecliner.chattalk.Vars.utils;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
 
@@ -29,7 +28,7 @@ public class MsgStock {
             FileIO.uploadStock(group, who, "", sTalk, sText, key12);
             NotificationBar.update(head, sText);
             logQueUpdate.add(head, sText + key12);
-            if (speakSwitchOn || sTalk.length() > 0) {
+            if (sTalk.length() > 0) {
                 String[] joins = new String[]{sTalk, group, sTalk, who,
                         (sayMore.length()> 0) ? sayMore:"", sText,
                         utils.makeEtc(sText, 80)};

@@ -84,7 +84,6 @@
         android:inputType="text|textMultiLine"
         android:scrollbars="vertical"
         android:text="x"
-        android:textAlignment="center"
         android:textSize="14sp" />
     </ScrollView>
 </LinearLayout>
