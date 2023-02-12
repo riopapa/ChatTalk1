@@ -11,7 +11,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
-import android.view.View;
 import android.widget.RemoteViews;
 
 import androidx.core.app.NotificationCompat;
@@ -27,7 +26,6 @@ public class NotificationService extends Service {
 
     private Context svcContext;
     NotificationCompat.Builder mBuilder = null;
-    NotificationChannel mNotificationChannel = null;
     NotificationManager mNotificationManager;
     private RemoteViews mRemoteViews;
     private static final int ERASER = 1013;
@@ -87,22 +85,29 @@ public class NotificationService extends Service {
 
     private void createNotification() {
 
-        if (null == mNotificationChannel) {
-                mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-                mNotificationChannel = new NotificationChannel("default","default", NotificationManager.IMPORTANCE_DEFAULT);
-                mNotificationManager.createNotificationChannel(mNotificationChannel);
+        if (null == mNotificationManager) {
+            CharSequence name = "Chat Talk";
+            String description = "Chat Talk Description";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("ChatTalk", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            mNotificationManager = getSystemService(NotificationManager.class);
+            mNotificationManager.createNotificationChannel(channel);
+
         }
         if (null == mBuilder) {
-
+            who = "new One";
+            msgText = "";
             mBuilder = new NotificationCompat.Builder(this,"default")
                     .setSmallIcon(R.mipmap.chat_talk_mini)
                     .setContent(mRemoteViews)
                     .setOnlyAlertOnce(true)
                     .setAutoCancel(false)
-                    .setCustomContentView(mRemoteViews)
                     .setCustomBigContentView(mRemoteViews)
+                    .setStyle(new NotificationCompat.BigTextStyle())
                     .setOngoing(true);
-
         }
 
         Intent mainIntent = new Intent(svcContext, MainActivity.class);
@@ -120,24 +125,13 @@ public class NotificationService extends Service {
         PendingIntent stopSayPi = PendingIntent.getService(svcContext, 22, stopSayIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(stopSayPi);
         mRemoteViews.setOnClickPendingIntent(R.id.stop_now, stopSayPi);
-
-//        Intent popIntent = new Intent(this, NotificationService.class);
-//        popIntent.putExtra("operation", SPEAK_ON_OFF);
-//        PendingIntent popPI = PendingIntent.getService(svcContext, 44, popIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
-//        mBuilder.setContentIntent(popPI);
-//        mRemoteViews.setOnClickPendingIntent(R.id.speak, popPI);
     }
 
     private void updateRemoteViews() {
 
-        if (msgText == null) {
-            mRemoteViews.setViewVisibility(R.id.msg_line, View.GONE);
-        } else {
-            mRemoteViews.setViewVisibility(R.id.msg_line, View.VISIBLE);
-            mRemoteViews.setTextViewText(R.id.msg_time, time);
-            mRemoteViews.setTextViewText(R.id.msg_who, who);
-            mRemoteViews.setTextViewText(R.id.msg_text, msgText);
-        }
+        mRemoteViews.setTextViewText(R.id.msg_time, time);
+        mRemoteViews.setTextViewText(R.id.msg_who, who);
+        mRemoteViews.setTextViewText(R.id.msg_text, msgText);
         mNotificationManager.notify(100,mBuilder.build());
     }
 }

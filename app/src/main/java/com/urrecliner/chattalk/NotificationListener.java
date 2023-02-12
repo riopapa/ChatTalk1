@@ -47,7 +47,6 @@ public class NotificationListener extends NotificationListenerService {
     long tesla_time = 0;
 
     static HashMap<String, String> kkWhoTexts = new HashMap<>();
-//    static ArrayList<WhoText> kkWhoTexts = new ArrayList<>();
     static ArrayList<WhoText> smsWhoTexts = new ArrayList<>();
     static ArrayList<WhoText> tgWhoTexts = new ArrayList<>();
     static ArrayList<WhoText> whoTexts = new ArrayList<>();
@@ -218,7 +217,7 @@ public class NotificationListener extends NotificationListenerService {
                 sbnText = subFunc.utils.strReplace(sbnWho, sbnText);
                 head = "[" + sbnPackageNick + "🖐️"+ sbnWho +"] ";
                 subFunc.logQueUpdate.add(head , sbnText);
-                NotificationBar.update(sbnPackageNick + "🖐️"+ sbnWho, sbnText);
+                NotificationBar.update(sbnPackageNick + ":"+ sbnWho, sbnText);
                 sbnText = sbnPackageNick + " 로부터 " + head + sbnText;
                 subFunc.sounds.speakAfterBeep(subFunc.utils.makeEtc(sbnText, 200));
                 break;
