@@ -47,7 +47,7 @@ public class LogQueUpdate {
             String front = logQue.substring(0, logQue.length()*2/3);
             front = front.substring(0, front.lastIndexOf("\n"));
             int pos = front.lastIndexOf("\n", front.length()-2);
-            if (!StringUtils.isNumeric(""+front.charAt(pos-1))) {  // start with MMDD ...
+            if (!StringUtils.isNumeric(""+front.charAt(pos))) {  // start with MMDD ...
                 pos = front.lastIndexOf("\n", pos-2);
             }
             front = logQue.substring(0, pos).replace("\n\n","\n");

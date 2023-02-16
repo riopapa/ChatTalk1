@@ -4,20 +4,18 @@ import static com.urrecliner.chattalk.SubFunc.logQueUpdate;
 import static com.urrecliner.chattalk.SubFunc.sounds;
 import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.alertLines;
-import static com.urrecliner.chattalk.Vars.kKey1;
-import static com.urrecliner.chattalk.Vars.kKey2;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
 
-public class MsgStock {
+public class AlertStock {
     String key12, sTalk, sayMore, group, who;
 
-    void alert(String sText, int aIdx) {
+    void show(String sText, int aIdx) {
 
         AlertLine al = alertLines.get(aIdx);
         al.matched++;
         alertLines.set(aIdx, al);
-        key12 = " {" + kKey1[aIdx] + "/" + kKey2[aIdx] + "}";
+        key12 = " {" + al.key1 + "/" + al.key2 + "}";
         group = al.group;
         who = al.who;
         sTalk = al.talk;

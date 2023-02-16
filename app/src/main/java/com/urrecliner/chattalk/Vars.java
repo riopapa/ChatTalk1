@@ -20,6 +20,7 @@ import com.urrecliner.chattalk.Sub.AlertLine;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Vars {
     static File packageDirectory = null;
@@ -29,7 +30,7 @@ public class Vars {
 
     public static String toDay = "ToDay";
 
-    static String packageIgnoreStr = null;    // @com.ignoring.package @com.ignored.package ...
+    static ArrayList<String> packageIgnores;
     static ArrayList<String> pkgFullNames, pkgNickNames, pkgTypes;
     static String sbnGroup, sbnWho, sbnText, sbnAppFullName, sbnPackageType, sbnPackageNick;
 
@@ -37,22 +38,14 @@ public class Vars {
 
     static String kGroupIgnores = null;
     static String[] kkTxtIgnores = null;
-    static String[] kGroupWho = null;
-    static String[] kKey1 = null;
-    static String[] kKey2 = null;
-    static String[] kTalk = null;
-    static String[] kSkip = null;
 
-    static String aGroupDot = null;       // 1000.고선 1001.그룹
-    static String aGroupWhoDot = null;    // 1000group1.who 1001group1.who2
-    static String[] aGroupSay = null;
-    static String[] aGroupSkip1 = null;
-    static String[] aGroupSkip2 = null;
-    static String[] aGroupSkip3 = null;
-    static String[] aGroupSkip4 = null;
-    static String[] aGroupWhoSaved = null;
-    static Integer[] aGroupWhoS;
-    static Integer[] aGroupWhoF;
+    static String[] aGroupSaid = null;
+    static int [][][] aAlertLineIdx;
+
+    static List<String> aGroups;    // {고선, 텔레, 힐}
+    static String[] aGSkip1, aGSkip2, aGSkip3, aGSkip4;
+    static String[][] aGroupWhos;     // [2] 이진홍, 김선수
+    static String[][][] aGroupWhoKey1, aGroupWhoKey2, aGroupWhoSkip;
 
     static String[] smsWhoIgnores = null;
     static String[] smsTextIgnores = null;
@@ -82,7 +75,7 @@ public class Vars {
     static AudioFocusRequest mFocusGain = null;
 
     /* module list */
-    static AlertIndex alertIndex = null;
+    static AlertWhoIndex alertWhoIndex = null;
 
     static long sharedStart, sharedFinish;
     static boolean isPhoneBusy = false;
@@ -111,7 +104,7 @@ public class Vars {
         downloadFolder = new File(Environment.getExternalStorageDirectory(), "download");
         tableFolder = new File(downloadFolder, "_ChatTalk");
 
-        alertIndex = new AlertIndex();
+        alertWhoIndex = new AlertWhoIndex();
         tableListFile = new TableListFile();
         new OptionTables().readAll();
 

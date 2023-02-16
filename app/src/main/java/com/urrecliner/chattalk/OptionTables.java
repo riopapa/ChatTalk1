@@ -6,7 +6,7 @@ import static com.urrecliner.chattalk.Vars.kGroupIgnores;
 import static com.urrecliner.chattalk.Vars.kkTxtIgnores;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.nineIgnores;
-import static com.urrecliner.chattalk.Vars.packageIgnoreStr;
+import static com.urrecliner.chattalk.Vars.packageIgnores;
 import static com.urrecliner.chattalk.Vars.pkgFullNames;
 import static com.urrecliner.chattalk.Vars.pkgNickNames;
 import static com.urrecliner.chattalk.Vars.pkgTypes;
@@ -60,6 +60,7 @@ class OptionTables {
         pkgFullNames = new ArrayList<>();
         pkgNickNames = new ArrayList<>();
         pkgTypes = new ArrayList<>();
+        packageIgnores = new ArrayList<>();
 
         for (String pLine:packages) {
             strings = pLine.split("\\^");
@@ -69,7 +70,7 @@ class OptionTables {
                 String fullName = strings[0].trim();
                 String nickName = strings[1].trim();
                 if (nickName.equals("@")) {
-                    sbIgnore.append(" ").append(nickName).append(fullName);
+                    packageIgnores.add(fullName);
                 } else {
                     String type = strings[2].trim();
                     pkgFullNames.add(fullName);
@@ -78,7 +79,6 @@ class OptionTables {
                 }
             }
         }
-        packageIgnoreStr = sbIgnore.toString();
     }
 
     void readReplacesFile() {

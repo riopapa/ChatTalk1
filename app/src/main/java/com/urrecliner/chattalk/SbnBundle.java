@@ -2,7 +2,7 @@ package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.SubFunc.msgAndroid;
 import static com.urrecliner.chattalk.SubFunc.utils;
-import static com.urrecliner.chattalk.Vars.packageIgnoreStr;
+import static com.urrecliner.chattalk.Vars.packageIgnores;
 import static com.urrecliner.chattalk.Vars.pkgFullNames;
 import static com.urrecliner.chattalk.Vars.pkgNickNames;
 import static com.urrecliner.chattalk.Vars.pkgTypes;
@@ -60,21 +60,21 @@ public class SbnBundle {
         if (sbnAppFullName.equals("com.kakao.talk")) {
             sbnPackageNick = "카톡";
             sbnPackageType = "kk";
+
         } else if (sbnAppFullName.equals("viva.republica.toss")) {
                 sbnPackageNick = "토스";
                 sbnPackageType = "toss";
+
         } else {
-            if (packageIgnoreStr.contains("@" + sbnAppFullName)) // @ means do not talk for this package
+            if (Collections.binarySearch(packageIgnores, sbnAppFullName) >= 0)
                 return true;
-            else {
-                int pDx = Collections.binarySearch(pkgFullNames, sbnAppFullName);
-                if (pDx >= 0) {
-                    sbnPackageNick = pkgNickNames.get(pDx);
-                    sbnPackageType = pkgTypes.get(pDx);
-                } else {
-                    sbnPackageNick = "None";
-                    sbnPackageType = "None";
-                }
+            int pDx = Collections.binarySearch(pkgFullNames, sbnAppFullName);
+            if (pDx >= 0) {
+                sbnPackageNick = pkgNickNames.get(pDx);
+                sbnPackageType = pkgTypes.get(pDx);
+            } else {
+                sbnPackageNick = "None";
+                sbnPackageType = "None";
             }
         }
 

@@ -2,10 +2,15 @@ package com.urrecliner.chattalk;
 
 import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 import static com.urrecliner.chattalk.SubFunc.utils;
-import static com.urrecliner.chattalk.Vars.alertIndex;
+import static com.urrecliner.chattalk.Vars.aAlertLineIdx;
+import static com.urrecliner.chattalk.Vars.aGroupSaid;
+import static com.urrecliner.chattalk.Vars.aGroupWhoKey1;
+import static com.urrecliner.chattalk.Vars.aGroupWhoKey2;
+import static com.urrecliner.chattalk.Vars.aGroupWhoSkip;
+import static com.urrecliner.chattalk.Vars.aGroups;
+import static com.urrecliner.chattalk.Vars.alertWhoIndex;
 import static com.urrecliner.chattalk.Vars.alertLines;
 import static com.urrecliner.chattalk.Vars.chatGroup;
-import static com.urrecliner.chattalk.Vars.aGroupDot;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.replGroup;
 import static com.urrecliner.chattalk.Vars.replGroupCnt;
@@ -42,6 +47,7 @@ public class SelectChats {
         StringBuilder headStr = new StringBuilder();
         String[] head = chatLines[0].replaceAll("[\uFEFC-\uFEFF]","").trim().split(" "); // 조선 nnn 카카오톡 대화
         chatGroup = head[0];
+        int gIdx = Collections.binarySearch(aGroups, chatGroup);
         getWhoList();
         headStr.append("그룹 : ").append(chatGroup).append(" ").append(groupInfo).append("\n");
         for (String w: whoKeys)
@@ -72,9 +78,10 @@ public class SelectChats {
         String prvTxt = "";
         SpannableString matchedSS = new SpannableString("\nMatched Lines ---\n\n");
         SpannableString selectedSS = new SpannableString("\nSelected Lines ---\n\n");
-        int groupPos = aGroupDot.indexOf(chatGroup+"!");
-        if (groupPos < 0)
+
+        if (gIdx < 0)
             return new SpannableString(headStr+"\nSelected Lines ---\n\n");
+
         for (String txt: msgLines) {
             if (txt.equals("") || txt.equals(prvTxt) || canIgnore(txt))
                 continue;
@@ -91,8 +98,21 @@ public class SelectChats {
             String body = utils.removeSpecialChars(tmp.substring(3+who.length()));
             if (body.length() < 18)      // 너무 짧으면 대상 아닐 것임
                 continue;
-            int aIdx = alertIndex.get(groupPos, chatGroup, who, txt);
-            if (aIdx > 0) { //  || inWhoList(txt)) {
+
+            boolean found = false;
+            int gwIdx = alertWhoIndex.get(gIdx, who, txt);
+            if (gwIdx >=0) {
+                for (int i = 0; i < aGroupWhoKey1[gIdx][gwIdx].length; i++) {
+                    if ((txt.contains(aGroupWhoKey1[gIdx][gwIdx][i])) &&
+                            (txt.contains(aGroupWhoKey2[gIdx][gwIdx][i])) &&
+                            (!txt.contains(aGroupWhoSkip[gIdx][gwIdx][i]))) {
+                        found = true;
+                        break;
+                    }
+                }
+            }
+
+            if (found) { //  || inWhoList(txt)) {
                 SpannableString ss = key2Matched(time, who, body);
                 if (ss.length() > 1) {
                     selectedSS = appendSS(selectedSS, key2Matched(time, who, body));

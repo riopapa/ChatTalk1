@@ -28,9 +28,12 @@ public class NotificationService extends Service {
     NotificationCompat.Builder mBuilder = null;
     NotificationManager mNotificationManager;
     private RemoteViews mRemoteViews;
-    private static final int ERASER = 1013;
-    private static final int STOP_SAY = 10011;
-    String who = null, msgText = null, time = null;
+    private static final int ERASER1 = 1013;
+    private static final int STOP_SAY1 = 10011;
+    private static final int ERASER2 = 1023;
+    private static final int STOP_SAY2 = 10021;
+    String who1 = "Chat", msgText1 = "", time1 = "00:99";
+    String who2 = "Talk", msgText2 = "", time2 = "00:99";
 
     @Override
     public void onCreate() {
@@ -58,27 +61,36 @@ public class NotificationService extends Service {
         }
         createNotification();
         switch (operation) {
-            case STOP_SAY:
+            case STOP_SAY1:
+            case STOP_SAY2:
                 sounds.stopTTS();
                 break;
 
             case SHOW_MESSAGE:
-                who = Objects.requireNonNull(intent.getStringExtra("who")).replace(" ", "\u00A0");
-                while (ByteLength.get(who) > 17)
-                    who = who.substring(0, who.length()-1);
-                msgText = Objects.requireNonNull(intent.getStringExtra("msg")).replace(" ", "\u00A0");
+                who2 = who1;
+                msgText2 = msgText1;
+                who1 = Objects.requireNonNull(intent.getStringExtra("who")).replace(" ", "\u00A0");
+                while (ByteLength.get(who1) > 17)
+                    who1 = who1.substring(0, who1.length()-1);
+                msgText1 = Objects.requireNonNull(intent.getStringExtra("msg")).replace(" ", "\u00A0");
+
                 break;
 
-            case ERASER:
-                msgText = null;
-                who = "Chat Talk..";
-
+            case ERASER1:
+                msgText1 = "";
+                who1 = "Chat Talk..";
+                break;
+            case ERASER2:
+                msgText2 = "";
+                who2 = "Chat Talk..";
                 break;
             default:
                 break;
         }
 
-        time = new SimpleDateFormat("HH:mm", Locale.KOREA).format(new Date());
+        time2 = time1;
+        time1 = new SimpleDateFormat("HH:mm", Locale.KOREA).format(new Date());
+
         updateRemoteViews();
         return START_STICKY;
     }
@@ -98,8 +110,8 @@ public class NotificationService extends Service {
 
         }
         if (null == mBuilder) {
-            who = "new One";
-            msgText = "";
+            who1 = "newly Loaded";
+            msgText1 = "";
             mBuilder = new NotificationCompat.Builder(this,"default")
                     .setSmallIcon(R.mipmap.chat_talk_mini)
                     .setContent(mRemoteViews)
@@ -114,24 +126,40 @@ public class NotificationService extends Service {
         mainIntent.putExtra("load","load");
         mRemoteViews.setOnClickPendingIntent(R.id.ll_customNotification, PendingIntent.getActivity(svcContext, 0, mainIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));
 
-        Intent eraseIntent = new Intent(this, NotificationService.class);
-        eraseIntent.putExtra("operation", ERASER);
-        PendingIntent erasePi = PendingIntent.getService(svcContext, 11, eraseIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
-        mBuilder.setContentIntent(erasePi);
-        mRemoteViews.setOnClickPendingIntent(R.id.erase, erasePi);
+        Intent erase1Intent = new Intent(this, NotificationService.class);
+        erase1Intent.putExtra("operation", ERASER1);
+        PendingIntent erase1Pi = PendingIntent.getService(svcContext, 11, erase1Intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(erase1Pi);
+        mRemoteViews.setOnClickPendingIntent(R.id.erase1, erase1Pi);
 
-        Intent stopSayIntent = new Intent(this, NotificationService.class);
-        stopSayIntent.putExtra("operation", STOP_SAY);
-        PendingIntent stopSayPi = PendingIntent.getService(svcContext, 22, stopSayIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
-        mBuilder.setContentIntent(stopSayPi);
-        mRemoteViews.setOnClickPendingIntent(R.id.stop_now, stopSayPi);
+        Intent erase2Intent = new Intent(this, NotificationService.class);
+        erase2Intent.putExtra("operation", ERASER2);
+        PendingIntent erase2Pi = PendingIntent.getService(svcContext, 12, erase2Intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(erase2Pi);
+        mRemoteViews.setOnClickPendingIntent(R.id.erase2, erase2Pi);
+
+        Intent stopSay1Intent = new Intent(this, NotificationService.class);
+        stopSay1Intent.putExtra("operation", STOP_SAY1);
+        PendingIntent stopSay1Pi = PendingIntent.getService(svcContext, 21, stopSay1Intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(stopSay1Pi);
+        mRemoteViews.setOnClickPendingIntent(R.id.stop_now1, stopSay1Pi);
+
+        Intent stopSay2Intent = new Intent(this, NotificationService.class);
+        stopSay2Intent.putExtra("operation", STOP_SAY2);
+        PendingIntent stopSay2Pi = PendingIntent.getService(svcContext, 22, stopSay2Intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(stopSay2Pi);
+        mRemoteViews.setOnClickPendingIntent(R.id.stop_now1, stopSay2Pi);
+
     }
 
     private void updateRemoteViews() {
 
-        mRemoteViews.setTextViewText(R.id.msg_time, time);
-        mRemoteViews.setTextViewText(R.id.msg_who, who);
-        mRemoteViews.setTextViewText(R.id.msg_text, msgText);
+        mRemoteViews.setTextViewText(R.id.msg_time1, time1);
+        mRemoteViews.setTextViewText(R.id.msg_who1, who1);
+        mRemoteViews.setTextViewText(R.id.msg_text1, msgText1);
+        mRemoteViews.setTextViewText(R.id.msg_time2, time2);
+        mRemoteViews.setTextViewText(R.id.msg_who2, who2);
+        mRemoteViews.setTextViewText(R.id.msg_text2, msgText2);
         mNotificationManager.notify(100,mBuilder.build());
     }
 }

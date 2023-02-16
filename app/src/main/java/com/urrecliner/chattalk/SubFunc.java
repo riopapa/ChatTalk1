@@ -21,6 +21,5 @@ public class SubFunc {
         utils.setTimeBoundary();
         sbnBundle = new SbnBundle();
         Upload2Google.initSheetQue();
-
     }
 }

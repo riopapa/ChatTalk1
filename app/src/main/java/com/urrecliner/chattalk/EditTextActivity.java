@@ -1,6 +1,6 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.Vars.aGroupDot;
+import static com.urrecliner.chattalk.Vars.aGroups;
 import static com.urrecliner.chattalk.Vars.nowFileName;
 import static com.urrecliner.chattalk.Vars.tableFolder;
 import static com.urrecliner.chattalk.Vars.tableListFile;
@@ -26,6 +26,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 public class EditTextActivity extends AppCompatActivity {
@@ -95,7 +96,8 @@ public class EditTextActivity extends AppCompatActivity {
             String [] oneL = textLine.split("\\^");
             if (!oneL[0].equals(svGroup)) {
                 svGroup = oneL[0];
-                String del = (aGroupDot.indexOf(svGroup+"!") > 0) ? "":" // 없는 그룹 //";
+                int gIdx = Collections.binarySearch(aGroups, svGroup);
+                String del = (gIdx >= 0) ? "":" // 없는 그룹 //";
                 sb.append(dummyHead).append(svGroup).append(del).append(" ] -\n\n");    // dummy some chars between groups
             }
             sb.append(textLine).append("\n").append("\n");
