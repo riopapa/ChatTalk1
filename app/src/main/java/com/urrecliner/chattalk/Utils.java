@@ -74,7 +74,6 @@ class Utils {
 
     void showToast(String text) {    // 0: short 1:long
         Toast toast = Toast.makeText(mContext,"\n"+text+"\n", Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL,0,300);
         toast.show();
     }
 

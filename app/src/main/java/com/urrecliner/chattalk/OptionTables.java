@@ -2,7 +2,7 @@ package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.SubFunc.sounds;
 import static com.urrecliner.chattalk.SubFunc.utils;
-import static com.urrecliner.chattalk.Vars.kGroupIgnores;
+import static com.urrecliner.chattalk.Vars.kGroupWhoIgnores;
 import static com.urrecliner.chattalk.Vars.kkTxtIgnores;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.nineIgnores;
@@ -28,6 +28,7 @@ class OptionTables {
 
     void readAll() {
 
+        kGroupWhoIgnores = tableListFile.read("kGroupWhoIgnores");
         kkTxtIgnores = tableListFile.read("kkTxtIgnores");
         smsWhoIgnores =  tableListFile.read("smsWhoIgnores");
         smsTextIgnores =  tableListFile.read("smsTextIgnores");
@@ -41,10 +42,10 @@ class OptionTables {
         }
         readReplacesFile();
         readPackageTable();
-        String[] groupIgs =  tableListFile.read("kGroupIgnores");
-        StringBuilder sb = new StringBuilder();
-        for (String groupIg : groupIgs) sb.append("!").append(groupIg).append("!");
-        kGroupIgnores = sb.toString();
+//        String[] groupIgs =  tableListFile.read("kGroupIgnores");
+//        StringBuilder sb = new StringBuilder();
+//        for (String groupIg : groupIgs) sb.append("!").append(groupIg).append("!");
+//        kGroupWhoIgnores = sb.toString();
     }
 
     private void readPackageTable() {

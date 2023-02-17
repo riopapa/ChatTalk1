@@ -36,7 +36,7 @@ public class Vars {
 
     static TableListFile tableListFile = null;
 
-    static String kGroupIgnores = null;
+    static String[] kGroupWhoIgnores = null;
     static String[] kkTxtIgnores = null;
 
     static String[] aGroupSaid = null;

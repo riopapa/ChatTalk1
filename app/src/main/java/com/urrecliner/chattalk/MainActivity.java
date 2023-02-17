@@ -74,6 +74,13 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), " permission OK", Toast.LENGTH_LONG).show();
             //permissions are granted - do your stuff here :)
         }
+
+        if (!NotificationManagerCompat.getEnabledListenerPackages(this).contains(getPackageName())) {        //ask for permission
+            Log.w("Permission","required "+getPackageName());
+            Intent intent = new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
+            startActivity(intent);
+        }
+
         mContext = this;
         mActivity = this;
 

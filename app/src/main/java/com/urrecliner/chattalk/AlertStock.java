@@ -20,7 +20,7 @@ public class AlertStock {
         who = al.who;
         sTalk = al.talk;
         sayMore = al.more;
-
+        utils.logW("alertStock "+aIdx,al.group+" "+al.who+" "+key12);
         Thread thisThread = new Thread(() -> {
             String head = " [" + group + "." + who + "] ";
             FileIO.uploadStock(group, who, "", sTalk, sText, key12);

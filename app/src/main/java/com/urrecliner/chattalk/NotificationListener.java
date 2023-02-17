@@ -1,6 +1,6 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.Vars.kGroupIgnores;
+import static com.urrecliner.chattalk.Vars.kGroupWhoIgnores;
 import static com.urrecliner.chattalk.Vars.kkTxtIgnores;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.sbnAppFullName;
@@ -18,7 +18,6 @@ import android.service.notification.StatusBarNotification;
 import android.util.Log;
 
 import com.urrecliner.chattalk.Sub.IgnoreText;
-import com.urrecliner.chattalk.Sub.IsWhoText;
 import com.urrecliner.chattalk.Sub.MapWhoText;
 import com.urrecliner.chattalk.Sub.WhoText;
 
@@ -79,15 +78,15 @@ public class NotificationListener extends NotificationListenerService {
 
             case KATALK:
 
-                if (kGroupIgnores.contains("!"+ sbnGroup +"!") ||
-                    kGroupIgnores.contains("!"+ sbnWho +"!") ||
-                        IgnoreText.contains(sbnText, kkTxtIgnores))
+                if ((!sbnGroup.equals("") && IgnoreText.contains(sbnWho, kGroupWhoIgnores)) ||
+                    (!sbnWho.equals("") && IgnoreText.contains(sbnWho, kGroupWhoIgnores)) ||
+                    IgnoreText.contains(sbnText, kkTxtIgnores))
                     return;
                 if (sbnGroup.equals("")) {
+                    sbnText = subFunc.utils.strReplace(sbnWho, subFunc.utils.text2OneLine(sbnText));
                     if (MapWhoText.repeated(kkWhoTexts, sbnWho, sbnText) )
                         return;
                     String head = "{카톡!"+ sbnWho + "} ";
-                    sbnText = subFunc.utils.strReplace(sbnWho, subFunc.utils.text2OneLine(sbnText));
                     NotificationBar.update("카톡!"+sbnWho, sbnText);
                     subFunc.logQueUpdate.add( head, sbnText);
                     subFunc.sounds.speakAfterBeep(" 카톡왔음 " + sbnWho + " 님이 " + subFunc.utils.replaceKKHH(subFunc.utils.makeEtc(sbnText, 150)));

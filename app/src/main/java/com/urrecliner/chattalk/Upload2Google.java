@@ -2,6 +2,7 @@ package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.SubFunc.logQueUpdate;
 import static com.urrecliner.chattalk.SubFunc.sounds;
+import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.mContext;
 
 import android.os.AsyncTask;
@@ -41,20 +42,11 @@ public class Upload2Google {
 //        new asyncUpload().execute();
     }
 
-    static class asyncUpload extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... inputParams) {
-            uploadStock();
-            return null;
-        }
-    }
-
     static int getQueSize() {
         return sheetQues.size();
     }
     static void uploadStock() {
-        if (sheetQues == null || sheetQues.size() == 0 || nowUploading ) //  || WifiMonitor.wifiName.equals(none))
+        if (sheetQues.size() == 0 || nowUploading ) //  || WifiMonitor.wifiName.equals(none))
             return;
         nowUploading = true;
         SheetQue que = sheetQues.get(0);
@@ -71,6 +63,7 @@ public class Upload2Google {
                 error -> {
                     nowUploading = false;
                     String s = group+", "+who+", "+timeStamp+", "+percent+", "+statement;
+                    utils.logW("uploadStock()", s+"\n Error "+s);
                     sounds.speakAfterBeep("Google Upload Error "+ s);
                     sounds.beepOnce(Vars.soundType.ERR.ordinal());
                 }

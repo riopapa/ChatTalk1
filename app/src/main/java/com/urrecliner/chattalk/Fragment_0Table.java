@@ -55,7 +55,7 @@ public class Fragment_0Table extends Fragment {
         rootView.findViewById(R.id.sms_text_ignores).setOnClickListener(this::edit_table);
         rootView.findViewById(R.id.package_names).setOnClickListener(this::edit_table);
 
-        rootView.findViewById(R.id.k_group_ignores).setOnClickListener(this::edit_table);
+        rootView.findViewById(R.id.k_group_who_ignores).setOnClickListener(this::edit_table);
         rootView.findViewById(R.id.k_text_ignores).setOnClickListener(this::edit_table);
         rootView.findViewById(R.id.string_replace).setOnClickListener(this::edit_table);
     }

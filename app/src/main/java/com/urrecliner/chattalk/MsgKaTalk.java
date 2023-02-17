@@ -1,5 +1,6 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.NotificationListener.subFunc;
 import static com.urrecliner.chattalk.SubFunc.logQueUpdate;
 import static com.urrecliner.chattalk.SubFunc.sounds;
 import static com.urrecliner.chattalk.SubFunc.utils;
@@ -28,6 +29,10 @@ class MsgKaTalk {
             if (aGroupSaid[gIdx].equals(iText))
                 return;
             aGroupSaid[gIdx] = iText;
+            if (iWho.equals("바른 급등주(무료방)")) {
+                utils.logW("텔레", "제대로 " +iWho + " / " + iText);
+            }
+
 //            long nowTime = System.currentTimeMillis();
 //            if (nowTime < sharedStart || nowTime > sharedFinish)
 //                return;
@@ -38,8 +43,13 @@ class MsgKaTalk {
             for (int i = 0; i < aGroupWhoKey1[gIdx][gwIdx].length; i++) {
                 if ((iText.contains(aGroupWhoKey1[gIdx][gwIdx][i])) &&
                     (iText.contains(aGroupWhoKey2[gIdx][gwIdx][i])) &&
-                    (!iText.contains(aGroupWhoSkip[gIdx][gwIdx][i])))
+                    (!iText.contains(aGroupWhoSkip[gIdx][gwIdx][i]))) {
+                    utils.logW("matched "+i, iGroup+" "+iWho+" idx="+gIdx+", gwIdx="+gwIdx+" i="+i+
+                            " key1="+aGroupWhoKey1[gIdx][gwIdx][i]+
+                            " key2="+aGroupWhoKey2[gIdx][gwIdx][i]+
+                            " lineIdx="+aAlertLineIdx[gIdx][gwIdx][i]);
                     new AlertStock().show(utils.strReplace(iGroup, utils.removeSpecialChars(iText)), aAlertLineIdx[gIdx][gwIdx][i]);
+                }
             }
 
         } else {    // normal group
