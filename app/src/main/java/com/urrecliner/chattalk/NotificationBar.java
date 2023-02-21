@@ -5,7 +5,12 @@ import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
 
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.urrecliner.chattalk.Sub.IsScreen;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,7 +38,7 @@ public class NotificationBar {
             timer = null;
         }
         savedMessage = new SimpleDateFormat("HH:mm\u00A0", Locale.KOREA).format(new Date());
-        savedMessage += msg.substring(0, msg.length()/2);
+        savedMessage += msg.substring(0, msg.length()*2/3);
         count = 0;
         if (mActivity != null) {
             Intent updateIntent = new Intent(mContext, NotificationService.class);
@@ -44,6 +49,14 @@ public class NotificationBar {
                 mActivity.startService(updateIntent);
             } catch (Exception e) {
                 Log.e("NotificationBar","updateIntent Error \n"+e);
+            }
+            if (IsScreen.On(mContext)) {
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(mContext, who + " > " + msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         }
         lastTime = System.currentTimeMillis();

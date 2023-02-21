@@ -126,6 +126,7 @@ class AlertTable {
         }
 
         gIdx = 0;
+        int svIdx = 2;
         List<String> key1 = new ArrayList<>();
         List<String> key2 = new ArrayList<>();
         List<String> skip = new ArrayList<>();
@@ -138,7 +139,8 @@ class AlertTable {
                     aGroupWhoSkip[gIdx][gwIdx] = skip.toArray(new String[key1.size()]);
                     aAlertLineIdx[gIdx][gwIdx] = new int [key1.size()];
                     for (int j = 0; j < key1.size(); j++)
-                        aAlertLineIdx[gIdx][gwIdx][j] = i-1;
+                        aAlertLineIdx[gIdx][gwIdx][j] = svIdx+j;
+                    svIdx = i;
                     gIdx++;
                 }
                 key1 = new ArrayList<>();
@@ -153,9 +155,10 @@ class AlertTable {
                         aGroupWhoSkip[gIdx][gwIdx] = skip.toArray(new String[key1.size()]);
                         aAlertLineIdx[gIdx][gwIdx] = new int [key1.size()];
                         for (int j = 0; j < key1.size(); j++)
-                            aAlertLineIdx[gIdx][gwIdx][j] = i-1;
+                            aAlertLineIdx[gIdx][gwIdx][j] = svIdx+j;
                         gwIdx++;
                     }
+                    svIdx = i;
                     svWho = al.who;
                     key1 = new ArrayList<>();
                     key2 = new ArrayList<>();
@@ -166,7 +169,6 @@ class AlertTable {
                 skip.add(al.skip.equals("") ? none : al.skip);
             }
         }
-
     }
 
     static void sort() {

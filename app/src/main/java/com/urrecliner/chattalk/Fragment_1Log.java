@@ -4,6 +4,7 @@ import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.aBar;
 import static com.urrecliner.chattalk.Vars.logQue;
 import static com.urrecliner.chattalk.Vars.logSave;
+import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.sharedEditor;
 import static com.urrecliner.chattalk.Vars.topTabs;
@@ -246,9 +247,12 @@ public class Fragment_1Log extends Fragment {
             etTable.setText(logQue2Spannable());
             if (prevStart >= logQue.length())
                 prevStart = logQue.length();
-            etTable.setSelection(prevStart-1);
-            scrollView1.smoothScrollBy(0, (prevStart-posFinish)*4);
-
+            if (prevStart < 6)
+                prevStart = 6;
+            Editable etText = etTable.getText();
+            Selection.setSelection(etText, prevStart-5, prevStart-1);
+            etTable.requestFocus();
+            scrollView1.scrollBy(0, -280);
         } else if (item.getItemId() == R.id.delete_1line_logque) {
             String logNow = etTable.getText().toString().trim() + "\n";
             int posCurr = etTable.getSelectionStart();
@@ -264,7 +268,7 @@ public class Fragment_1Log extends Fragment {
             sharedEditor.apply();
             etTable.setText(logQue2Spannable());
             etTable.setSelection(posStart);
-            scrollView1.smoothScrollBy(0, (posFinish-posStart));
+            scrollView1.smoothScrollBy(0, -(posFinish-posStart));
         }
         return super.onOptionsItemSelected(item);
     }

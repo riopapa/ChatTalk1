@@ -1,6 +1,6 @@
 package com.urrecliner.chattalk.Sub;
 
-public class IgnoreText {
+public class IgnoreThis {
 
     public static boolean contains(String text, String[] lists) {
         if (text != null && lists != null) {

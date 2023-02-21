@@ -98,8 +98,6 @@ public class Vars {
         sharedEditor = sharePref.edit();
         if (mActivity != null)
             mLayoutView = mActivity.findViewById(R.id.main_layout);
-        sharedStart = sharePref.getLong("start",0);
-        sharedFinish = sharePref.getLong("finish",0);
         packageDirectory = new File(Environment.getExternalStorageDirectory(), "_ChatTalkLog");
         downloadFolder = new File(Environment.getExternalStorageDirectory(), "download");
         tableFolder = new File(downloadFolder, "_ChatTalk");

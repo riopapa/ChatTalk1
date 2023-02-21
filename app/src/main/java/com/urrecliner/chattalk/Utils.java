@@ -10,13 +10,9 @@ import static com.urrecliner.chattalk.Vars.replGroup;
 import static com.urrecliner.chattalk.Vars.replGroupCnt;
 import static com.urrecliner.chattalk.Vars.replLong;
 import static com.urrecliner.chattalk.Vars.replShort;
-import static com.urrecliner.chattalk.Vars.sharePref;
-import static com.urrecliner.chattalk.Vars.sharedFinish;
-import static com.urrecliner.chattalk.Vars.sharedStart;
 import static com.urrecliner.chattalk.Vars.toDay;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.util.Log;
 import android.view.Gravity;
@@ -30,9 +26,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.io.File;
 import java.io.IOException;
 import java.text.Collator;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 class Utils {
@@ -102,31 +96,6 @@ class Utils {
         snackbar.show();
     }
 
-    void setTimeBoundary() {
-        final SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA);
-        if (toDay.equals("ToDay"))
-            logQueUpdate.readyTodayFolderIfNewDay();
-        Date currentDay = dateTimeFormat.parse(toDay+" 08:40", new ParsePosition(0));
-        sharedStart = currentDay.getTime();
-        currentDay = dateTimeFormat.parse(toDay+" 18:30", new ParsePosition(0));
-        sharedFinish = currentDay.getTime();
-        SharedPreferences.Editor editor = sharePref.edit();
-        editor.putLong("start", sharedStart);
-        editor.putLong("finish",sharedFinish);
-        editor.apply();
-    }
-
-    static void reStartApp() {
-        // restart this application
-        Log.e("reStartApp", "app restart");
-
-        PackageManager pm = mContext.getPackageManager();
-        Intent mStartActivity = pm.getLaunchIntentForPackage(mContext.getPackageName());
-        mStartActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        mContext.getApplicationContext().startActivity(mStartActivity);
-        System.exit(0);
-    }
-
     /* delete old packageDirectory / files if storage is less than x days */
     void deleteOldFiles() {
         final SimpleDateFormat dateFormat = new SimpleDateFormat("yy-MM-dd", Locale.KOREA);
@@ -176,11 +145,9 @@ class Utils {
     }
 
     String makeEtc (String s, int len) {
-        if (s.length() < len)
-            return s;
-        else
-            return s.substring(0, len) + " ˚ 등등";
+        return (s.length() < len)? s : s.substring(0, len) + " ˚ 등등";
     }
+
     String replaceKKHH(String text) {
         return text.replace("ㅇㅋ", " 오케이 ")
                 .replace("ㅋ", " 크 ")

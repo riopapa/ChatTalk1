@@ -205,8 +205,7 @@ public class SelectChats {
     }
 
     SpannableString appendSS(SpannableString s1, SpannableString s2) {
-        CharSequence as = TextUtils.concat(s1, s2);
-        return new SpannableString(as);
+        return new SpannableString(TextUtils.concat(s1, s2));
     }
 
     void getWhoList() {

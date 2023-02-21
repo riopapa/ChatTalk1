@@ -67,13 +67,13 @@ public class LogQueUpdate {
         if (toDay.equals(nowDay))
             return;
         toDay = nowDay;
-        utils.setTimeBoundary();
+//        utils.setTimeBoundary();
         todayFolder = new File(packageDirectory, toDay);
         if (!todayFolder.exists()) {
             if (todayFolder.mkdirs()) {
                 String logQueFile = "logQue " + toDay;
                 FileIO.writeTextFile(todayFolder, logQueFile, logQue);
-                logQue += "\n\n /** " + toDay + new SimpleDateFormat(" (EEE) HH:mm ", Locale.KOREA).format(new Date()) + " NEW DAY " + " **/\nNew Day" + "\n\n";
+                logQue += "\n /** " + toDay + new SimpleDateFormat(" (EEE) HH:mm ", Locale.KOREA).format(new Date()) + " NEW DAY " + " **/\nNew Day" + "\n";
                 utils.deleteOldFiles();
             }
         }

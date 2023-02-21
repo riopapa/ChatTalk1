@@ -18,7 +18,7 @@ import android.app.Notification;
 import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
 
-import com.urrecliner.chattalk.Sub.IgnoreText;
+import com.urrecliner.chattalk.Sub.IgnoreThis;
 
 import java.util.Collections;
 
@@ -49,8 +49,8 @@ public class SbnBundle {
             return true;
         }
         if (sbnAppFullName.equals("android")) {
-            if (sbnText.length() > 10 && !IgnoreText.contains(sbnText, systemIgnores)
-                    && !IgnoreText.contains(sbnWho, systemIgnores)) {
+            if (sbnText.length() > 10 && !IgnoreThis.contains(sbnText, systemIgnores)
+                    && !IgnoreThis.contains(sbnWho, systemIgnores)) {
                 sbnText = utils.text2OneLine(sbnText);
                 msgAndroid.say(sbnAppFullName, sbnWho, sbnText);
             }

@@ -11,9 +11,8 @@ import static com.urrecliner.chattalk.Vars.aGroupWhoKey2;
 import static com.urrecliner.chattalk.Vars.aGroupWhoSkip;
 import static com.urrecliner.chattalk.Vars.aGroups;
 import static com.urrecliner.chattalk.Vars.alertWhoIndex;
+import static com.urrecliner.chattalk.Vars.alertsAdapter;
 import static com.urrecliner.chattalk.Vars.nineIgnores;
-import static com.urrecliner.chattalk.Vars.sharedFinish;
-import static com.urrecliner.chattalk.Vars.sharedStart;
 
 import com.urrecliner.chattalk.Sub.IsWhoNine;
 
@@ -29,13 +28,7 @@ class MsgKaTalk {
             if (aGroupSaid[gIdx].equals(iText))
                 return;
             aGroupSaid[gIdx] = iText;
-            if (iWho.equals("바른 급등주(무료방)")) {
-                utils.logW("텔레", "제대로 " +iWho + " / " + iText);
-            }
 
-//            long nowTime = System.currentTimeMillis();
-//            if (nowTime < sharedStart || nowTime > sharedFinish)
-//                return;
             int gwIdx = alertWhoIndex.get(gIdx, iWho, iText);
             if (gwIdx == -1)
                 return;
@@ -44,11 +37,13 @@ class MsgKaTalk {
                 if ((iText.contains(aGroupWhoKey1[gIdx][gwIdx][i])) &&
                     (iText.contains(aGroupWhoKey2[gIdx][gwIdx][i])) &&
                     (!iText.contains(aGroupWhoSkip[gIdx][gwIdx][i]))) {
-                    utils.logW("matched "+i, iGroup+" "+iWho+" idx="+gIdx+", gwIdx="+gwIdx+" i="+i+
-                            " key1="+aGroupWhoKey1[gIdx][gwIdx][i]+
-                            " key2="+aGroupWhoKey2[gIdx][gwIdx][i]+
-                            " lineIdx="+aAlertLineIdx[gIdx][gwIdx][i]);
-                    new AlertStock().show(utils.strReplace(iGroup, utils.removeSpecialChars(iText)), aAlertLineIdx[gIdx][gwIdx][i]);
+//                    utils.logW("matched "+i, iGroup+" "+iWho+" idx="+gIdx+", gwIdx="+gwIdx+" i="+i+
+//                            " key1="+aGroupWhoKey1[gIdx][gwIdx][i]+
+//                            " key2="+aGroupWhoKey2[gIdx][gwIdx][i]+
+//                            " lineIdx="+aAlertLineIdx[gIdx][gwIdx][i]);
+                    subFunc.alertStock.show(utils.strReplace(iGroup, utils.removeSpecialChars(iText)), aAlertLineIdx[gIdx][gwIdx][i]);
+                    alertsAdapter.notifyItemChanged(aAlertLineIdx[gIdx][gwIdx][i]);
+                    return;
                 }
             }
 

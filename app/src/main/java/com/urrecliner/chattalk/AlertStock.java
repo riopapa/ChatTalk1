@@ -4,14 +4,15 @@ import static com.urrecliner.chattalk.SubFunc.logQueUpdate;
 import static com.urrecliner.chattalk.SubFunc.sounds;
 import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.alertLines;
+import static com.urrecliner.chattalk.Vars.alertsAdapter;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
 
 public class AlertStock {
-    String key12, sTalk, sayMore, group, who;
 
     void show(String sText, int aIdx) {
 
+        String key12, sTalk, sayMore, group, who;
         AlertLine al = alertLines.get(aIdx);
         al.matched++;
         alertLines.set(aIdx, al);
@@ -20,7 +21,6 @@ public class AlertStock {
         who = al.who;
         sTalk = al.talk;
         sayMore = al.more;
-        utils.logW("alertStock "+aIdx,al.group+" "+al.who+" "+key12);
         Thread thisThread = new Thread(() -> {
             String head = " [" + group + "." + who + "] ";
             FileIO.uploadStock(group, who, "", sTalk, sText, key12);
