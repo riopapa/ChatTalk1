@@ -41,7 +41,7 @@ class MsgKaTalk {
 //                            " key1="+aGroupWhoKey1[gIdx][gwIdx][i]+
 //                            " key2="+aGroupWhoKey2[gIdx][gwIdx][i]+
 //                            " lineIdx="+aAlertLineIdx[gIdx][gwIdx][i]);
-                    subFunc.alertStock.show(utils.strReplace(iGroup, utils.removeSpecialChars(iText)), aAlertLineIdx[gIdx][gwIdx][i]);
+                    subFunc.alertStock.show(iGroup, iText, aAlertLineIdx[gIdx][gwIdx][i]);
                     alertsAdapter.notifyItemChanged(aAlertLineIdx[gIdx][gwIdx][i]);
                     return;
                 }

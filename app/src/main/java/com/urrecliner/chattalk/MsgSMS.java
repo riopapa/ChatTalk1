@@ -10,6 +10,10 @@ import static com.urrecliner.chattalk.Vars.nineIgnores;
 
 import com.urrecliner.chattalk.Sub.IsWhoNine;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 class MsgSMS {
 
     final static String trade = "체결";
@@ -62,7 +66,8 @@ class MsgSMS {
                             stockName + " " + amount + " " + uPrice + " 에 팔렸음 ");
                     NotificationBar.update(trade +":"+buySell, sayMsg);
                     logQueUpdate.add("sms>"+nhStock, sayMsg);
-                    FileIO.uploadStock(sGroup, mWho, stockName, buySell, mText, amount);
+                    String timeStamp = new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date());
+                    FileIO.uploadStock(sGroup, mWho, stockName, buySell, mText, amount, timeStamp);
                     sounds.speakAfterBeep(sayMsg.replaceAll("[0-9]",""));
                 }
             } catch (Exception e) {

@@ -1,12 +1,7 @@
 package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.SubFunc.utils;
-import static com.urrecliner.chattalk.Vars.aAlertLineIdx;
 import static com.urrecliner.chattalk.Vars.aBar;
-import static com.urrecliner.chattalk.Vars.aGroupWhoKey1;
-import static com.urrecliner.chattalk.Vars.aGroupWhoKey2;
-import static com.urrecliner.chattalk.Vars.aGroupWhos;
-import static com.urrecliner.chattalk.Vars.aGroups;
 import static com.urrecliner.chattalk.Vars.alertLines;
 import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
@@ -36,7 +31,6 @@ import com.google.android.material.tabs.TabLayout;
 import com.urrecliner.chattalk.Sub.AlertLine;
 import com.urrecliner.chattalk.Sub.Permission;
 
-import java.util.List;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -138,13 +132,13 @@ public class MainActivity extends AppCompatActivity {
                         " key1=" + al.key1 + " key2=" + al.key2 + " match=" + al.matched);
             }
 
-            for (int gI = 0; gI < aGroups.size(); gI++) {
-                for (int gW = 0; gW < aGroupWhos[gI].length; gW++) {
-                    Log.w("a", gI + " group= " + aGroups.get(gI)+" who ="+aGroupWhos[gI][gW]+" keylen="+ aGroupWhoKey1[gI][gW].length);
-                    for (int k = 0; k < aGroupWhoKey1[gI][gW].length; k++)
-                        Log.w("a", " key1="+aGroupWhoKey1[gI][gW][k]+ " key2="+aGroupWhoKey2[gI][gW][k] +" pos="+aAlertLineIdx[gI][gW][k]);
-                }
-            }
+//            for (int gI = 0; gI < aGroups.size(); gI++) {
+//                for (int gW = 0; gW < aGroupWhos[gI].length; gW++) {
+//                    Log.w("a", gI + " group= " + aGroups.get(gI)+" who ="+aGroupWhos[gI][gW]+" keylen="+ aGroupWhoKey1[gI][gW].length);
+//                    for (int k = 0; k < aGroupWhoKey1[gI][gW].length; k++)
+//                        Log.w("a", " key1="+aGroupWhoKey1[gI][gW][k]+ " key2="+aGroupWhoKey2[gI][gW][k] +" pos="+aAlertLineIdx[gI][gW][k]);
+//                }
+//            }
             utils.showSnackBar("All Table","Reloaded");
         }
         return false;

@@ -40,7 +40,6 @@ public class Fragment_4Chat extends Fragment {
     int chatPos = -1;
     EditText etChat;
     ImageView ivNext;
-    static View uploadIconView = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -79,7 +78,7 @@ public class Fragment_4Chat extends Fragment {
         }
         nowChatFile = nowChatFiles[0];
         if (nowChatFile.getName().startsWith("Kakao"))
-            selChat = new SelectChats().generate(nowChatFile);
+            selChat = new SelectChats().generate(nowChatFile, false);
         else {
             utils.showSnackBar("Chat File", "not start with Kakao");
             getChatFolders();
@@ -195,13 +194,15 @@ public class Fragment_4Chat extends Fragment {
         } else if (item.getItemId() == R.id.action_right && chatIdx < chatFolders.length-1) {
             chatIdx++;
             showChats();
+        } else if (item.getItemId() == R.id.action_upload) {
+            selChat = new SelectChats().generate(nowChatFile, true);
         } else if (item.getItemId() == R.id.action_delete) {
             nowChatFile.delete();
             String name = nowChatFile.getName();
             String fullName = nowChatFile.toString().replace("/"+name, "");
             //noinspection ResultOfMethodCallIgnored
             new File (fullName).delete();
-            utils.showSnackBar(chatGroup, fullName+" deleted");
+            utils.showSnackBar(chatGroup, chatGroup+ " deleted");
             getChatFolders();
             chatIdx--;
             if (chatIdx < 0)

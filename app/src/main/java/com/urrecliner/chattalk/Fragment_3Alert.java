@@ -41,7 +41,8 @@ public class Fragment_3Alert extends Fragment {
         super.onResume();
         topTabs.getTabAt(3).select();
         recyclerView = rootView.findViewById(R.id.recycle_alerts);
-        alertsAdapter = new AlertsAdapter();
+        if (alertsAdapter == null)
+            alertsAdapter = new AlertsAdapter();
         recyclerView.setAdapter(alertsAdapter);
     }
 

@@ -25,9 +25,9 @@ import java.util.Locale;
 public class EditOneAlertActivity extends AppCompatActivity {
 
     AlertLine al;
-    EditText eGroup, eWho, eKey1, eKey2, eTalk, eMatched, eSkip, eMemo;
-    TextView tGroup, tWho, tKey1, tKey2, tTalk, tMatched, tSkip, tMemo;
-    String mGroup, mWho, mPercent, mMemo;
+    EditText eGroup, eWho, eKey1, eKey2, eTalk, eMatched, eSkip, eMemo, ePrev, eNext;
+    TextView tGroup, tWho, tKey1, tKey2, tTalk, tMatched, tSkip, tMemo, tPrev, tNext;
+    String mGroup, mWho, mPercent, mMemo, mPrev, mNext;
     View deleteMenu;
     boolean newGroup = false;
 
@@ -46,21 +46,25 @@ public class EditOneAlertActivity extends AppCompatActivity {
         eMatched = findViewById(R.id.e_matched);  eMatched.setText(""+al.matched);
         eSkip = findViewById(R.id.e_skip); eSkip.setText(al.skip);
         eMemo = findViewById(R.id.e_memo); eMemo.setText(al.memo.replace("~","\n"));
+        ePrev = findViewById(R.id.e_prev); ePrev.setText(al.prev);
+        eNext = findViewById(R.id.e_next); eNext.setText(al.next);
         tGroup = findViewById(R.id.t_group); tWho = findViewById(R.id.t_who);
         tKey1 = findViewById(R.id.t_key1); tKey2 = findViewById(R.id.t_key2);
         tTalk = findViewById(R.id.t_talk); tMatched = findViewById(R.id.t_matched);
-        tSkip = findViewById(R.id.t_skip);
-        tMemo = findViewById(R.id.t_memo);
+        tSkip = findViewById(R.id.t_skip); tMemo = findViewById(R.id.t_memo);
+        tPrev = findViewById(R.id.t_prev); tNext = findViewById(R.id.t_next);
         if (al.matched == -1) { // group line
             tGroup.setText("Group Name"); tWho.setText("Group Info");
             tKey1.setText("Skip 1"); tKey2.setText("Skip 2");
             tTalk.setText("Skip 3"); tMatched.setText("Matched");
             tSkip.setText("Skip 4"); tMemo.setText("Say More");
+            tPrev.setText("Prev"); tNext.setText("Next");
         } else {
             tGroup.setText("Group Name"); tWho.setText("Who");
             tKey1.setText("Key 1"); tKey2.setText("Key 2");
             tTalk.setText("Talk"); tMatched.setText("Matched");
             tSkip.setText("Skip"); tMemo.setText("Memo ~");
+            tPrev.setText("Prev"); tNext.setText("Next");
         }
     }
 
@@ -87,6 +91,7 @@ public class EditOneAlertActivity extends AppCompatActivity {
     private void deleteAlert() {
         if (alertLines.get(linePos).matched == -1) {    // group delete
             makeGroupMemo();
+            mWho += "\n 삭제됨 : " + new SimpleDateFormat(".MM/dd HH:mm", Locale.KOREA).format(new Date());
             mPercent += "\n 그룹 삭제 " + new SimpleDateFormat(".MM/dd HH:mm", Locale.KOREA).format(new Date());
             int alertSize = alertLines.size();
             for (int i = 0; i < alertSize;) {
@@ -120,11 +125,12 @@ public class EditOneAlertActivity extends AppCompatActivity {
             al = new AlertLine(eGroup.getText().toString(), eWho.getText().toString(),
                     eKey1.getText().toString(), eKey2.getText().toString(),
                     eTalk.getText().toString(), matchInt,
-                    eSkip.getText().toString(), memo, more);
+                    eSkip.getText().toString(), memo, more,
+                    ePrev.getText().toString(), eNext.getText().toString());
             alertLines.set(linePos, al);
             if (al.matched == -1 && newGroup) { // add new group dummy line
                 al = new AlertLine(eGroup.getText().toString(), "누군가",
-                        "종목명", "매수가", "", 123, "","", "");
+                        "종목명", "매수가", "", 123, "","", "", "","");
                 alertLines.add(al);
                 alertsAdapter.notifyItemInserted(linePos);
                 newGroup = false;
@@ -166,7 +172,9 @@ public class EditOneAlertActivity extends AppCompatActivity {
                         .append(al.matched).append(" ")
                         .append((al.talk.length()>1)? ", talk( "+al.talk+" ) ":" ")
                         .append((al.skip.length()>1)? ", skip( "+al.skip+" ) ":" ")
-                        .append((al.memo.length()>1)? ", "+al.memo:"");
+                        .append((al.memo.length()>1)? ", "+al.memo:"")
+                        .append(" <").append(al.prev).append("x").append(al.next)
+                        .append(" >");
                 }
             }
         }

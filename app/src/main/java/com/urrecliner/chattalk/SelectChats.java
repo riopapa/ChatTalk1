@@ -26,8 +26,11 @@ import android.text.style.UnderlineSpan;
 import com.urrecliner.chattalk.Sub.AlertLine;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
+import java.util.Locale;
 
 public class SelectChats {
 
@@ -35,12 +38,12 @@ public class SelectChats {
     String[] whoKeys;
     String[] keywords, keyWhose, keyword1, keyword2;
     String groupInfo;
-
+    boolean upload;
     ArrayList<String> msgLines;
     final String repeated = new String(new char[70]).replace("\0", ".")+"\n";
 
-    SpannableString generate(File chatFile) {
-
+    SpannableString generate(File chatFile, boolean upload) {
+        this.upload = upload;
         String[] chatLines = tableListFile.readRaw(chatFile);
         if (chatLines == null)
             return null;
@@ -89,14 +92,14 @@ public class SelectChats {
             int p = txt.indexOf(", ");
             if (p < 0)
                 continue;
-            String time = txt.substring(0,p+1);
-            String tmp = txt.substring(p);
+            String time = txt.substring(0,p);
+            String tmp = txt.substring(p+2);
             p = tmp.indexOf(":")-1;
             if (p < 0)
                 continue;
-            String who = tmp.substring(2, p).trim();
+            String who = tmp.substring(0, p).trim();
             String body = utils.removeSpecialChars(tmp.substring(3+who.length()));
-            if (body.length() < 18)      // 너무 짧으면 대상 아닐 것임
+            if (body.length() < 16)      // 너무 짧으면 대상 아닐 것임
                 continue;
 
             boolean found = false;
@@ -115,19 +118,18 @@ public class SelectChats {
             if (found) { //  || inWhoList(txt)) {
                 SpannableString ss = key2Matched(time, who, body);
                 if (ss.length() > 1) {
-                    selectedSS = appendSS(selectedSS, key2Matched(time, who, body));
+                    selectedSS = appendSS(selectedSS, ss);
                     matchedSS = appendSS(matchedSS, ss);
                 } else
-                    selectedSS = appendSS(selectedSS, checkKeywords(time+" "+who+" "+body));
+                    selectedSS = appendSS(selectedSS, checkKeywords(time+", "+who+" , "+body));
             } else if (inWhoList(who)) {
-                selectedSS = appendSS(selectedSS, new SpannableString("▣ "+time+" "+who+" "+makeDot(body)+"\n\n"));
+                selectedSS = appendSS(selectedSS, new SpannableString("▣ "+time+" , "+who+" , "+makeDot(body)+"\n\n"));
             } else if (hasKeywords(txt)) {
-                selectedSS = appendSS(selectedSS, checkKeywords(time+" "+who+" "+body));
+                selectedSS = appendSS(selectedSS, checkKeywords(time+", "+who+" , "+body));
             }
         }
-        CharSequence cs = TextUtils.concat(new SpannableString(headStr+"\n"),
-                matchedSS, selectedSS);
-        return new SpannableString(cs);
+        return new SpannableString(TextUtils.concat(new SpannableString(headStr+"\n"),
+                matchedSS, selectedSS));
     }
 
     private String makeDot(String txt) {
@@ -178,25 +180,25 @@ public class SelectChats {
         int p1, p2;
         for (int k = 0; k < keyword1.length; k++) {
             p1 = body.indexOf(keyword1[k]);
-            if (p1 > 0) {
+            if (p1 >= 0) {
                 p2 = body.indexOf(keyword2[k]);
-                if (p2 > 0) {
-                    String squeezed = utils.strReplace(chatGroup, body);
-                    p1 = squeezed.indexOf(keyword1[k]);
-                    p2 = squeezed.indexOf(keyword2[k]);
-                    SpannableString s = new SpannableString(time+" "+who+" "+squeezed+"\n\n");
+                if (p2 >= 0) {
+                    String str = time+", "+who+" , "+utils.strReplace(chatGroup, body)+"\n\n";
+                    SpannableString s = new SpannableString(str);
                     s.setSpan(new BackgroundColorSpan(mContext.getResources().getColor(R.color.keyMatchedBack, null)), 0, s.length()-1, SPAN_EXCLUSIVE_EXCLUSIVE);
-                    if (squeezed.contains(keyWhose[k]))
+                    if (str.contains(keyWhose[k]))
                         s.setSpan(new UnderlineSpan(), 0, s.length()-1, SPAN_EXCLUSIVE_EXCLUSIVE);
-                    int offset = time.length()+who.length()+2;
-                    if (p1 > 0) {
-                        p1 += offset;
+                    p1 = str.indexOf(keyword1[k]);
+                    if (p1 >= 0) {
                         s.setSpan(new BackgroundColorSpan(mContext.getResources().getColor(R.color.keyMatchedWord, null)), p1, p1 + keyword1[k].length(), SPAN_EXCLUSIVE_EXCLUSIVE);
                     }
-                    if (p2 > 0) {
-                        p2 += offset;
+                    p2 = str.indexOf(keyword2[k]);
+                    if (p2 >= 0) {
                         s.setSpan(new BackgroundColorSpan(mContext.getResources().getColor(R.color.keyMatchedWord, null)), p2, p2 + keyword2[k].length(), SPAN_EXCLUSIVE_EXCLUSIVE);
                     }
+                    if(upload)
+                        FileIO.uploadStock(chatGroup, who, "", "selChats",
+                                body, "["+keyword1[k]+"/"+keyword2[k]+"]", time);
                     return s;
                 }
             }

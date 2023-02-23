@@ -1,5 +1,6 @@
 package com.urrecliner.chattalk;
 
+import static android.content.Context.INPUT_METHOD_SERVICE;
 import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.aBar;
 import static com.urrecliner.chattalk.Vars.logQue;
@@ -27,6 +28,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
@@ -38,6 +40,9 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Fragment_1Log extends Fragment {
 
@@ -227,50 +232,71 @@ public class Fragment_1Log extends Fragment {
             Toast.makeText(mContext, "log copied " + copied, Toast.LENGTH_SHORT).show();
 
         } else if (item.getItemId() == R.id.delete_item_logque) {
-            String logNow = etTable.getText().toString().trim() + "\n";
-            int posCurr = etTable.getSelectionStart();
-            int posStart = logNow.lastIndexOf("\n", posCurr - 1);
-            int posFinish = logNow.indexOf("\n", posCurr);
-            if (posFinish == -1)
-                posFinish = logNow.length();
-            int prevStart = logNow.lastIndexOf("\n", posStart - 2);
-            if (prevStart == -1)
-                prevStart = 1;
-            if (logNow.charAt(prevStart - 1) == '\n')
-                logNow = logNow.substring(0, prevStart - 1) + logNow.substring(posFinish);
-            else
-                logNow = logNow.substring(0, prevStart) + logNow.substring(posFinish);
-            logQue = logNow;
-            logQue = logQue.replace("    ","");
-            sharedEditor.putString("logQue", logQue);
-            sharedEditor.apply();
-            etTable.setText(logQue2Spannable());
-            if (prevStart >= logQue.length())
-                prevStart = logQue.length();
-            if (prevStart < 6)
-                prevStart = 6;
-            Editable etText = etTable.getText();
-            Selection.setSelection(etText, prevStart-5, prevStart-1);
-            etTable.requestFocus();
-            scrollView1.scrollBy(0, -280);
+
+            delete_OneItem();
         } else if (item.getItemId() == R.id.delete_1line_logque) {
-            String logNow = etTable.getText().toString().trim() + "\n";
-            int posCurr = etTable.getSelectionStart();
-            int posStart = logNow.lastIndexOf("\n", posCurr - 1);
-            if (posStart == -1)
-                posStart = 0;
-            int posFinish = logNow.indexOf("\n", posCurr);
-            if (posFinish == -1)
-                posFinish = logNow.length();
-            logQue = logNow.substring(0, posStart) + logNow.substring(posFinish);
-            logQue = logQue.replace("    ","");
-            sharedEditor.putString("logQue", logQue);
-            sharedEditor.apply();
-            etTable.setText(logQue2Spannable());
-            etTable.setSelection(posStart);
-            scrollView1.smoothScrollBy(0, -(posFinish-posStart));
+            delete_OneLine();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void delete_OneLine() {
+        String logNow = etTable.getText().toString().trim() + "\n";
+        int posCurr = etTable.getSelectionStart();
+        int posStart = logNow.lastIndexOf("\n", posCurr - 1);
+        if (posStart == -1)
+            posStart = 0;
+        int posFinish = logNow.indexOf("\n", posCurr);
+        if (posFinish == -1)
+            posFinish = logNow.length();
+        logQue = logNow.substring(0, posStart) + logNow.substring(posFinish);
+        logQue = logQue.replace("    ","");
+        sharedEditor.putString("logQue", logQue);
+        sharedEditor.apply();
+        etTable.setText(logQue2Spannable());
+        Editable etText = etTable.getText();
+        Selection.setSelection(etText, posFinish-5, posFinish-1);
+//            scrollView1.smoothScrollBy(0, -500);
+    }
+
+    private void delete_OneItem() {
+        InputMethodManager imm = (InputMethodManager) mActivity.getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(etTable.getWindowToken(), 0);
+        String logNow = etTable.getText().toString().trim() + "\n";
+        int posCurr = etTable.getSelectionStart();
+        int posStart = logNow.lastIndexOf("\n", posCurr - 1);
+        int posFinish = logNow.indexOf("\n", posCurr);
+        if (posFinish == -1)
+            posFinish = logNow.length();
+        int prevStart = logNow.lastIndexOf("\n", posStart - 2);
+        if (prevStart == -1)
+            prevStart = 1;
+        if (logNow.charAt(prevStart - 1) == '\n')
+            logNow = logNow.substring(0, prevStart - 1) + logNow.substring(posFinish);
+        else
+            logNow = logNow.substring(0, prevStart) + logNow.substring(posFinish);
+        logQue = logNow;
+        logQue = logQue.replace("    ","");
+        sharedEditor.putString("logQue", logQue);
+        sharedEditor.apply();
+        etTable.setText(logQue2Spannable());
+        if (prevStart >= logQue.length())
+            prevStart = logQue.length();
+        if (prevStart < 6)
+            prevStart = 6;
+        posCurr = logQue.lastIndexOf("\n", prevStart-2) +1;
+        if (posCurr < 0)
+            posCurr = prevStart -3;
+        Editable etText = etTable.getText();
+        Selection.setSelection(etText, posCurr, prevStart-1);
+        etTable.requestFocus();
+        scrollView1.post(() -> new Timer().schedule(new TimerTask() {
+            public void run() {
+                mActivity.runOnUiThread(() -> {
+                    scrollView1.scrollBy(0, -300);
+                });
+            }
+        }, 30));
     }
 
     OnBackPressedCallback callback;

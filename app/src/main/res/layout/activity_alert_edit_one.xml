@@ -124,12 +124,42 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Say More"
+        android:text="Memo"
         android:textSize="@dimen/alert_font_size"
         app:layout_constraintHorizontal_weight="3"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/e_memo"
         app:layout_constraintTop_toBottomOf="@id/t_skip"
+        />
+
+    <TextView
+        android:id="@+id/t_prev"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Prev"
+        android:textSize="@dimen/alert_font_size"
+        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/e_prev"
+        app:layout_constraintTop_toBottomOf="@id/t_memo"
+        />
+
+    <TextView
+        android:id="@+id/t_next"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Next"
+        android:textSize="@dimen/alert_font_size"
+        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/e_next"
+        app:layout_constraintTop_toBottomOf="@id/t_prev"
         />
 
     <EditText
@@ -235,13 +265,41 @@
         android:layout_width="0dp"
         app:layout_constraintHorizontal_weight="6"
         android:layout_height="wrap_content"
-        android:inputType="text|textMultiLine"
+        android:inputType="text"
         android:text="Memo"
         android:textSize="@dimen/alert_font_size"
         app:layout_constraintLeft_toRightOf="@id/t_memo"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/t_memo"
+        app:layout_constraintTop_toTopOf="@id/t_memo"
         app:layout_constraintBottom_toBottomOf="@id/t_memo"
+        />
+
+    <EditText
+        android:id="@+id/e_prev"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="6"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:text="Prev"
+        android:textSize="@dimen/alert_font_size"
+        app:layout_constraintLeft_toRightOf="@id/t_prev"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/t_prev"
+        app:layout_constraintBottom_toBottomOf="@id/t_prev"
+        />
+
+    <EditText
+        android:id="@+id/e_next"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="6"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:text="Next"
+        android:textSize="@dimen/alert_font_size"
+        app:layout_constraintLeft_toRightOf="@id/t_next"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/t_next"
+        app:layout_constraintBottom_toBottomOf="@id/t_next"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

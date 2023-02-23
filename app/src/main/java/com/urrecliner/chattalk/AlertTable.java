@@ -10,6 +10,8 @@ import static com.urrecliner.chattalk.Vars.aGSkip4;
 import static com.urrecliner.chattalk.Vars.aGroupSaid;
 import static com.urrecliner.chattalk.Vars.aGroupWhoKey1;
 import static com.urrecliner.chattalk.Vars.aGroupWhoKey2;
+import static com.urrecliner.chattalk.Vars.aGroupWhoNext;
+import static com.urrecliner.chattalk.Vars.aGroupWhoPrev;
 import static com.urrecliner.chattalk.Vars.aGroupWhoSkip;
 import static com.urrecliner.chattalk.Vars.aGroupWhos;
 import static com.urrecliner.chattalk.Vars.aGroups;
@@ -18,14 +20,11 @@ import static com.urrecliner.chattalk.Vars.tableFolder;
 import static com.urrecliner.chattalk.Vars.tableListFile;
 import static com.urrecliner.chattalk.Vars.todayFolder;
 
-import android.util.Log;
-
 import com.urrecliner.chattalk.Sub.AlertLine;
 import com.urrecliner.chattalk.Sub.ByteLength;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -38,7 +37,7 @@ class AlertTable {
 //   group^ group name  ^     skip1  ^  skip2    ^ skip3 ^  -1  ^ skip4    ^ sayMore
 //    고선 ^ VIP리딩방 CA ^     !!     ^     해외  ^  BTC  ^       ^    0%    ^ 개장전
 
-//   group^  who        ^  keyword1 ^ keyword2 ^ talk ^ count ^ skip     ^ memo
+//   group^  who        ^  keyword1 ^ keyword2 ^ talk ^ count ^ skip     ^ memo ^ prev ^ next
 //    고선 ^ 고선생       ^    매수    ^   목표가  ^      ^  101  ^          ^ 01/11
 
     static void readFile() {
@@ -49,7 +48,7 @@ class AlertTable {
 
         for (String line : lines) {
             String[] strings = (line+" ").split("\\^");
-            if (strings.length < 8) {
+            if (strings.length < 10) {
                 String s = "Caret for Alert missing, "+line;
                 utils.showSnackBar("kTalkAlerts", s);
                 utils.logW("Alert Table "," Error "+line);
@@ -66,16 +65,25 @@ class AlertTable {
             String [] tMemos = strings[7].split("~");
             String tMemo = tMemos[0].trim();
             String tMore = (tMemos.length>1) ? tMemos[1].trim():"";
-            alertLines.add(new AlertLine(tGroup, tWho, tKey1, tKey2, tTalk, matched, tSkip, tMemo, tMore));
+            String prev = strings[8].trim(); if (prev.equals("")) prev = tKey1;
+            String next = strings[9].trim(); if (next.equals("")) next = tKey2;
+            alertLines.add(new AlertLine(tGroup, tWho, tKey1, tKey2, tTalk, matched, tSkip, tMemo, tMore, prev, next));
         }
     }
 
+    static ArrayList<String> gSkip1 = new ArrayList<>();
+    static ArrayList<String> gSkip2 = new ArrayList<>();
+    static ArrayList<String> gSkip3 = new ArrayList<>();
+    static ArrayList<String> gSkip4 = new ArrayList<>();
+    static List<String> key1 = new ArrayList<>();
+    static List<String> key2 = new ArrayList<>();
+    static List<String> skip = new ArrayList<>();
+    static List<String> prev = new ArrayList<>();
+    static List<String> next = new ArrayList<>();
+    static int gIdx, gwIdx, svIdx;
+
     static void makeArrays() {
 
-        ArrayList<String> gSkip1 = new ArrayList<>();
-        ArrayList<String> gSkip2 = new ArrayList<>();
-        ArrayList<String> gSkip3 = new ArrayList<>();
-        ArrayList<String> gSkip4 = new ArrayList<>();
         String svGroup = "", svWho = "";
         String none = "nOnE";
         int alertSize = alertLines.size();
@@ -100,21 +108,26 @@ class AlertTable {
         aGroupWhoKey1 = new String[groupCnt][][];
         aGroupWhoKey2 = new String[groupCnt][][];
         aGroupWhoSkip = new String[groupCnt][][];
+        aGroupWhoPrev = new String[groupCnt][][];
+        aGroupWhoNext = new String[groupCnt][][];
         aAlertLineIdx = new int[groupCnt][][];
         aGroupSaid = new String[groupCnt];
         for (int i = 0; i < groupCnt; i++)
             aGroupSaid[i] = "x";
 
-        int gIdx = 0, gwIdx = 0;
+        gIdx = 0; gwIdx = 0;
         ArrayList<String> whoList = new ArrayList<>();
         for (AlertLine alt: alertLines) {
             if (alt.matched == -1) {    // this means group
-                if (whoList.size() > 0) {    // save Prev Group
+                int sz = whoList.size();
+                if (sz > 0) {    // save Prev Group
                     aGroupWhos[gIdx] = whoList.toArray(new String[whoList.size()]);
-                    aGroupWhoKey1[gIdx] = new String[whoList.size()][];
-                    aGroupWhoKey2[gIdx] = new String[whoList.size()][];
-                    aGroupWhoSkip[gIdx] = new String[whoList.size()][];
-                    aAlertLineIdx[gIdx] = new int[whoList.size()][];
+                    aGroupWhoKey1[gIdx] = new String[sz][];
+                    aGroupWhoKey2[gIdx] = new String[sz][];
+                    aGroupWhoSkip[gIdx] = new String[sz][];
+                    aGroupWhoPrev[gIdx] = new String[sz][];
+                    aGroupWhoNext[gIdx] = new String[sz][];
+                    aAlertLineIdx[gIdx] = new int[sz][];
                     whoList = new ArrayList<>();
                     gIdx++;
                 }
@@ -125,44 +138,28 @@ class AlertTable {
             }
         }
 
+        clearArrays();
         gIdx = 0;
-        int svIdx = 2;
-        List<String> key1 = new ArrayList<>();
-        List<String> key2 = new ArrayList<>();
-        List<String> skip = new ArrayList<>();
+        svIdx = 2;
         for (int i = 0; i < alertSize; i++) {
             AlertLine al = alertLines.get(i);
             if (al.matched == -1) {    // this means group
                 if (key1.size()> 0) {
-                    aGroupWhoKey1[gIdx][gwIdx] = key1.toArray(new String[key1.size()]);
-                    aGroupWhoKey2[gIdx][gwIdx] = key2.toArray(new String[key1.size()]);
-                    aGroupWhoSkip[gIdx][gwIdx] = skip.toArray(new String[key1.size()]);
-                    aAlertLineIdx[gIdx][gwIdx] = new int [key1.size()];
-                    for (int j = 0; j < key1.size(); j++)
-                        aAlertLineIdx[gIdx][gwIdx][j] = svIdx+j;
+                    makeAGroupWho();
                     svIdx = i;
                     gIdx++;
                 }
-                key1 = new ArrayList<>();
-                key2 = new ArrayList<>();
-                skip = new ArrayList<>();
+                clearArrays();
                 gwIdx = 0;
             } else {
                 if (!svWho.equals(al.who)) {
                     if (key1.size()> 0) {
-                        aGroupWhoKey1[gIdx][gwIdx] = key1.toArray(new String[key1.size()]);
-                        aGroupWhoKey2[gIdx][gwIdx] = key2.toArray(new String[key1.size()]);
-                        aGroupWhoSkip[gIdx][gwIdx] = skip.toArray(new String[key1.size()]);
-                        aAlertLineIdx[gIdx][gwIdx] = new int [key1.size()];
-                        for (int j = 0; j < key1.size(); j++)
-                            aAlertLineIdx[gIdx][gwIdx][j] = svIdx+j;
+                        makeAGroupWho();
                         gwIdx++;
                     }
                     svIdx = i;
                     svWho = al.who;
-                    key1 = new ArrayList<>();
-                    key2 = new ArrayList<>();
-                    skip = new ArrayList<>();
+                    clearArrays();
                 }
                 key1.add(al.key1);
                 key2.add(al.key2);
@@ -171,6 +168,25 @@ class AlertTable {
         }
     }
 
+    static void makeAGroupWho() {
+        int sz = key1.size();
+        aGroupWhoKey1[gIdx][gwIdx] = key1.toArray(new String[sz]);
+        aGroupWhoKey2[gIdx][gwIdx] = key2.toArray(new String[sz]);
+        aGroupWhoSkip[gIdx][gwIdx] = skip.toArray(new String[sz]);
+        aGroupWhoPrev[gIdx][gwIdx] = skip.toArray(new String[sz]);
+        aGroupWhoNext[gIdx][gwIdx] = skip.toArray(new String[sz]);
+        aAlertLineIdx[gIdx][gwIdx] = new int [sz];
+        for (int j = 0; j < sz; j++)
+            aAlertLineIdx[gIdx][gwIdx][j] = svIdx+j;
+    }
+
+    static void clearArrays() {
+        key1 = new ArrayList<>();
+        key2 = new ArrayList<>();
+        skip = new ArrayList<>();
+        prev = new ArrayList<>();
+        next = new ArrayList<>();
+    }
     static void sort() {
         // group asc, who asc, matched desc
         alertLines.sort(Comparator.comparing(obj -> (obj.group + " " + ((obj.matched == -1)? " ": obj.who + (999-obj.matched)))));
@@ -193,7 +209,9 @@ class AlertTable {
             s.append(m.substring(m.length()-7)).append("^");
             s.append(strPad(al.skip, (padLen[5]))).append("^");
             s.append(" ").append(al.memo);
-            s.append("~").append(al.more);
+            s.append("~").append(al.more).append("^");
+            s.append(strPad(al.prev, (padLen[6]))).append("^");
+            s.append(strPad(al.next, (padLen[7]))).append("^");
             s.append("\n");
         }
         FileIO.writeTextFile( tableFolder,"kTalkAlerts",s.toString());
@@ -217,7 +235,7 @@ class AlertTable {
     }
 
     static int [] getMaxLengths() {
-        int [] maxLen = new int[6];
+        int [] maxLen = new int[8];
         int bl;
         for (AlertLine al : alertLines){
             bl = calcBytes(al.group); if (bl > maxLen[0]) maxLen[0] = bl;
@@ -226,8 +244,10 @@ class AlertTable {
             bl = calcBytes(al.key2); if (bl > maxLen[3]) maxLen[3] = bl;
             bl = calcBytes(al.talk); if (bl > maxLen[4]) maxLen[4] = bl;
             bl = calcBytes(al.skip); if (bl > maxLen[5]) maxLen[5] = bl;
+            bl = calcBytes(al.prev); if (bl > maxLen[6]) maxLen[6] = bl;
+            bl = calcBytes(al.next); if (bl > maxLen[7]) maxLen[7] = bl;
         }
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 8; i++)
             maxLen[i] = maxLen[i] + maxLen[i] % 2 + 2;
         return maxLen;
     }

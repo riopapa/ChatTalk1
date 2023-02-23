@@ -28,8 +28,7 @@ public class FileIO {
         }
     }
 
-    static void uploadStock(String group, String who, String percent, String talk, String text, String key12) {
-        String timeStamp = new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date());
+    static void uploadStock(String group, String who, String percent, String talk, String text, String key12, String timeStamp) {
         Upload2Google.add2Que(group, timeStamp, who, percent, talk, text, key12);
     }
 

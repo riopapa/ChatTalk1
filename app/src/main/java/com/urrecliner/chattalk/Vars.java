@@ -45,7 +45,7 @@ public class Vars {
     static List<String> aGroups;    // {고선, 텔레, 힐}
     static String[] aGSkip1, aGSkip2, aGSkip3, aGSkip4;
     static String[][] aGroupWhos;     // [2] 이진홍, 김선수
-    static String[][][] aGroupWhoKey1, aGroupWhoKey2, aGroupWhoSkip;
+    static String[][][] aGroupWhoKey1, aGroupWhoKey2, aGroupWhoSkip, aGroupWhoPrev, aGroupWhoNext;
 
     static String[] smsWhoIgnores = null;
     static String[] smsTextIgnores = null;
