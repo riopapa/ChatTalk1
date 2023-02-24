@@ -14,6 +14,8 @@ import static com.urrecliner.chattalk.Vars.alertWhoIndex;
 import static com.urrecliner.chattalk.Vars.alertsAdapter;
 import static com.urrecliner.chattalk.Vars.nineIgnores;
 
+import android.util.Log;
+
 import com.urrecliner.chattalk.Sub.IsWhoNine;
 
 import java.util.Collections;
@@ -32,17 +34,16 @@ class MsgKaTalk {
             int gwIdx = alertWhoIndex.get(gIdx, iWho, iText);
             if (gwIdx == -1)
                 return;
-
+            iText = utils.removeSpecialChars(iText);
             for (int i = 0; i < aGroupWhoKey1[gIdx][gwIdx].length; i++) {
                 if ((iText.contains(aGroupWhoKey1[gIdx][gwIdx][i])) &&
                     (iText.contains(aGroupWhoKey2[gIdx][gwIdx][i])) &&
                     (!iText.contains(aGroupWhoSkip[gIdx][gwIdx][i]))) {
-//                    utils.logW("matched "+i, iGroup+" "+iWho+" idx="+gIdx+", gwIdx="+gwIdx+" i="+i+
-//                            " key1="+aGroupWhoKey1[gIdx][gwIdx][i]+
-//                            " key2="+aGroupWhoKey2[gIdx][gwIdx][i]+
-//                            " lineIdx="+aAlertLineIdx[gIdx][gwIdx][i]);
                     subFunc.alertStock.show(iGroup, iText, aAlertLineIdx[gIdx][gwIdx][i]);
-                    alertsAdapter.notifyItemChanged(aAlertLineIdx[gIdx][gwIdx][i]);
+                    if (alertsAdapter != null)
+                        alertsAdapter.notifyItemChanged(aAlertLineIdx[gIdx][gwIdx][i]);
+                    else
+                        Log.w("msgTalk","alertsAdapter is null");
                     return;
                 }
             }

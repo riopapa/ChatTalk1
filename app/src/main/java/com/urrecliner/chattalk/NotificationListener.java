@@ -33,7 +33,6 @@ public class NotificationListener extends NotificationListenerService {
     //                            Say  Que Log
     final String YYY = "yyy"; //   Y    Y   Y
     final String YYN = "yyn"; //   Y    Y   N
-    final String YY9 = "yy9"; //   Y    Y   N
     final String YYX = "yyx"; //   Y    Y   X exclude Group
     final String YNX = "ynx"; //   Y    N   X  no Who
     final String YWX = "ywx"; //   Y    N   X  who should be in text
@@ -47,7 +46,7 @@ public class NotificationListener extends NotificationListenerService {
     static HashMap<String, String> kkWhoTexts = new HashMap<>();
     static HashMap<String, String> smsWhoTexts = new HashMap<>();
     static HashMap<String, String> whoAndTexts = new HashMap<>();
-    static ArrayList<WhoText> tgWhoTexts = new ArrayList<>();
+
     String head;
 
     static Vars vars = null;
@@ -95,7 +94,6 @@ public class NotificationListener extends NotificationListenerService {
                     if ((IgnoreThis.contains(sbnGroup, kGroupWhoIgnores)) ||
                         (!sbnWho.equals("") && IgnoreThis.contains(sbnWho, kGroupWhoIgnores)))
                         return;
-                    sbnText = subFunc.utils.strReplace(sbnWho, subFunc.utils.text2OneLine(sbnText));
                     subFunc.msgKaTalk.say(sbnGroup, sbnWho, subFunc.utils.text2OneLine(sbnText));
                 }
                 break;
@@ -236,21 +234,6 @@ public class NotificationListener extends NotificationListenerService {
                 NotificationBar.update((sbnGroup.equals("")) ? sbnPackageNick + "🖐️"+ sbnWho : sbnGroup + "🖐️"+ sbnWho, sbnText);
                 sbnText = sbnPackageNick + " 로부터 " + head + sbnText;
                 subFunc.sounds.speakAfterBeep(subFunc.utils.makeEtc(sbnText, 230));
-                break;
-
-            case YY9:   //
-
-                if (IgnoreThis.contains(sbnText, textIgnores) ||
-                        MapWhoText.repeated(whoAndTexts, sbnWho, sbnText))
-                    return;
-                sbnText = subFunc.utils.text2OneLine(sbnText);
-                sbnText = subFunc.utils.strReplace(sbnWho, subFunc.utils.text2OneLine(sbnText));
-                head = "[" + sbnPackageNick + "¦️" + sbnGroup + "¦️"  + sbnWho +"] ";
-                subFunc.logQueUpdate.add(head , sbnText);
-                NotificationBar.update(sbnGroup + "¦️"  + sbnWho, sbnText);
-                sbnText = sbnPackageNick + " 로부터 " + head +
-                        sbnText.replaceAll("[0-9]", "");
-                subFunc.sounds.speakAfterBeep(sbnText);
                 break;
 
             case YNN: // no who

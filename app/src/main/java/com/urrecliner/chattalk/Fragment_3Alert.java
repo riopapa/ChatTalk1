@@ -81,11 +81,11 @@ public class Fragment_3Alert extends Fragment {
                 alertLines.set(i, al);
             }
             AlertTable.sort();
-            AlertTable.saveFile();
+            new AlertSave();
             alertsAdapter.notifyDataSetChanged();
         } else if (item.getItemId() == R.id.copy2log_save) {
             AlertTable.sort();
-            AlertTable.saveFile();
+            new AlertSave();
             alertsAdapter.notifyDataSetChanged();
         }
         return super.onOptionsItemSelected(item);

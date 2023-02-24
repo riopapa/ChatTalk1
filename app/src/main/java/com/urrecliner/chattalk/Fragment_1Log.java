@@ -21,7 +21,9 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.text.style.TypefaceSpan;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -279,14 +281,16 @@ public class Fragment_1Log extends Fragment {
         logQue = logQue.replace("    ","");
         sharedEditor.putString("logQue", logQue);
         sharedEditor.apply();
-        etTable.setText(logQue2Spannable());
+        SpannableString ss = logQue2Spannable();
         if (prevStart >= logQue.length())
             prevStart = logQue.length();
         if (prevStart < 6)
             prevStart = 6;
-        posCurr = logQue.lastIndexOf("\n", prevStart-2) +1;
+        posCurr = logQue.lastIndexOf("\n", prevStart-2) + 1;
         if (posCurr < 0)
             posCurr = prevStart -3;
+        ss.setSpan(new StyleSpan(Typeface.ITALIC), posCurr, prevStart-1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        etTable.setText(ss);
         Editable etText = etTable.getText();
         Selection.setSelection(etText, posCurr, prevStart-1);
         etTable.requestFocus();

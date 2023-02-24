@@ -49,22 +49,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/e_key1"
         app:layout_constraintTop_toBottomOf="@id/t_who"
-        app:layout_constraintBottom_toTopOf="@id/t_key2"
-        android:gravity="center"
-        />
-
-    <TextView
-        android:id="@+id/t_key2"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_width="0dp"
-        app:layout_constraintHorizontal_weight="3"
-        android:layout_height="wrap_content"
-        android:text="Skip 2"
-        android:textSize="@dimen/alert_font_size"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/e_key2"
-        app:layout_constraintTop_toBottomOf="@id/t_key1"
         app:layout_constraintBottom_toTopOf="@id/t_talk"
         android:gravity="center"
         />
@@ -80,7 +64,7 @@
         android:textSize="@dimen/alert_font_size"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/e_talk"
-        app:layout_constraintTop_toBottomOf="@id/t_key2"
+        app:layout_constraintTop_toBottomOf="@id/t_key1"
         app:layout_constraintBottom_toTopOf="@id/t_matched"
         android:gravity="center"
         />
@@ -97,24 +81,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/e_matched"
         app:layout_constraintTop_toBottomOf="@id/t_talk"
-        app:layout_constraintBottom_toTopOf="@id/t_skip"
-        android:gravity="center"
-        />
-
-    <TextView
-        android:id="@+id/t_skip"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Skip 4"
-        android:textSize="@dimen/alert_font_size"
-        app:layout_constraintHorizontal_weight="3"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/e_skip"
-        app:layout_constraintTop_toBottomOf="@id/t_matched"
         app:layout_constraintBottom_toTopOf="@id/t_memo"
+        android:gravity="center"
         />
 
     <TextView
@@ -129,7 +97,7 @@
         app:layout_constraintHorizontal_weight="3"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/e_memo"
-        app:layout_constraintTop_toBottomOf="@id/t_skip"
+        app:layout_constraintTop_toBottomOf="@id/t_matched"
         />
 
     <TextView
@@ -147,28 +115,13 @@
         app:layout_constraintTop_toBottomOf="@id/t_memo"
         />
 
-    <TextView
-        android:id="@+id/t_next"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Next"
-        android:textSize="@dimen/alert_font_size"
-        app:layout_constraintHorizontal_weight="3"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/e_next"
-        app:layout_constraintTop_toBottomOf="@id/t_prev"
-        />
-
     <EditText
         android:id="@+id/e_group"
         android:layout_width="0dp"
         app:layout_constraintHorizontal_weight="6"
         android:layout_height="wrap_content"
         android:inputType="text"
-        android:text="Name"
+        android:text="Group"
         android:textSize="@dimen/alert_font_size"
         app:layout_constraintLeft_toRightOf="@id/t_group"
         app:layout_constraintRight_toRightOf="parent"
@@ -182,7 +135,7 @@
         app:layout_constraintHorizontal_weight="6"
         android:layout_height="wrap_content"
         android:inputType="text"
-        android:text="Name"
+        android:text="Who"
         android:textSize="@dimen/alert_font_size"
         app:layout_constraintLeft_toRightOf="@id/t_who"
         app:layout_constraintRight_toRightOf="parent"
@@ -193,13 +146,13 @@
     <EditText
         android:id="@+id/e_key1"
         android:layout_width="0dp"
-        app:layout_constraintHorizontal_weight="6"
+        app:layout_constraintHorizontal_weight="3"
         android:layout_height="wrap_content"
-        android:inputType="text|textMultiLine"
-        android:text="Name"
+        android:inputType="text"
+        android:text="Key1"
         android:textSize="@dimen/alert_font_size"
         app:layout_constraintLeft_toRightOf="@id/t_key1"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/e_key2"
         app:layout_constraintTop_toTopOf="@id/t_key1"
         app:layout_constraintBottom_toBottomOf="@id/t_key1"
         />
@@ -207,26 +160,40 @@
     <EditText
         android:id="@+id/e_key2"
         android:layout_width="0dp"
-        app:layout_constraintHorizontal_weight="6"
+        app:layout_constraintHorizontal_weight="3"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:text="Key2"
         android:textSize="@dimen/alert_font_size"
-        app:layout_constraintLeft_toRightOf="@id/t_key2"
+        app:layout_constraintLeft_toRightOf="@id/e_key1"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/t_key2"
-        app:layout_constraintBottom_toBottomOf="@id/t_key2"
+        app:layout_constraintTop_toTopOf="@id/t_key1"
+        app:layout_constraintBottom_toBottomOf="@id/t_key1"
         />
 
     <EditText
         android:id="@+id/e_talk"
         android:layout_width="0dp"
-        app:layout_constraintHorizontal_weight="6"
+        app:layout_constraintHorizontal_weight="3"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:text="Talk"
         android:textSize="@dimen/alert_font_size"
         app:layout_constraintLeft_toRightOf="@id/t_talk"
+        app:layout_constraintRight_toLeftOf="@id/e_skip"
+        app:layout_constraintTop_toTopOf="@id/t_talk"
+        app:layout_constraintBottom_toBottomOf="@id/t_talk"
+        />
+
+    <EditText
+        android:id="@+id/e_skip"
+        android:layout_width="0dp"
+        app:layout_constraintHorizontal_weight="3"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:text="Skip"
+        android:textSize="@dimen/alert_font_size"
+        app:layout_constraintLeft_toRightOf="@id/e_talk"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/t_talk"
         app:layout_constraintBottom_toBottomOf="@id/t_talk"
@@ -247,20 +214,6 @@
         />
 
     <EditText
-        android:id="@+id/e_skip"
-        android:layout_width="0dp"
-        app:layout_constraintHorizontal_weight="6"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:text="Skip"
-        android:textSize="@dimen/alert_font_size"
-        app:layout_constraintLeft_toRightOf="@id/t_skip"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/t_skip"
-        app:layout_constraintBottom_toBottomOf="@id/t_skip"
-        />
-
-    <EditText
         android:id="@+id/e_memo"
         android:layout_width="0dp"
         app:layout_constraintHorizontal_weight="6"
@@ -277,13 +230,13 @@
     <EditText
         android:id="@+id/e_prev"
         android:layout_width="0dp"
-        app:layout_constraintHorizontal_weight="6"
+        app:layout_constraintHorizontal_weight="3"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:text="Prev"
         android:textSize="@dimen/alert_font_size"
         app:layout_constraintLeft_toRightOf="@id/t_prev"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/e_next"
         app:layout_constraintTop_toTopOf="@id/t_prev"
         app:layout_constraintBottom_toBottomOf="@id/t_prev"
         />
@@ -291,15 +244,15 @@
     <EditText
         android:id="@+id/e_next"
         android:layout_width="0dp"
-        app:layout_constraintHorizontal_weight="6"
+        app:layout_constraintHorizontal_weight="3"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:text="Next"
         android:textSize="@dimen/alert_font_size"
-        app:layout_constraintLeft_toRightOf="@id/t_next"
+        app:layout_constraintLeft_toRightOf="@id/e_prev"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/t_next"
-        app:layout_constraintBottom_toBottomOf="@id/t_next"
+        app:layout_constraintTop_toTopOf="@id/t_prev"
+        app:layout_constraintBottom_toBottomOf="@id/t_prev"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,6 +22,7 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
 
@@ -36,7 +37,7 @@ public class SelectChats {
 
     String[] whose;
     String[] whoKeys;
-    String[] keywords, keyWhose, keyword1, keyword2;
+    String[] keywords, keyWhose, keyword1, keyword2, prev, next;
     String groupInfo;
     boolean upload;
     ArrayList<String> msgLines;
@@ -103,12 +104,12 @@ public class SelectChats {
                 continue;
 
             boolean found = false;
-            int gwIdx = alertWhoIndex.get(gIdx, who, txt);
+            int gwIdx = alertWhoIndex.get(gIdx, who, body);
             if (gwIdx >=0) {
                 for (int i = 0; i < aGroupWhoKey1[gIdx][gwIdx].length; i++) {
-                    if ((txt.contains(aGroupWhoKey1[gIdx][gwIdx][i])) &&
-                            (txt.contains(aGroupWhoKey2[gIdx][gwIdx][i])) &&
-                            (!txt.contains(aGroupWhoSkip[gIdx][gwIdx][i]))) {
+                    if ((body.contains(aGroupWhoKey1[gIdx][gwIdx][i])) &&
+                            (body.contains(aGroupWhoKey2[gIdx][gwIdx][i])) &&
+                            (!body.contains(aGroupWhoSkip[gIdx][gwIdx][i]))) {
                         found = true;
                         break;
                     }
@@ -118,8 +119,8 @@ public class SelectChats {
             if (found) { //  || inWhoList(txt)) {
                 SpannableString ss = key2Matched(time, who, body);
                 if (ss.length() > 1) {
-                    selectedSS = appendSS(selectedSS, ss);
                     matchedSS = appendSS(matchedSS, ss);
+                    selectedSS = appendSS(selectedSS, ss);
                 } else
                     selectedSS = appendSS(selectedSS, checkKeywords(time+", "+who+" , "+body));
             } else if (inWhoList(who)) {
@@ -133,8 +134,8 @@ public class SelectChats {
     }
 
     private String makeDot(String txt) {
-        if (txt.length() > 150)
-            return txt.substring(0, 145) + " ⋙";
+        if (txt.length() > 100)
+            return txt.substring(0, 95) + " ⋙";
         return txt;
     }
 
@@ -183,22 +184,25 @@ public class SelectChats {
             if (p1 >= 0) {
                 p2 = body.indexOf(keyword2[k]);
                 if (p2 >= 0) {
-                    String str = time+", "+who+" , "+utils.strReplace(chatGroup, body)+"\n\n";
+                    String str = time+", "+who+" , "+utils.strReplace(chatGroup, body)+
+                            " <"+keyword1[k]+"/"+keyword2[k]+">\n\n";
                     SpannableString s = new SpannableString(str);
                     s.setSpan(new BackgroundColorSpan(mContext.getResources().getColor(R.color.keyMatchedBack, null)), 0, s.length()-1, SPAN_EXCLUSIVE_EXCLUSIVE);
                     if (str.contains(keyWhose[k]))
                         s.setSpan(new UnderlineSpan(), 0, s.length()-1, SPAN_EXCLUSIVE_EXCLUSIVE);
-                    p1 = str.indexOf(keyword1[k]);
+                    p1 = str.indexOf(prev[k]);
                     if (p1 >= 0) {
-                        s.setSpan(new BackgroundColorSpan(mContext.getResources().getColor(R.color.keyMatchedWord, null)), p1, p1 + keyword1[k].length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+                        s.setSpan(new BackgroundColorSpan(mContext.getResources().getColor(R.color.keyMatchedWord, null)), p1, p1 + prev[k].length(), SPAN_EXCLUSIVE_EXCLUSIVE);
                     }
-                    p2 = str.indexOf(keyword2[k]);
+                    p2 = str.indexOf(next[k]);
                     if (p2 >= 0) {
-                        s.setSpan(new BackgroundColorSpan(mContext.getResources().getColor(R.color.keyMatchedWord, null)), p2, p2 + keyword2[k].length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+                        s.setSpan(new BackgroundColorSpan(mContext.getResources().getColor(R.color.keyMatchedWord, null)), p2, p2 + next[k].length(), SPAN_EXCLUSIVE_EXCLUSIVE);
                     }
-                    if(upload)
-                        FileIO.uploadStock(chatGroup, who, "", "selChats",
-                                body, "["+keyword1[k]+"/"+keyword2[k]+"]", time);
+                    if(upload) {
+                        String stockName = getStockName(prev[k], next[k], body);
+                        FileIO.uploadStock(chatGroup, who, stockName, "chats",
+                                body, "[" + keyword1[k] + "/" + keyword2[k] + "]", time);
+                    }
                     return s;
                 }
             }
@@ -216,8 +220,10 @@ public class SelectChats {
         ArrayList<String> aWhoKeys = new ArrayList<>();
         ArrayList<String> aKeywords = new ArrayList<>();
         ArrayList<String> aKeyWhose = new ArrayList<>();
-        ArrayList<String> aKeyword1 = new ArrayList<>();
-        ArrayList<String> aKeyword2 = new ArrayList<>();
+        ArrayList<String> aKey1 = new ArrayList<>();
+        ArrayList<String> aKey2 = new ArrayList<>();
+        ArrayList<String> aPrev = new ArrayList<>();
+        ArrayList<String> aNext = new ArrayList<>();
         int alertSize = alertLines.size();
         for (int i = 0; i < alertSize; i++) {
             AlertLine al = alertLines.get(i);
@@ -240,8 +246,10 @@ public class SelectChats {
                     if (al.key2.length()> 1) aKeywords.add(al.key2);
                     if (al.key1.length()> 1) {
                         aKeyWhose.add(al.who);
-                        aKeyword1.add(al.key1);
-                        aKeyword2.add(al.key2);
+                        aKey1.add(al.key1);
+                        aKey2.add(al.key2);
+                        aPrev.add(al.prev);
+                        aNext.add(al.next);
                     }
                 }
             }
@@ -261,7 +269,24 @@ public class SelectChats {
         whoKeys = aWhoKeys.toArray(new String[0]);
         keywords = aKeywords.toArray(new String[0]);
         keyWhose = aKeyWhose.toArray(new String[0]);
-        keyword1 = aKeyword1.toArray(new String[0]);
-        keyword2 = aKeyword2.toArray(new String[0]);
+        keyword1 = aKey1.toArray(new String[0]);
+        keyword2 = aKey2.toArray(new String[0]);
+        prev = aPrev.toArray(new String[0]);
+        next = aNext.toArray(new String[0]);
     }
+
+    String getStockName(String prev, String next, String iText) {
+        String s = iText;
+        Log.w("getStockName", "prev="+prev+", iText="+iText);
+        int p1 = s.indexOf(prev);
+        if (p1 >= 0) {
+            s = s.substring(p1+prev.length());
+            p1 = s.indexOf(next);
+            if (p1 > 0)
+                return s.substring(0,p1).replaceAll("[0-9,%|()]","").trim();
+            return "NoName2";
+        }
+        return "NoName";
+    }
+
 }

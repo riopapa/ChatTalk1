@@ -23,14 +23,13 @@ public class AlertStock {
         al.matched++;
         alertLines.set(aIdx, al);
         String k1 = al.key1, k2 = al.key2;
-        String prev = al.prev;
         group = al.group;
         who = al.who;
         sTalk = al.talk;
         sayMore = al.more;
         key12 = " {" + k1 + "/" + k2 + "}";
         String stockName = getStockName(al.prev, al.next, iText);
-        String sText = utils.strReplace(iGroup, utils.removeSpecialChars(iText));
+        String sText = utils.strReplace(iGroup, iText);
         String head = " [" + group + "." + who + "] "+stockName;
         Thread thisThread = new Thread(() -> {
             String timeStamp = new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date());
@@ -45,29 +44,21 @@ public class AlertStock {
             } else {
                 sounds.beepOnce(Vars.soundType.ONLY.ordinal());
             }
+            new AlertSave();
         });
         thisThread.start();
     }
 
     String getStockName(String prev, String next, String iText) {
-        String [] texts = iText.split(prev);
-        try {
-            if (texts.length> 1) {
-                for (int i = 0; i < texts.length; i++) {
-                    if (texts[i].equals(prev)) {
-                        String[] txts = texts[i].split(next);
-                        if (txts.length > 1) {
-                            for (int j = 1; j < txts.length; j++) {
-                                if (txts[j].equals(next))
-                                    return txts[j - 1]
-                                            .replace("[0-9]()%","").trim();
-                            }
-                        }
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        String s = iText;
+        Log.w("getStockName", "prev="+prev+", iText="+iText);
+        int p1 = s.indexOf(prev);
+        if (p1 >= 0) {
+            s = s.substring(p1+prev.length());
+            p1 = s.indexOf(next);
+            if (p1 > 0)
+                return s.substring(0,p1-1).replaceAll("[0-9],%|","").trim();
+            return "NoName2";
         }
         return "NoName";
     }

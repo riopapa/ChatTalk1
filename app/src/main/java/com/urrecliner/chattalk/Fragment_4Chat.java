@@ -7,6 +7,8 @@ import static com.urrecliner.chattalk.Vars.topTabs;
 
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.Selection;
 import android.text.Spannable;
@@ -178,11 +180,21 @@ public class Fragment_4Chat extends Fragment {
         chatIdx = chatMax-1;
     }
 
+    View uploadMenu;
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         mainMenu = menu;
         inflater.inflate(R.menu.menu_4chat, menu);
         super.onCreateOptionsMenu(menu, inflater);
+        new Handler(Looper.getMainLooper()).post(() -> {
+            uploadMenu = getActivity().findViewById(R.id.action_upload);
+            if (uploadMenu != null) {
+                uploadMenu.setOnLongClickListener(view -> {
+                    selChat = new SelectChats().generate(nowChatFile, true);
+                    return false;
+                });
+            }
+        });
     }
 
     @Override
@@ -194,8 +206,6 @@ public class Fragment_4Chat extends Fragment {
         } else if (item.getItemId() == R.id.action_right && chatIdx < chatFolders.length-1) {
             chatIdx++;
             showChats();
-        } else if (item.getItemId() == R.id.action_upload) {
-            selChat = new SelectChats().generate(nowChatFile, true);
         } else if (item.getItemId() == R.id.action_delete) {
             nowChatFile.delete();
             String name = nowChatFile.getName();
