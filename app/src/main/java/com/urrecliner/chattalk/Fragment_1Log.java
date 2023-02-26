@@ -233,8 +233,8 @@ public class Fragment_1Log extends Fragment {
             Toast.makeText(mContext, "log copied " + copied, Toast.LENGTH_SHORT).show();
 
         } else if (item.getItemId() == R.id.delete_item_logque) {
-
             delete_OneItem();
+
         } else if (item.getItemId() == R.id.delete_1line_logque) {
             delete_OneLine();
         }
@@ -285,7 +285,7 @@ public class Fragment_1Log extends Fragment {
             prevStart = logQue.length();
         if (prevStart < 6)
             prevStart = 6;
-        posCurr = logQue.lastIndexOf("\n", prevStart-2) + 1;
+        posCurr = logQue.lastIndexOf("\n", prevStart-2) + 2;
         if (posCurr < 0)
             posCurr = prevStart -3;
         ss.setSpan(new StyleSpan(Typeface.ITALIC), posCurr, prevStart-1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -298,7 +298,7 @@ public class Fragment_1Log extends Fragment {
         scrollView1.post(() -> new Timer().schedule(new TimerTask() {
             public void run() {
                 mActivity.runOnUiThread(() -> {
-                    scrollView1.scrollBy(0, -300);
+                    scrollView1.scrollBy(0, 200);
                 });
             }
         }, 30));

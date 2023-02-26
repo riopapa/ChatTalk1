@@ -214,7 +214,7 @@ public class Fragment_4Chat extends Fragment {
             String fullName = nowChatFile.toString().replace("/"+name, "");
             //noinspection ResultOfMethodCallIgnored
             new File (fullName).delete();
-            utils.showSnackBar(chatGroup, chatGroup+ " deleted");
+            utils.showSnackBar(chatGroup, chatGroup+ " deleted\n");
             getChatFolders();
             chatIdx--;
             if (chatIdx < 0)

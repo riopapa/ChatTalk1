@@ -12,8 +12,6 @@ import static com.urrecliner.chattalk.Vars.replLong;
 import static com.urrecliner.chattalk.Vars.replShort;
 import static com.urrecliner.chattalk.Vars.toDay;
 
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.util.Log;
 import android.view.Gravity;
@@ -87,17 +85,13 @@ class Utils {
         tv1.setText(title);
         tv2.setText(text);
 
-        // now change the layout of the Snackbar
-        Snackbar.SnackbarLayout snackbarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
-//        snackbarLayout.setPadding(8, 8, 8, 8);
-        snackbarLayout.setBackgroundColor(0x00FFFFFF);  // remove background
-        FrameLayout.LayoutParams params =(FrameLayout.LayoutParams)snackbarLayout.getLayoutParams();
+        // now change the layout of the SnackBar
+        Snackbar.SnackbarLayout snackBarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+        snackBarLayout.setBackgroundColor(0x0033FFFF);  // transparent background
+        FrameLayout.LayoutParams params =(FrameLayout.LayoutParams)snackBarLayout.getLayoutParams();
         params.gravity = Gravity.CENTER_VERTICAL;
         sView.setLayoutParams(params);
-        // register the button from the custom_snackbar_view layout file
-
-        // add the custom snack bar layout to snackbar layout
-        snackbarLayout.addView(sView, 0);
+        snackBarLayout.addView(sView, 0);
 
         snackbar.show();
     }
@@ -131,7 +125,7 @@ class Utils {
     String removeSpecialChars(String text) {
         return text.replace("──", "").replace("==", "-")
                 .replace("=", "ￚ").replace("--", "-")
-        .replaceAll("[^0-9a-zA-Z:|#().@,%/~ㄱ-ㅎ가-힣\\s\\-]+", "")
+        .replaceAll("[^0-9a-zA-Z:|#().@,%/~ㄱ-ㅎ가-힣\\s\\-+]", "")
         ;
     }
 

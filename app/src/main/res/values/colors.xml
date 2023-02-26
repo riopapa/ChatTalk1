@@ -2,9 +2,9 @@
 <resources>
     <color name="colorPrimary">#778FA8</color>
 
-    <color name="snackBarBack">#ACAFBD</color>
-    <color name="snackBarTitle">#354DE3</color>
-    <color name="snackBarText">#770B09</color>
+    <color name="snackBarBack">#CCA010</color>
+    <color name="snackBarTitle">#FF354DE3</color>
+    <color name="snackBarText">#FF770B09</color>
 
     <color name="colorLine">#DADDB9</color>
     <color name="headLine">#EBE3B2</color>
