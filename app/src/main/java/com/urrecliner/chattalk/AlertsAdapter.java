@@ -1,7 +1,6 @@
 package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.Vars.alertLines;
-import static com.urrecliner.chattalk.Vars.linePos;
 import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
 
@@ -99,8 +98,8 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
         }
         holder.tCount.setBackgroundColor(colorWho);
         holder.tLine.setOnClickListener(v -> {
-            linePos = holder.getAdapterPosition();
             Intent intent = new Intent(mContext, EditOneAlertActivity.class);
+            intent.putExtra("linePos", holder.getAdapterPosition());
             mActivity.startActivity(intent);
         });
     }

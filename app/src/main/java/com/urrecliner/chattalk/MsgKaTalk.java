@@ -3,7 +3,6 @@ package com.urrecliner.chattalk;
 import static com.urrecliner.chattalk.NotificationListener.subFunc;
 import static com.urrecliner.chattalk.SubFunc.logQueUpdate;
 import static com.urrecliner.chattalk.SubFunc.sounds;
-import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.aAlertLineIdx;
 import static com.urrecliner.chattalk.Vars.aGroupSaid;
 import static com.urrecliner.chattalk.Vars.aGroupWhoKey1;
@@ -13,6 +12,7 @@ import static com.urrecliner.chattalk.Vars.aGroups;
 import static com.urrecliner.chattalk.Vars.alertWhoIndex;
 import static com.urrecliner.chattalk.Vars.alertsAdapter;
 import static com.urrecliner.chattalk.Vars.nineIgnores;
+import static com.urrecliner.chattalk.MainActivity.utils;
 
 import android.util.Log;
 
@@ -23,6 +23,8 @@ import java.util.Collections;
 class MsgKaTalk {
 
     void say(String iGroup, String iWho, String iText) {
+        if (utils == null)
+            utils = new Utils();
         int gIdx = Collections.binarySearch(aGroups, iGroup);
         if (gIdx >= 0) {    // within Alert Group
             if (iText.length() < 8 || iText.contains("http"))
@@ -39,6 +41,8 @@ class MsgKaTalk {
                 if ((iText.contains(aGroupWhoKey1[gIdx][gwIdx][i])) &&
                     (iText.contains(aGroupWhoKey2[gIdx][gwIdx][i])) &&
                     (!iText.contains(aGroupWhoSkip[gIdx][gwIdx][i]))) {
+                    if (subFunc.alertStock == null)
+                        subFunc.alertStock = new AlertStock();
                     subFunc.alertStock.show(iGroup, iText, aAlertLineIdx[gIdx][gwIdx][i]);
                     if (alertsAdapter != null)
                         alertsAdapter.notifyItemChanged(aAlertLineIdx[gIdx][gwIdx][i]);

@@ -1,8 +1,6 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.aBar;
-import static com.urrecliner.chattalk.Vars.alertLines;
 import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.topTabs;
@@ -28,7 +26,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
-import com.urrecliner.chattalk.Sub.AlertLine;
 import com.urrecliner.chattalk.Sub.Permission;
 
 import java.util.Set;
@@ -40,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     int count = 0;
     Vars vars = null;
     SubFunc subFunc = null;
-
+    public static Utils utils = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,22 +121,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (item.getItemId() == R.id.reload_all_tables) {
             new OptionTables().readAll();
-            AlertTable.readFile();
-            AlertTable.makeArrays();
-            for (int i = 0; i < alertLines.size(); i++) {
-                AlertLine al = alertLines.get(i);
-                new Utils().logW("alertStock", i + ") " + al.group + "/" + al.who +
-                        " key1=" + al.key1 + " key2=" + al.key2 + " match=" + al.matched);
-            }
-
-//            for (int gI = 0; gI < aGroups.size(); gI++) {
-//                for (int gW = 0; gW < aGroupWhos[gI].length; gW++) {
-//                    Log.w("a", gI + " group= " + aGroups.get(gI)+" who ="+aGroupWhos[gI][gW]+" keylen="+ aGroupWhoKey1[gI][gW].length);
-//                    for (int k = 0; k < aGroupWhoKey1[gI][gW].length; k++)
-//                        Log.w("a", " key1="+aGroupWhoKey1[gI][gW][k]+ " key2="+aGroupWhoKey2[gI][gW][k] +" pos="+aAlertLineIdx[gI][gW][k]);
-//                }
-//            }
-            utils.showSnackBar("All Table","Reloaded");
+            AlertTable.readFile("Main");
+            new Utils().showSnackBar("All Table","Reloaded");
         }
         return false;
     }
@@ -152,6 +135,8 @@ public class MainActivity extends AppCompatActivity {
             vars.set(mContext, "onResume");
             subFunc = new SubFunc();
         }
+        if (utils == null)
+            utils = new Utils();
         aBar = getSupportActionBar();
         aBar.setIcon(R.mipmap.chat_talk_mini);
         WifiMonitor.init(mContext);
@@ -170,7 +155,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }, 60000*300, 60000*300);
         super.onResume();
-
     }
 
     private boolean isNotificationAllowed(String packageName) {

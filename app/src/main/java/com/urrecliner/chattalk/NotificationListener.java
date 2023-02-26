@@ -12,6 +12,7 @@ import static com.urrecliner.chattalk.Vars.sbnWho;
 import static com.urrecliner.chattalk.Vars.smsTextIgnores;
 import static com.urrecliner.chattalk.Vars.smsWhoIgnores;
 import static com.urrecliner.chattalk.Vars.textIgnores;
+import static com.urrecliner.chattalk.MainActivity.utils;
 
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
@@ -19,9 +20,7 @@ import android.util.Log;
 
 import com.urrecliner.chattalk.Sub.IgnoreThis;
 import com.urrecliner.chattalk.Sub.MapWhoText;
-import com.urrecliner.chattalk.Sub.WhoText;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class NotificationListener extends NotificationListenerService {
@@ -51,6 +50,10 @@ public class NotificationListener extends NotificationListenerService {
 
     static Vars vars = null;
     static SubFunc subFunc = null;
+    static MsgKaTalk msgKaTalk = null;
+    static MsgSMS msgSMS = null;
+    static SbnBundle sbnBundle = null;
+
     @Override
     public void onCreate() {
         if (mContext == null || subFunc == null) {
@@ -70,7 +73,11 @@ public class NotificationListener extends NotificationListenerService {
             vars.set(this, "noti Post");
             subFunc = new SubFunc();
         }
-        if (subFunc.sbnBundle.bypassSbn(sbn))
+        if (utils == null)
+            utils = new Utils();
+        if (sbnBundle == null)
+            sbnBundle = new SbnBundle();
+        if (sbnBundle.bypassSbn(sbn))
             return;
 
         switch (sbnPackageType) {
@@ -85,16 +92,18 @@ public class NotificationListener extends NotificationListenerService {
                     if (IgnoreThis.contains(sbnWho, kGroupWhoIgnores)||
                         MapWhoText.repeated(kkWhoTexts, sbnWho, sbnText))
                         return;
-                    sbnText = subFunc.utils.strReplace(sbnWho, subFunc.utils.text2OneLine(sbnText));
+                    sbnText = utils.strReplace(sbnWho, utils.text2OneLine(sbnText));
                     String head = "{카톡!"+ sbnWho + "} ";
                     NotificationBar.update("카톡!"+sbnWho, sbnText);
                     subFunc.logQueUpdate.add( head, sbnText);
-                    subFunc.sounds.speakAfterBeep(" 카톡왔음 " + sbnWho + " 님이 " + subFunc.utils.replaceKKHH(subFunc.utils.makeEtc(sbnText, 150)));
+                    subFunc.sounds.speakAfterBeep(" 카톡왔음 " + sbnWho + " 님이 " + utils.replaceKKHH(utils.makeEtc(sbnText, 150)));
                 } else {
                     if ((IgnoreThis.contains(sbnGroup, kGroupWhoIgnores)) ||
                         (!sbnWho.equals("") && IgnoreThis.contains(sbnWho, kGroupWhoIgnores)))
                         return;
-                    subFunc.msgKaTalk.say(sbnGroup, sbnWho, subFunc.utils.text2OneLine(sbnText));
+                    if (msgKaTalk == null)
+                        msgKaTalk = new MsgKaTalk();
+                    msgKaTalk.say(sbnGroup, sbnWho, utils.text2OneLine(sbnText));
                 }
                 break;
 
@@ -108,23 +117,27 @@ public class NotificationListener extends NotificationListenerService {
                     return;
                 if (MapWhoText.repeated(smsWhoTexts, sbnWho, sbnText))
                     return;
-                subFunc.msgSMS.say(sbnWho, subFunc.utils.text2OneLine(sbnText));
+                if (msgSMS == null)
+                    msgSMS = new MsgSMS();
+                msgSMS.say(sbnWho, utils.text2OneLine(sbnText));
                 break;
 
             case NAHMOO:
 
-                new MsgNamoo().say(subFunc.utils.text2OneLine(sbnText));
+                new MsgNamoo().say(utils.text2OneLine(sbnText));
                 break;
 
             case TELEGRAM:
 
                 if (sbnText.contains("곳에서 보냄"))
                     return;
-                sbnText = subFunc.utils.text2OneLine(sbnText);
+                sbnText = utils.text2OneLine(sbnText);
                 final String [] stocks = { "바른"};
                 for (String s: stocks) {
                     if (sbnWho.contains(s)) {
-                        subFunc.msgKaTalk.say("텔레", sbnWho, sbnText);
+                        if (msgKaTalk == null)
+                            msgKaTalk = new MsgKaTalk();
+                        msgKaTalk.say("텔레", sbnWho, sbnText);
                         return;
                     }
                 }
@@ -132,7 +145,7 @@ public class NotificationListener extends NotificationListenerService {
                 subFunc.logQueUpdate.add(head, sbnText);
                 NotificationBar.update(sbnGroup + "📞" + sbnWho, sbnText);
                 sbnText = head + " 로 부터. " + sbnText;
-                subFunc.sounds.speakAfterBeep(subFunc.utils.makeEtc(sbnText, 200));
+                subFunc.sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
                 break;
 
             case TESLA:
@@ -164,48 +177,33 @@ public class NotificationListener extends NotificationListenerService {
                     if (sbnText.contains(s) || sbnWho.contains(s))
                         return;
                 }
-                sbnText = subFunc.utils.text2OneLine(sbnText);  // 토스는 아직 줄일게 없음
+                sbnText = utils.text2OneLine(sbnText);  // 토스는 아직 줄일게 없음
                 head = "[" + sbnPackageNick + "]";
                 subFunc.logQueUpdate.add(head , sbnWho+"🖐"+sbnText);
                 NotificationBar.update(sbnPackageNick, sbnText);
                 sbnText = "토스 로부터 " + sbnText;
-                subFunc.sounds.speakAfterBeep(subFunc.utils.makeEtc(sbnText, 200));
-                break;
-
-            case YYY:
-
-                if (MapWhoText.repeated(whoAndTexts, sbnPackageNick, sbnText) ||
-                        IgnoreThis.contains(sbnText, textIgnores))
-                    break;
-                sbnText = subFunc.utils.text2OneLine(sbnText);
-                sbnText = subFunc.utils.strReplace(sbnWho, sbnText);
-                head = sbnGroup + "👍"+ sbnWho +"👍";
-                subFunc.logQueUpdate.add("[" + sbnPackageNick + "] "+head, sbnText);
-                NotificationBar.update(sbnGroup + "👍"+ sbnWho, sbnText);
-                subFunc.utils.logW(sbnPackageNick, head+sbnText);
-                sbnText = sbnPackageNick + " 로부터 " + head + sbnText;
-                subFunc.sounds.speakAfterBeep(subFunc.utils.makeEtc(sbnText, 200));
+                subFunc.sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
                 break;
 
             case YYX:     // exclude Group e.g. bank app
 
-                sbnText = subFunc.utils.text2OneLine(sbnText);
+                sbnText = utils.text2OneLine(sbnText);
                 if (MapWhoText.repeated(whoAndTexts, sbnPackageNick, sbnText) ||
                         IgnoreThis.contains(sbnText, textIgnores))
                     break;
-                sbnText = subFunc.utils.strReplace(sbnWho, sbnText);
+                sbnText = utils.strReplace(sbnWho, sbnText);
                 head = "[" + sbnPackageNick + "🖐️"+ sbnWho +"] ";
                 subFunc.logQueUpdate.add(head , sbnText);
                 NotificationBar.update(sbnPackageNick + ":"+ sbnWho, sbnText);
                 sbnText = sbnPackageNick + " 로부터 " + head + sbnText;
-                subFunc.sounds.speakAfterBeep(subFunc.utils.makeEtc(sbnText, 200));
+                subFunc.sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
                 break;
 
             case YNX: // no who, log Yes, say Yes
 
                 if (IgnoreThis.contains(sbnText, textIgnores))
                     return;
-                sbnText = subFunc.utils.text2OneLine(sbnText);
+                sbnText = utils.text2OneLine(sbnText);
                 sbnText = sbnGroup + "✓" + sbnText;
                 subFunc.logQueUpdate.add("["+sbnPackageNick+"]", sbnText);
                 subFunc.sounds.speakAfterBeep(sbnPackageNick + " 로 부터 " + sbnText);
@@ -215,7 +213,7 @@ public class NotificationListener extends NotificationListenerService {
 
                 if (IgnoreThis.contains(sbnText, textIgnores))
                     return;
-                sbnText = subFunc.utils.text2OneLine(sbnText);
+                sbnText = utils.text2OneLine(sbnText);
                 sbnText = sbnWho + "✓" + sbnText;
                 subFunc.logQueUpdate.add(sbnPackageNick, sbnText);
                 NotificationBar.update(sbnPackageNick, sbnText);
@@ -227,20 +225,38 @@ public class NotificationListener extends NotificationListenerService {
                 if (IgnoreThis.contains(sbnText, textIgnores) ||
                     MapWhoText.repeated(whoAndTexts, sbnWho, sbnText))
                     return;
-                sbnText = subFunc.utils.text2OneLine(sbnText);
-                sbnText = subFunc.utils.strReplace(sbnWho, subFunc.utils.text2OneLine(sbnText));
+                sbnText = utils.text2OneLine(sbnText);
+                if (sbnGroup.length() > 1)
+                    sbnText = utils.strReplace(sbnGroup, utils.text2OneLine(sbnText));
+                else
+                    sbnText = utils.strReplace(sbnWho, utils.text2OneLine(sbnText));
                 head = "[" + sbnPackageNick + "🖐️"+ sbnGroup + "🖐️"+ sbnWho +"] ";
                 subFunc.logQueUpdate.add(head , sbnText);
                 NotificationBar.update((sbnGroup.equals("")) ? sbnPackageNick + "🖐️"+ sbnWho : sbnGroup + "🖐️"+ sbnWho, sbnText);
                 sbnText = sbnPackageNick + " 로부터 " + head + sbnText;
-                subFunc.sounds.speakAfterBeep(subFunc.utils.makeEtc(sbnText, 230));
+                subFunc.sounds.speakAfterBeep(utils.makeEtc(sbnText, 230));
+                break;
+
+            case YYY:
+
+                if (MapWhoText.repeated(whoAndTexts, sbnPackageNick, sbnText) ||
+                        IgnoreThis.contains(sbnText, textIgnores))
+                    break;
+                sbnText = utils.text2OneLine(sbnText);
+                sbnText = utils.strReplace(sbnWho, sbnText);
+                head = sbnGroup + "👍"+ sbnWho +"👍";
+                subFunc.logQueUpdate.add("[" + sbnPackageNick + "] "+head, sbnText);
+                NotificationBar.update(sbnGroup + "👍"+ sbnWho, sbnText);
+                utils.logW(sbnPackageNick, head+sbnText);
+                sbnText = sbnPackageNick + " 로부터 " + head + sbnText;
+                subFunc.sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
                 break;
 
             case YNN: // no who
 
                 if (IgnoreThis.contains(sbnText, textIgnores))
                     return;
-                sbnText = subFunc.utils.text2OneLine(sbnText);
+                sbnText = utils.text2OneLine(sbnText);
                 sbnText = sbnGroup + "§" + sbnWho + "§" + sbnText;
                 subFunc.sounds.speakAfterBeep(sbnPackageNick + " 로 부터 " + sbnText);
                 break;
@@ -252,7 +268,7 @@ public class NotificationListener extends NotificationListenerService {
                 if (sbnText.contains("지금 확인하세요") || MapWhoText.repeated(whoAndTexts, sbnWho, sbnText)
                         || IgnoreThis.contains(sbnText, textIgnores))
                     return;
-                sbnText = subFunc.utils.strReplace(sbnWho, subFunc.utils.text2OneLine(sbnText));
+                sbnText = utils.strReplace(sbnWho, utils.text2OneLine(sbnText));
                 head = sbnGroup + "🗼"+ sbnWho +"🗼";
                 NotificationBar.update(sbnGroup + "🗼"+ sbnWho, sbnText);
                 sbnText = head + " 로부터 "+ sbnText;
@@ -263,11 +279,11 @@ public class NotificationListener extends NotificationListenerService {
 
                 if (MapWhoText.repeated(whoAndTexts, sbnWho, sbnText))
                     return;
-                sbnText = subFunc.utils.text2OneLine(sbnText);
+                sbnText = utils.text2OneLine(sbnText);
                 sbnText = "새로운 앱이 설치됨,  group:" + sbnGroup + " who:" + sbnWho + " text:" + sbnText;
                 NotificationBar.update("[새 앱]", sbnText);
                 subFunc.logQueUpdate.add("[ " + sbnAppFullName + " ]", sbnText);
-                subFunc.utils.logW("new App "+ sbnGroup, sbnAppFullName +" "+ sbnText);
+                utils.logW("new App "+ sbnGroup, sbnAppFullName +" "+ sbnText);
                 subFunc.sounds.speakAfterBeep(sbnText);
                 break;
         }

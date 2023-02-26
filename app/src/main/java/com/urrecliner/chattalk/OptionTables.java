@@ -1,7 +1,6 @@
 package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.SubFunc.sounds;
-import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.kGroupWhoIgnores;
 import static com.urrecliner.chattalk.Vars.kkTxtIgnores;
 import static com.urrecliner.chattalk.Vars.mContext;
@@ -66,7 +65,7 @@ class OptionTables {
         for (String pLine:packages) {
             strings = pLine.split("\\^");
             if (strings.length < 3) {
-                utils.showSnackBar("Package Table Error ", pLine);
+                new Utils().showSnackBar("Package Table Error ", pLine);
             } else {
                 String fullName = strings[0].trim();
                 String nickName = strings[1].trim();

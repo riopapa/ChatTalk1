@@ -1,7 +1,6 @@
 package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.SubFunc.sounds;
-import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.aAlertLineIdx;
 import static com.urrecliner.chattalk.Vars.aGSkip1;
 import static com.urrecliner.chattalk.Vars.aGSkip2;
@@ -16,21 +15,16 @@ import static com.urrecliner.chattalk.Vars.aGroupWhoSkip;
 import static com.urrecliner.chattalk.Vars.aGroupWhos;
 import static com.urrecliner.chattalk.Vars.aGroups;
 import static com.urrecliner.chattalk.Vars.alertLines;
-import static com.urrecliner.chattalk.Vars.tableFolder;
 import static com.urrecliner.chattalk.Vars.tableListFile;
-import static com.urrecliner.chattalk.Vars.todayFolder;
+import static com.urrecliner.chattalk.MainActivity.utils;
+
+import android.util.Log;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
-import com.urrecliner.chattalk.Sub.ByteLength;
 
-import org.apache.commons.lang3.StringUtils;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 class AlertTable {
 
@@ -40,8 +34,9 @@ class AlertTable {
 //   group^  who        ^  keyword1 ^ keyword2 ^ talk ^ count ^ skip     ^ memo ^ prev ^ next
 //    고선 ^ 고선생       ^    매수    ^   목표가  ^      ^  101  ^          ^ 01/11
 
-    static void readFile() {
+    static void readFile(String msg) {
 
+        Log.w("alertTable","read "+msg);
         String[] lines = tableListFile.read("kTalkAlerts");
 
         alertLines = new ArrayList<>();
@@ -50,6 +45,8 @@ class AlertTable {
             String[] strings = (line+" ").split("\\^");
             if (strings.length < 10) {
                 String s = "Caret for Alert missing, "+line;
+                if (utils == null)
+                    utils = new Utils();
                 utils.showSnackBar("kTalkAlerts", s);
                 utils.logW("Alert Table "," Error "+line);
                 sounds.speakAfterBeep(s);
@@ -69,6 +66,7 @@ class AlertTable {
             String next = strings[9].trim(); if (next.equals("")) next = tKey2;
             alertLines.add(new AlertLine(tGroup, tWho, tKey1, tKey2, tTalk, matched, tSkip, tMemo, tMore, prev, next));
         }
+        makeArrays();
     }
 
     static ArrayList<String> gSkip1 = new ArrayList<>();

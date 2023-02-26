@@ -2,10 +2,7 @@ package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.SubFunc.logQueUpdate;
 import static com.urrecliner.chattalk.SubFunc.sounds;
-import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.mContext;
-
-import android.os.AsyncTask;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -63,7 +60,7 @@ public class Upload2Google {
                 error -> {
                     nowUploading = false;
                     String s = group+", "+who+", "+timeStamp+", "+percent+", "+statement;
-                    utils.logW("uploadStock()", s+"\n Error "+s);
+                    new Utils().logW("uploadStock()", s+"\n Error "+s);
                     sounds.speakAfterBeep("Google Upload Error "+ s);
                     sounds.beepOnce(Vars.soundType.ERR.ordinal());
                 }

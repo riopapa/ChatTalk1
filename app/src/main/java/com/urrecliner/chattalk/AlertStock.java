@@ -2,13 +2,12 @@ package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.SubFunc.logQueUpdate;
 import static com.urrecliner.chattalk.SubFunc.sounds;
-import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.alertLines;
-import static com.urrecliner.chattalk.Vars.alertsAdapter;
-
-import android.util.Log;
+import static com.urrecliner.chattalk.Vars.mContext;
+import static com.urrecliner.chattalk.MainActivity.utils;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
+import com.urrecliner.chattalk.Sub.AlertLinesGetPut;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,6 +18,8 @@ public class AlertStock {
     void show(String iGroup, String iText, int aIdx) {
 
         String key12, sTalk, sayMore, group, who;
+        if (utils == null)
+            utils = new Utils();
         AlertLine al = alertLines.get(aIdx);
         al.matched++;
         alertLines.set(aIdx, al);
@@ -33,7 +34,7 @@ public class AlertStock {
         String head = " [" + group + "." + who + "] "+stockName;
         Thread thisThread = new Thread(() -> {
             String timeStamp = new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date());
-            FileIO.uploadStock(group, who, stockName, sTalk, sText, key12, timeStamp);
+            FileIO.uploadStock(group, who, sTalk, stockName, sText, key12, timeStamp);
             NotificationBar.update(head, sText);
             logQueUpdate.add(head, sText + key12);
             if (sTalk.length() > 0) {
@@ -44,22 +45,21 @@ public class AlertStock {
             } else {
                 sounds.beepOnce(Vars.soundType.ONLY.ordinal());
             }
-            new AlertSave();
+            new AlertLinesGetPut().put(alertLines, mContext);
         });
         thisThread.start();
     }
 
     String getStockName(String prev, String next, String iText) {
         String s = iText;
-        Log.w("getStockName", "prev="+prev+", iText="+iText);
         int p1 = s.indexOf(prev);
         if (p1 >= 0) {
             s = s.substring(p1+prev.length());
             p1 = s.indexOf(next);
             if (p1 > 0)
-                return s.substring(0,p1-1).replaceAll("[0-9],%|","").trim();
+                return s.substring(0,p1-1).replaceAll("[0-9,%|]","").trim();
             return "NoName2";
         }
-        return "NoName";
+        return "NoName1";
     }
 }

@@ -1,10 +1,10 @@
 package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.SubFunc.logQueUpdate;
-import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.packageDirectory;
 import static com.urrecliner.chattalk.Vars.todayFolder;
 
+import android.os.Environment;
 import android.util.Log;
 
 import java.io.BufferedWriter;
@@ -18,7 +18,10 @@ import java.util.Locale;
 public class FileIO {
 
     static void readyPackageFolder() {
-        if (packageDirectory != null && !packageDirectory.exists()) {
+        if (packageDirectory == null)
+            packageDirectory = new File(Environment.getExternalStorageDirectory(), "_ChatTalkLog");
+
+        if (packageDirectory.exists()) {
             try {
                 //noinspection ResultOfMethodCallIgnored
                 packageDirectory.mkdirs();
@@ -28,7 +31,8 @@ public class FileIO {
         }
     }
 
-    static void uploadStock(String group, String who, String percent, String talk, String text, String key12, String timeStamp) {
+    static void uploadStock(String group, String who, String percent, String talk,
+                            String text,    String key12, String timeStamp) {
         Upload2Google.add2Que(group, timeStamp, who, percent, talk, text, key12);
     }
 
@@ -47,7 +51,7 @@ public class FileIO {
             if (!file.exists()) {
                 if (!file.createNewFile()) {
                     String s = "create file Error "+file;
-                    utils.showSnackBar("append2File",s);
+                    new Utils().showSnackBar("append2File",s);
                     Log.e("file "+file,s);
                 }
             }
@@ -77,8 +81,8 @@ public class FileIO {
             bufferedWriter.write(outText);
             bufferedWriter.close();
         } catch (IOException ex) {
-            utils.logE("editor", fileName + "'\n" + ex);
-            utils.showSnackBar("writeTextFile", "Write table error " + fileName);
+            new Utils().logE("editor", fileName + "'\n" + ex);
+            new Utils().showSnackBar("writeTextFile", "Write table error " + fileName);
         }
     }
 }

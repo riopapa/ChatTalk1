@@ -1,6 +1,5 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.beepRawIds;
 import static com.urrecliner.chattalk.Vars.isPhoneBusy;
 import static com.urrecliner.chattalk.Vars.mAudioManager;
@@ -115,7 +114,7 @@ class Sounds {
                         isTalking = true;
                         mTTS.speak(speakText, TextToSpeech.QUEUE_ADD, null, TTSId);
                     } catch (Exception e) {
-                        utils.logE(logID, "TTS Error:" + e);
+                        new Utils().logE(logID, "TTS Error:" + e);
                     }
                 }
             }, 150);

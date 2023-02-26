@@ -1,11 +1,12 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.alertLines;
+import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.tableFolder;
 import static com.urrecliner.chattalk.Vars.todayFolder;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
+import com.urrecliner.chattalk.Sub.AlertLinesGetPut;
 import com.urrecliner.chattalk.Sub.ByteLength;
 
 import org.apache.commons.lang3.StringUtils;
@@ -42,7 +43,8 @@ public class AlertSave {
         SimpleDateFormat timeStamp = new SimpleDateFormat("_HHmmss", Locale.KOREA);
         FileIO.writeTextFile( todayFolder,"kTalkAlerts"+timeStamp.format(new Date()),s.toString());
         AlertTable.makeArrays();
-        utils.showSnackBar("Alert Table", "Saved..");
+        new AlertLinesGetPut().put(alertLines, mContext);
+        new Utils().showSnackBar("Alert Table", "Saved..");
     }
 
     String strPad(String s, int size) {

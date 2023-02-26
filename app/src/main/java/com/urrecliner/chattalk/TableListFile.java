@@ -1,6 +1,5 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.tableFolder;
 
 import java.io.File;
@@ -21,7 +20,7 @@ public class TableListFile {
             lines = Files.readAllLines(Paths.get(
                     String.valueOf(new File(tableFolder, filename + ".txt"))));
         } catch (IOException e) {
-            utils.showSnackBar("ArrayTable.read", "File " + filename+ " Not Found");
+            new Utils().showSnackBar("ArrayTable.read", "File " + filename+ " Not Found");
             e.printStackTrace();
         }
 
@@ -46,7 +45,7 @@ public class TableListFile {
             lines = Files.readAllLines(Paths.get(
                     String.valueOf(fullName)));
         } catch (IOException e) {
-            utils.showSnackBar("readRawLines", "File " + fullName+ " Not Found");
+            new Utils().showSnackBar("readRawLines", "File " + fullName+ " Not Found");
             e.printStackTrace();
         }
         return lines.toArray(new String[0]);

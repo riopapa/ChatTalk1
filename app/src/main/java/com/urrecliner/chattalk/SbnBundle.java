@@ -1,7 +1,5 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.SubFunc.msgAndroid;
-import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.packageIgnores;
 import static com.urrecliner.chattalk.Vars.pkgFullNames;
 import static com.urrecliner.chattalk.Vars.pkgNickNames;
@@ -24,6 +22,7 @@ import java.util.Collections;
 
 public class SbnBundle {
 
+    Utils utils = null;
     public boolean bypassSbn(StatusBarNotification sbn) {
 
         sbnAppFullName = sbn.getPackageName().toLowerCase();
@@ -45,14 +44,16 @@ public class SbnBundle {
             if (sbnWho.equals("null"))
                 sbnWho = "";
         } catch (Exception e) {
-            utils.logW("sbn WHO Error", "no Who "+sbnAppFullName+" "+sbnText);
+            new Utils().logW("sbn WHO Error", "no Who "+sbnAppFullName+" "+sbnText);
             return true;
         }
         if (sbnAppFullName.equals("android")) {
             if (sbnText.length() > 10 && !IgnoreThis.contains(sbnText, systemIgnores)
                     && !IgnoreThis.contains(sbnWho, systemIgnores)) {
+                if (utils == null)
+                    utils = new Utils();
                 sbnText = utils.text2OneLine(sbnText);
-                msgAndroid.say(sbnAppFullName, sbnWho, sbnText);
+                new MsgAndroid().say(sbnAppFullName, sbnWho, sbnText);
             }
             return true;
         }

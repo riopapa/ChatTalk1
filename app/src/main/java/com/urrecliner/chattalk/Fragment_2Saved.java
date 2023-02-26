@@ -1,6 +1,5 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.aBar;
 import static com.urrecliner.chattalk.Vars.logSave;
 import static com.urrecliner.chattalk.Vars.mContext;
@@ -85,7 +84,7 @@ public class Fragment_2Saved extends Fragment {
             }
             sv = ss;
             etTable.setText(ss);
-            utils.showSnackBar(key, cnt+" times Found");
+            new Utils().showSnackBar(key, cnt+" times Found");
             Editable etText = etTable.getText();
             if (logPos > 0) {
                 Selection.setSelection(etText, logPos);

@@ -59,8 +59,7 @@ public class Fragment_3Alert extends Fragment {
 
         if (item.getItemId() == R.id.reload_all_tables) {
             new OptionTables().readAll();
-            AlertTable.readFile();
-            AlertTable.makeArrays();
+            AlertTable.readFile("alertTab");
             AlertTable.sort();
             alertsAdapter.notifyDataSetChanged();
         } else if (item.getItemId() == R.id.rotate_screen) {

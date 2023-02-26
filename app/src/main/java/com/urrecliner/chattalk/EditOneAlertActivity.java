@@ -2,7 +2,6 @@ package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.Vars.alertLines;
 import static com.urrecliner.chattalk.Vars.alertsAdapter;
-import static com.urrecliner.chattalk.Vars.linePos;
 import static com.urrecliner.chattalk.Vars.mContext;
 
 import android.os.Bundle;
@@ -30,11 +29,13 @@ public class EditOneAlertActivity extends AppCompatActivity {
     String mGroup, mWho, mPercent, mMemo, mPrev, mNext;
     View deleteMenu;
     boolean newGroup = false;
+    int linePos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alert_edit_one);
+        linePos = getIntent().getIntExtra("linePos", linePos);
 //        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         newGroup = false;
         al = alertLines.get(linePos);
@@ -144,8 +145,8 @@ public class EditOneAlertActivity extends AppCompatActivity {
             AlertTable.sort();
             alertsAdapter = new AlertsAdapter();
 //            alertsAdapter.notifyDataSetChanged();
-            finish();
             new AlertSave();
+            finish();
 
         } else if (item.getItemId() == R.id.duplicate_alert) {
             linePos++;

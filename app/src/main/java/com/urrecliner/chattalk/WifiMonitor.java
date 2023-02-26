@@ -1,7 +1,5 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.SubFunc.utils;
-
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.Network;
@@ -58,7 +56,7 @@ public class WifiMonitor {
             public void onLost(@NonNull Network network) {
                 super.onLost(network);
                 if (wifiName != null) {
-                    utils.showToast(wifiName+" 연결 끊어짐");
+                    new Utils().showToast(wifiName+" 연결 끊어짐");
                     wifiName = null;
                 }
             }

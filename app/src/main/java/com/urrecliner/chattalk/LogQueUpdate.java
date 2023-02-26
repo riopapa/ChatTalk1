@@ -1,7 +1,6 @@
 package com.urrecliner.chattalk;
 
 import static android.content.Context.MODE_PRIVATE;
-import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.logQue;
 import static com.urrecliner.chattalk.Vars.logSave;
 import static com.urrecliner.chattalk.Vars.mContext;
@@ -64,17 +63,16 @@ public class LogQueUpdate {
 
     public void readyTodayFolderIfNewDay() {
         String nowDay = new SimpleDateFormat("yy-MM-dd", Locale.KOREA).format(new Date());
-        if (toDay.equals(nowDay))
+        if (toDay != null && toDay.equals(nowDay))
             return;
         toDay = nowDay;
-//        utils.setTimeBoundary();
         todayFolder = new File(packageDirectory, toDay);
         if (!todayFolder.exists()) {
             if (todayFolder.mkdirs()) {
                 String logQueFile = "logQue " + toDay;
                 FileIO.writeTextFile(todayFolder, logQueFile, logQue);
                 logQue += "\n /** " + toDay + new SimpleDateFormat(" (EEE) HH:mm ", Locale.KOREA).format(new Date()) + " NEW DAY " + " **/\nNew Day" + "\n";
-                utils.deleteOldFiles();
+                new Utils().deleteOldFiles();
             }
         }
     }

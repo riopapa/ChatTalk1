@@ -1,15 +1,12 @@
 package com.urrecliner.chattalk;
 
 import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static com.urrecliner.chattalk.SubFunc.utils;
-import static com.urrecliner.chattalk.Vars.aAlertLineIdx;
-import static com.urrecliner.chattalk.Vars.aGroupSaid;
 import static com.urrecliner.chattalk.Vars.aGroupWhoKey1;
 import static com.urrecliner.chattalk.Vars.aGroupWhoKey2;
 import static com.urrecliner.chattalk.Vars.aGroupWhoSkip;
 import static com.urrecliner.chattalk.Vars.aGroups;
-import static com.urrecliner.chattalk.Vars.alertWhoIndex;
 import static com.urrecliner.chattalk.Vars.alertLines;
+import static com.urrecliner.chattalk.Vars.alertWhoIndex;
 import static com.urrecliner.chattalk.Vars.chatGroup;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.replGroup;
@@ -25,13 +22,11 @@ import android.text.style.UnderlineSpan;
 import android.util.Log;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
+import static com.urrecliner.chattalk.MainActivity.utils;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
-import java.util.Locale;
 
 public class SelectChats {
 

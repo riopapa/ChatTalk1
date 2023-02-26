@@ -1,12 +1,10 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.aBar;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.nowFileName;
 import static com.urrecliner.chattalk.Vars.topTabs;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,7 +23,7 @@ import com.urrecliner.chattalk.Sub.WifiName;
 public class Fragment_0Table extends Fragment {
 
     ViewGroup rootView;
-    Activity activity;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -78,9 +76,8 @@ public class Fragment_0Table extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.reload_all_tables) {
             new OptionTables().readAll();
-            AlertTable.readFile();
-            AlertTable.makeArrays();
-            utils.showSnackBar("All Table", "Reloaded");
+            AlertTable.readFile("read All");
+            new Utils().showSnackBar("All Table", "Reloaded");
         }
         return super.onOptionsItemSelected(item);
     }

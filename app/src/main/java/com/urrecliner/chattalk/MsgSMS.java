@@ -1,12 +1,11 @@
 package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.SubFunc.logQueUpdate;
-import static com.urrecliner.chattalk.SubFunc.msgKaTalk;
 import static com.urrecliner.chattalk.SubFunc.sounds;
-import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.lastChar;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.nineIgnores;
+import static com.urrecliner.chattalk.MainActivity.utils;
 
 import com.urrecliner.chattalk.Sub.IsWhoNine;
 
@@ -20,12 +19,18 @@ class MsgSMS {
     final static String jrGroup = "찌라";
     final static String nhStock = "NH투자증권";
 
+    static MsgKaTalk msgKaTalk = null;
     void say(String mWho, String mText) {
+
+        if (utils == null)
+            utils = new Utils();
 
         mWho = mWho.replaceAll("[\\u200C-\\u206F]", "");
         mText = mText.replace(mContext.getString(R.string.web_sent), "").replaceAll("[\\u200C-\\u206F]", "");
 //        manageLogQue.add("MsgSMS", "who="+mWho+", txt="+mText);
         if (mWho.startsWith(jrGroup)) {
+            if (msgKaTalk == null)
+                msgKaTalk = new MsgKaTalk();
             msgKaTalk.say(jrGroup, mWho, mText);
         } else if (mWho.equals(nhStock)) {
             // |[NH투자]|매수 전량체결|KMH    |10주|9,870원|주문 0001026052
@@ -67,7 +72,7 @@ class MsgSMS {
                     NotificationBar.update(trade +":"+buySell, sayMsg);
                     logQueUpdate.add("sms>"+nhStock, sayMsg);
                     String timeStamp = new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date());
-                    FileIO.uploadStock(sGroup, mWho, stockName, buySell, mText, amount, timeStamp);
+                    FileIO.uploadStock(sGroup, mWho, buySell, stockName, mText, amount, timeStamp);
                     sounds.speakAfterBeep(sayMsg.replaceAll("[0-9]",""));
                 }
             } catch (Exception e) {

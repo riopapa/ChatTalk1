@@ -1,7 +1,6 @@
 package com.urrecliner.chattalk;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
-import static com.urrecliner.chattalk.SubFunc.utils;
 import static com.urrecliner.chattalk.Vars.aBar;
 import static com.urrecliner.chattalk.Vars.logQue;
 import static com.urrecliner.chattalk.Vars.logSave;
@@ -98,7 +97,7 @@ public class Fragment_1Log extends Fragment {
             }
             sv = ss;
             etTable.setText(ss);
-            utils.showSnackBar(key, cnt+" times Found");
+            new Utils().showSnackBar(key, cnt+" times Found");
             Editable etText = etTable.getText();
             if (logPos > 0) {
                 Selection.setSelection(etText, logPos);
@@ -290,6 +289,8 @@ public class Fragment_1Log extends Fragment {
         if (posCurr < 0)
             posCurr = prevStart -3;
         ss.setSpan(new StyleSpan(Typeface.ITALIC), posCurr, prevStart-1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        ss.setSpan(new UnderlineSpan(), posCurr, prevStart-1,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         etTable.setText(ss);
         Editable etText = etTable.getText();
         Selection.setSelection(etText, posCurr, prevStart-1);

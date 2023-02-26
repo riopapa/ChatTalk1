@@ -17,6 +17,7 @@ import androidx.appcompat.app.ActionBar;
 
 import com.google.android.material.tabs.TabLayout;
 import com.urrecliner.chattalk.Sub.AlertLine;
+import com.urrecliner.chattalk.Sub.AlertLinesGetPut;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -77,7 +78,6 @@ public class Vars {
     /* module list */
     static AlertWhoIndex alertWhoIndex = null;
 
-    static long sharedStart, sharedFinish;
     static boolean isPhoneBusy = false;
 
     static AlertsAdapter alertsAdapter = null;
@@ -85,20 +85,18 @@ public class Vars {
     static ArrayList<AlertLine> alertLines;
 
     static String chatGroup;
-    static int linePos = 999;
     static final String lastChar = "힝";
 
     enum soundType { PRE, POST, ERR, TESLY, ONLY}
     static final int[] beepRawIds = { R.raw.a0_pre_sound, R.raw.a1_post_sound, R.raw.a2_alert, R.raw.a3_tesly, R.raw.a4_only};
 
     void set(Context context, String msg) {
-        Log.w("vars","Set msg="+msg);
+        Log.w("vars","vars set msg="+msg);
         mContext = context;
         sharePref = mContext.getSharedPreferences("sayText", MODE_PRIVATE);
         sharedEditor = sharePref.edit();
         if (mActivity != null)
             mLayoutView = mActivity.findViewById(R.id.main_layout);
-        packageDirectory = new File(Environment.getExternalStorageDirectory(), "_ChatTalkLog");
         downloadFolder = new File(Environment.getExternalStorageDirectory(), "download");
         tableFolder = new File(downloadFolder, "_ChatTalk");
 
@@ -108,9 +106,11 @@ public class Vars {
 
         FileIO.readyPackageFolder();
         sheetQues = new ArrayList<>();
-        AlertTable.readFile();
-        AlertTable.makeArrays();
+        alertLines = new AlertLinesGetPut().get(context);
+        if (alertLines.size() == 0) {
+            AlertTable.readFile("var");
+            new AlertLinesGetPut().put(alertLines, context);
+        } else
+            AlertTable.makeArrays();
     }
-
-
 }
