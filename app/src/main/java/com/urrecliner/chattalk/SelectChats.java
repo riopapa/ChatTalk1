@@ -271,17 +271,16 @@ public class SelectChats {
     }
 
     String getStockName(String prev, String next, String iText) {
-        String s = iText;
-        Log.w("getStockName", "prev="+prev+", iText="+iText);
-        int p1 = s.indexOf(prev);
+        String str = iText;
+        int p1 = str.indexOf(prev);
         if (p1 >= 0) {
-            s = s.substring(p1+prev.length());
-            p1 = s.indexOf(next);
+            str = str.substring(p1+prev.length());
+            p1 = str.indexOf(next);
             if (p1 > 0)
-                return s.substring(0,p1).replaceAll("[0-9,%|()]","").trim();
-            return "NoName2";
+                return str.substring(0,p1).replaceAll("[0-9,%|#()]","").trim();
+            return "No Next";
         }
-        return "NoName";
+        return "No Prev";
     }
 
 }

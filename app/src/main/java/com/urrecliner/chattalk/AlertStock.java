@@ -28,7 +28,7 @@ public class AlertStock {
         who = al.who;
         sTalk = al.talk;
         sayMore = al.more;
-        key12 = " {" + k1 + "/" + k2 + "}";
+        key12 = " {" + k1 + "." + k2 + "}";
         String stockName = getStockName(al.prev, al.next, iText);
         String sText = utils.strReplace(iGroup, iText);
         String head = " [" + group + "." + who + "] "+stockName;
@@ -38,9 +38,8 @@ public class AlertStock {
             NotificationBar.update(head, sText);
             logQueUpdate.add(head, sText + key12);
             if (sTalk.length() > 0) {
-                String[] joins = new String[]{sTalk, group, sTalk, who,
-                        (sayMore.length()> 0) ? sayMore:"", sText,
-                        utils.makeEtc(sText, 80)};
+                String[] joins = new String[]{stockName, group, stockName, who, sTalk,
+                        stockName, utils.makeEtc(sText, 40)};
                 sounds.speakAfterBeep(String.join(" ", joins).replaceAll("[0-9]",""));
             } else {
                 sounds.beepOnce(Vars.soundType.ONLY.ordinal());
@@ -51,15 +50,15 @@ public class AlertStock {
     }
 
     String getStockName(String prev, String next, String iText) {
-        String s = iText;
-        int p1 = s.indexOf(prev);
+        String str = iText;
+        int p1 = str.indexOf(prev);
         if (p1 >= 0) {
-            s = s.substring(p1+prev.length());
-            p1 = s.indexOf(next);
+            str = str.substring(p1+prev.length());
+            p1 = str.indexOf(next);
             if (p1 > 0)
-                return s.substring(0,p1-1).replaceAll("[0-9,%|]","").trim();
-            return "NoName2";
+                return str.substring(0,p1).replaceAll("[0-9,%|#()]","").trim();
+            return "NoNext";
         }
-        return "NoName1";
+        return "NoPrev";
     }
 }

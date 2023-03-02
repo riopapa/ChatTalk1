@@ -129,9 +129,9 @@ class Utils {
         ;
     }
 
-    String strReplace(String group, String text) {
+    String strReplace(String groupOrWho, String text) {
         for (int i = 0; i < replGroupCnt; i++) {
-            int compared = group.compareTo(replGroup[i]);
+            int compared = groupOrWho.compareTo(replGroup[i]);
             if (compared == 0) {
                 for (int j = 0; j < replLong[i].length; j++)
                     text = text.replace(replLong[i][j], replShort[i][j]);

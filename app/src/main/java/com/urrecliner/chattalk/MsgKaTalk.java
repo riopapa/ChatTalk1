@@ -22,6 +22,10 @@ import java.util.Collections;
 
 class MsgKaTalk {
 
+    public MsgKaTalk() {
+        utils.logW("kakaoTalk", "Initiated");
+    }
+
     void say(String iGroup, String iWho, String iText) {
         if (utils == null)
             utils = new Utils();
