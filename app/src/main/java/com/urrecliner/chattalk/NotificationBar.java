@@ -51,12 +51,7 @@ public class NotificationBar {
                 Log.e("NotificationBar","updateIntent Error \n"+e);
             }
             if (IsScreen.On(mContext)) {
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(mContext, who + " > " + msg, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(mContext, who + " > " + msg, Toast.LENGTH_SHORT).show());
             }
         }
         lastTime = System.currentTimeMillis();

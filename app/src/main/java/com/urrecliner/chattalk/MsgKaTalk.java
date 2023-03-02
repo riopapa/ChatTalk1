@@ -45,8 +45,8 @@ class MsgKaTalk {
                 if ((iText.contains(aGroupWhoKey1[gIdx][gwIdx][i])) &&
                     (iText.contains(aGroupWhoKey2[gIdx][gwIdx][i])) &&
                     (!iText.contains(aGroupWhoSkip[gIdx][gwIdx][i]))) {
-                    if (subFunc.alertStock == null)
-                        subFunc.alertStock = new AlertStock();
+                    if (subFunc == null)
+                        subFunc  = new SubFunc();
                     subFunc.alertStock.show(iGroup, iText, aAlertLineIdx[gIdx][gwIdx][i]);
                     if (alertsAdapter != null)
                         alertsAdapter.notifyItemChanged(aAlertLineIdx[gIdx][gwIdx][i]);
@@ -62,7 +62,7 @@ class MsgKaTalk {
             NotificationBar.update(iGroup+":"+iWho, iText);
             logQueUpdate.add(head, iText);
             if (IsWhoNine.in(nineIgnores, iWho))
-                iText = iText.replaceAll("[0-9]","");
+                iText = iText.replaceAll("\\d","");
             iText = "단톡방 " + iGroup + " 에서 " + iWho + " 님이 " + utils.makeEtc(iText, 180);
             sounds.speakAfterBeep(utils.replaceKKHH(iText));
         }

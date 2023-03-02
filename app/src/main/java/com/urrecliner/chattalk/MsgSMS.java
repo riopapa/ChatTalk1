@@ -46,7 +46,7 @@ class MsgSMS {
             logQueUpdate.add(head, mText);
             NotificationBar.update("sms "+mWho, mText);
             if (IsWhoNine.in(nineIgnores, mWho))
-                mText = mText.replaceAll("[0-9]", "");
+                mText = mText.replaceAll("\\d", "");
             sounds.speakAfterBeep(head+" 으로부터 "+ utils.makeEtc(mText, 160));
         }
     }
@@ -73,7 +73,7 @@ class MsgSMS {
                     logQueUpdate.add("sms>"+nhStock, sayMsg);
                     String timeStamp = new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date());
                     FileIO.uploadStock(sGroup, mWho, buySell, stockName, mText, amount, timeStamp);
-                    sounds.speakAfterBeep(sayMsg.replaceAll("[0-9]",""));
+                    sounds.speakAfterBeep(sayMsg.replaceAll("\\d",""));
                 }
             } catch (Exception e) {
                 mText = "Parsing Exception_01 " + mText;

@@ -10,6 +10,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.Selection;
 import android.text.Spannable;
@@ -106,7 +107,7 @@ public class Fragment_2Saved extends Fragment {
             }
         });
 
-        new Handler().post(() -> {
+        new Handler(Looper.getMainLooper()).post(() -> {
             ScrollView scrollView1 = rootView.findViewById(R.id.scroll_2_log);
             scrollView1.smoothScrollBy(0, 40000);
         });

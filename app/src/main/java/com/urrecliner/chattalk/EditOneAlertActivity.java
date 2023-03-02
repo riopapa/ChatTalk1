@@ -6,6 +6,7 @@ import static com.urrecliner.chattalk.Vars.mContext;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,7 +27,7 @@ public class EditOneAlertActivity extends AppCompatActivity {
     AlertLine al;
     EditText eGroup, eWho, eKey1, eKey2, eTalk, eMatched, eSkip, eMemo, ePrev, eNext;
     TextView tGroup, tWho, tKey1, tTalk, tMatched, tMemo, tPrev;
-    String mGroup, mWho, mPercent, mMemo, mPrev, mNext;
+    String mGroup, mWho, mPercent, mMemo;
     View deleteMenu;
     boolean newGroup = false;
     int linePos;
@@ -73,7 +74,7 @@ public class EditOneAlertActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.menu_one, menu);
-        new Handler().post(() -> {
+        new Handler(Looper.getMainLooper()).post(() -> {
             deleteMenu = this.findViewById(R.id.action_remove);
             if (deleteMenu != null) {
                 setLongClick();

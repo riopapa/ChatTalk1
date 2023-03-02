@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
@@ -50,8 +49,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 // If you have access to the external storage, do whatever you need
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R &&
-            (!Environment.isExternalStorageManager())) {
+        if (!Environment.isExternalStorageManager()) {
                 Intent intent = new Intent();
                 intent.setAction(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
                 Uri uri = Uri.fromParts("package", this.getPackageName(), null);

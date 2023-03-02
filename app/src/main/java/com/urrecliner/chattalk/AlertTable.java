@@ -119,7 +119,7 @@ class AlertTable {
             if (alt.matched == -1) {    // this means group
                 int sz = whoList.size();
                 if (sz > 0) {    // save Prev Group
-                    aGroupWhos[gIdx] = whoList.toArray(new String[whoList.size()]);
+                    aGroupWhos[gIdx] = whoList.toArray(new String[0]);
                     aGroupWhoKey1[gIdx] = new String[sz][];
                     aGroupWhoKey2[gIdx] = new String[sz][];
                     aGroupWhoSkip[gIdx] = new String[sz][];

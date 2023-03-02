@@ -33,6 +33,9 @@ public class EditTextActivity extends AppCompatActivity {
 
     boolean isPackageNames, isStrReplace;
     final String dummyHead = "- [ ";
+    int pos = -1;
+    EditText et;
+    String key, fullText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,10 +58,9 @@ public class EditTextActivity extends AppCompatActivity {
         ImageView iv = findViewById(R.id.searchKeyword);
         iv.setOnClickListener(v -> {
             int cnt = 0;
-            int pos = -1;
-            EditText et = findViewById(R.id.keyword);
-            String key = et.getText().toString();           // .replace(" ","\u00A0");
-            String fullText = tv.getText().toString();
+            et = findViewById(R.id.keyword);
+            key = et.getText().toString();           // .replace(" ","\u00A0");
+            fullText = tv.getText().toString();
             tv.setText(fullText);   // reset previous searched color
             Spannable Word2Span = new SpannableString( tv.getText() );
             int offsetEnd = fullText.indexOf(key);
@@ -75,6 +77,13 @@ public class EditTextActivity extends AppCompatActivity {
             if (pos > 0)
                 tv.setSelection(pos, pos+key.length());
             Toast.makeText(this, "Total "+cnt+" words found", Toast.LENGTH_SHORT).show();
+        });
+
+        ImageView iNxt = findViewById(R.id.searchNext);
+        iNxt.setOnClickListener(v -> {
+            pos = tv.getText().toString().indexOf(key, pos + key.length());
+            if (pos > 0)
+                tv.setSelection(pos, pos+key.length());
         });
         if (isStrReplace)
             text = replaceAddBlankLine(lines);
@@ -192,16 +201,6 @@ public class EditTextActivity extends AppCompatActivity {
         }
         return sortedText.toString();
     }
-
-//    static int getByteLength(String s) {
-//        final String del = String.copyValueOf(new char[]{(char) Byte.parseByte("7F", 16)});
-//        int byteNumber = 0;
-//        for (int i = 0; i < s.length(); i++) {
-//            String bite = s.substring(i,i+1);
-//            byteNumber += (bite.compareTo(del)>0)? 2:1;
-//        }
-//        return byteNumber;
-//    }
 
     static int getByteLength(String str) {
         try {

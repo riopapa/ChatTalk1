@@ -1,6 +1,7 @@
 package com.urrecliner.chattalk;
 
 import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
+import static com.urrecliner.chattalk.MainActivity.utils;
 import static com.urrecliner.chattalk.Vars.aGroupWhoKey1;
 import static com.urrecliner.chattalk.Vars.aGroupWhoKey2;
 import static com.urrecliner.chattalk.Vars.aGroupWhoSkip;
@@ -19,10 +20,9 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.UnderlineSpan;
-import android.util.Log;
+import android.widget.Toast;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
-import static com.urrecliner.chattalk.MainActivity.utils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -124,6 +124,8 @@ public class SelectChats {
                 selectedSS = appendSS(selectedSS, checkKeywords(time+", "+who+" , "+body));
             }
         }
+        if (upload)
+            Toast.makeText(mContext, " Uploaded to google", Toast.LENGTH_SHORT).show();
         return new SpannableString(TextUtils.concat(new SpannableString(headStr+"\n"),
                 matchedSS, selectedSS));
     }
@@ -277,7 +279,7 @@ public class SelectChats {
             str = str.substring(p1+prev.length());
             p1 = str.indexOf(next);
             if (p1 > 0)
-                return str.substring(0,p1).replaceAll("[0-9,%|#()]","").trim();
+                return str.substring(0,p1).replaceAll("[\\d,%|#()]","").trim();
             return "No Next";
         }
         return "No Prev";

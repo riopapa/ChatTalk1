@@ -17,7 +17,7 @@ public class AlertStock {
 
     void show(String iGroup, String iText, int aIdx) {
 
-        String key12, sTalk, sayMore, group, who;
+        String key12, sTalk, group, who;
         if (utils == null)
             utils = new Utils();
         AlertLine al = alertLines.get(aIdx);
@@ -27,7 +27,6 @@ public class AlertStock {
         group = al.group;
         who = al.who;
         sTalk = al.talk;
-        sayMore = al.more;
         key12 = " {" + k1 + "." + k2 + "}";
         String stockName = getStockName(al.prev, al.next, iText);
         String sText = utils.strReplace(iGroup, iText);
@@ -40,7 +39,7 @@ public class AlertStock {
             if (sTalk.length() > 0) {
                 String[] joins = new String[]{stockName, group, stockName, who, sTalk,
                         stockName, utils.makeEtc(sText, 40)};
-                sounds.speakAfterBeep(String.join(" ", joins).replaceAll("[0-9]",""));
+                sounds.speakAfterBeep(String.join(" ", joins).replaceAll("\\d",""));
             } else {
                 sounds.beepOnce(Vars.soundType.ONLY.ordinal());
             }
@@ -56,7 +55,7 @@ public class AlertStock {
             str = str.substring(p1+prev.length());
             p1 = str.indexOf(next);
             if (p1 > 0)
-                return str.substring(0,p1).replaceAll("[0-9,%|#()]","").trim();
+                return str.substring(0,p1).replaceAll("[\\d,%|#()]","").trim();
             return "NoNext";
         }
         return "NoPrev";

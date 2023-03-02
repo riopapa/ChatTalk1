@@ -5,4 +5,5 @@
     <string name="web_sent">[Web발신]</string>
     <string name="active_say_table_list">Active say Table List</string>
     <string name="search">Search</string>
+    <string name="enter_search_key">Enter Search Key</string>
 </resources>

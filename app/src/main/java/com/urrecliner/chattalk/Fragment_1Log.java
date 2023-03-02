@@ -13,6 +13,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.Selection;
 import android.text.Spannable;
@@ -121,7 +122,7 @@ public class Fragment_1Log extends Fragment {
 
         ivClear.setOnClickListener(v -> etKeyword.setText(""));
         scrollView1 = rootView.findViewById(R.id.scroll_1_log);
-        new Handler().post(() -> scrollView1.smoothScrollBy(0, 40000));
+        new Handler(Looper.getMainLooper()).post(() -> scrollView1.smoothScrollBy(0, 40000));
         super.onResume();
 
     }
@@ -297,9 +298,7 @@ public class Fragment_1Log extends Fragment {
         etTable.requestFocus();
         scrollView1.post(() -> new Timer().schedule(new TimerTask() {
             public void run() {
-                mActivity.runOnUiThread(() -> {
-                    scrollView1.scrollBy(0, 200);
-                });
+                mActivity.runOnUiThread(() -> scrollView1.scrollBy(0, 200));
             }
         }, 30));
     }

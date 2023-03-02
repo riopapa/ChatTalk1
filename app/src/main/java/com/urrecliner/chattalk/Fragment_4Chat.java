@@ -27,6 +27,7 @@ import androidx.fragment.app.Fragment;
 
 import java.io.File;
 import java.util.Arrays;
+
 import static com.urrecliner.chattalk.MainActivity.utils;
 
 public class Fragment_4Chat extends Fragment {
@@ -189,7 +190,7 @@ public class Fragment_4Chat extends Fragment {
         inflater.inflate(R.menu.menu_4chat, menu);
         super.onCreateOptionsMenu(menu, inflater);
         new Handler(Looper.getMainLooper()).post(() -> {
-            uploadMenu = getActivity().findViewById(R.id.action_upload);
+            uploadMenu = requireActivity().findViewById(R.id.action_upload);
             if (uploadMenu != null) {
                 uploadMenu.setOnLongClickListener(view -> {
                     selChat = new SelectChats().generate(nowChatFile, true);

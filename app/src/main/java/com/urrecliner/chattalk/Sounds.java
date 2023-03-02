@@ -105,7 +105,7 @@ class Sounds {
                 public void run() {
                     // 한글, 영문, 숫자만 OK
 //                    final String match = "[^\uAC00-\uD7A3xfe0-9a-zA-Z.,\\-\\s]";
-                    final String match = "[^\uAC00-\uD7A30-9a-zA-Z.,\\-]";
+                    final String match = "[^\uAC00-\uD7A3\\da-zA-Z.,\\-]";
                     String speakText = text.replaceAll(match, " ");
                     int idx = speakText.indexOf("http");
                     if (idx > 0)

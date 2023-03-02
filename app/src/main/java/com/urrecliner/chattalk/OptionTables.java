@@ -56,7 +56,6 @@ class OptionTables {
         String [] strings;
 
         /* separate ignoring package vs target package */
-        StringBuilder sbIgnore = new StringBuilder();
         pkgFullNames = new ArrayList<>();
         pkgNickNames = new ArrayList<>();
         pkgTypes = new ArrayList<>();
@@ -104,7 +103,7 @@ class OptionTables {
         ArrayList<String> gLong = new ArrayList<>();
         ArrayList<String> gShort = new ArrayList<>();
         for (String oneLine : lines) {
-            String[] ones = oneLine.split("[\\^]");
+            String[] ones = oneLine.split("\\^");
             if (ones.length < 3) {
                 sounds.beepOnce(Vars.soundType.ERR.ordinal());
                 Toast.makeText(mContext, "Caret missing "+oneLine, Toast.LENGTH_LONG).show();

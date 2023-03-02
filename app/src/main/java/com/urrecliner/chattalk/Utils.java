@@ -125,7 +125,7 @@ class Utils {
     String removeSpecialChars(String text) {
         return text.replace("──", "").replace("==", "-")
                 .replace("=", "ￚ").replace("--", "-")
-        .replaceAll("[^0-9a-zA-Z:|#().@,%/~ㄱ-ㅎ가-힣\\s\\-+]", "")
+        .replaceAll("[^\\da-zA-Z:|#().@,%/~ㄱ-ㅎ가-힣\\s\\-+]", "")
         ;
     }
 
