@@ -7,6 +7,7 @@ import static com.urrecliner.chattalk.Vars.logSave;
 import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.sharedEditor;
+import static com.urrecliner.chattalk.Vars.tableFolder;
 import static com.urrecliner.chattalk.Vars.topTabs;
 
 import android.content.Context;
@@ -43,6 +44,7 @@ import androidx.fragment.app.Fragment;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -207,8 +209,15 @@ public class Fragment_1Log extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.action_reload) {
-            new OptionTables().readAll();
+
+        if (item.getItemId() == R.id.delete_item_logque) {
+            delete_OneItem();
+
+        } else if (item.getItemId() == R.id.action_reload) {
+            reload_loqQue();
+
+        } else if (item.getItemId() == R.id.delete_1line_logque) {
+            delete_OneLine();
 
         } else if (item.getItemId() == R.id.copy2log_save) {
             String logNow = etTable.getText().toString().trim() + "\n";
@@ -233,11 +242,6 @@ public class Fragment_1Log extends Fragment {
             copied = copied.replace("\n", " ▶️ ");
             Toast.makeText(mContext, "log copied " + copied, Toast.LENGTH_SHORT).show();
 
-        } else if (item.getItemId() == R.id.delete_item_logque) {
-            delete_OneItem();
-
-        } else if (item.getItemId() == R.id.delete_1line_logque) {
-            delete_OneLine();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -298,11 +302,20 @@ public class Fragment_1Log extends Fragment {
         etTable.requestFocus();
         scrollView1.post(() -> new Timer().schedule(new TimerTask() {
             public void run() {
-                mActivity.runOnUiThread(() -> scrollView1.scrollBy(0, 200));
+                mActivity.runOnUiThread(() -> scrollView1.scrollBy(0, 100));
             }
         }, 30));
     }
 
+    private void reload_loqQue() {
+        String [] que = new FileIO().readKR(new File(tableFolder, "logQue.txt").toString());
+        StringBuilder sb = new StringBuilder();
+        for (String s: que) {
+            sb.append(s);
+        }
+        logQue = sb.toString();
+        etTable.setText(logQue2Spannable());
+    }
     OnBackPressedCallback callback;
     @Override
     public void onAttach(@NonNull Context context) {

@@ -7,12 +7,19 @@ import static com.urrecliner.chattalk.Vars.todayFolder;
 import android.os.Environment;
 import android.util.Log;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class FileIO {
@@ -33,6 +40,8 @@ public class FileIO {
 
     static void uploadStock(String group, String who, String percent, String talk,
                             String text,    String key12, String timeStamp) {
+        if (text.length() > 120)
+            text = text.substring(0,120);
         Upload2Google.add2Que(group, timeStamp, who, percent, talk, text, key12);
     }
 
@@ -85,4 +94,56 @@ public class FileIO {
             new Utils().showSnackBar("writeTextFile", "Write table error " + fileName);
         }
     }
+
+    String[] readKR(String filename) {
+        final int BUFFER_SIZE = 81920;
+        String code = "EUC-KR";
+        BufferedReader bufferedReader;
+        try {
+            bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(filename), code), BUFFER_SIZE);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        List<String> lines = new ArrayList<>();
+        String line;
+        while (true) {
+            try {
+                if ((line = bufferedReader.readLine()) == null) break;
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            lines.add(line);
+        }
+        try {
+            bufferedReader.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return lines.toArray(new String[0]);
+    }
+
+    static void writeKR(File file, String textLine) {
+        BufferedWriter bw = null;
+        FileWriter fw = null;
+        file.delete();
+        try {
+            fw = new FileWriter(file.getAbsoluteFile(), true);
+            bw = new BufferedWriter(fw);
+            bw.write(textLine+"\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (bw != null) bw.close();
+                if (fw != null) fw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
 }

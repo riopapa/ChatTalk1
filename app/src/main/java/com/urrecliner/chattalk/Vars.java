@@ -88,7 +88,7 @@ public class Vars {
     static final String lastChar = "힝";
 
     enum soundType { PRE, POST, ERR, TESLY, ONLY}
-    static final int[] beepRawIds = { R.raw.a0_pre_sound, R.raw.a1_post_sound, R.raw.a2_alert, R.raw.a3_tesly, R.raw.a4_only};
+    static final int[] beepRawIds = { R.raw.a0_pre_sound, R.raw.a1_post_sound, R.raw.a2_alert, R.raw.a3_hello_tesry, R.raw.a4_only};
 
     void set(Context context, String msg) {
         Log.w("vars","vars set msg="+msg);

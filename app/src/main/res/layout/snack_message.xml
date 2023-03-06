@@ -50,7 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/text_header"
-                android:text="body"
+                android:text="body\nnext line"
                 android:textAlignment="center"
                 android:textColor="@color/snackBarText"
                 android:textSize="16sp" />

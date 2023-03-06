@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#778FA8</color>
 
-    <color name="snackBarBack">#CCA010</color>
+    <color name="snackBarBack">#D3B03B</color>
     <color name="snackBarTitle">#FF354DE3</color>
     <color name="snackBarText">#FF770B09</color>
 
@@ -11,7 +11,7 @@
     <color name="lightLine">#ACAFBD</color>
     <color name="textFore">#222233</color>
     <color name="alertBack">#805B79A6</color>
-    <color name="alertTalk">#D81B60</color>
+    <color name="alertTalk">#7E1E8F</color>
     <color name="textNormal">#DDDDDD</color>
     <color name="textEdit">#80C2D59A</color>
     <color name="tabSelected">#0D2367</color>

@@ -1,6 +1,7 @@
 package com.urrecliner.chattalk;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.urrecliner.chattalk.Vars.downloadFolder;
 import static com.urrecliner.chattalk.Vars.logQue;
 import static com.urrecliner.chattalk.Vars.logSave;
 import static com.urrecliner.chattalk.Vars.mContext;
@@ -14,9 +15,17 @@ import android.content.Context;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class LogQueUpdate {
@@ -69,11 +78,13 @@ public class LogQueUpdate {
         todayFolder = new File(packageDirectory, toDay);
         if (!todayFolder.exists()) {
             if (todayFolder.mkdirs()) {
-                String logQueFile = "logQue " + toDay;
-                FileIO.writeTextFile(todayFolder, logQueFile, logQue);
+                String logQueFile = "logQue " + toDay + ".txt";
+                FileIO.writeKR(new File(todayFolder, logQueFile), logQue);
+                FileIO.writeKR(new File(downloadFolder, "logQue.txt"), logQue);
                 logQue += "\n /** " + toDay + new SimpleDateFormat(" (EEE) HH:mm ", Locale.KOREA).format(new Date()) + " NEW DAY " + " **/\nNew Day" + "\n";
                 new Utils().deleteOldFiles();
             }
         }
     }
+
 }

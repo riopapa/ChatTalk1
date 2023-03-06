@@ -9,14 +9,19 @@ public class SubFunc {
     static AlertStock alertStock;
 
     public SubFunc() {
+
         if (logQueUpdate == null)
             logQueUpdate = new LogQueUpdate(mContext);
+        if (toDay == null || toDay.equals("ToDay"))
+            logQueUpdate.readyTodayFolderIfNewDay();
+
         if (sounds == null) {
             sounds = new Sounds();
             sounds.init();
         }
-        if (toDay.equals("ToDay"))
-            logQueUpdate.readyTodayFolderIfNewDay();
+        if (alertStock == null)
+            alertStock = new AlertStock();
+
         Upload2Google.initSheetQue();
     }
 }

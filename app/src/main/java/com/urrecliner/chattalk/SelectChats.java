@@ -197,7 +197,7 @@ public class SelectChats {
                     }
                     if(upload) {
                         String stockName = getStockName(prev[k], next[k], body);
-                        FileIO.uploadStock(chatGroup, who, stockName, "chats",
+                        FileIO.uploadStock(chatGroup, who, "chats", stockName,
                                 body, "[" + keyword1[k] + "/" + keyword2[k] + "]", time);
                     }
                     return s;
