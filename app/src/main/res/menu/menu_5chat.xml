@@ -3,30 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/reload_all_tables"
+        android:id="@+id/action_upload"
         android:orderInCategory="100"
         android:icon="@drawable/upload_file"
         app:showAsAction="always"
-        android:title="@string/todo" />
+        android:title="Upload to Google" />
 
     <item
-        android:id="@+id/rotate_screen"
+        android:id="@+id/action_delete"
         android:orderInCategory="100"
-        android:icon="@drawable/rotate"
+        android:icon="@drawable/delete"
         app:showAsAction="always"
         android:title="@string/todo" />
 
     <item
-        android:id="@+id/clear_matched_number"
+        android:id="@+id/action_left"
         android:orderInCategory="100"
-        android:icon="@mipmap/eraser"
+        android:icon="@drawable/arrow_left"
         app:showAsAction="always"
         android:title="@string/todo" />
 
     <item
-        android:id="@+id/copy2log_save"
+        android:id="@+id/action_right"
         android:orderInCategory="100"
-        android:icon="@drawable/save_file"
+        android:icon="@drawable/arrow_right"
         app:showAsAction="always"
         android:title="@string/todo" />
 

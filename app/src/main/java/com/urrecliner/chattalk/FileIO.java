@@ -1,6 +1,6 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.SubFunc.logQueUpdate;
+import static com.urrecliner.chattalk.SubFunc.logUpdate;
 import static com.urrecliner.chattalk.Vars.packageDirectory;
 import static com.urrecliner.chattalk.Vars.todayFolder;
 
@@ -53,7 +53,7 @@ public class FileIO {
     }
 
     static void append2File(File file, String timeInfo, String textLine) {
-        logQueUpdate.readyTodayFolderIfNewDay();
+        logUpdate.readyTodayFolderIfNewDay();
         BufferedWriter bw = null;
         FileWriter fw = null;
         try {

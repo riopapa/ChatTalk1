@@ -19,19 +19,21 @@ public PagerAdapter(FragmentActivity fm) {
             case 0:
                 return new Fragment_0Table();
             case 1:
-                return new Fragment_1Log();
+                return new Fragment_1Que();
             case 2:
                 return new Fragment_2Saved();
             case 3:
-                return new Fragment_3Alert();
+                return new Fragment_3Stock();
             case 4:
-                return new Fragment_4Chat();
+                return new Fragment_4Alert();
+            case 5:
+                return new Fragment_5Chat();
         }
-        return new Fragment_1Log();
+        return new Fragment_1Que();
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return 6;
     }
 }

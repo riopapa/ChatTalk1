@@ -4,16 +4,18 @@ import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.toDay;
 
 public class SubFunc {
-    static LogQueUpdate logQueUpdate;
+    static LogUpdate logUpdate;
     static Sounds sounds;
     static AlertStock alertStock;
 
     public SubFunc() {
 
-        if (logQueUpdate == null)
-            logQueUpdate = new LogQueUpdate(mContext);
-        if (toDay == null || toDay.equals("ToDay"))
-            logQueUpdate.readyTodayFolderIfNewDay();
+        if (logUpdate == null) {
+            logUpdate = new LogUpdate(mContext);
+        }
+        if (toDay == null || toDay.equals("ToDay")) {
+            logUpdate.readyTodayFolderIfNewDay();
+        }
 
         if (sounds == null) {
             sounds = new Sounds();

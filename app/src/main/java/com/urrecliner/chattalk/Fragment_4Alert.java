@@ -22,7 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
 
-public class Fragment_3Alert extends Fragment {
+public class Fragment_4Alert extends Fragment {
 
     ViewGroup rootView;
     RecyclerView recyclerView;
@@ -31,7 +31,7 @@ public class Fragment_3Alert extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = (ViewGroup) inflater.inflate(
-                R.layout.frag3_alert, container, false);
+                R.layout.frag4_alert, container, false);
         setHasOptionsMenu(true);
         return rootView;
     }
@@ -39,7 +39,7 @@ public class Fragment_3Alert extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        topTabs.getTabAt(3).select();
+        topTabs.getTabAt(4).select();
         recyclerView = rootView.findViewById(R.id.recycle_alerts);
         if (alertsAdapter == null)
             alertsAdapter = new AlertsAdapter();
@@ -49,7 +49,7 @@ public class Fragment_3Alert extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_3alert, menu);
+        inflater.inflate(R.menu.menu_4alert, menu);
         aBar.setTitle("  Alert Table");
         aBar.setSubtitle(null);
     }
@@ -82,7 +82,7 @@ public class Fragment_3Alert extends Fragment {
             AlertTable.sort();
             new AlertSave();
             alertsAdapter.notifyDataSetChanged();
-        } else if (item.getItemId() == R.id.copy2log_save) {
+        } else if (item.getItemId() == R.id.copy2log) {
             AlertTable.sort();
             new AlertSave();
             alertsAdapter.notifyDataSetChanged();

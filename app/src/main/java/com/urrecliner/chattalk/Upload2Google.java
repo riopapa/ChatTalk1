@@ -1,6 +1,6 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.SubFunc.logQueUpdate;
+import static com.urrecliner.chattalk.SubFunc.logUpdate;
 import static com.urrecliner.chattalk.SubFunc.sounds;
 import static com.urrecliner.chattalk.Vars.mContext;
 
@@ -94,7 +94,7 @@ public class Upload2Google {
                 },
                 error -> {
                     String s = "코멘트 올리기 에러남 "+error;
-                    logQueUpdate.add("Google", s);
+                    logUpdate.addQue("Google", s);
                     sounds.speakAfterBeep(s);
                     nowUploading = false;
                 }

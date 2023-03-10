@@ -3,30 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_upload"
+        android:id="@+id/action_reload"
         android:orderInCategory="100"
         android:icon="@drawable/upload_file"
         app:showAsAction="always"
         android:title="@string/todo" />
 
     <item
-        android:id="@+id/action_delete"
+        android:id="@+id/copy2log"
         android:orderInCategory="100"
-        android:icon="@drawable/delete"
+        android:icon="@drawable/copy"
         app:showAsAction="always"
         android:title="@string/todo" />
 
     <item
-        android:id="@+id/action_left"
+        android:id="@+id/delete_1line_que"
         android:orderInCategory="100"
-        android:icon="@drawable/arrow_left"
+        android:icon="@drawable/line_delete1"
         app:showAsAction="always"
         android:title="@string/todo" />
 
     <item
-        android:id="@+id/action_right"
+        android:id="@+id/delete_item_que"
         android:orderInCategory="100"
-        android:icon="@drawable/arrow_right"
+        android:icon="@drawable/line_delete3"
         app:showAsAction="always"
         android:title="@string/todo" />
 

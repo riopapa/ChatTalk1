@@ -1,7 +1,7 @@
 package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.NotificationListener.subFunc;
-import static com.urrecliner.chattalk.SubFunc.logQueUpdate;
+import static com.urrecliner.chattalk.SubFunc.logUpdate;
 import static com.urrecliner.chattalk.SubFunc.sounds;
 import static com.urrecliner.chattalk.Vars.aAlertLineIdx;
 import static com.urrecliner.chattalk.Vars.aGroupSaid;
@@ -60,7 +60,7 @@ class MsgKaTalk {
             String head = "[카톡 " + iGroup + "." + iWho + "]";
             iText = utils.strReplace(iGroup, iText);
             NotificationBar.update(iGroup+":"+iWho, iText);
-            logQueUpdate.add(head, iText);
+            logUpdate.addQue(head, iText);
             if (IsWhoNine.in(nineIgnores, iWho))
                 iText = iText.replaceAll("\\d","");
             iText = "단톡방 " + iGroup + " 에서 " + iWho + " 님이 " + utils.makeEtc(iText, 180);

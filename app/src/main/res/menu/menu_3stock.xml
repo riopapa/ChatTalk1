@@ -2,29 +2,30 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/action_reload"
-        android:orderInCategory="100"
-        android:icon="@drawable/upload_file"
-        app:showAsAction="always"
-        android:title="@string/todo" />
 
     <item
-        android:id="@+id/copy2log_save"
+        android:id="@+id/copy2stock"
         android:orderInCategory="100"
         android:icon="@drawable/copy"
         app:showAsAction="always"
         android:title="@string/todo" />
 
     <item
-        android:id="@+id/delete_1line_logque"
+        android:id="@+id/action_restock"
+        android:orderInCategory="100"
+        android:icon="@drawable/upload_file"
+        app:showAsAction="always"
+        android:title="@string/todo" />
+
+    <item
+        android:id="@+id/delete_1line_stock"
         android:orderInCategory="100"
         android:icon="@drawable/line_delete1"
         app:showAsAction="always"
         android:title="@string/todo" />
 
     <item
-        android:id="@+id/delete_item_logque"
+        android:id="@+id/delete_item_stock"
         android:orderInCategory="100"
         android:icon="@drawable/line_delete3"
         app:showAsAction="always"

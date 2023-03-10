@@ -23,13 +23,13 @@
     <color name="keyMatchedWord">#8FB68F</color>
 
     <color name="log_head_f0">#FF611714</color>
-    <color name="log_head_b0">#CCBCCCAA</color>
+    <color name="log_head_b0">#CCE7F2DB</color>
     <color name="log_line_f0">#49201F</color>
-    <color name="log_line_b0">#CCB5C1AC</color>
+    <color name="log_line_b0">#CCE2EFD8</color>
     <color name="log_line_x0">#BF9B6C</color>
     <color name="log_head_f1">#FF0A09AE</color>
-    <color name="log_head_b1">#AAB8B0D1</color>
+    <color name="log_head_b1">#AAE7E1F9</color>
     <color name="log_line_f1">#3E3C8C</color>
-    <color name="log_line_b1">#AAC8C1D6</color>
+    <color name="log_line_b1">#AAE9E1F9</color>
     <color name="log_line_x1">#B1A268</color>
 </resources>

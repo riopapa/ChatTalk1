@@ -58,7 +58,7 @@ public class EditTextActivity extends AppCompatActivity {
         ImageView iv = findViewById(R.id.searchKeyword);
         iv.setOnClickListener(v -> {
             int cnt = 0;
-            et = findViewById(R.id.keyword);
+            et = findViewById(R.id.key_que);
             key = et.getText().toString();           // .replace(" ","\u00A0");
             fullText = tv.getText().toString();
             tv.setText(fullText);   // reset previous searched color

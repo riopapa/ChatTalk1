@@ -49,7 +49,7 @@ public class Fragment_2Saved extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = (ViewGroup) inflater.inflate(
-                R.layout.frag2_log_saved, container, false);
+                R.layout.frag2_saved, container, false);
         etTable = rootView.findViewById(R.id.text_log2);
         etKeyword = rootView.findViewById(R.id.keyword2);
         ivFind = rootView.findViewById(R.id.find2);
@@ -161,7 +161,7 @@ public class Fragment_2Saved extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         mainMenu = menu;
-        inflater.inflate(R.menu.menu_2log_save, menu);
+        inflater.inflate(R.menu.menu_2save, menu);
         super.onCreateOptionsMenu(menu, inflater);
         aBar.setTitle("  Saved Log");
         aBar.setSubtitle(null);

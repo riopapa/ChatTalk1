@@ -30,7 +30,7 @@ import java.util.Arrays;
 
 import static com.urrecliner.chattalk.MainActivity.utils;
 
-public class Fragment_4Chat extends Fragment {
+public class Fragment_5Chat extends Fragment {
 
     ViewGroup rootView;
     SpannableString selChat;
@@ -48,7 +48,7 @@ public class Fragment_4Chat extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = (ViewGroup) inflater.inflate(
-                R.layout.frag4_chat, container, false);
+                R.layout.frag5_chat, container, false);
         etChat = rootView.findViewById(R.id.table_text);
         setHasOptionsMenu(true);
         return rootView;
@@ -59,7 +59,7 @@ public class Fragment_4Chat extends Fragment {
         super.onResume();
         if (utils == null)
             utils = new Utils();
-        topTabs.getTabAt(4).select();
+        topTabs.getTabAt(5).select();
         etChat.setFocusableInTouchMode(true);
         etChat.setEnabled(true);
         etChat.setFocusable(true);
@@ -187,7 +187,7 @@ public class Fragment_4Chat extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         mainMenu = menu;
-        inflater.inflate(R.menu.menu_4chat, menu);
+        inflater.inflate(R.menu.menu_5chat, menu);
         super.onCreateOptionsMenu(menu, inflater);
         new Handler(Looper.getMainLooper()).post(() -> {
             uploadMenu = requireActivity().findViewById(R.id.action_upload);

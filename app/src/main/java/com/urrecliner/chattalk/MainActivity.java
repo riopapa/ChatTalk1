@@ -84,8 +84,9 @@ public class MainActivity extends AppCompatActivity {
 
         topTabs = findViewById(R.id.tab_layout);
         topTabs.addTab(topTabs.newTab().setText("Tables"));
-        topTabs.addTab(topTabs.newTab().setText("LogQue"));
-        topTabs.addTab(topTabs.newTab().setText("LogSave"));
+        topTabs.addTab(topTabs.newTab().setText("Que"));
+        topTabs.addTab(topTabs.newTab().setText("Save"));
+        topTabs.addTab(topTabs.newTab().setText("Stock"));
         topTabs.addTab(topTabs.newTab().setText("Alerts"));
         topTabs.addTab(topTabs.newTab().setText("Chats"));
         topTabs.setTabGravity(TabLayout.GRAVITY_FILL);

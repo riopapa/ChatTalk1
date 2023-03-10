@@ -48,7 +48,7 @@ import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Fragment_1Log extends Fragment {
+public class Fragment_1Que extends Fragment {
 
     ViewGroup rootView;
     ScrollView scrollView1;
@@ -63,12 +63,12 @@ public class Fragment_1Log extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = (ViewGroup) inflater.inflate(
-                R.layout.frag1_log_que, container, false);
-        etTable = rootView.findViewById(R.id.text_Log);
-        etKeyword = rootView.findViewById(R.id.keyword);
-        ivFind = rootView.findViewById(R.id.find);
-        ivNext = rootView.findViewById(R.id.next);
-        ivClear = rootView.findViewById(R.id.clear_text);
+                R.layout.frag1_que, container, false);
+        etTable = rootView.findViewById(R.id.text_que);
+        etKeyword = rootView.findViewById(R.id.key_que);
+        ivFind = rootView.findViewById(R.id.find_que);
+        ivNext = rootView.findViewById(R.id.next_que);
+        ivClear = rootView.findViewById(R.id.clear_que);
         setHasOptionsMenu(true);
         return rootView;
     }
@@ -123,7 +123,7 @@ public class Fragment_1Log extends Fragment {
         });
 
         ivClear.setOnClickListener(v -> etKeyword.setText(""));
-        scrollView1 = rootView.findViewById(R.id.scroll_1_log);
+        scrollView1 = rootView.findViewById(R.id.scroll_1_que);
         new Handler(Looper.getMainLooper()).post(() -> scrollView1.smoothScrollBy(0, 40000));
         super.onResume();
 
@@ -201,7 +201,7 @@ public class Fragment_1Log extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         mainMenu = menu;
-        inflater.inflate(R.menu.menu_1log_que, menu);
+        inflater.inflate(R.menu.menu_1que, menu);
         super.onCreateOptionsMenu(menu, inflater);
         aBar.setTitle("  Today Log");
         aBar.setSubtitle(null);
@@ -210,16 +210,16 @@ public class Fragment_1Log extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        if (item.getItemId() == R.id.delete_item_logque) {
+        if (item.getItemId() == R.id.delete_item_que) {
             delete_OneItem();
 
         } else if (item.getItemId() == R.id.action_reload) {
             reload_loqQue();
 
-        } else if (item.getItemId() == R.id.delete_1line_logque) {
+        } else if (item.getItemId() == R.id.delete_1line_que) {
             delete_OneLine();
 
-        } else if (item.getItemId() == R.id.copy2log_save) {
+        } else if (item.getItemId() == R.id.copy2log) {
             String logNow = etTable.getText().toString().trim() + "\n";
             int posCurr = etTable.getSelectionStart();
             int posStart = logNow.lastIndexOf("\n", posCurr - 1);
@@ -252,17 +252,21 @@ public class Fragment_1Log extends Fragment {
         int posStart = logNow.lastIndexOf("\n", posCurr - 1);
         if (posStart == -1)
             posStart = 0;
-        int posFinish = logNow.indexOf("\n", posCurr);
+        int posFinish = logNow.indexOf("\n", posStart+1);
         if (posFinish == -1)
-            posFinish = logNow.length();
+            posFinish = logNow.length() - 2;
         logQue = logNow.substring(0, posStart) + logNow.substring(posFinish);
         logQue = logQue.replace("    ","");
         sharedEditor.putString("logQue", logQue);
         sharedEditor.apply();
-        etTable.setText(logQue2Spannable());
+        SpannableString ss = logQue2Spannable();
+        posStart = logQue.lastIndexOf("\n", posCurr - 1) + 1;
+        posFinish = logQue.indexOf("\n", posStart+1) - 1;
+        ss.setSpan(new StyleSpan(Typeface.ITALIC), posStart, posFinish, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        ss.setSpan(new UnderlineSpan(), posStart, posFinish,Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        etTable.setText(ss);
         Editable etText = etTable.getText();
-        Selection.setSelection(etText, posFinish-5, posFinish-1);
-//            scrollView1.smoothScrollBy(0, -500);
+        Selection.setSelection(etText, posStart, posFinish);
     }
 
     private void delete_OneItem() {
@@ -294,7 +298,6 @@ public class Fragment_1Log extends Fragment {
         if (posCurr < 0)
             posCurr = prevStart -3;
         ss.setSpan(new StyleSpan(Typeface.ITALIC), posCurr, prevStart-1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
         ss.setSpan(new UnderlineSpan(), posCurr, prevStart-1,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         etTable.setText(ss);
         Editable etText = etTable.getText();

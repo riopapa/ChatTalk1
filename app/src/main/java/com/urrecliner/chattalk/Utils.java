@@ -1,6 +1,6 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.SubFunc.logQueUpdate;
+import static com.urrecliner.chattalk.SubFunc.logUpdate;
 import static com.urrecliner.chattalk.SubFunc.sounds;
 import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
@@ -40,7 +40,7 @@ class Utils {
         logE writes to download folder, removing by manual operation
      */
     void logW(String tag, String text) {
-        logQueUpdate.readyTodayFolderIfNewDay();
+        logUpdate.readyTodayFolderIfNewDay();
         StackTraceElement[] traces = Thread.currentThread().getStackTrace();
         String logText  =(traces.length>6) ? excludeName(traces[6].getMethodName()):"";
         logText += excludeName(traces[5].getMethodName()) + excludeName(traces[4].getMethodName()) + excludeName(traceClassName(traces[3].getClassName()))+"> "+traces[3].getMethodName() + "#" + traces[3].getLineNumber() + " {"+ tag + "} " + text;

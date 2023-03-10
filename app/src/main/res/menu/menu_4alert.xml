@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/reload_all_tables"
+        android:orderInCategory="100"
+        android:icon="@drawable/upload_file"
+        app:showAsAction="always"
+        android:title="@string/todo" />
+
+    <item
+        android:id="@+id/rotate_screen"
+        android:orderInCategory="100"
+        android:icon="@drawable/rotate"
+        app:showAsAction="always"
+        android:title="@string/todo" />
+
+    <item
+        android:id="@+id/clear_matched_number"
+        android:orderInCategory="100"
+        android:icon="@mipmap/eraser"
+        app:showAsAction="always"
+        android:title="@string/todo" />
+
+    <item
+        android:id="@+id/copy2log"
+        android:orderInCategory="100"
+        android:icon="@drawable/save_file"
+        app:showAsAction="always"
+        android:title="@string/todo" />
+
+</menu>

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/fragment_table"
     android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
     android:orientation="vertical"
     android:screenOrientation="landscape">
@@ -11,18 +12,27 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <ImageButton
+            android:id="@+id/clear_que"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:contentDescription="@string/search"
+            android:src="@drawable/clear_text" />
+
         <EditText
             android:id="@+id/key_que"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_weight="8"
+            android:layout_weight="7"
             android:inputType="text"
-            android:hint="@string/enter_search_key"
             android:autofillHints="Enter Text to search" />
 
         <ImageButton
-            android:id="@+id/searchKeyword"
+            android:id="@+id/find_que"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="4dp"
@@ -32,7 +42,7 @@
             android:src="@drawable/search" />
 
         <ImageButton
-            android:id="@+id/searchNext"
+            android:id="@+id/next_que"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="4dp"
@@ -43,18 +53,26 @@
 
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/table_text"
+    <ScrollView
+        android:id="@+id/scroll_1_que"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:autofillHints="Table text"
-        android:cursorVisible="true"
-        android:focusable="false"
-        android:inputType="text|textMultiLine"
+        android:fastScrollEnabled="true"
         android:scrollbars="vertical"
-        android:text="@string/active_say_table_list"
-        android:textSize="15sp" />
+        android:scrollbarSize="12dp"
+        style="@style/up_down_scroll_thumb"
+        >
+        <EditText
+            android:id="@+id/text_que"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:autofillHints="Table text"
+            android:focusable="false"
+            android:inputType="text|textMultiLine"
+            android:text="@string/active_say_table_list"
+            android:textSize="14sp" />
+    </ScrollView>
 
 </LinearLayout>

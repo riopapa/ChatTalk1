@@ -1,6 +1,6 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.SubFunc.logQueUpdate;
+import static com.urrecliner.chattalk.SubFunc.logUpdate;
 import static com.urrecliner.chattalk.SubFunc.sounds;
 import static com.urrecliner.chattalk.Vars.lastChar;
 import static com.urrecliner.chattalk.Vars.mContext;
@@ -43,7 +43,7 @@ class MsgSMS {
         } else {
             String head = "[sms "+mWho + "]";
             mText = utils.strReplace(mWho, mText);
-            logQueUpdate.add(head, mText);
+            logUpdate.addQue(head, mText);
             NotificationBar.update("sms "+mWho, mText);
             if (IsWhoNine.in(nineIgnores, mWho))
                 mText = mText.replaceAll("\\d", "");
@@ -58,7 +58,7 @@ class MsgSMS {
             try {
                 String[] words = mText.split("\\|");
                 if (words.length < 5) {
-                    logQueUpdate.add("SMS NH증권 에러 " + words.length + ".txt", mText);
+                    logUpdate.addStock("SMS NH증권 에러 " + words.length + ".txt", mText);
                     sounds.speakAfterBeep(mText);
                 } else {
                     String stockName = words[3].trim();  // 종목명
@@ -70,14 +70,15 @@ class MsgSMS {
                             + amount + " " + uPrice + "으로 샀음 " :
                             stockName + " " + amount + " " + uPrice + " 에 팔렸음 ");
                     NotificationBar.update(trade +":"+buySell, sayMsg);
-                    logQueUpdate.add("sms>"+nhStock, sayMsg);
+                    logUpdate.addStock("sms>"+nhStock, sayMsg);
                     String timeStamp = new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date());
                     FileIO.uploadStock(sGroup, mWho, buySell, stockName, mText, amount, timeStamp);
+                    sayMsg = stockName + (buySell.equals("매수") ? " 샀음 " : " 팔렸음 ");
                     sounds.speakAfterBeep(sayMsg.replaceAll("\\d",""));
                 }
             } catch (Exception e) {
                 mText = "Parsing Exception_01 " + mText;
-                logQueUpdate.add(nhStock, mText);
+                logUpdate.addStock(nhStock, mText);
                 sounds.speakAfterBeep(mText);
             }
         } else
@@ -88,7 +89,7 @@ class MsgSMS {
         String head = "[sms."+ mWho + "] ";
         mText = utils.strReplace("sms", mText);
         NotificationBar.update(head, mText);
-        logQueUpdate.add(head, mText);
+        logUpdate.addQue(head, mText);
         sounds.speakAfterBeep(head + utils.makeEtc(mText, 160));
     }
 }

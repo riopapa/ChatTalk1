@@ -36,7 +36,7 @@ public class SelectChats {
     String groupInfo;
     boolean upload;
     ArrayList<String> msgLines;
-    final String repeated = new String(new char[70]).replace("\0", ".")+"\n";
+    final String repeated = new String(new char[30]).replace("\0\0", "- ")+"\n";
 
     SpannableString generate(File chatFile, boolean upload) {
         this.upload = upload;
@@ -47,7 +47,7 @@ public class SelectChats {
         String[] head = chatLines[0].replaceAll("[\uFEFC-\uFEFF]","").trim().split(" "); // 조선 nnn 카카오톡 대화
         chatGroup = head[0];
         int gIdx = Collections.binarySearch(aGroups, chatGroup);
-        getWhoList();
+        getWhoKeyList();
         headStr.append("그룹 : ").append(chatGroup).append(" ").append(groupInfo).append("\n");
         for (String w: whoKeys)
             headStr.append(w).append("\n");
@@ -113,15 +113,15 @@ public class SelectChats {
 
             if (found) { //  || inWhoList(txt)) {
                 SpannableString ss = key2Matched(time, who, body);
-                if (ss.length() > 1) {
-                    matchedSS = appendSS(matchedSS, ss);
-                    selectedSS = appendSS(selectedSS, ss);
+                if (ss.length() > 10) {
+                    matchedSS = concatSS(matchedSS, ss);
+                    selectedSS = new SpannableString(TextUtils.concat(selectedSS, key2Matched(time, who, body)));
                 } else
-                    selectedSS = appendSS(selectedSS, checkKeywords(time+", "+who+" , "+body));
+                    selectedSS = concatSS(selectedSS, checkKeywords(time+", "+who+" , "+body));
             } else if (inWhoList(who)) {
-                selectedSS = appendSS(selectedSS, new SpannableString("▣ "+time+" , "+who+" , "+makeDot(body)+"\n\n"));
+                selectedSS = concatSS(selectedSS, new SpannableString("▣ "+time+" , "+who+" , "+makeDot(body)+"\n\n"));
             } else if (hasKeywords(txt)) {
-                selectedSS = appendSS(selectedSS, checkKeywords(time+", "+who+" , "+body));
+                selectedSS = concatSS(selectedSS, checkKeywords(time+", "+who+" , "+body));
             }
         }
         if (upload)
@@ -180,7 +180,7 @@ public class SelectChats {
             p1 = body.indexOf(keyword1[k]);
             if (p1 >= 0) {
                 p2 = body.indexOf(keyword2[k]);
-                if (p2 >= 0) {
+                if (p2 >= 0) {      // both matched
                     String str = time+", "+who+" , "+utils.strReplace(chatGroup, body)+
                             " <"+keyword1[k]+"/"+keyword2[k]+">\n\n";
                     SpannableString s = new SpannableString(str);
@@ -207,11 +207,11 @@ public class SelectChats {
         return new SpannableString("");
     }
 
-    SpannableString appendSS(SpannableString s1, SpannableString s2) {
+    SpannableString concatSS(SpannableString s1, SpannableString s2) {
         return new SpannableString(TextUtils.concat(s1, s2));
     }
 
-    void getWhoList() {
+    void getWhoKeyList() {
         String svWho = "x";
         ArrayList<String> aWhose = new ArrayList<>();
         ArrayList<String> aWhoKeys = new ArrayList<>();
@@ -236,9 +236,11 @@ public class SelectChats {
                 }
                 if (!(al.matched == -1)) {
                     aWhoKeys.add(svWho + ", [" + al.key1 + "," + al.key2 + "]"
-                            + ((al.skip.length() > 1) ? ", skip[" + al.skip + "]" : "")
-                            + (" ("+al.matched+") ")
-                            + ((al.talk.length() > 1) ? ", talk[" + al.talk + "]" : ""));
+                        + ((al.skip.length() > 1) ? ", skip[" + al.skip + "]" : "")
+                        + (" ("+al.matched+") ")
+                        + ((al.talk.length() > 1) ? ", talk[" + al.talk + "]" : "")
+                        + " <" +al.prev+"x"+al.next+">")
+                    ;
                     if (al.key1.length()> 1) aKeywords.add(al.key1);
                     if (al.key2.length()> 1) aKeywords.add(al.key2);
                     if (al.key1.length()> 1) {

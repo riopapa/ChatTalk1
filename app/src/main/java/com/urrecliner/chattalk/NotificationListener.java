@@ -95,7 +95,7 @@ public class NotificationListener extends NotificationListenerService {
                     sbnText = utils.strReplace(sbnWho, utils.text2OneLine(sbnText));
                     String head = "{카톡!"+ sbnWho + "} ";
                     NotificationBar.update("카톡!"+sbnWho, sbnText);
-                    subFunc.logQueUpdate.add( head, sbnText);
+                    subFunc.logUpdate.addQue( head, sbnText);
                     subFunc.sounds.speakAfterBeep(" 카톡왔음 " + sbnWho + " 님이 " + utils.replaceKKHH(utils.makeEtc(sbnText, 150)));
                 } else {
                     if ((IgnoreThis.contains(sbnGroup, kGroupWhoIgnores)) ||
@@ -142,7 +142,7 @@ public class NotificationListener extends NotificationListenerService {
                     }
                 }
                 head = "[텔레 "+ sbnGroup + "📞" + sbnWho + "]";
-                subFunc.logQueUpdate.add(head, sbnText);
+                subFunc.logUpdate.addQue(head, sbnText);
                 NotificationBar.update(sbnGroup + "📞" + sbnWho, sbnText);
                 sbnText = head + " 로 부터. " + sbnText;
                 subFunc.sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
@@ -164,7 +164,7 @@ public class NotificationListener extends NotificationListenerService {
                 }
                 if (MapWhoText.repeated(whoAndTexts, sbnWho, sbnText))
                     break;
-                subFunc.logQueUpdate.add("[ 테스리 ]", sbnText);
+                subFunc.logUpdate.addQue("[ 테스리 ]", sbnText);
                 NotificationBar.update(sbnPackageNick, sbnText);
 //                FileIO.append2Today("Tesla.txt", sbnText);
                 subFunc.sounds.speakAfterBeep("테스리로 부터 " + sbnText);
@@ -178,7 +178,7 @@ public class NotificationListener extends NotificationListenerService {
                         return;
                 }
                 head = "[" + sbnPackageNick + "]";
-                subFunc.logQueUpdate.add(head , sbnWho+"🖐"+ utils.text2OneLine(sbnText));
+                subFunc.logUpdate.addQue(head , sbnWho+"🖐"+ utils.text2OneLine(sbnText));
                 NotificationBar.update(sbnPackageNick, sbnText);
                 sbnText = "토스 로부터 " + sbnText;
                 subFunc.sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
@@ -191,7 +191,7 @@ public class NotificationListener extends NotificationListenerService {
                     break;
                 sbnText = utils.strReplace(sbnWho, utils.text2OneLine(sbnText));
                 head = "[" + sbnPackageNick + "🖐️"+ sbnWho +"] ";
-                subFunc.logQueUpdate.add(head , sbnText);
+                subFunc.logUpdate.addQue(head , sbnText);
                 NotificationBar.update(sbnPackageNick + ":"+ sbnWho, sbnText);
                 sbnText = sbnPackageNick + " 로부터 " + head + sbnText;
                 subFunc.sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
@@ -202,7 +202,7 @@ public class NotificationListener extends NotificationListenerService {
                 if (IgnoreThis.contains(sbnText, textIgnores))
                     return;
                 sbnText = sbnGroup + "✓" + utils.text2OneLine(sbnText);
-                subFunc.logQueUpdate.add("["+sbnPackageNick+"]", sbnText);
+                subFunc.logUpdate.addQue("["+sbnPackageNick+"]", sbnText);
                 subFunc.sounds.speakAfterBeep(sbnPackageNick + " 로 부터 " + sbnText);
                 break;
 
@@ -211,7 +211,7 @@ public class NotificationListener extends NotificationListenerService {
                 if (IgnoreThis.contains(sbnText, textIgnores))
                     return;
                 sbnText = sbnWho + "✓" + utils.text2OneLine(sbnText);
-                subFunc.logQueUpdate.add(sbnPackageNick, sbnText);
+                subFunc.logUpdate.addQue(sbnPackageNick, sbnText);
                 NotificationBar.update(sbnPackageNick, sbnText);
                 subFunc.sounds.speakAfterBeep(sbnPackageNick + " 로 부터 " + sbnText);
                 break;
@@ -224,7 +224,7 @@ public class NotificationListener extends NotificationListenerService {
                 sbnText = utils.text2OneLine(sbnText);
                 sbnText = utils.strReplace(sbnGroup.equals("")? sbnWho:sbnGroup, sbnText);
                 head = "[" + sbnPackageNick + "🖐️"+ sbnGroup + "🖐️"+ sbnWho +"] ";
-                subFunc.logQueUpdate.add(head , sbnText);
+                subFunc.logUpdate.addQue(head , sbnText);
                 NotificationBar.update((sbnGroup.equals("")) ? sbnPackageNick + "🖐️"+ sbnWho : sbnGroup + "🖐️"+ sbnWho, sbnText);
                 sbnText = sbnPackageNick + " 로부터 " + head + sbnText;
                 subFunc.sounds.speakAfterBeep(utils.makeEtc(sbnText, 230));
@@ -237,7 +237,7 @@ public class NotificationListener extends NotificationListenerService {
                     break;
                 sbnText = utils.strReplace(sbnWho, utils.text2OneLine(sbnText));
                 head = sbnGroup + "👍"+ sbnWho +"👍";
-                subFunc.logQueUpdate.add("[" + sbnPackageNick + "] "+head, sbnText);
+                subFunc.logUpdate.addQue("[" + sbnPackageNick + "] "+head, sbnText);
                 NotificationBar.update(sbnGroup + "👍"+ sbnWho, sbnText);
                 utils.logW(sbnPackageNick, head+sbnText);
                 sbnText = sbnPackageNick + " 로부터 " + head + sbnText;
@@ -273,7 +273,7 @@ public class NotificationListener extends NotificationListenerService {
                 sbnText = utils.text2OneLine(sbnText);
                 sbnText = "새로운 앱이 설치됨,  group:" + sbnGroup + " who:" + sbnWho + " text:" + sbnText;
                 NotificationBar.update("[새 앱]", sbnText);
-                subFunc.logQueUpdate.add("[ " + sbnAppFullName + " ]", sbnText);
+                subFunc.logUpdate.addQue("[ " + sbnAppFullName + " ]", sbnText);
                 utils.logW("new App "+ sbnGroup, sbnAppFullName +" "+ sbnText);
                 subFunc.sounds.speakAfterBeep(sbnText);
                 break;

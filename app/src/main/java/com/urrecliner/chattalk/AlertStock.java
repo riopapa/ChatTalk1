@@ -1,6 +1,6 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.SubFunc.logQueUpdate;
+import static com.urrecliner.chattalk.SubFunc.logUpdate;
 import static com.urrecliner.chattalk.SubFunc.sounds;
 import static com.urrecliner.chattalk.Vars.alertLines;
 import static com.urrecliner.chattalk.Vars.mContext;
@@ -35,7 +35,7 @@ public class AlertStock {
             String timeStamp = new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date());
             FileIO.uploadStock(group, who, sTalk, stockName, sText, key12, timeStamp);
             NotificationBar.update(head, sText);
-            logQueUpdate.add(head, sText + key12);
+            logUpdate.addStock(head, sText + key12);
             if (sTalk.length() > 0) {
                 String[] joins = new String[]{stockName, group, stockName, who, sTalk,
                         stockName, utils.makeEtc(sText, 40)};

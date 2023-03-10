@@ -13,7 +13,7 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/clear_text"
+            android:id="@+id/clear_stock"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="4dp"
@@ -23,7 +23,7 @@
             android:src="@drawable/clear_text" />
 
         <EditText
-            android:id="@+id/keyword"
+            android:id="@+id/key_stock"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -32,7 +32,7 @@
             android:autofillHints="Enter Text to search" />
 
         <ImageButton
-            android:id="@+id/find"
+            android:id="@+id/find_stock"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="4dp"
@@ -42,7 +42,7 @@
             android:src="@drawable/search" />
 
         <ImageButton
-            android:id="@+id/next"
+            android:id="@+id/next_stock"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="4dp"
@@ -54,7 +54,7 @@
     </LinearLayout>
 
     <ScrollView
-        android:id="@+id/scroll_1_log"
+        android:id="@+id/scroll_3_stock"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fastScrollEnabled="true"
@@ -63,7 +63,7 @@
         style="@style/up_down_scroll_thumb"
         >
         <EditText
-            android:id="@+id/text_Log"
+            android:id="@+id/text_stock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"

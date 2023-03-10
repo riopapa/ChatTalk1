@@ -70,7 +70,7 @@ public class Vars {
     static View mLayoutView;
 
     static final int SHOW_MESSAGE = 1234;
-    static String logQue = "", logSave = "";
+    static String logQue = "", logSave = "", logStock = "";
     static ActionBar aBar = null;
     static AudioManager mAudioManager = null;
     static AudioFocusRequest mFocusGain = null;
