@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class AlertSave {
-    public AlertSave() {
+    public AlertSave(String msg) {
         String sv = "sv";
         int[] padLen = getMaxLengths();
         StringBuilder s = new StringBuilder();
@@ -44,7 +44,7 @@ public class AlertSave {
         FileIO.writeTextFile( todayFolder,"kTalkAlerts"+timeStamp.format(new Date()),s.toString());
         AlertTable.makeArrays();
         new AlertLinesGetPut().put(alertLines, mContext);
-        new Utils().showSnackBar("Alert Table", "Saved..");
+        new Utils().showSnackBar("Alert Table", msg);
     }
 
     String strPad(String s, int size) {

@@ -56,7 +56,7 @@ public class EditOneAlertActivity extends AppCompatActivity {
         tMemo = findViewById(R.id.t_memo);
         tPrev = findViewById(R.id.t_prev);
         if (al.matched == -1) { // group line
-            tGroup.setText("Group Name"); tWho.setText("Group Info");
+            tGroup.setText("Group"); tWho.setText("Info");
             tKey1.setText("Skip 1,2");
             tTalk.setText("Skip 3,4"); tMatched.setText("Matched");
             tMemo.setText("Say More");
@@ -111,7 +111,7 @@ public class EditOneAlertActivity extends AppCompatActivity {
             makeGroupMemo();
         }
         Upload2Google.uploadComment(mGroup, mWho, mPercent, mMemo);
-        new AlertSave();
+        new AlertSave("Delete "+mGroup);
         finish();
     }
 
@@ -146,7 +146,7 @@ public class EditOneAlertActivity extends AppCompatActivity {
             AlertTable.sort();
             alertsAdapter = new AlertsAdapter();
 //            alertsAdapter.notifyDataSetChanged();
-            new AlertSave();
+            new AlertSave((al.matched == -1)? "Save Group": "Save "+eWho.getText().toString());
             finish();
 
         } else if (item.getItemId() == R.id.duplicate_alert) {

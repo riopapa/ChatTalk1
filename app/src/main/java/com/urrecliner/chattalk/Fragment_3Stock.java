@@ -64,6 +64,7 @@ public class Fragment_3Stock extends Fragment {
                              Bundle savedInstanceState) {
         rootView = (ViewGroup) inflater.inflate(
                 R.layout.frag3_stock, container, false);
+        rootView.setBackgroundColor(getContext().getColor(R.color.colorLine));
         etTable = rootView.findViewById(R.id.text_stock);
         etKeyword = rootView.findViewById(R.id.key_stock);
         ivFind = rootView.findViewById(R.id.find_stock);
@@ -124,7 +125,7 @@ public class Fragment_3Stock extends Fragment {
 
         ivClear.setOnClickListener(v -> etKeyword.setText(""));
         scrollView1 = rootView.findViewById(R.id.scroll_3_stock);
-        new Handler(Looper.getMainLooper()).post(() -> scrollView1.smoothScrollBy(0, 10));
+        new Handler(Looper.getMainLooper()).post(() -> scrollView1.smoothScrollBy(0, 10000));
         super.onResume();
 
     }
@@ -214,7 +215,7 @@ public class Fragment_3Stock extends Fragment {
             delete_OneItem();
 
         } else if (item.getItemId() == R.id.action_restock) {
-            reload_loqQue();
+            reload_stock();
 
         } else if (item.getItemId() == R.id.delete_1line_stock) {
             delete_OneLine();
@@ -235,8 +236,8 @@ public class Fragment_3Stock extends Fragment {
             else {
                 posStart = logNow.lastIndexOf("\n", posStart - 1);
             }
-            String copied = logNow.substring(posStart+1, posFinish);
-            logSave += "\n" + copied;
+            String copied = logNow.substring(posStart, posFinish);
+            logSave += copied;
             sharedEditor.putString("logSave", logSave);
             sharedEditor.apply();
             copied = copied.replace("\n", " 🗼️ ");
@@ -292,9 +293,9 @@ public class Fragment_3Stock extends Fragment {
         SpannableString ss = logStock2Spannable();
         if (prevStart >= logStock.length())
             prevStart = logStock.length();
-        if (prevStart < 6)
-            prevStart = 6;
-        posCurr = logStock.lastIndexOf("\n", prevStart-2) + 2;
+        if (prevStart < 2)
+            prevStart = 2;
+        posCurr = logStock.lastIndexOf("\n", prevStart-1);
         if (posCurr < 0)
             posCurr = prevStart -3;
         ss.setSpan(new StyleSpan(Typeface.ITALIC), posCurr, prevStart-1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -310,7 +311,7 @@ public class Fragment_3Stock extends Fragment {
         }, 30));
     }
 
-    private void reload_loqQue() {
+    private void reload_stock() {
         String [] que = new FileIO().readKR(new File(tableFolder, "logStock.txt").toString());
         StringBuilder sb = new StringBuilder();
         for (String s: que) {

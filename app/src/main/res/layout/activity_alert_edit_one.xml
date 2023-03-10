@@ -118,7 +118,7 @@
     <EditText
         android:id="@+id/e_group"
         android:layout_width="0dp"
-        app:layout_constraintHorizontal_weight="6"
+        app:layout_constraintHorizontal_weight="8"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:text="Group"
@@ -132,7 +132,7 @@
     <EditText
         android:id="@+id/e_who"
         android:layout_width="0dp"
-        app:layout_constraintHorizontal_weight="6"
+        app:layout_constraintHorizontal_weight="8"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:text="Who"
@@ -146,7 +146,7 @@
     <EditText
         android:id="@+id/e_key1"
         android:layout_width="0dp"
-        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintHorizontal_weight="4"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:text="Key1"
@@ -160,7 +160,7 @@
     <EditText
         android:id="@+id/e_key2"
         android:layout_width="0dp"
-        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintHorizontal_weight="4"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:text="Key2"
@@ -174,7 +174,7 @@
     <EditText
         android:id="@+id/e_talk"
         android:layout_width="0dp"
-        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintHorizontal_weight="4"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:text="Talk"
@@ -188,7 +188,7 @@
     <EditText
         android:id="@+id/e_skip"
         android:layout_width="0dp"
-        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintHorizontal_weight="4"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:text="Skip"
@@ -202,7 +202,7 @@
     <EditText
         android:id="@+id/e_matched"
         android:layout_width="0dp"
-        app:layout_constraintHorizontal_weight="6"
+        app:layout_constraintHorizontal_weight="8"
         android:layout_height="wrap_content"
         android:inputType="numberSigned"
         android:text="0"
@@ -216,7 +216,7 @@
     <EditText
         android:id="@+id/e_memo"
         android:layout_width="0dp"
-        app:layout_constraintHorizontal_weight="6"
+        app:layout_constraintHorizontal_weight="8"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:text="Memo"
@@ -230,7 +230,7 @@
     <EditText
         android:id="@+id/e_prev"
         android:layout_width="0dp"
-        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintHorizontal_weight="4"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:text="Prev"
@@ -244,7 +244,7 @@
     <EditText
         android:id="@+id/e_next"
         android:layout_width="0dp"
-        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintHorizontal_weight="4"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:text="Next"
@@ -253,6 +253,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/t_prev"
         app:layout_constraintBottom_toBottomOf="@id/t_prev"
-        />
+        android:autofillHints = "Next" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
