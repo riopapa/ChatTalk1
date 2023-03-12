@@ -33,7 +33,11 @@ public class AlertStock {
         String head = " [" + group + "." + who + "] "+stockName;
         Thread thisThread = new Thread(() -> {
             String timeStamp = new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date());
-            FileIO.uploadStock(group, who, sTalk, stockName, sText, key12, timeStamp);
+            String stockDot = "";
+            for (int i = 0; i < stockName.length() ; i++)
+                stockDot += stockName.substring(i,i+1)+".";
+            final String dotText = sText.replace(stockName, stockDot);
+            FileIO.uploadStock(group, who, sTalk, stockName, dotText, key12, timeStamp);
             NotificationBar.update(head, sText);
             logUpdate.addStock(head, sText + key12);
             if (sTalk.length() > 0) {

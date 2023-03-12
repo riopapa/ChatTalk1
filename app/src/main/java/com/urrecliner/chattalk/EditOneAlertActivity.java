@@ -93,8 +93,11 @@ public class EditOneAlertActivity extends AppCompatActivity {
     private void deleteAlert() {
         if (alertLines.get(linePos).matched == -1) {    // group delete
             makeGroupMemo();
-            mWho += "\n 삭제됨 : " + new SimpleDateFormat(".MM/dd HH:mm", Locale.KOREA).format(new Date());
-            mPercent += "\n 그룹 삭제 " + new SimpleDateFormat(".MM/dd HH:mm", Locale.KOREA).format(new Date());
+            mWho = "\n삭제됨\n" + mWho + "\n"
+                    + new SimpleDateFormat(".MM/dd HH:mm", Locale.KOREA).format(new Date())
+                    + "\n삭제됨\n";
+            mPercent += "\n삭제\n" +mPercent+"\n"
+                    + new SimpleDateFormat(".MM/dd HH:mm", Locale.KOREA).format(new Date());
             int alertSize = alertLines.size();
             for (int i = 0; i < alertSize;) {
                 if (alertLines.get(i).group.equals(mGroup)) {
@@ -167,20 +170,20 @@ public class EditOneAlertActivity extends AppCompatActivity {
             if (al.group.equals(mGroup)) {
                 if (al.matched == -1) {
                     mWho = al.who;
-                    mPercent = al.key1+", "+al.key2+", "+al.talk+", "+al.skip+"\n"
+                    mPercent = "s("+al.key1+","+al.key2+"\n"+al.talk+","+al.skip+")\n"
                         + al.memo.replace("~","\n");
                 } else {
                     if (sb.length() > 1)
                         sb.append("\n");
-                    sb.append(al.who).append(", key( ")
+                    sb.append(al.who).append(", k( ")
                         .append(al.key1).append(", ")
                         .append(al.key2).append(" ), ")
                         .append(al.matched).append(" ")
-                        .append((al.talk.length()>1)? ", talk( "+al.talk+" ) ":" ")
-                        .append((al.skip.length()>1)? ", skip( "+al.skip+" ) ":" ")
+                        .append((al.talk.length()>1)? " t( "+al.talk+" ) ":"")
+                        .append((al.skip.length()>1)? " s( "+al.skip+" ) ":"")
                         .append((al.memo.length()>1)? ", "+al.memo:"")
-                        .append(" <").append(al.prev).append("x").append(al.next)
-                        .append(" >");
+                        .append(" pn<").append(al.prev).append(",").append(al.next)
+                        .append(">");
                 }
             }
         }

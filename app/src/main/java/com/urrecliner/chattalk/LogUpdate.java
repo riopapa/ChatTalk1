@@ -100,14 +100,17 @@ public class LogUpdate {
         todayFolder = new File(packageDirectory, toDay);
         if (!todayFolder.exists()) {
             if (todayFolder.mkdirs()) {
+                logQue += "\n /** " + toDay + new SimpleDateFormat(" (EEE) HH:mm ", Locale.KOREA).format(new Date()) + " NEW DAY " + " **/\nNew Day" + "\n";
+                logStock += "\n /** " + toDay + new SimpleDateFormat(" (EEE) HH:mm ", Locale.KOREA).format(new Date()) + " NEW DAY " + " **/\nNew Day" + "\n";
+                sharedEditor.putString("logQue", logQue);
+                sharedEditor.putString("logStock", logStock);
+                sharedEditor.apply();
                 String logQueFile = "logQue " + toDay + ".txt";
                 FileIO.writeKR(new File(todayFolder, logQueFile), logQue);
                 FileIO.writeKR(new File(downloadFolder, "logQue.txt"), logQue);
-                logQue += "\n /** " + toDay + new SimpleDateFormat(" (EEE) HH:mm ", Locale.KOREA).format(new Date()) + " NEW DAY " + " **/\nNew Day" + "\n";
                 String logStockFile = "logStock " + toDay + ".txt";
                 FileIO.writeKR(new File(todayFolder, logStockFile), logStock);
                 FileIO.writeKR(new File(downloadFolder, "logStock.txt"), logStock);
-                logStock += "\n /** " + toDay + new SimpleDateFormat(" (EEE) HH:mm ", Locale.KOREA).format(new Date()) + " NEW DAY " + " **/\nNew Day" + "\n";
                 new Utils().deleteOldFiles();
             }
         }
