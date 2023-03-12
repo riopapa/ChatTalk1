@@ -261,8 +261,10 @@ public class Fragment_3Stock extends Fragment {
         sharedEditor.putString("logStock", logStock);
         sharedEditor.apply();
         SpannableString ss = logStock2Spannable();
-        posStart = logStock.lastIndexOf("\n", posCurr - 1) + 1;
-        posFinish = logStock.indexOf("\n", posStart+1) - 1;
+        posStart = logStock.lastIndexOf("\n", posStart - 1) + 1;
+        posFinish = logStock.indexOf("\n", posStart) - 1;
+        if (posStart >= posFinish)
+            posFinish = posStart + 1;
         ss.setSpan(new StyleSpan(Typeface.ITALIC), posStart, posFinish, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         ss.setSpan(new UnderlineSpan(), posStart, posFinish,Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         etTable.setText(ss);

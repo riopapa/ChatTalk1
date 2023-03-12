@@ -260,8 +260,10 @@ public class Fragment_1Que extends Fragment {
         sharedEditor.putString("logQue", logQue);
         sharedEditor.apply();
         SpannableString ss = logQue2Spannable();
-        posStart = logQue.lastIndexOf("\n", posCurr - 1) + 1;
-        posFinish = logQue.indexOf("\n", posStart+1) - 1;
+        posStart = logQue.lastIndexOf("\n", posStart - 1) + 1;
+        posFinish = logQue.indexOf("\n", posStart) - 1;
+        if (posStart >= posFinish)
+            posFinish = posStart + 1;
         ss.setSpan(new StyleSpan(Typeface.ITALIC), posStart, posFinish, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         ss.setSpan(new UnderlineSpan(), posStart, posFinish,Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         etTable.setText(ss);
