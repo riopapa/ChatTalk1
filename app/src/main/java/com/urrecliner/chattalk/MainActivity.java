@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     Vars vars = null;
     SubFunc subFunc = null;
     public static Utils utils = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

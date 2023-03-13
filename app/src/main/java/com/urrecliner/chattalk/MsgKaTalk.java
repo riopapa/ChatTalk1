@@ -1,6 +1,7 @@
 package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.NotificationListener.subFunc;
+import static com.urrecliner.chattalk.NotificationListener.vars;
 import static com.urrecliner.chattalk.SubFunc.logUpdate;
 import static com.urrecliner.chattalk.SubFunc.sounds;
 import static com.urrecliner.chattalk.Vars.aAlertLineIdx;
@@ -36,7 +37,11 @@ class MsgKaTalk {
             if (aGroupSaid[gIdx].equals(iText))
                 return;
             aGroupSaid[gIdx] = iText;
-
+            if (vars.timeBegin == 0)
+                logUpdate.readyTodayFolderIfNewDay();
+            long nowTime = System.currentTimeMillis();
+            if (nowTime < vars.timeBegin || nowTime > vars.timeEnd)
+                return;
             int gwIdx = alertWhoIndex.get(gIdx, iWho, iText);
             if (gwIdx == -1)
                 return;

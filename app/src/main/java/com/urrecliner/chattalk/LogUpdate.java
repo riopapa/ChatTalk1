@@ -1,6 +1,7 @@
 package com.urrecliner.chattalk;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.urrecliner.chattalk.NotificationListener.vars;
 import static com.urrecliner.chattalk.Vars.downloadFolder;
 import static com.urrecliner.chattalk.Vars.logQue;
 import static com.urrecliner.chattalk.Vars.logSave;
@@ -18,6 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -77,6 +79,14 @@ public class LogUpdate {
         if (toDay != null && toDay.equals(nowDay))
             return;
         toDay = nowDay;
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(System.currentTimeMillis());
+        c.set(Calendar.HOUR_OF_DAY, 8);
+        c.set(Calendar.MINUTE, 30);
+        vars.timeBegin = c.getTimeInMillis();
+        c.set(Calendar.HOUR_OF_DAY, 15);
+        vars.timeEnd = c.getTimeInMillis();
+
         todayFolder = new File(packageDirectory, toDay);
         if (!todayFolder.exists()) {
             if (todayFolder.mkdirs()) {

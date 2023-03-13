@@ -31,6 +31,7 @@ public class Vars {
     static File todayFolder = null;
 
     public static String toDay = "ToDay";
+    public static long timeBegin = 0, timeEnd = 0;
 
     static ArrayList<String> packageIgnores;
     static ArrayList<String> pkgFullNames, pkgNickNames, pkgTypes;
