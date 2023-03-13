@@ -203,7 +203,7 @@ public class Fragment_1Que extends Fragment {
         mainMenu = menu;
         inflater.inflate(R.menu.menu_1que, menu);
         super.onCreateOptionsMenu(menu, inflater);
-        aBar.setTitle("  Today Log");
+        aBar.setTitle("  Que");
         aBar.setSubtitle(null);
     }
 
@@ -221,26 +221,25 @@ public class Fragment_1Que extends Fragment {
 
         } else if (item.getItemId() == R.id.copy2log) {
             String logNow = etTable.getText().toString().trim() + "\n";
-            int posCurr = etTable.getSelectionStart();
-            int posStart = logNow.lastIndexOf("\n", posCurr - 1);
-            if (posStart == -1)
-                posStart = 0;
-            int posFinish = logNow.indexOf("\n", posCurr);
-            if (posFinish == -1)
-                posFinish = logNow.length();
+            int ps = logNow.lastIndexOf("\n", etTable.getSelectionStart() - 1);
+            if (ps == -1)
+                ps = 0;
+            int pf = logNow.indexOf("\n", ps + 1);
+            if (pf == -1)
+                pf = logNow.length();
 
-            posStart = logNow.lastIndexOf("\n", posStart - 1);
-            if (posStart == -1)
-                posStart = 0;
+            ps = logNow.lastIndexOf("\n", ps - 1);
+            if (ps == -1)
+                ps = 0;
             else {
-                posStart = logNow.lastIndexOf("\n", posStart - 1);
+                ps = logNow.lastIndexOf("\n", ps - 1);
             }
-            String copied = logNow.substring(posStart+1, posFinish);
+            String copied = logNow.substring(ps+1, pf);
             logSave += "\n" + copied;
             sharedEditor.putString("logSave", logSave);
             sharedEditor.apply();
             copied = copied.replace("\n", " ▶️ ");
-            Toast.makeText(mContext, "log copied " + copied, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "que copied " + copied, Toast.LENGTH_SHORT).show();
 
         }
         return super.onOptionsItemSelected(item);
@@ -275,35 +274,28 @@ public class Fragment_1Que extends Fragment {
         InputMethodManager imm = (InputMethodManager) mActivity.getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(etTable.getWindowToken(), 0);
         String logNow = etTable.getText().toString().trim() + "\n";
-        int posCurr = etTable.getSelectionStart();
-        int posStart = logNow.lastIndexOf("\n", posCurr - 1);
-        int posFinish = logNow.indexOf("\n", posCurr);
-        if (posFinish == -1)
-            posFinish = logNow.length();
-        int prevStart = logNow.lastIndexOf("\n", posStart - 2);
-        if (prevStart == -1)
-            prevStart = 1;
-        if (logNow.charAt(prevStart - 1) == '\n')
-            logNow = logNow.substring(0, prevStart - 1) + logNow.substring(posFinish);
+        int ps = logNow.lastIndexOf("\n", etTable.getSelectionStart() - 1);
+        int pf = logNow.indexOf("\n", ps+1);
+        if (pf == -1)
+            pf = logNow.length() - 1;
+        ps = logNow.lastIndexOf("\n", ps - 1);
+        if (logNow.charAt(ps - 1) == '\n')
+            logNow = logNow.substring(0, ps - 1) + logNow.substring(pf);
         else
-            logNow = logNow.substring(0, prevStart) + logNow.substring(posFinish);
-        logQue = logNow;
-        logQue = logQue.replace("    ","");
+            logNow = logNow.substring(0, ps) + logNow.substring(pf);
+        logQue = logNow.replace("    ","");
         sharedEditor.putString("logQue", logQue);
         sharedEditor.apply();
+        ps = logQue.lastIndexOf("\n", ps - 2) + 1;
+        pf = logQue.indexOf("\n", ps);
+        if (pf == -1)
+            pf = logQue.length() - 1;
         SpannableString ss = logQue2Spannable();
-        if (prevStart >= logQue.length())
-            prevStart = logQue.length();
-        if (prevStart < 6)
-            prevStart = 6;
-        posCurr = logQue.lastIndexOf("\n", prevStart-2) + 2;
-        if (posCurr < 0)
-            posCurr = prevStart -3;
-        ss.setSpan(new StyleSpan(Typeface.ITALIC), posCurr, prevStart-1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        ss.setSpan(new UnderlineSpan(), posCurr, prevStart-1,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(new StyleSpan(Typeface.ITALIC), ps, pf, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(new UnderlineSpan(), ps, pf,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         etTable.setText(ss);
         Editable etText = etTable.getText();
-        Selection.setSelection(etText, posCurr, prevStart-1);
+        Selection.setSelection(etText, ps, pf);
         etTable.requestFocus();
         scrollView1.post(() -> new Timer().schedule(new TimerTask() {
             public void run() {

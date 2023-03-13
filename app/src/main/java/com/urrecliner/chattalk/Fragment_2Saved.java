@@ -163,7 +163,7 @@ public class Fragment_2Saved extends Fragment {
         mainMenu = menu;
         inflater.inflate(R.menu.menu_2save, menu);
         super.onCreateOptionsMenu(menu, inflater);
-        aBar.setTitle("  Saved Log");
+        aBar.setTitle("  Saved");
         aBar.setSubtitle(null);
     }
 
