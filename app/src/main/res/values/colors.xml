@@ -2,6 +2,14 @@
 <resources>
     <color name="colorPrimary">#778FA8</color>
 
+    <color name="color_tab_que">#E4B8B5</color>
+    <color name="color_tab_save">#C9EBA1</color>
+    <color name="color_tab_stock">#C9D6E3</color>
+    <color name="color_tab_chat">#CDCFB0</color>
+
+    <color name="barLine1">#1A2828</color>
+    <color name="barLine2">#0D153A</color>
+
     <color name="snackBarBack">#D3B03B</color>
     <color name="snackBarTitle">#FF354DE3</color>
     <color name="snackBarText">#FF770B09</color>
@@ -24,12 +32,12 @@
 
     <color name="log_head_f0">#FF611714</color>
     <color name="log_head_b0">#CCE7F2DB</color>
-    <color name="log_line_f0">#49201F</color>
+    <color name="log_line_f0">#2A6660</color>
     <color name="log_line_b0">#CCE2EFD8</color>
     <color name="log_line_x0">#BF9B6C</color>
     <color name="log_head_f1">#FF0A09AE</color>
     <color name="log_head_b1">#AAE7E1F9</color>
-    <color name="log_line_f1">#3E3C8C</color>
+    <color name="log_line_f1">#2D3D82</color>
     <color name="log_line_b1">#AAE9E1F9</color>
     <color name="log_line_x1">#B1A268</color>
 </resources>

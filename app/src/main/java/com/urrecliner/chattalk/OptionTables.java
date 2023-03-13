@@ -21,6 +21,8 @@ import static com.urrecliner.chattalk.Vars.textIgnores;
 
 import android.widget.Toast;
 
+import com.urrecliner.chattalk.Sub.SnackBar;
+
 import java.util.ArrayList;
 
 class OptionTables {
@@ -64,7 +66,7 @@ class OptionTables {
         for (String pLine:packages) {
             strings = pLine.split("\\^");
             if (strings.length < 3) {
-                new Utils().showSnackBar("Package Table Error ", pLine);
+                new SnackBar().show("Package Table Error ", pLine);
             } else {
                 String fullName = strings[0].trim();
                 String nickName = strings[1].trim();

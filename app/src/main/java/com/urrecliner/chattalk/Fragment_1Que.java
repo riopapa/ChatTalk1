@@ -21,9 +21,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.BackgroundColorSpan;
-import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
-import android.text.style.TypefaceSpan;
 import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -39,10 +37,10 @@ import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
-import org.apache.commons.lang3.StringUtils;
+import com.urrecliner.chattalk.Sub.LogString;
+import com.urrecliner.chattalk.Sub.SnackBar;
 
 import java.io.File;
 import java.util.Timer;
@@ -56,7 +54,6 @@ public class Fragment_1Que extends Fragment {
     EditText etTable, etKeyword;
     ImageView ivFind, ivClear, ivNext;
     Menu mainMenu;
-    Typeface font1, font2;
     int logPos = -1;
 
     @Override
@@ -76,8 +73,13 @@ public class Fragment_1Que extends Fragment {
     @Override
     public void onResume() {
         topTabs.getTabAt(1).select();
-        etTable.setText(logQue2Spannable());
-        setEditable();
+        logQue = logQue.replace("    ","");
+        ss = new LogString().make(logQue, mContext);
+        sv = ss;
+        etTable.setText(ss);
+        etTable.setFocusableInTouchMode(true);
+        etTable.setFocusable(true);
+
         ivNext.setVisibility(View.GONE);
         logPos = -1;
         ivFind.setOnClickListener(v -> {
@@ -100,7 +102,7 @@ public class Fragment_1Que extends Fragment {
             }
             sv = ss;
             etTable.setText(ss);
-            new Utils().showSnackBar(key, cnt+" times Found");
+            new SnackBar().show(key, cnt+" times Found");
             Editable etText = etTable.getText();
             if (logPos > 0) {
                 Selection.setSelection(etText, logPos);
@@ -127,75 +129,6 @@ public class Fragment_1Que extends Fragment {
         new Handler(Looper.getMainLooper()).post(() -> scrollView1.smoothScrollBy(0, 40000));
         super.onResume();
 
-    }
-
-    private void setEditable() {
-        etTable.setFocusableInTouchMode(true);
-//        etTable.setEnabled(true);
-        etTable.setFocusable(true);
-    }
-
-    SpannableString logQue2Spannable() {
-
-        font1 = Typeface.create(ResourcesCompat.getFont(mContext, R.font.mayplestory), Typeface.NORMAL);
-        font2 = Typeface.create(ResourcesCompat.getFont(mContext, R.font.cookie_run), Typeface.NORMAL);
-        boolean newItem = false;
-        int nPos = 0, sLen;
-
-        int [][]colors = new int[2][];
-
-        colors[0] = new int[]{
-                mContext.getColor(R.color.log_head_f0), mContext.getColor(R.color.log_head_b0),
-                mContext.getColor(R.color.log_line_f0), mContext.getColor(R.color.log_line_b0),
-                mContext.getColor(R.color.log_line_x0)
-        };
-        colors[1] = new int[]{
-                mContext.getColor(R.color.log_head_f1), mContext.getColor(R.color.log_head_b1),
-                mContext.getColor(R.color.log_line_f1), mContext.getColor(R.color.log_line_b1),
-                mContext.getColor(R.color.log_line_x1)
-        };
-
-        int colorIdx = 0;
-        int colorFore, colorBack;
-
-        Typeface font = font1;
-        ss = new SpannableString(logQue);
-        String[] msgLine = logQue.split("\n");
-        for (String s : msgLine) {
-            sLen = s.length();
-            if (sLen == 0) {
-                nPos += 1;
-                continue;
-            }
-            if (s.contains("/**")) {    // new date separator
-                colorIdx = (colorIdx + 1) % 2;
-                colorFore = colors[colorIdx][0];
-                colorBack = colors[colorIdx][1];
-                newItem = true;
-            } else if (StringUtils.isNumeric(String.valueOf(s.charAt(0)))) {  // timestamp + who
-                colorFore = colors[colorIdx][0];
-                colorBack = colors[colorIdx][1];
-                newItem = true;
-            }
-            else {
-                colorFore = colors[colorIdx][2];
-                if (newItem) {
-                    colorBack = colors[colorIdx][3];
-                } else {
-                    colorBack = colors[colorIdx][4];
-                }
-                newItem = false;
-            }
-
-            int endPos = nPos + sLen;
-            ss.setSpan(new ForegroundColorSpan(colorFore), nPos, endPos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            ss.setSpan(new TypefaceSpan(font), nPos, endPos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            ss.setSpan(new BackgroundColorSpan(colorBack), nPos, endPos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-//            ss.setSpan(new RelativeSizeSpan(fontSize), nPos, nPos + sLen, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            nPos += sLen + 1;
-        }
-        sv = ss;
-        return ss;
     }
 
     @Override
@@ -255,10 +188,9 @@ public class Fragment_1Que extends Fragment {
         if (posFinish == -1)
             posFinish = logNow.length() - 2;
         logQue = logNow.substring(0, posStart) + logNow.substring(posFinish);
-        logQue = logQue.replace("    ","");
         sharedEditor.putString("logQue", logQue);
         sharedEditor.apply();
-        SpannableString ss = logQue2Spannable();
+        SpannableString ss = new LogString().make(logQue, mContext);
         posStart = logQue.lastIndexOf("\n", posStart - 1) + 1;
         posFinish = logQue.indexOf("\n", posStart) - 1;
         if (posStart >= posFinish)
@@ -273,29 +205,14 @@ public class Fragment_1Que extends Fragment {
     private void delete_OneItem() {
         InputMethodManager imm = (InputMethodManager) mActivity.getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(etTable.getWindowToken(), 0);
-        String logNow = etTable.getText().toString().trim() + "\n";
-        int ps = logNow.lastIndexOf("\n", etTable.getSelectionStart() - 1);
-        int pf = logNow.indexOf("\n", ps+1);
-        if (pf == -1)
-            pf = logNow.length() - 1;
-        ps = logNow.lastIndexOf("\n", ps - 1);
-        if (logNow.charAt(ps - 1) == '\n')
-            logNow = logNow.substring(0, ps - 1) + logNow.substring(pf);
-        else
-            logNow = logNow.substring(0, ps) + logNow.substring(pf);
-        logQue = logNow.replace("    ","");
+
+        Vars.DelItem delItem = new LogString().delItem(etTable.getText().toString(), etTable.getSelectionStart(), mContext);
+        logQue = delItem.logNow;
         sharedEditor.putString("logQue", logQue);
         sharedEditor.apply();
-        ps = logQue.lastIndexOf("\n", ps - 2) + 1;
-        pf = logQue.indexOf("\n", ps);
-        if (pf == -1)
-            pf = logQue.length() - 1;
-        SpannableString ss = logQue2Spannable();
-        ss.setSpan(new StyleSpan(Typeface.ITALIC), ps, pf, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        ss.setSpan(new UnderlineSpan(), ps, pf,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        etTable.setText(ss);
+        etTable.setText(delItem.ss);
         Editable etText = etTable.getText();
-        Selection.setSelection(etText, ps, pf);
+        Selection.setSelection(etText, delItem.ps, delItem.pf);
         etTable.requestFocus();
         scrollView1.post(() -> new Timer().schedule(new TimerTask() {
             public void run() {
@@ -308,10 +225,10 @@ public class Fragment_1Que extends Fragment {
         String [] que = new FileIO().readKR(new File(tableFolder, "logQue.txt").toString());
         StringBuilder sb = new StringBuilder();
         for (String s: que) {
-            sb.append(s);
+            sb.append(s).append("\n");
         }
         logQue = sb.toString();
-        etTable.setText(logQue2Spannable());
+        etTable.setText(new LogString().make(logQue, mContext));
     }
     OnBackPressedCallback callback;
     @Override

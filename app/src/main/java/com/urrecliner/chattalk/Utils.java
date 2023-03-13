@@ -70,31 +70,6 @@ class Utils {
         return s.substring(s.lastIndexOf(".")+1);
     }
 
-    void showToast(String text) {    // 0: short 1:long
-        Toast toast = Toast.makeText(mContext,"\n"+text+"\n", Toast.LENGTH_LONG);
-        toast.show();
-    }
-
-    void showSnackBar(String title, String text) {
-        Snackbar snackbar = Snackbar.make(mLayoutView, "", Snackbar.LENGTH_SHORT);
-        View sView = mActivity.getLayoutInflater().inflate(R.layout.snack_message, null);
-
-        TextView tv1 = sView.findViewById(R.id.text_header);
-        TextView tv2 = sView.findViewById(R.id.text_body);
-
-        tv1.setText(title);
-        tv2.setText(text);
-
-        // now change the layout of the SnackBar
-        Snackbar.SnackbarLayout snackBarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
-        snackBarLayout.setBackgroundColor(0x0033FFFF);  // transparent background
-        FrameLayout.LayoutParams params =(FrameLayout.LayoutParams)snackBarLayout.getLayoutParams();
-        params.gravity = Gravity.CENTER_VERTICAL;
-        sView.setLayoutParams(params);
-        snackBarLayout.addView(sView, 0);
-
-        snackbar.show();
-    }
 
     /* delete old packageDirectory / files if storage is less than x days */
     void deleteOldFiles() {

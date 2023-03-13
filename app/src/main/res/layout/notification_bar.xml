@@ -9,7 +9,7 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:background="#3C3B3B"
+        android:background="@color/barLine1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -59,7 +59,7 @@
             android:layout_margin="4dp"
             android:src="@drawable/stop_talking" />
     </LinearLayout>
-        <LinearLayout
+    <LinearLayout
          android:id="@+id/msg_line1"
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
      </LinearLayout>
     </LinearLayout>
     <LinearLayout
-        android:background="#493E3E"
+        android:background="@color/barLine2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">

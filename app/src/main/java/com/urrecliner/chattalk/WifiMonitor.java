@@ -7,6 +7,7 @@ import android.net.NetworkCapabilities;
 
 import androidx.annotation.NonNull;
 
+import com.urrecliner.chattalk.Sub.ToastText;
 import com.urrecliner.chattalk.Sub.WifiName;
 
 import java.util.Timer;
@@ -56,7 +57,7 @@ public class WifiMonitor {
             public void onLost(@NonNull Network network) {
                 super.onLost(network);
                 if (wifiName != null) {
-                    new Utils().showToast(wifiName+" 연결 끊어짐");
+                    new ToastText().show(wifiName+" 연결 끊어짐");
                     wifiName = null;
                 }
             }

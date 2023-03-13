@@ -55,7 +55,7 @@ public class LogUpdate {
             front = logQue.substring(0, pos).replace("\n\n","\n");
             front = front.replace("\n\n","\n");
             String remain = logQue.substring(pos);
-            logQue = front+"\n\n/** " + MMDDHHMM.format(new Date()) + " **/" +
+            logQue = front+"\n\n" + MMDDHHMM.format(new Date()) + " **/" +
                     "\n---- squeezed to "+ (front.length()+remain.length()) + " -------" +
                     "\n"+remain +
                     "\n---- squeezed " + MMDDHHMM.format(new Date()) + "\n";
@@ -67,27 +67,7 @@ public class LogUpdate {
         readyTodayFolderIfNewDay();
         logStock += "\n" + MMDDHHMM.format(new Date())
                 + header + "\n" + text+"\n";
-        int len = logStock.length();
-        if (len > 5000) {   // max log que size
-            logStock = logStock.substring(2000);    // remove old 3000 bytes
-            logStock = logStock.substring(logStock.indexOf("\n")+1);
-            if (!StringUtils.isNumeric(""+logStock.charAt(0))) {  // start with MMDD ...
-                logStock = logStock.substring(logStock.indexOf("\n")+1);
-            }
-            String front = logStock.substring(0, logStock.length()*2/3);
-            front = front.substring(0, front.lastIndexOf("\n"));
-            int pos = front.lastIndexOf("\n", front.length()-2);
-            if (!StringUtils.isNumeric(""+front.charAt(pos))) {  // start with MMDD ...
-                pos = front.lastIndexOf("\n", pos-2);
-            }
-            front = logStock.substring(0, pos).replace("\n\n","\n");
-            front = front.replace("\n\n","\n");
-            String remain = logStock.substring(pos);
-            logStock = front+"\n\n/** " + MMDDHHMM.format(new Date()) + " **/" +
-                    "\n---- squeezed to "+ (front.length()+remain.length()) + " -------" +
-                    "\n"+remain +
-                    "\n---- squeezed " + MMDDHHMM.format(new Date()) + "\n";
-        }
+
         sharedEditor.putString("logStock", logStock);
         sharedEditor.apply();
     }
@@ -100,8 +80,8 @@ public class LogUpdate {
         todayFolder = new File(packageDirectory, toDay);
         if (!todayFolder.exists()) {
             if (todayFolder.mkdirs()) {
-                logQue += "\n /** " + toDay + new SimpleDateFormat(" (EEE) HH:mm ", Locale.KOREA).format(new Date()) + " NEW DAY " + " **/\nNew Day" + "\n";
-                logStock += "\n /** " + toDay + new SimpleDateFormat(" (EEE) HH:mm ", Locale.KOREA).format(new Date()) + " NEW DAY " + " **/\nNew Day" + "\n";
+                logQue += "\n" + toDay + new SimpleDateFormat(" (EEE) HH:mm ", Locale.KOREA).format(new Date()) + " NEW DAY " + " **/\nNew Day" + "\n";
+                logStock += "\n" + toDay + new SimpleDateFormat(" (EEE) HH:mm ", Locale.KOREA).format(new Date()) + " NEW DAY " + " **/\nNew Day" + "\n";
                 sharedEditor.putString("logQue", logQue);
                 sharedEditor.putString("logStock", logStock);
                 sharedEditor.apply();

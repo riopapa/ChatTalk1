@@ -7,6 +7,7 @@ import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.nineIgnores;
 import static com.urrecliner.chattalk.MainActivity.utils;
 
+import com.urrecliner.chattalk.Sub.Dotted;
 import com.urrecliner.chattalk.Sub.IsWhoNine;
 
 import java.text.SimpleDateFormat;
@@ -27,7 +28,6 @@ class MsgSMS {
 
         mWho = mWho.replaceAll("[\\u200C-\\u206F]", "");
         mText = mText.replace(mContext.getString(R.string.web_sent), "").replaceAll("[\\u200C-\\u206F]", "");
-//        manageLogQue.add("MsgSMS", "who="+mWho+", txt="+mText);
         if (mWho.startsWith(jrGroup)) {
             if (msgKaTalk == null)
                 msgKaTalk = new MsgKaTalk();
@@ -58,26 +58,26 @@ class MsgSMS {
             try {
                 String[] words = mText.split("\\|");
                 if (words.length < 5) {
-                    logUpdate.addStock("SMS NH증권 에러 " + words.length + ".txt", mText);
+                    logUpdate.addStock("SMS NH 증권 에러 " + words.length, mText);
                     sounds.speakAfterBeep(mText);
                 } else {
                     String stockName = words[3].trim();  // 종목명
-                    String buySell = (words[2].contains("매수")) ? "매수" : "매도";
+                    boolean buySell = words[2].contains("매수");
+                    String samPam = (buySell) ?  " 샀음": " 팔림";
                     String amount = words[4];
                     String uPrice = words[5];
                     String sGroup = lastChar + trade;
-                    String sayMsg = (buySell.equals("매수") ? stockName + " "
-                            + amount + " " + uPrice + "으로 샀음 " :
-                            stockName + " " + amount + " " + uPrice + " 에 팔렸음 ");
-                    NotificationBar.update(trade +":"+buySell, sayMsg);
+                    String sayMsg = stockName + " " + amount + " " + uPrice + samPam;
+                    NotificationBar.update(trade +":"+stockName, sayMsg);
                     logUpdate.addStock("sms>"+nhStock, sayMsg);
-                    String timeStamp = new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date());
-                    FileIO.uploadStock(sGroup, mWho, buySell, stockName, mText, amount, timeStamp);
-                    sayMsg = stockName + (buySell.equals("매수") ? " 샀음 " : " 팔렸음 ");
+                    FileIO.uploadStock(sGroup, mWho, samPam, stockName,
+                            mText.replace(stockName, new Dotted().make(stockName)), amount,
+                            new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date()));
+                    sayMsg = stockName + samPam;
                     sounds.speakAfterBeep(sayMsg.replaceAll("\\d",""));
                 }
             } catch (Exception e) {
-                mText = "Parsing Exception_01 " + mText;
+                mText = mText + e;
                 logUpdate.addStock(nhStock, mText);
                 sounds.speakAfterBeep(mText);
             }

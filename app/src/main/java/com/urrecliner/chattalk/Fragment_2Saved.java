@@ -7,7 +7,6 @@ import static com.urrecliner.chattalk.Vars.sharedEditor;
 import static com.urrecliner.chattalk.Vars.topTabs;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -15,10 +14,7 @@ import android.text.Editable;
 import android.text.Selection;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.style.BackgroundColorSpan;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.TypefaceSpan;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,8 +27,10 @@ import android.widget.ScrollView;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+
+import com.urrecliner.chattalk.Sub.LogString;
+import com.urrecliner.chattalk.Sub.SnackBar;
 
 public class Fragment_2Saved extends Fragment {
 
@@ -42,7 +40,6 @@ public class Fragment_2Saved extends Fragment {
     EditText etTable, etKeyword;
     ImageView ivFind, ivNext;
     Menu mainMenu;
-    Typeface font1, font2;
     int logPos = -1;
 
     @Override
@@ -61,8 +58,13 @@ public class Fragment_2Saved extends Fragment {
     @Override
     public void onResume() {
         topTabs.getTabAt(2).select();
-        etTable.setText(logSave2Spannable());
-        setEditable();
+        logSave = logSave.replace("    ","");
+        ss = new LogString().make(logSave, mContext);
+        sv = ss;
+        etTable.setText(ss);
+        etTable.setFocusableInTouchMode(true);
+        etTable.setFocusable(true);
+
         ivNext.setVisibility(View.GONE);
         logPos = -1;
         ivFind.setOnClickListener(v -> {
@@ -85,7 +87,7 @@ public class Fragment_2Saved extends Fragment {
             }
             sv = ss;
             etTable.setText(ss);
-            new Utils().showSnackBar(key, cnt+" times Found");
+            new SnackBar().show(key, cnt+" times Found");
             Editable etText = etTable.getText();
             if (logPos > 0) {
                 Selection.setSelection(etText, logPos);
@@ -115,49 +117,6 @@ public class Fragment_2Saved extends Fragment {
 
     }
 
-    private void setEditable() {
-        etTable.setFocusableInTouchMode(true);
-        etTable.setFocusable(true);
-    }
-
-    SpannableString logSave2Spannable() {
-
-        font1 = Typeface.create(ResourcesCompat.getFont(mContext, R.font.mayplestory), Typeface.NORMAL);
-        font2 = Typeface.create(ResourcesCompat.getFont(mContext, R.font.cookie_run), Typeface.NORMAL);
-
-        int nPos = 0, sLen;
-        int foreColor,backColor;
-        Typeface font;
-        ss = new SpannableString(logSave);
-        String[] msgLine = logSave.split("\n");
-        boolean changeColor = true;
-        for (String s : msgLine) {
-            sLen = s.length();
-            if (sLen == 0) {
-                nPos += 1;
-                continue;
-            }
-            if (changeColor) {
-                    foreColor = mContext.getColor(R.color.log_head_f1);
-                    backColor = mContext.getColor(R.color.log_head_b0);
-                    font = font2;
-            } else {
-                    foreColor = mContext.getColor(R.color.log_head_f0);
-                    backColor = mContext.getColor(R.color.log_head_b0);
-                    font = font1;
-            }
-            changeColor = !changeColor;
-
-            ss.setSpan(new BackgroundColorSpan(backColor), nPos, nPos + sLen, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            ss.setSpan(new ForegroundColorSpan(foreColor), nPos, nPos + sLen, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            ss.setSpan(new TypefaceSpan(font), nPos, nPos + sLen, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-//            ss.setSpan(new RelativeSizeSpan(fontSize), nPos, nPos + sLen, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            nPos += sLen + 1;
-        }
-        sv = ss;
-        return ss;
-    }
-
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         mainMenu = menu;
@@ -172,25 +131,21 @@ public class Fragment_2Saved extends Fragment {
 
         if (item.getItemId() == R.id.line_delete_item) {
             String logNow = etTable.getText().toString().trim() + "\n";
-            int posCurr = etTable.getSelectionStart();
-            int posStart = logNow.lastIndexOf("\n", posCurr - 1);
-            int posFinish = logNow.indexOf("\n", posCurr);
-            if (posFinish == -1)
-                posFinish = logNow.length();
-            int prevStart = logNow.lastIndexOf("\n", posStart - 2);
-            if (prevStart == -1)
-                prevStart = 1;
-            if (logNow.charAt(prevStart - 1) == '\n')
-                logNow = logNow.substring(0, prevStart - 1) + logNow.substring(posFinish);
+            int ps = logNow.lastIndexOf("\n", etTable.getSelectionStart() - 1);
+            int pf = logNow.indexOf("\n", ps + 1 );
+            ps = logNow.lastIndexOf("\n", ps - 1);
+            if (ps == -1)
+                ps = 1;
+            if (logNow.charAt(ps - 1) == '\n')
+                logSave = logNow.substring(0, ps - 1) + logNow.substring(pf);
             else
-                logNow = logNow.substring(0, prevStart) + logNow.substring(posFinish);
-            logSave = logNow.replace("    ","");
+                logSave = logNow.substring(0, ps) + logNow.substring(pf);
             sharedEditor.putString("logSave", logSave);
             sharedEditor.apply();
-            etTable.setText(logSave2Spannable());
-            if (prevStart >= logSave.length())
-                prevStart = logSave.length();
-            etTable.setSelection(prevStart-1);
+            etTable.setText(new LogString().make(logSave, mContext));
+            pf = ps - 1;
+            ps = logSave.lastIndexOf("\n", pf - 1) + 1;
+            etTable.setSelection(ps, pf);
 
         } else if (item.getItemId() == R.id.line_delete_one) {
             String logNow = etTable.getText().toString().trim() + "\n";
@@ -205,7 +160,7 @@ public class Fragment_2Saved extends Fragment {
             logSave = logSave.replace("    ","");
             sharedEditor.putString("logSave", logSave);
             sharedEditor.apply();
-            etTable.setText(logSave2Spannable());
+            etTable.setText(new LogString().make(logSave, mContext));
             etTable.setSelection(posStart);
 
         } else if (item.getItemId() == R.id.save_log_save) {
@@ -213,7 +168,7 @@ public class Fragment_2Saved extends Fragment {
             logSave = logSave.replace("    ","");
             sharedEditor.putString("logSave", logSave);
             sharedEditor.apply();
-            etTable.setText(logSave2Spannable());
+            etTable.setText(new LogString().make(logSave, mContext));
         }
         return super.onOptionsItemSelected(item);
     }

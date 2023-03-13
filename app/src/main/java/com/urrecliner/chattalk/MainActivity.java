@@ -26,6 +26,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.urrecliner.chattalk.Sub.Permission;
+import com.urrecliner.chattalk.Sub.SnackBar;
 
 import java.util.Set;
 import java.util.Timer;
@@ -121,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.reload_all_tables) {
             new OptionTables().readAll();
             AlertTable.readFile("Main");
-            new Utils().showSnackBar("All Table","Reloaded");
+            new SnackBar().show("All Table","Reloaded");
         }
         return false;
     }

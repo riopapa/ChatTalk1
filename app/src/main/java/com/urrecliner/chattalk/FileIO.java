@@ -8,6 +8,8 @@ import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
+import com.urrecliner.chattalk.Sub.SnackBar;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -62,7 +64,7 @@ public class FileIO {
             if (!file.exists()) {
                 if (!file.createNewFile()) {
                     String s = "create file Error " + file;
-                    new Utils().showSnackBar("append2File", s);
+                    new SnackBar().show("append2File", s);
                     Log.e("file " + file, s);
                 }
             }
@@ -93,7 +95,7 @@ public class FileIO {
             bufferedWriter.close();
         } catch (IOException ex) {
             new Utils().logE("editor", fileName + "'\n" + ex);
-            new Utils().showSnackBar("writeTextFile", "Write table error " + fileName);
+            new SnackBar().show("writeTextFile", "Write table error " + fileName);
         }
     }
 

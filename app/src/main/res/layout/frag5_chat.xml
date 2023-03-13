@@ -5,7 +5,7 @@
     android:id="@+id/fragment_chat"
     android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
     android:orientation="vertical"
-    android:background="#89abcdef"
+    android:background="@color/color_tab_chat"
     android:screenOrientation="landscape">
 
     <LinearLayout

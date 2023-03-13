@@ -8,6 +8,7 @@ import static com.urrecliner.chattalk.Vars.todayFolder;
 import com.urrecliner.chattalk.Sub.AlertLine;
 import com.urrecliner.chattalk.Sub.AlertLinesGetPut;
 import com.urrecliner.chattalk.Sub.ByteLength;
+import com.urrecliner.chattalk.Sub.SnackBar;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -44,7 +45,7 @@ public class AlertSave {
         FileIO.writeTextFile( todayFolder,"kTalkAlerts"+timeStamp.format(new Date()),s.toString());
         AlertTable.makeArrays();
         new AlertLinesGetPut().put(alertLines, mContext);
-        new Utils().showSnackBar("Alert Table", msg);
+        new SnackBar().show("Alert Table", msg);
     }
 
     String strPad(String s, int size) {

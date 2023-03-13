@@ -17,12 +17,14 @@ import static com.urrecliner.chattalk.Vars.replShort;
 import static com.urrecliner.chattalk.Vars.tableListFile;
 
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.UnderlineSpan;
 import android.widget.Toast;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
+import com.urrecliner.chattalk.Sub.Dotted;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -33,7 +35,7 @@ public class SelectChats {
     String[] whose;
     String[] whoKeys;
     String[] keywords, keyWhose, keyword1, keyword2, prev, next;
-    String groupInfo;
+    String groupInfo, gSkip1, gSkip2, gSkip3, gSkip4;
     boolean upload;
     ArrayList<String> msgLines;
     final String repeated = new String(new char[30]).replace("\0\0", "- ")+"\n";
@@ -84,6 +86,9 @@ public class SelectChats {
         for (String txt: msgLines) {
             if (txt.equals("") || txt.equals(prvTxt) || canIgnore(txt))
                 continue;
+            if (txt.contains(gSkip1) || txt.contains(gSkip2) ||
+                    txt.contains(gSkip3) || txt.contains(gSkip4))
+                continue;
             prvTxt = txt;
             int p = txt.indexOf(", ");
             if (p < 0)
@@ -112,10 +117,11 @@ public class SelectChats {
             }
 
             if (found) { //  || inWhoList(txt)) {
-                SpannableString ss = key2Matched(time, who, body);
+                SpannableString ss = key2Matched(time, who, body, upload);
                 if (ss.length() > 10) {
                     matchedSS = concatSS(matchedSS, ss);
-                    selectedSS = new SpannableString(TextUtils.concat(selectedSS, key2Matched(time, who, body)));
+                    selectedSS = new SpannableString(TextUtils.concat(selectedSS,
+                            key2Matched(time, who, body, false)));
                 } else
                     selectedSS = concatSS(selectedSS, checkKeywords(time+", "+who+" , "+body));
             } else if (inWhoList(who)) {
@@ -129,7 +135,6 @@ public class SelectChats {
         return new SpannableString(TextUtils.concat(new SpannableString(headStr+"\n"),
                 matchedSS, selectedSS));
     }
-
     private String makeDot(String txt) {
         if (txt.length() > 100)
             return txt.substring(0, 95) + " ⋙";
@@ -174,7 +179,7 @@ public class SelectChats {
         return s;
     }
 
-    SpannableString key2Matched(String time, String who, String body) {
+    SpannableString key2Matched(String time, String who, String body, boolean upload) {
         int p1, p2;
         for (int k = 0; k < keyword1.length; k++) {
             p1 = body.indexOf(keyword1[k]);
@@ -182,8 +187,8 @@ public class SelectChats {
                 p2 = body.indexOf(keyword2[k]);
                 if (p2 >= 0) {      // both matched
                     String str = time+", "+who+" , "+utils.strReplace(chatGroup, body)+
-                            " <"+keyword1[k]+"/"+keyword2[k]+">\n\n";
-                    SpannableString s = new SpannableString(str);
+                            " <"+keyword1[k]+"/"+keyword2[k]+">";
+                    SpannableString s = new SpannableString(str+"\n\n");
                     s.setSpan(new BackgroundColorSpan(mContext.getResources().getColor(R.color.keyMatchedBack, null)), 0, s.length()-1, SPAN_EXCLUSIVE_EXCLUSIVE);
                     if (str.contains(keyWhose[k]))
                         s.setSpan(new UnderlineSpan(), 0, s.length()-1, SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -197,6 +202,7 @@ public class SelectChats {
                     }
                     if(upload) {
                         String stockName = getStockName(prev[k], next[k], body);
+                        body = body.replace(stockName, new Dotted().make(stockName));
                         FileIO.uploadStock(chatGroup, who, "chats", stockName,
                                 body, "[" + keyword1[k] + "/" + keyword2[k] + "]", time);
                     }
@@ -227,8 +233,13 @@ public class SelectChats {
             if (al.group.equals(chatGroup)) {
                 if (!al.who.equals(svWho)) {
                     if (al.matched == -1) { // head
-                        groupInfo = "("+al.who + ") skip |"+ al.key1 + "|"+ al.key2 + "|"
-                                + al.talk+"|" + al.skip+"|\n" + al.memo;
+                        gSkip1 = al.key1; gSkip2 = al.key2; gSkip3 = al.talk; gSkip4 = al.skip;
+                        groupInfo = "("+al.who + ") skip |"+ gSkip1 + "|"+ gSkip2 + "|"
+                                + gSkip3 +"|" + gSkip4 +"|\n" + al.memo;
+                        if (gSkip1.equals("")) gSkip1 = "업슴";
+                        if (gSkip2.equals("")) gSkip2 = "업슴";
+                        if (gSkip3.equals("")) gSkip3 = "업슴";
+                        if (gSkip4.equals("")) gSkip4 = "업슴";
                     } else {
                         svWho = al.who;
                         aWhose.add(svWho);

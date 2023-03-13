@@ -21,6 +21,7 @@ import static com.urrecliner.chattalk.MainActivity.utils;
 import android.util.Log;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
+import com.urrecliner.chattalk.Sub.SnackBar;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -47,7 +48,7 @@ class AlertTable {
                 String s = "Caret for Alert missing, "+line;
                 if (utils == null)
                     utils = new Utils();
-                utils.showSnackBar("kTalkAlerts", s);
+                new SnackBar().show("kTalkAlerts", s);
                 utils.logW("Alert Table "," Error "+line);
                 sounds.speakAfterBeep(s);
                 sounds.beepOnce(Vars.soundType.ERR.ordinal());
@@ -83,17 +84,17 @@ class AlertTable {
     static void makeArrays() {
 
         String svGroup = "", svWho = "";
-        String none = "nOnE";
         int alertSize = alertLines.size();
 
         aGroups = new ArrayList<>();
         for (AlertLine al: alertLines) {
             if (!svGroup.equals(al.group)) {
                 aGroups.add(al.group);
-                gSkip1.add(al.key1.equals("") ? none : al.key1);
-                gSkip2.add(al.key2.equals("") ? none : al.key2);
-                gSkip3.add(al.talk.equals("") ? none : al.talk);
-                gSkip4.add(al.skip.equals("") ? none : al.skip);
+                String key;
+                key = al.key1; if (key.equals("")) key = "업씀"; gSkip1.add(key);
+                key = al.key2; if (key.equals("")) key = "업씀"; gSkip2.add(key);
+                key = al.talk; if (key.equals("")) key = "업씀"; gSkip3.add(key);
+                key = al.skip; if (key.equals("")) key = "업씀"; gSkip4.add(key);
                 svGroup = al.group;
             }
         }
@@ -161,7 +162,7 @@ class AlertTable {
                 }
                 key1.add(al.key1);
                 key2.add(al.key2);
-                skip.add(al.skip.equals("") ? none : al.skip);
+                skip.add(al.skip.equals("") ? "업써" : al.skip);
             }
         }
     }

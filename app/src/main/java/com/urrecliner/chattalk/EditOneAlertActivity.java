@@ -131,15 +131,16 @@ public class EditOneAlertActivity extends AppCompatActivity {
             String key2 = eKey2.getText().toString();
             String prev = ePrev.getText().toString(); if (prev.equals("")) prev = key1;
             String next = eNext.getText().toString(); if (next.equals("")) next = key2;
-            al = new AlertLine(eGroup.getText().toString(), eWho.getText().toString(),
-                    key1, key2,
+            al = new AlertLine(eGroup.getText().toString(),
+                    eWho.getText().toString(), key1, key2,
                     eTalk.getText().toString(), matchInt,
                     eSkip.getText().toString(), memo, more,
                     prev, next);
             alertLines.set(linePos, al);
             if (al.matched == -1 && newGroup) { // add new group dummy line
                 al = new AlertLine(eGroup.getText().toString(), "누군가",
-                        "종목명", "매수가", "", 123, "","", "", "","");
+                        "종목명", "매수가", "", 0, "","", "",
+                        "종목명","매수가");
                 alertLines.add(al);
                 alertsAdapter.notifyItemInserted(linePos);
                 newGroup = false;
@@ -148,8 +149,7 @@ public class EditOneAlertActivity extends AppCompatActivity {
             Upload2Google.uploadComment(mGroup, mWho, mPercent, mMemo);
             AlertTable.sort();
             alertsAdapter = new AlertsAdapter();
-//            alertsAdapter.notifyDataSetChanged();
-            new AlertSave((al.matched == -1)? "Save Group": "Save "+eWho.getText().toString());
+            new AlertSave((al.matched == -1)? ("Save Group "+mGroup): ("Save "+mGroup+" " +mWho));
             finish();
 
         } else if (item.getItemId() == R.id.duplicate_alert) {
@@ -164,14 +164,13 @@ public class EditOneAlertActivity extends AppCompatActivity {
     }
 
     void makeGroupMemo() {
-        mGroup = al.group; mWho = al.who; mPercent = ""; mMemo = "";
+        mGroup = al.group;
         StringBuilder sb = new StringBuilder();
         for (AlertLine al: alertLines) {
             if (al.group.equals(mGroup)) {
                 if (al.matched == -1) {
-                    mWho = al.who;
-                    mPercent = "s("+al.key1+","+al.key2+"\n"+al.talk+","+al.skip+")\n"
-                        + al.memo.replace("~","\n");
+                    mWho = al.who + ((al.memo.length()> 1) ? "\n"+al.memo:"");
+                    mPercent = "s("+al.key1+","+al.key2+"\n"+al.talk+","+al.skip+")";
                 } else {
                     if (sb.length() > 1)
                         sb.append("\n");

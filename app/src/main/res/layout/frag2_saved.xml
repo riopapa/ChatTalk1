@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/fragment_saved"
-    android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
     android:orientation="vertical"
-    android:screenOrientation="landscape">
+  android:background="@color/color_tab_save"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.os.Environment;
+import android.text.SpannableString;
 import android.util.Log;
 import android.view.View;
 
@@ -63,11 +64,11 @@ public class Vars {
     static SharedPreferences.Editor sharedEditor;
 
     @SuppressLint("StaticFieldLeak")
-    static Context mContext = null;
+    public static Context mContext = null;
     @SuppressLint("StaticFieldLeak")
-    static Activity mActivity = null;
+    public static Activity mActivity = null;
     @SuppressLint("StaticFieldLeak")
-    static View mLayoutView;
+    public static View mLayoutView;
 
     static final int SHOW_MESSAGE = 1234;
     static String logQue = "", logSave = "", logStock = "";
@@ -90,6 +91,16 @@ public class Vars {
     enum soundType { PRE, POST, ERR, TESLY, ONLY}
     static final int[] beepRawIds = { R.raw.a0_pre_sound, R.raw.a1_post_sound, R.raw.a2_alert, R.raw.a3_hello_tesry, R.raw.a4_only};
 
+    public static class DelItem {
+        String logNow;
+        int ps, pf;
+        SpannableString ss;
+        public DelItem(String logNow, int ps, int pf, SpannableString ss) {
+            this.logNow = logNow;
+            this.ps = ps; this.pf = pf;
+            this.ss = ss;
+        }
+    }
     void set(Context context, String msg) {
         Log.w("vars","vars set msg="+msg);
         mContext = context;

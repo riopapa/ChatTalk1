@@ -30,6 +30,8 @@ import java.util.Arrays;
 
 import static com.urrecliner.chattalk.MainActivity.utils;
 
+import com.urrecliner.chattalk.Sub.SnackBar;
+
 public class Fragment_5Chat extends Fragment {
 
     ViewGroup rootView;
@@ -75,7 +77,7 @@ public class Fragment_5Chat extends Fragment {
             return;
         nowChatFiles = chatFolders[chatIdx].listFiles(file -> (file.getPath().endsWith(".txt")));
         if (nowChatFiles == null || nowChatFiles.length == 0) {
-            utils.showSnackBar("Folder "+ chatFolders[chatIdx]," empty or Error");
+            new SnackBar().show("Folder "+ chatFolders[chatIdx]," empty or Error");
             //noinspection ResultOfMethodCallIgnored
             chatFolders[chatIdx].delete();
             getChatFolders();
@@ -85,7 +87,7 @@ public class Fragment_5Chat extends Fragment {
         if (nowChatFile.getName().startsWith("Kakao"))
             selChat = new SelectChats().generate(nowChatFile, false);
         else {
-            utils.showSnackBar("Chat File", "not start with Kakao");
+            new SnackBar().show("Chat File", "not start with Kakao");
             getChatFolders();
             return;
         }
@@ -130,7 +132,7 @@ public class Fragment_5Chat extends Fragment {
             }
 
             etChat.setText(selChat);
-            utils.showSnackBar("Keywords","Total "+cnt+" keywords found");
+            new SnackBar().show("Keywords","Total "+cnt+" keywords found");
             if (chatPos > 0) {
                 Editable editText = etChat.getText();
                 Selection.setSelection(editText, chatPos);
@@ -215,7 +217,7 @@ public class Fragment_5Chat extends Fragment {
             String fullName = nowChatFile.toString().replace("/"+name, "");
             //noinspection ResultOfMethodCallIgnored
             new File (fullName).delete();
-            utils.showSnackBar(chatGroup, chatGroup+ " deleted\n");
+            new SnackBar().show(chatGroup, chatGroup+ " deleted\n");
             getChatFolders();
             chatIdx--;
             if (chatIdx < 0)
