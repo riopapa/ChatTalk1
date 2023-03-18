@@ -10,6 +10,7 @@ import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.packageDirectory;
 import static com.urrecliner.chattalk.Vars.sharePref;
 import static com.urrecliner.chattalk.Vars.sharedEditor;
+import static com.urrecliner.chattalk.Vars.tableFolder;
 import static com.urrecliner.chattalk.Vars.toDay;
 import static com.urrecliner.chattalk.Vars.todayFolder;
 
@@ -82,25 +83,27 @@ public class LogUpdate {
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(System.currentTimeMillis());
         c.set(Calendar.HOUR_OF_DAY, 8);
-        c.set(Calendar.MINUTE, 30);
+        c.set(Calendar.MINUTE, 20);
         vars.timeBegin = c.getTimeInMillis();
-        c.set(Calendar.HOUR_OF_DAY, 15);
+        c.set(Calendar.HOUR_OF_DAY, 16);
         vars.timeEnd = c.getTimeInMillis();
 
         todayFolder = new File(packageDirectory, toDay);
         if (!todayFolder.exists()) {
             if (todayFolder.mkdirs()) {
-                logQue += "\n" + toDay + new SimpleDateFormat(" (EEE) HH:mm ", Locale.KOREA).format(new Date()) + " NEW DAY " + " **/\nNew Day" + "\n";
-                logStock += "\n" + toDay + new SimpleDateFormat(" (EEE) HH:mm ", Locale.KOREA).format(new Date()) + " NEW DAY " + " **/\nNew Day" + "\n";
+                String new_day = "\n" + new SimpleDateFormat("MM-dd (EEE) HH:mm ", Locale.KOREA).format(new Date())
+                        + " NEW DAY " + " **/\nNew Day" + "\n";
+                logQue += new_day;
+                logStock += new_day;
                 sharedEditor.putString("logQue", logQue);
                 sharedEditor.putString("logStock", logStock);
                 sharedEditor.apply();
-                String logQueFile = "logQue " + toDay + ".txt";
-                FileIO.writeKR(new File(todayFolder, logQueFile), logQue);
-                FileIO.writeKR(new File(downloadFolder, "logQue.txt"), logQue);
                 String logStockFile = "logStock " + toDay + ".txt";
                 FileIO.writeKR(new File(todayFolder, logStockFile), logStock);
-                FileIO.writeKR(new File(downloadFolder, "logStock.txt"), logStock);
+                FileIO.writeKR(new File(tableFolder, "logStock.txt"), logStock);
+                String logQueFile = "logQue " + toDay + ".txt";
+                FileIO.writeKR(new File(todayFolder, logQueFile), logQue);
+                FileIO.writeKR(new File(tableFolder, "logQue.txt"), logQue);
                 new Utils().deleteOldFiles();
             }
         }

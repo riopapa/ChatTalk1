@@ -60,6 +60,9 @@ public class NotificationListener extends NotificationListenerService {
             vars = new Vars();
             vars.set(this, "noti Create");
             subFunc = new SubFunc();
+            kkWhoTexts = new HashMap<>();
+            smsWhoTexts = new HashMap<>();
+            whoAndTexts = new HashMap<>();
             Log.w("notilisten", "onCreate()");
         }
         super.onCreate();
@@ -99,7 +102,8 @@ public class NotificationListener extends NotificationListenerService {
                     subFunc.sounds.speakAfterBeep(" 카톡왔음 " + sbnWho + " 님이 " + utils.replaceKKHH(utils.makeEtc(sbnText, 150)));
                 } else {
                     if ((IgnoreThis.contains(sbnGroup, kGroupWhoIgnores)) ||
-                        (!sbnWho.equals("") && IgnoreThis.contains(sbnWho, kGroupWhoIgnores)))
+                        (!sbnWho.equals("") && IgnoreThis.contains(sbnWho, kGroupWhoIgnores)) ||
+                        MapWhoText.repeated(kkWhoTexts, sbnWho, sbnText))
                         return;
                     if (msgKaTalk == null)
                         msgKaTalk = new MsgKaTalk();
@@ -178,7 +182,8 @@ public class NotificationListener extends NotificationListenerService {
                         return;
                 }
                 head = "[" + sbnPackageNick + "]";
-                subFunc.logUpdate.addQue(head , sbnWho+"🖐"+ utils.text2OneLine(sbnText));
+                sbnText = sbnWho+"🖐"+ utils.text2OneLine(sbnText);
+                subFunc.logUpdate.addQue(head , sbnText);
                 NotificationBar.update(sbnPackageNick, sbnText);
                 sbnText = "토스 로부터 " + sbnText;
                 subFunc.sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
@@ -224,10 +229,10 @@ public class NotificationListener extends NotificationListenerService {
                 sbnText = utils.text2OneLine(sbnText);
                 sbnText = utils.strReplace(sbnGroup.equals("")? sbnWho:sbnGroup, sbnText);
                 head = "[" + sbnPackageNick + "🖐️"+ sbnGroup + "🖐️"+ sbnWho +"] ";
-                subFunc.logUpdate.addQue(head , sbnText);
+                subFunc.logUpdate.addQue(head, sbnText);
                 NotificationBar.update((sbnGroup.equals("")) ? sbnPackageNick + "🖐️"+ sbnWho : sbnGroup + "🖐️"+ sbnWho, sbnText);
                 sbnText = sbnPackageNick + " 로부터 " + head + sbnText;
-                subFunc.sounds.speakAfterBeep(utils.makeEtc(sbnText, 230));
+                subFunc.sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
                 break;
 
             case YYY:
@@ -244,7 +249,7 @@ public class NotificationListener extends NotificationListenerService {
                 subFunc.sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
                 break;
 
-            case YNN: // no who
+            case YNN: // talk only
 
                 if (IgnoreThis.contains(sbnText, textIgnores))
                     return;

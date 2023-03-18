@@ -8,7 +8,7 @@ import static com.urrecliner.chattalk.MainActivity.utils;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
 import com.urrecliner.chattalk.Sub.AlertLinesGetPut;
-import com.urrecliner.chattalk.Sub.Dotted;
+import com.urrecliner.chattalk.Sub.Dot;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -34,7 +34,7 @@ public class AlertStock {
         String head = " [" + group + "." + who + "] "+stockName;
         Thread thisThread = new Thread(() -> {
             String timeStamp = new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date());
-            final String dotText = sText.replace(stockName, new Dotted().make(stockName));
+            final String dotText = sText.replace(stockName, new Dot().add(stockName));
             FileIO.uploadStock(group, who, sTalk, stockName, dotText, key12, timeStamp);
             NotificationBar.update(head, sText);
             logUpdate.addStock(head, sText + key12);

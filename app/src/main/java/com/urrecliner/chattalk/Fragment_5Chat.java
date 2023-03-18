@@ -172,7 +172,7 @@ public class Fragment_5Chat extends Fragment {
             chatIdx = chatMax - 1;
         }
         aBar.setTitle(chatGroup);
-        aBar.setSubtitle("  "+chatIdx+" / "+(chatFolders.length));
+        aBar.setSubtitle("  "+(chatIdx+1)+" / "+(chatFolders.length));
     }
 
     private void getChatFolders() {

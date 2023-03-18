@@ -2,6 +2,7 @@ package com.urrecliner.chattalk;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 import static com.urrecliner.chattalk.Vars.aBar;
+import static com.urrecliner.chattalk.Vars.downloadFolder;
 import static com.urrecliner.chattalk.Vars.logQue;
 import static com.urrecliner.chattalk.Vars.logSave;
 import static com.urrecliner.chattalk.Vars.mActivity;
@@ -13,6 +14,7 @@ import static com.urrecliner.chattalk.Vars.topTabs;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
@@ -222,6 +224,10 @@ public class Fragment_1Que extends Fragment {
     }
 
     private void reload_loqQue() {
+        if (tableFolder ==  null) {
+            downloadFolder = new File(Environment.getExternalStorageDirectory(), "download");
+            tableFolder = new File(downloadFolder, "_ChatTalk");
+        }
         String [] que = new FileIO().readKR(new File(tableFolder, "logQue.txt").toString());
         StringBuilder sb = new StringBuilder();
         for (String s: que) {

@@ -24,6 +24,7 @@ import java.util.Collections;
 class MsgKaTalk {
 
     public MsgKaTalk() {
+
         utils.logW("kakaoTalk", "Initiated");
     }
 
@@ -40,8 +41,10 @@ class MsgKaTalk {
             if (vars.timeBegin == 0)
                 logUpdate.readyTodayFolderIfNewDay();
             long nowTime = System.currentTimeMillis();
-            if (nowTime < vars.timeBegin || nowTime > vars.timeEnd)
+            if (nowTime < vars.timeBegin || nowTime > vars.timeEnd) {
+                utils.logW(iGroup,"time outRange "+iWho);
                 return;
+            }
             int gwIdx = alertWhoIndex.get(gIdx, iWho, iText);
             if (gwIdx == -1)
                 return;

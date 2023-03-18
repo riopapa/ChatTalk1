@@ -7,7 +7,7 @@ import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.nineIgnores;
 import static com.urrecliner.chattalk.MainActivity.utils;
 
-import com.urrecliner.chattalk.Sub.Dotted;
+import com.urrecliner.chattalk.Sub.Dot;
 import com.urrecliner.chattalk.Sub.IsWhoNine;
 
 import java.text.SimpleDateFormat;
@@ -71,7 +71,7 @@ class MsgSMS {
                     NotificationBar.update(trade +":"+stockName, sayMsg);
                     logUpdate.addStock("sms>"+nhStock, sayMsg);
                     FileIO.uploadStock(sGroup, mWho, samPam, stockName,
-                            mText.replace(stockName, new Dotted().make(stockName)), amount,
+                            mText.replace(stockName, new Dot().add(stockName)), amount,
                             new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date()));
                     sayMsg = stockName + samPam;
                     sounds.speakAfterBeep(sayMsg.replaceAll("\\d",""));

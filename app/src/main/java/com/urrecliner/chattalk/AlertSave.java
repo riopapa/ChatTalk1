@@ -18,6 +18,7 @@ import java.util.Locale;
 
 public class AlertSave {
     public AlertSave(String msg) {
+        AlertTable.makeArrays();
         String sv = "sv";
         int[] padLen = getMaxLengths();
         StringBuilder s = new StringBuilder();
@@ -41,9 +42,7 @@ public class AlertSave {
             s.append("\n");
         }
         FileIO.writeTextFile( tableFolder,"kTalkAlerts",s.toString());
-        SimpleDateFormat timeStamp = new SimpleDateFormat("_HHmmss", Locale.KOREA);
-        FileIO.writeTextFile( todayFolder,"kTalkAlerts"+timeStamp.format(new Date()),s.toString());
-        AlertTable.makeArrays();
+        FileIO.writeTextFile( todayFolder,"kTalkAlerts",s.toString());
         new AlertLinesGetPut().put(alertLines, mContext);
         new SnackBar().show("Alert Table", msg);
     }

@@ -204,9 +204,9 @@ public class Fragment_3Stock extends Fragment {
     }
 
     private void reload_stock() {
-        String [] que = new FileIO().readKR(new File(tableFolder, "logStock.txt").toString());
+        String [] str = new FileIO().readKR(new File(tableFolder, "logStock.txt").toString());
         StringBuilder sb = new StringBuilder();
-        for (String s: que) {
+        for (String s: str) {
             sb.append(s).append("\n");
         }
         logStock = sb.toString();

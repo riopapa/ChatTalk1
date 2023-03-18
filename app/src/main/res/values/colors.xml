@@ -10,11 +10,12 @@
     <color name="barLine1">#1A2828</color>
     <color name="barLine2">#0D153A</color>
 
-    <color name="snackBarBack">#D3B03B</color>
+    <color name="snackBarBack">#FCEFC1</color>
     <color name="snackBarTitle">#FF354DE3</color>
     <color name="snackBarText">#FF770B09</color>
 
-    <color name="colorLine">#DADDB9</color>
+    <color name="colorLine1">#FFFFFF</color>
+    <color name="colorLine2">#DADDB9</color>
     <color name="headLine">#EBE3B2</color>
     <color name="lightLine">#ACAFBD</color>
     <color name="textFore">#222233</color>

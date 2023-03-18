@@ -17,14 +17,13 @@ import static com.urrecliner.chattalk.Vars.replShort;
 import static com.urrecliner.chattalk.Vars.tableListFile;
 
 import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.UnderlineSpan;
 import android.widget.Toast;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
-import com.urrecliner.chattalk.Sub.Dotted;
+import com.urrecliner.chattalk.Sub.Dot;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -38,7 +37,6 @@ public class SelectChats {
     String groupInfo, gSkip1, gSkip2, gSkip3, gSkip4;
     boolean upload;
     ArrayList<String> msgLines;
-    final String repeated = new String(new char[30]).replace("\0\0", "- ")+"\n";
 
     SpannableString generate(File chatFile, boolean upload) {
         this.upload = upload;
@@ -53,7 +51,7 @@ public class SelectChats {
         headStr.append("그룹 : ").append(chatGroup).append(" ").append(groupInfo).append("\n");
         for (String w: whoKeys)
             headStr.append(w).append("\n");
-        headStr.append(repeated).append("strReplaces :\n");
+        headStr.append("\nstrReplaces ---\n\n");
         for (int i = 0; i < replGroupCnt; i++) {
             int compared = chatGroup.compareTo(replGroup[i]);
             if (compared == 0) {
@@ -61,7 +59,6 @@ public class SelectChats {
                     headStr.append(replShort[i][j]).append(" > ").append(replLong[i][j]).append("\n");
             }
         }
-        headStr.append(repeated);
 
         msgLines = new ArrayList<>();     // message lines chosen
         StringBuilder mSb = new StringBuilder();
@@ -186,8 +183,9 @@ public class SelectChats {
             if (p1 >= 0) {
                 p2 = body.indexOf(keyword2[k]);
                 if (p2 >= 0) {      // both matched
-                    String str = time+", "+who+" , "+utils.strReplace(chatGroup, body)+
-                            " <"+keyword1[k]+"/"+keyword2[k]+">";
+                    body = utils.strReplace(chatGroup, body);
+                    String keys = "<"+keyword1[k]+"~"+keyword2[k]+">";
+                    String str = time+", "+who+" , "+ body + " " + keys;
                     SpannableString s = new SpannableString(str+"\n\n");
                     s.setSpan(new BackgroundColorSpan(mContext.getResources().getColor(R.color.keyMatchedBack, null)), 0, s.length()-1, SPAN_EXCLUSIVE_EXCLUSIVE);
                     if (str.contains(keyWhose[k]))
@@ -202,9 +200,9 @@ public class SelectChats {
                     }
                     if(upload) {
                         String stockName = getStockName(prev[k], next[k], body);
-                        body = body.replace(stockName, new Dotted().make(stockName));
+                        body = body.replace(stockName, new Dot().add(stockName));
                         FileIO.uploadStock(chatGroup, who, "chats", stockName,
-                                body, "[" + keyword1[k] + "/" + keyword2[k] + "]", time);
+                                body, keys, time);
                     }
                     return s;
                 }

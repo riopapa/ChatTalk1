@@ -24,6 +24,7 @@ import com.urrecliner.chattalk.Sub.AlertLine;
 import com.urrecliner.chattalk.Sub.SnackBar;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -83,9 +84,9 @@ class AlertTable {
 
     static void makeArrays() {
 
+        sort();
         String svGroup = "", svWho = "";
         int alertSize = alertLines.size();
-
         aGroups = new ArrayList<>();
         for (AlertLine al: alertLines) {
             if (!svGroup.equals(al.group)) {
@@ -98,6 +99,8 @@ class AlertTable {
                 svGroup = al.group;
             }
         }
+        Collections.sort(aGroups);
+
         int groupCnt = aGroups.size();
         aGSkip1 = gSkip1.toArray(new String[groupCnt]);
         aGSkip2 = gSkip2.toArray(new String[groupCnt]);

@@ -149,7 +149,8 @@ public class EditOneAlertActivity extends AppCompatActivity {
             Upload2Google.uploadComment(mGroup, mWho, mPercent, mMemo);
             AlertTable.sort();
             alertsAdapter = new AlertsAdapter();
-            new AlertSave((al.matched == -1)? ("Save Group "+mGroup): ("Save "+mGroup+" " +mWho));
+            new AlertSave((al.matched == -1)? ("Save Group "+eGroup.getText().toString()):
+                    ("Save "+eGroup.getText().toString() + " " + eWho.getText().toString()));
             finish();
 
         } else if (item.getItemId() == R.id.duplicate_alert) {
