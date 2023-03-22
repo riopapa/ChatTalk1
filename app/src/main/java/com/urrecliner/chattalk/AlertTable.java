@@ -84,7 +84,6 @@ class AlertTable {
 
     static void makeArrays() {
 
-        sort();
         String svGroup = "", svWho = "";
         int alertSize = alertLines.size();
         aGroups = new ArrayList<>();
@@ -99,7 +98,6 @@ class AlertTable {
                 svGroup = al.group;
             }
         }
-        Collections.sort(aGroups);
 
         int groupCnt = aGroups.size();
         aGSkip1 = gSkip1.toArray(new String[groupCnt]);
@@ -119,8 +117,8 @@ class AlertTable {
 
         gIdx = 0; gwIdx = 0;
         ArrayList<String> whoList = new ArrayList<>();
-        for (AlertLine alt: alertLines) {
-            if (alt.matched == -1) {    // this means group
+        for (AlertLine al: alertLines) {
+            if (al.matched == -1) {    // this means group
                 int sz = whoList.size();
                 if (sz > 0) {    // save Prev Group
                     aGroupWhos[gIdx] = whoList.toArray(new String[0]);
@@ -133,16 +131,18 @@ class AlertTable {
                     whoList = new ArrayList<>();
                     gIdx++;
                 }
+                svWho = "x";
             } else {
-                if (!svWho.equals(alt.who))
-                    whoList.add(alt.who);
-                svWho = alt.who;
+                if (!svWho.equals(al.who))
+                    whoList.add(al.who);
+                svWho = al.who;
             }
         }
 
         clearArrays();
-        gIdx = 0;
+        gIdx = 0; gwIdx = 0;
         svIdx = 2;
+        svWho = "x";
         for (int i = 0; i < alertSize; i++) {
             AlertLine al = alertLines.get(i);
             if (al.matched == -1) {    // this means group
@@ -151,6 +151,7 @@ class AlertTable {
                     svIdx = i;
                     gIdx++;
                 }
+                svWho = "x";
                 clearArrays();
                 gwIdx = 0;
             } else {

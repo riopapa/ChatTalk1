@@ -18,6 +18,7 @@ import java.util.Locale;
 
 public class AlertSave {
     public AlertSave(String msg) {
+        AlertTable.sort();
         AlertTable.makeArrays();
         String sv = "sv";
         int[] padLen = getMaxLengths();

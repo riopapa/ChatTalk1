@@ -131,27 +131,6 @@ public class NotificationListener extends NotificationListenerService {
                 new MsgNamoo().say(utils.text2OneLine(sbnText));
                 break;
 
-            case TELEGRAM:
-
-                if (sbnText.contains("곳에서 보냄"))
-                    return;
-                sbnText = utils.text2OneLine(sbnText);
-                final String [] stocks = { "바른"};
-                for (String s: stocks) {
-                    if (sbnWho.contains(s)) {
-                        if (msgKaTalk == null)
-                            msgKaTalk = new MsgKaTalk();
-                        msgKaTalk.say("텔레", sbnWho, sbnText);
-                        return;
-                    }
-                }
-                head = "[텔레 "+ sbnGroup + "📞" + sbnWho + "]";
-                subFunc.logUpdate.addQue(head, sbnText);
-                NotificationBar.update(sbnGroup + "📞" + sbnWho, sbnText);
-                sbnText = head + " 로 부터. " + sbnText;
-                subFunc.sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
-                break;
-
             case TESLA:
 
                 final String [] ignoreTesla = { "연결 중", "연결 해제됨", "핸드폰을 키로"};
@@ -269,6 +248,27 @@ public class NotificationListener extends NotificationListenerService {
                 NotificationBar.update(sbnGroup + "🗼"+ sbnWho, sbnText);
                 sbnText = head + " 로부터 "+ sbnText;
                 subFunc.sounds.speakAfterBeep(sbnPackageNick + " " + sbnText);
+                break;
+
+            case TELEGRAM:
+
+                if (sbnText.contains("곳에서 보냄"))
+                    return;
+                sbnText = utils.text2OneLine(sbnText);
+                final String [] stocks = { "바른"};
+                for (String s: stocks) {
+                    if (sbnWho.contains(s)) {
+                        if (msgKaTalk == null)
+                            msgKaTalk = new MsgKaTalk();
+                        msgKaTalk.say("텔레", sbnWho, sbnText);
+                        return;
+                    }
+                }
+                head = "[텔레 "+ sbnGroup + "📞" + sbnWho + "]";
+                subFunc.logUpdate.addQue(head, sbnText);
+                NotificationBar.update(sbnGroup + "📞" + sbnWho, sbnText);
+                sbnText = head + " 로 부터. " + sbnText;
+                subFunc.sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
                 break;
 
             default:

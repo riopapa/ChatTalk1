@@ -122,35 +122,35 @@ public class EditOneAlertActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == R.id.save_alert) {
+            String group = eGroup.getText().toString();
+            String who = eWho.getText().toString();
+            String key1 = eKey1.getText().toString();
+            String key2 = eKey2.getText().toString();
             String matchStr = eMatched.getText().toString();
             int matchInt = matchStr.equals("") ? 0: Integer.parseInt(matchStr);
             String [] memos = eMemo.getText().toString().split("~");
             String memo = memos[0].trim();
             String more = (memos.length> 1) ? memos[1].trim() : "";
-            String key1 = eKey1.getText().toString();
-            String key2 = eKey2.getText().toString();
+            String talk = eTalk.getText().toString();
+            String skip = eSkip.getText().toString();
             String prev = ePrev.getText().toString(); if (prev.equals("")) prev = key1;
             String next = eNext.getText().toString(); if (next.equals("")) next = key2;
-            al = new AlertLine(eGroup.getText().toString(),
-                    eWho.getText().toString(), key1, key2,
-                    eTalk.getText().toString(), matchInt,
-                    eSkip.getText().toString(), memo, more,
+            al = new AlertLine(group, who, key1, key2, talk, matchInt, skip, memo, more,
                     prev, next);
             alertLines.set(linePos, al);
             if (al.matched == -1 && newGroup) { // add new group dummy line
-                al = new AlertLine(eGroup.getText().toString(), "누군가",
+                al = new AlertLine(group, group+"누군가",
                         "종목명", "매수가", "", 0, "","", "",
                         "종목명","매수가");
                 alertLines.add(al);
-                alertsAdapter.notifyItemInserted(linePos);
+//                alertsAdapter.notifyItemInserted(linePos);
                 newGroup = false;
             }
-            makeGroupMemo();
-            Upload2Google.uploadComment(mGroup, mWho, mPercent, mMemo);
-            AlertTable.sort();
-            alertsAdapter = new AlertsAdapter();
             new AlertSave((al.matched == -1)? ("Save Group "+eGroup.getText().toString()):
                     ("Save "+eGroup.getText().toString() + " " + eWho.getText().toString()));
+            makeGroupMemo();
+            Upload2Google.uploadComment(mGroup, mWho, mPercent, mMemo);
+            alertsAdapter = new AlertsAdapter();
             finish();
 
         } else if (item.getItemId() == R.id.duplicate_alert) {

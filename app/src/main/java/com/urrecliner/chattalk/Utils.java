@@ -126,7 +126,9 @@ class Utils {
     String replaceKKHH(String text) {
         return text.replace("ㅇㅋ", " 오케이 ")
                 .replace("ㅋ", " 크 ")
-                .replace("^^", " 흐 ")
+                .replace("^^", " 호호 ")
+                .replace("ㅊㅋ", " 축하 ")
+                .replace("ㅠ", " 흑 ")
                 .replace("ㅎ", " 하 ");
     }
 

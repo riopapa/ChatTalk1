@@ -34,14 +34,14 @@ public class AlertStock {
         String head = " [" + group + "." + who + "] "+stockName;
         Thread thisThread = new Thread(() -> {
             String timeStamp = new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date());
-            final String dotText = sText.replace(stockName, new Dot().add(stockName));
+            String dotText = sText.replace(stockName, new Dot().add(stockName));
             FileIO.uploadStock(group, who, sTalk, stockName, dotText, key12, timeStamp);
             NotificationBar.update(head, sText);
             logUpdate.addStock(head, sText + key12);
             if (sTalk.length() > 0) {
                 String[] joins = new String[]{stockName, group, stockName, who, sTalk,
-                        stockName, utils.makeEtc(sText, 40)};
-                sounds.speakAfterBeep(String.join(" ", joins).replaceAll("\\d",""));
+                        utils.makeEtc(dotText, 40), stockName};
+                sounds.speakAfterBeep(String.join(" , ", joins).replaceAll("\\d",""));
             } else {
                 sounds.beepOnce(Vars.soundType.ONLY.ordinal());
             }

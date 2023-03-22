@@ -42,7 +42,6 @@ class MsgKaTalk {
                 logUpdate.readyTodayFolderIfNewDay();
             long nowTime = System.currentTimeMillis();
             if (nowTime < vars.timeBegin || nowTime > vars.timeEnd) {
-                utils.logW(iGroup,"time outRange "+iWho);
                 return;
             }
             int gwIdx = alertWhoIndex.get(gIdx, iWho, iText);

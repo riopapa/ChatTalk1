@@ -128,7 +128,7 @@ public class Fragment_1Que extends Fragment {
 
         ivClear.setOnClickListener(v -> etKeyword.setText(""));
         scrollView1 = rootView.findViewById(R.id.scroll_1_que);
-        new Handler(Looper.getMainLooper()).post(() -> scrollView1.smoothScrollBy(0, 40000));
+        new Handler(Looper.getMainLooper()).post(() -> scrollView1.smoothScrollBy(0, 90000));
         super.onResume();
 
     }
@@ -218,7 +218,7 @@ public class Fragment_1Que extends Fragment {
         etTable.requestFocus();
         scrollView1.post(() -> new Timer().schedule(new TimerTask() {
             public void run() {
-                mActivity.runOnUiThread(() -> scrollView1.scrollBy(0, 100));
+                mActivity.runOnUiThread(() -> scrollView1.scrollBy(0, -122));
             }
         }, 30));
     }

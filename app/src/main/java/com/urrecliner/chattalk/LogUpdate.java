@@ -83,7 +83,7 @@ public class LogUpdate {
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(System.currentTimeMillis());
         c.set(Calendar.HOUR_OF_DAY, 8);
-        c.set(Calendar.MINUTE, 20);
+        c.set(Calendar.MINUTE, 30);
         vars.timeBegin = c.getTimeInMillis();
         c.set(Calendar.HOUR_OF_DAY, 16);
         vars.timeEnd = c.getTimeInMillis();

@@ -33,8 +33,8 @@
 
     <color name="log_head_f0">#FF611714</color>
     <color name="log_head_b0">#CCE7F2DB</color>
-    <color name="log_line_f0">#2A6660</color>
-    <color name="log_line_b0">#CCE2EFD8</color>
+    <color name="log_line_f0">#054407</color>
+    <color name="log_line_b0">#BCB5C9</color>
     <color name="log_line_x0">#BF9B6C</color>
     <color name="log_head_f1">#FF0A09AE</color>
     <color name="log_head_b1">#AAE7E1F9</color>
