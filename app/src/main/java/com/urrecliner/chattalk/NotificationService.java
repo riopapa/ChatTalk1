@@ -114,7 +114,7 @@ public class NotificationService extends Service {
             who1 = "newly Loaded";
             msgText1 = "";
             mBuilder = new NotificationCompat.Builder(this,"default")
-                    .setSmallIcon(R.mipmap.chat_talk)
+                    .setSmallIcon(R.drawable.chat_talk)
                     .setColor(getApplicationContext().getColor(R.color.alertTalk))
                     .setContent(mRemoteViews)
                     .setOnlyAlertOnce(true)

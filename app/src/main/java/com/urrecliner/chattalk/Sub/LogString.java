@@ -89,6 +89,8 @@ public class LogString {
         if (pf == -1)
             pf = logNow.length() - 1;
         ps = logNow.lastIndexOf("\n", ps - 1);
+        if (ps < 2)
+            ps = 1;
         if (logNow.charAt(ps - 1) == '\n')
             logNow = logNow.substring(0, ps - 1) + logNow.substring(pf);
         else

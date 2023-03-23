@@ -140,13 +140,15 @@ public class Fragment_3Stock extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         if (item.getItemId() == R.id.delete_item_stock) {
-            delete_OneItem();
+            showNextCandidate(new LogString().delItem(etTable.getText().toString(),
+                    etTable.getSelectionStart(), mContext));
 
         } else if (item.getItemId() == R.id.action_restock) {
             reload_stock();
 
         } else if (item.getItemId() == R.id.delete_1line_stock) {
-            delete_OneLine();
+            showNextCandidate(new LogString().delLine(etTable.getText().toString(),
+                    etTable.getSelectionStart(), mContext));
 
         } else if (item.getItemId() == R.id.copy2stock) {
             String logNow = etTable.getText().toString().trim() + "\n";
@@ -174,31 +176,19 @@ public class Fragment_3Stock extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private void delete_OneLine() {
-        Vars.DelItem delItem = new LogString().delLine(etTable.getText().toString(), etTable.getSelectionStart(), mContext);
-        etTable.setText(delItem.ss);
-        logStock = delItem.logNow;
-        sharedEditor.putString("logStock", logStock);
-        sharedEditor.apply();
-        Editable etText = etTable.getText();
-        Selection.setSelection(etText, delItem.ps, delItem.pf);
-    }
-
-    private void delete_OneItem() {
+    private void showNextCandidate(Vars.DelItem delItem) {
         InputMethodManager imm = (InputMethodManager) mActivity.getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(etTable.getWindowToken(), 0);
-
-        Vars.DelItem delItem = new LogString().delItem(etTable.getText().toString(), etTable.getSelectionStart(), mContext);
+        etTable.setText(delItem.ss);
         logStock = delItem.logNow;
         sharedEditor.putString("logStock", logStock);
         sharedEditor.apply();
-        etTable.setText(delItem.ss);
         Editable etText = etTable.getText();
         Selection.setSelection(etText, delItem.ps, delItem.pf);
         etTable.requestFocus();
         scrollView1.post(() -> new Timer().schedule(new TimerTask() {
             public void run() {
-                mActivity.runOnUiThread(() -> scrollView1.scrollBy(0, -120));
+                mActivity.runOnUiThread(() -> scrollView1.scrollBy(0, delItem.ps - delItem.pf));
             }
         }, 30));
     }

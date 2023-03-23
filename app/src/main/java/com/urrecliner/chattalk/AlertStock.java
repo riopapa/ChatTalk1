@@ -39,7 +39,7 @@ public class AlertStock {
             NotificationBar.update(head, sText);
             logUpdate.addStock(head, sText + key12);
             if (sTalk.length() > 0) {
-                String[] joins = new String[]{stockName, group, stockName, who, sTalk, stockName};
+                String[] joins = new String[]{stockName, group, who, stockName, sTalk, stockName};
                 sounds.speakAfterBeep(String.join(" , ", joins).replaceAll("\\d",""));
             } else {
                 sounds.beepOnce(Vars.soundType.ONLY.ordinal());
@@ -56,7 +56,7 @@ public class AlertStock {
             str = str.substring(p1+prev.length());
             p1 = str.indexOf(next);
             if (p1 > 0)
-                return str.substring(0,p1).replaceAll("[\\d,%|#()]","").trim();
+                return str.substring(0,p1).replaceAll("[\\d,%:|#()]","").trim();
             return "NoNext";
         }
         return "NoPrev";

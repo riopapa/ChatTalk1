@@ -146,13 +146,15 @@ public class Fragment_1Que extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         if (item.getItemId() == R.id.delete_item_que) {
-            delete_OneItem();
+            showNextQue(new LogString().delItem(etTable.getText().toString(),
+                    etTable.getSelectionStart(), mContext));
 
         } else if (item.getItemId() == R.id.action_reload) {
             reload_loqQue();
 
         } else if (item.getItemId() == R.id.delete_1line_que) {
-            delete_OneLine();
+            showNextQue(new LogString().delLine(etTable.getText().toString(),
+                    etTable.getSelectionStart(), mContext));
 
         } else if (item.getItemId() == R.id.copy2log) {
             String logNow = etTable.getText().toString().trim() + "\n";
@@ -180,35 +182,9 @@ public class Fragment_1Que extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private void delete_OneLine() {
-        String logNow = etTable.getText().toString().trim() + "\n";
-        int posCurr = etTable.getSelectionStart();
-        int posStart = logNow.lastIndexOf("\n", posCurr - 1);
-        if (posStart == -1)
-            posStart = 0;
-        int posFinish = logNow.indexOf("\n", posStart+1);
-        if (posFinish == -1)
-            posFinish = logNow.length() - 2;
-        logQue = logNow.substring(0, posStart) + logNow.substring(posFinish);
-        sharedEditor.putString("logQue", logQue);
-        sharedEditor.apply();
-        SpannableString ss = new LogString().make(logQue, mContext);
-        posStart = logQue.lastIndexOf("\n", posStart - 1) + 1;
-        posFinish = logQue.indexOf("\n", posStart) - 1;
-        if (posStart >= posFinish)
-            posFinish = posStart + 1;
-        ss.setSpan(new StyleSpan(Typeface.ITALIC), posStart, posFinish, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-        ss.setSpan(new UnderlineSpan(), posStart, posFinish,Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-        etTable.setText(ss);
-        Editable etText = etTable.getText();
-        Selection.setSelection(etText, posStart, posFinish);
-    }
-
-    private void delete_OneItem() {
+    private void showNextQue(Vars.DelItem delItem) {
         InputMethodManager imm = (InputMethodManager) mActivity.getSystemService(INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(etTable.getWindowToken(), 0);
-
-        Vars.DelItem delItem = new LogString().delItem(etTable.getText().toString(), etTable.getSelectionStart(), mContext);
         logQue = delItem.logNow;
         sharedEditor.putString("logQue", logQue);
         sharedEditor.apply();
@@ -218,7 +194,7 @@ public class Fragment_1Que extends Fragment {
         etTable.requestFocus();
         scrollView1.post(() -> new Timer().schedule(new TimerTask() {
             public void run() {
-                mActivity.runOnUiThread(() -> scrollView1.scrollBy(0, -122));
+                mActivity.runOnUiThread(() -> scrollView1.scrollBy(0, delItem.ps - delItem.pf));
             }
         }, 30));
     }
