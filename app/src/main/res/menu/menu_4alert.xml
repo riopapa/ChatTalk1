@@ -19,7 +19,7 @@
     <item
         android:id="@+id/clear_matched_number"
         android:orderInCategory="100"
-        android:icon="@mipmap/eraser"
+        android:icon="@drawable/clear"
         app:showAsAction="always"
         android:title="@string/todo" />
 

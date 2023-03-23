@@ -1,5 +1,6 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.MainActivity.utils;
 import static com.urrecliner.chattalk.SubFunc.sounds;
 import static com.urrecliner.chattalk.Vars.SHOW_MESSAGE;
 
@@ -72,7 +73,7 @@ public class NotificationService extends Service {
                 who1 = Objects.requireNonNull(intent.getStringExtra("who")).replace(" ", "\u00A0");
                 while (ByteLength.get(who1) > 18)
                     who1 = who1.substring(0, who1.length()-1);
-                msgText1 = Objects.requireNonNull(intent.getStringExtra("msg")).replace(" ", "\u00A0");
+                msgText1 = utils.makeEtc(Objects.requireNonNull(intent.getStringExtra("msg")), 100).replace(" ", "\u00A0");
 
                 break;
 
@@ -113,7 +114,8 @@ public class NotificationService extends Service {
             who1 = "newly Loaded";
             msgText1 = "";
             mBuilder = new NotificationCompat.Builder(this,"default")
-                    .setSmallIcon(R.mipmap.chat_talk_mini)
+                    .setSmallIcon(R.mipmap.chat_talk)
+                    .setColor(getApplicationContext().getColor(R.color.alertTalk))
                     .setContent(mRemoteViews)
                     .setOnlyAlertOnce(true)
                     .setAutoCancel(false)

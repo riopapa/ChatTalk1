@@ -39,8 +39,7 @@ public class AlertStock {
             NotificationBar.update(head, sText);
             logUpdate.addStock(head, sText + key12);
             if (sTalk.length() > 0) {
-                String[] joins = new String[]{stockName, group, stockName, who, sTalk,
-                        utils.makeEtc(dotText, 40), stockName};
+                String[] joins = new String[]{stockName, group, stockName, who, sTalk, stockName};
                 sounds.speakAfterBeep(String.join(" , ", joins).replaceAll("\\d",""));
             } else {
                 sounds.beepOnce(Vars.soundType.ONLY.ordinal());
