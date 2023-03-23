@@ -2,7 +2,6 @@ package com.urrecliner.chattalk;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.urrecliner.chattalk.NotificationListener.vars;
-import static com.urrecliner.chattalk.Vars.downloadFolder;
 import static com.urrecliner.chattalk.Vars.logQue;
 import static com.urrecliner.chattalk.Vars.logSave;
 import static com.urrecliner.chattalk.Vars.logStock;
@@ -37,42 +36,47 @@ public class LogUpdate {
         logSave = sharePref.getString("logSave", "");
     }
 
-    final SimpleDateFormat MMDDHHMM = new SimpleDateFormat("MM-dd HH:mm ", Locale.KOREA);
+    final SimpleDateFormat TIME_INFO = new SimpleDateFormat("MM-dd HH:mm ", Locale.KOREA);
     void addQue(String header, String text) {
         readyTodayFolderIfNewDay();
-        logQue += "\n" + MMDDHHMM.format(new Date())
-                + header + "\n" + text+"\n";
-        int len = logQue.length();
-        if (len > 15000) {   // max log que size
-            logQue = logQue.substring(5000);    // remove old 3000 bytes
-            logQue = logQue.substring(logQue.indexOf("\n")+1);
-            if (!StringUtils.isNumeric(""+logQue.charAt(0))) {  // start with MMDD ...
-                logQue = logQue.substring(logQue.indexOf("\n")+1);
-            }
-            String front = logQue.substring(0, logQue.length()*2/3);
-            front = front.substring(0, front.lastIndexOf("\n"));
-            int pos = front.lastIndexOf("\n", front.length()-2);
-            if (!StringUtils.isNumeric(""+front.charAt(pos))) {  // start with MMDD ...
-                pos = front.lastIndexOf("\n", pos-2);
-            }
-            front = logQue.substring(0, pos).replace("\n\n","\n");
-            front = front.replace("\n\n","\n");
-            String remain = logQue.substring(pos);
-            logQue = front+"\n\n" + MMDDHHMM.format(new Date()) + " **/" +
-                    "\n---- squeezed to "+ (front.length()+remain.length()) + " -------" +
-                    "\n"+remain +
-                    "\n---- squeezed " + MMDDHHMM.format(new Date()) + "\n";
-        }
+        logQue += "\n" + TIME_INFO.format(new Date()) + header + "\n" + text+"\n";
+        if (logQue.length() > 15000)
+            logQue = squeezeQue(logQue);
+
         sharedEditor.putString("logQue", logQue);
         sharedEditor.apply();
     }
+
     void addStock(String header, String text) {
         readyTodayFolderIfNewDay();
-        logStock += "\n" + MMDDHHMM.format(new Date())
-                + header + "\n" + text+"\n";
+        logStock += "\n" + TIME_INFO.format(new Date()) + header + "\n" + text+"\n";
+        if (logStock.length() > 8000)
+            logStock = squeezeQue(logStock);
 
         sharedEditor.putString("logStock", logStock);
         sharedEditor.apply();
+    }
+
+    private String squeezeQue(String logStr) {
+        logStr = logStr.substring(5000);    // remove old 3000 bytes
+        logStr = logStr.substring(logStr.indexOf("\n")+1);
+        if (!StringUtils.isNumeric(""+logStr.charAt(0))) {  // start with MMDD ...
+            logStr = logStr.substring(logStr.indexOf("\n")+1);
+        }
+        String front = logStr.substring(0, logStr.length()*2/3);
+        front = front.substring(0, front.lastIndexOf("\n"));
+        int pos = front.lastIndexOf("\n", front.length()-2);
+        if (!StringUtils.isNumeric(""+front.charAt(pos))) {  // start with MMDD ...
+            pos = front.lastIndexOf("\n", pos-2);
+        }
+        front = logStr.substring(0, pos).replace("\n\n","\n");
+        front = front.replace("\n\n","\n");
+        String remain = logStr.substring(pos);
+        logStr = front+"\n\n" + TIME_INFO.format(new Date()) + " **/" +
+                "\n---- squeezed to "+ (front.length()+remain.length()) + " -------" +
+                "\n"+remain +
+                "\n---- squeezed " + TIME_INFO.format(new Date()) + "\n";
+        return logStr;
     }
 
     public void readyTodayFolderIfNewDay() {
