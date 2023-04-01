@@ -48,6 +48,7 @@
         </activity>
 
         <activity android:name=".EditTextActivity"/>
+        <activity android:name=".EditReplaceActivity"/>
         <activity android:name=".EditOneAlertActivity"/>
 
         <service

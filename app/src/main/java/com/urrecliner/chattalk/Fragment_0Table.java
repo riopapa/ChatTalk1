@@ -56,12 +56,18 @@ public class Fragment_0Table extends Fragment {
 
         rootView.findViewById(R.id.k_group_who_ignores).setOnClickListener(this::edit_table);
         rootView.findViewById(R.id.k_text_ignores).setOnClickListener(this::edit_table);
-        rootView.findViewById(R.id.string_replace).setOnClickListener(this::edit_table);
+        rootView.findViewById(R.id.string_replace).setOnClickListener(this::edit_replace);
     }
 
     public void edit_table(View v) {
         nowFileName = v.getTag().toString();
         Intent intent = new Intent(mContext, EditTextActivity.class);
+        startActivity(intent);
+    }
+
+    public void edit_replace(View v) {
+        nowFileName = v.getTag().toString();
+        Intent intent = new Intent(mContext, EditReplaceActivity.class);
         startActivity(intent);
     }
 

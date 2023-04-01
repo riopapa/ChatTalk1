@@ -15,7 +15,8 @@ class MsgNamoo {
             String sText = "나무App : " + text;
             NotificationBar.update("[NH나무]", sText);
             logUpdate.addStock("[NH나무] ", sText);
-
+            if (sText.contains("매도"))
+                return;
             // [나무] 매도 전량체결 기산텔레콤(035460) 100주 3,370원 주문No.125378
             //   0     1    2        3            4     5
             String[] words = text.split(" ");

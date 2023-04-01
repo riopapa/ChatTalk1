@@ -54,7 +54,7 @@ class MsgKaTalk {
                     (!iText.contains(aGroupWhoSkip[gIdx][gwIdx][i]))) {
                     if (subFunc == null)
                         subFunc  = new SubFunc();
-                    subFunc.alertStock.show(iGroup, iText, aAlertLineIdx[gIdx][gwIdx][i]);
+                    subFunc.alertStock.sayNlog(iGroup, iText, aAlertLineIdx[gIdx][gwIdx][i]);
                     if (alertsAdapter != null)
                         alertsAdapter.notifyItemChanged(aAlertLineIdx[gIdx][gwIdx][i]);
                     else

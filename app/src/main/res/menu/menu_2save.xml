@@ -19,7 +19,7 @@
     <item
         android:id="@+id/line_delete_item"
         android:orderInCategory="100"
-        android:icon="@drawable/line_delete3"
+        android:icon="@drawable/line_remove3"
         app:showAsAction="always"
         android:title="@string/todo" />
 

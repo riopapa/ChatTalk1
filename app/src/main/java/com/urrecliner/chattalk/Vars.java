@@ -18,7 +18,8 @@ import androidx.appcompat.app.ActionBar;
 
 import com.google.android.material.tabs.TabLayout;
 import com.urrecliner.chattalk.Sub.AlertLine;
-import com.urrecliner.chattalk.Sub.AlertLinesGetPut;
+import com.urrecliner.chattalk.Sub.AlertLinesGet;
+import com.urrecliner.chattalk.Sub.AlertLinesPut;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -118,11 +119,13 @@ public class Vars {
 
         FileIO.readyPackageFolder();
         sheetQues = new ArrayList<>();
-        alertLines = new AlertLinesGetPut().get(context);
+        alertLines = new AlertLinesGet().exe(context);
         if (alertLines.size() == 0) {
             AlertTable.readFile("var");
-            new AlertLinesGetPut().put(alertLines, context);
-        } else
+            new AlertLinesPut().exe(alertLines, context);
+        } else {
+            AlertTable.updateMatched();
             AlertTable.makeArrays();
+        }
     }
 }

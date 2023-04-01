@@ -19,14 +19,14 @@
     <item
         android:id="@+id/delete_1line_que"
         android:orderInCategory="100"
-        android:icon="@drawable/line_delete1"
+        android:icon="@drawable/line_remove1"
         app:showAsAction="always"
         android:title="@string/todo" />
 
     <item
         android:id="@+id/delete_item_que"
         android:orderInCategory="100"
-        android:icon="@drawable/line_delete3"
+        android:icon="@drawable/line_remove3"
         app:showAsAction="always"
         android:title="@string/todo" />
 

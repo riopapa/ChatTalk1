@@ -6,15 +6,12 @@ import static com.urrecliner.chattalk.Vars.tableFolder;
 import static com.urrecliner.chattalk.Vars.todayFolder;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
-import com.urrecliner.chattalk.Sub.AlertLinesGetPut;
+import com.urrecliner.chattalk.Sub.AlertLinesPut;
+import com.urrecliner.chattalk.Sub.AlertRemove;
 import com.urrecliner.chattalk.Sub.ByteLength;
 import com.urrecliner.chattalk.Sub.SnackBar;
 
 import org.apache.commons.lang3.StringUtils;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 public class AlertSave {
     public AlertSave(String msg) {
@@ -44,7 +41,8 @@ public class AlertSave {
         }
         FileIO.writeTextFile( tableFolder,"kTalkAlerts",s.toString());
         FileIO.writeTextFile( todayFolder,"kTalkAlerts",s.toString());
-        new AlertLinesGetPut().put(alertLines, mContext);
+        new AlertLinesPut().exe(alertLines, mContext);
+        new AlertRemove().exec(alertLines, mContext);
         new SnackBar().show("Alert Table", msg);
     }
 

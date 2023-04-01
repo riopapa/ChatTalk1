@@ -1,5 +1,6 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.MainActivity.utils;
 import static com.urrecliner.chattalk.SubFunc.sounds;
 import static com.urrecliner.chattalk.Vars.aAlertLineIdx;
 import static com.urrecliner.chattalk.Vars.aGSkip1;
@@ -15,16 +16,16 @@ import static com.urrecliner.chattalk.Vars.aGroupWhoSkip;
 import static com.urrecliner.chattalk.Vars.aGroupWhos;
 import static com.urrecliner.chattalk.Vars.aGroups;
 import static com.urrecliner.chattalk.Vars.alertLines;
+import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.tableListFile;
-import static com.urrecliner.chattalk.MainActivity.utils;
 
 import android.util.Log;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
+import com.urrecliner.chattalk.Sub.AlertLinesGetMatch;
 import com.urrecliner.chattalk.Sub.SnackBar;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -68,6 +69,7 @@ class AlertTable {
             String next = strings[9].trim(); if (next.equals("")) next = tKey2;
             alertLines.add(new AlertLine(tGroup, tWho, tKey1, tKey2, tTalk, matched, tSkip, tMemo, tMore, prev, next));
         }
+        updateMatched();
         makeArrays();
     }
 
@@ -82,6 +84,16 @@ class AlertTable {
     static List<String> next = new ArrayList<>();
     static int gIdx, gwIdx, svIdx;
 
+    static void updateMatched() {
+        AlertLinesGetMatch alertLinesGetMatch = new AlertLinesGetMatch();
+        for (int i = 0; i < alertLines.size(); i++) {
+            AlertLine al = alertLines.get(i);
+            if (al.matched >= 0) {
+                alertLinesGetMatch.exe(al, mContext);
+                alertLines.set(i, al);
+            }
+        }
+    }
     static void makeArrays() {
 
         String svGroup = "", svWho = "";

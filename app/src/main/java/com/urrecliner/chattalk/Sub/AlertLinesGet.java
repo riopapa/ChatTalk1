@@ -12,18 +12,9 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AlertLinesGetPut {
-    public void put(ArrayList<AlertLine> alertLines, Context context) {
+public class AlertLinesGet {
 
-        SharedPreferences sharePref = context.getSharedPreferences("alertLine", MODE_PRIVATE);
-        SharedPreferences.Editor sharedEditor = sharePref.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(alertLines);
-        sharedEditor.putString("alertLine", json);
-        sharedEditor.apply();
-    }
-
-    public ArrayList<AlertLine> get(Context context) {
+    public ArrayList<AlertLine> exe(Context context) {
 
         ArrayList<AlertLine> list;
         SharedPreferences sharePref = context.getSharedPreferences("alertLine", MODE_PRIVATE);
