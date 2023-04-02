@@ -70,20 +70,21 @@ public class NotificationService extends Service {
             case SHOW_MESSAGE:
                 who2 = who1;
                 msgText2 = msgText1;
-                who1 = Objects.requireNonNull(intent.getStringExtra("who")).replace(" ", "\u00A0");
+                who1 = Objects.requireNonNull(intent.getStringExtra("who"))
+                        .replace(" ", "\u00A0");
                 while (ByteLength.get(who1) > 18)
                     who1 = who1.substring(0, who1.length()-1);
-                msgText1 = utils.makeEtc(Objects.requireNonNull(intent.getStringExtra("msg")), 100).replace(" ", "\u00A0");
-
+                msgText1 = utils.makeEtc(Objects.requireNonNull(intent.getStringExtra("msg")), 100)
+                        .replace(" ", "\u00A0");
                 break;
 
             case ERASER1:
                 msgText1 = "";
-                who1 = "Chat Talk..";
+                who1 = "Chat Talk Now";
                 break;
             case ERASER2:
                 msgText2 = "";
-                who2 = "Chat Talk..";
+                who2 = "Prev Chat Talk";
                 break;
             default:
                 break;
@@ -115,7 +116,7 @@ public class NotificationService extends Service {
             msgText1 = "";
             mBuilder = new NotificationCompat.Builder(this,"default")
                     .setSmallIcon(R.drawable.chat_talk)
-                    .setColor(getApplicationContext().getColor(R.color.alertTalk))
+                    .setColor(getApplicationContext().getColor(R.color.barLine1))
                     .setContent(mRemoteViews)
                     .setOnlyAlertOnce(true)
                     .setAutoCancel(false)

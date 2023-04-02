@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.BackgroundColorSpan;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -104,8 +105,8 @@ public class EditTextActivity extends AppCompatActivity {
         return true;
     }
 
-    final static String blank = StringUtils.repeat(" ", 20);
     private static String strPad(String s, int strLen) {
+        String blank = StringUtils.repeat(" ", 60);
         s = s.trim();
         int byteLen = getByteLength(s);
         if (byteLen >= strLen)
@@ -146,21 +147,36 @@ public class EditTextActivity extends AppCompatActivity {
         return false;
     }
 
+
     String sortPackage(String txt) {
+
         String[] arrText = txt.split("\n");
         for (int i = 0; i < arrText.length; i++)
             arrText[i] = arrText[i].trim();
         Arrays.sort(arrText);
+        int maxLen = 0;
+        for (String t : arrText) {
+            if (t.length() < 2)
+                continue;
+            String[] fields = t.split("\\^");
+            int len = fields[0].trim().length();
+            if (len > maxLen)
+                maxLen = len;
+        }
+        String blank = StringUtils.repeat(" ", maxLen);
         StringBuilder sortedText = new StringBuilder();
         for (String t : arrText) {
+            if (t.length() < 2)
+                continue;
             String[] fields = t.split("\\^");
             String memo= "";
             if (fields.length > 3)  // if nothing after ^ then no array return
-                memo = fields[3];
-            String oneLine = strPad(fields[0], 44) + "^" +  // package full name
+                memo = fields[3].trim();
+            String pkg = blank+fields[0].trim()+" ";
+            String oneLine = pkg.substring(pkg.length()-maxLen-1) + "^" +  // package full name
                     strPad(fields[1], 12) + " ^ "           // package nick name
                     + strPad(fields[2], 4) + " ^ "          // yyn
-                    + memo.trim();                                  // comment
+                    + memo;                                       // comment
             sortedText.append(oneLine).append("\n");
         }
         return sortedText.toString();
