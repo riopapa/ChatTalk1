@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:id="@+id/fragment_saved"
     android:orientation="vertical"
-  android:background="@color/color_tab_save"
+  android:background="@color/color_tab_save_background"
     >
 
     <LinearLayout

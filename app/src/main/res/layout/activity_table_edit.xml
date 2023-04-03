@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
     android:orientation="vertical"
-    android:background="@color/color_tab_stock"
+    android:background="@color/color_tab_stock_background"
     android:screenOrientation="landscape">
 
     <LinearLayout
