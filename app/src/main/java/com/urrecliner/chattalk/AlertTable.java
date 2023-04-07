@@ -22,7 +22,7 @@ import static com.urrecliner.chattalk.Vars.tableListFile;
 import android.util.Log;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
-import com.urrecliner.chattalk.Sub.AlertLinesGetMatch;
+import com.urrecliner.chattalk.Sub.AlertMatch;
 import com.urrecliner.chattalk.Sub.SnackBar;
 
 import java.util.ArrayList;
@@ -85,11 +85,11 @@ class AlertTable {
     static int gIdx, gwIdx, svIdx;
 
     static void updateMatched() {
-        AlertLinesGetMatch alertLinesGetMatch = new AlertLinesGetMatch();
+        AlertMatch alertMatch = new AlertMatch();
         for (int i = 0; i < alertLines.size(); i++) {
             AlertLine al = alertLines.get(i);
             if (al.matched >= 0) {
-                alertLinesGetMatch.exe(al, mContext);
+                alertMatch.get(al, mContext);
                 alertLines.set(i, al);
             }
         }

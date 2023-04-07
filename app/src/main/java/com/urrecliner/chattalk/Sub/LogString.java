@@ -55,6 +55,10 @@ public class LogString {
                 nPos += 1;
                 continue;
             }
+            if (s.length() < 10) {
+                nPos += s.length() + 1;
+                continue;
+            }
 
             if (StringUtils.isNumeric(String.valueOf(s.charAt(0)))) {  // timestamp + who
                 if (s.substring(0,5).equals(dayNow)) {

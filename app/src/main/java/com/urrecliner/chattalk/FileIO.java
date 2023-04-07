@@ -12,7 +12,9 @@ import com.urrecliner.chattalk.Sub.SnackBar;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -83,10 +85,14 @@ public class FileIO {
         }
     }
 
-    static void writeTextFile(File targetFolder, String fileName, String outText) {
+    public static void writeTextFile(File targetFolder, String fileName, String outText) {
 
+        writeFile(targetFolder, fileName, outText, ".txt");
+    }
+
+    public static void writeFile(File targetFolder, String fileName, String outText, String ext) {
         try {
-            File targetFile = new File(targetFolder, fileName + ".txt");
+            File targetFile = new File(targetFolder, fileName + ext);
             FileWriter fileWriter = new FileWriter(targetFile, false);
 
             // Always wrap FileWriter in BufferedWriter.
@@ -97,6 +103,26 @@ public class FileIO {
             new Utils().logE("editor", fileName + "'\n" + ex);
             new SnackBar().show("writeTextFile", "Write table error " + fileName);
         }
+    }
+
+    public static String readFile(File targetFolder, String fileName) {
+        String myData = "";
+        File jFile = new File(targetFolder, fileName);
+
+        try {
+            FileInputStream fis = new FileInputStream(jFile);
+            DataInputStream in = new DataInputStream(fis);
+            BufferedReader br =
+                    new BufferedReader(new InputStreamReader(in));
+            String strLine;
+            while ((strLine = br.readLine()) != null) {
+                myData = myData + strLine;
+            }
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return myData;
     }
 
     static void xwriteKR(File file, String textLine) {

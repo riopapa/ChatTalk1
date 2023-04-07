@@ -7,7 +7,7 @@ import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.MainActivity.utils;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
-import com.urrecliner.chattalk.Sub.AlertLinesPutMatch;
+import com.urrecliner.chattalk.Sub.AlertMatch;
 import com.urrecliner.chattalk.Sub.Dot;
 
 import java.text.SimpleDateFormat;
@@ -41,13 +41,14 @@ public class AlertStock {
             NotificationBar.update(head, sText);
             logUpdate.addStock(head, sText + key12);
             if (sTalk.length() > 0) {
-                String[] joins = new String[]{group, who, stockName, sTalk, stockName};
-                sounds.speakAfterBeep(String.join(" , ", joins)); //.replaceAll("\\d","")
+                sounds.beepOnce(Vars.soundType.STOCK.ordinal());
+                String[] joins = new String[]{group, group, who, stockName, sTalk, stockName};
+                sounds.speakBuyStock(String.join(" , ", joins)); //.replaceAll("\\d","")
             } else {
                 sounds.beepOnce(Vars.soundType.ONLY.ordinal());
             }
-//            new AlertLinesGet().put(alertLines, mContext);
-            new AlertLinesPutMatch().exe(al, mContext);
+//            new AlertTableIO().put(alertLines, mContext);
+            new AlertMatch().put(al, mContext);
         });
         thisThread.start();
     }

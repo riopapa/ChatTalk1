@@ -18,8 +18,7 @@ import androidx.appcompat.app.ActionBar;
 
 import com.google.android.material.tabs.TabLayout;
 import com.urrecliner.chattalk.Sub.AlertLine;
-import com.urrecliner.chattalk.Sub.AlertLinesGet;
-import com.urrecliner.chattalk.Sub.AlertLinesPut;
+import com.urrecliner.chattalk.Sub.AlertTableIO;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -90,8 +89,9 @@ public class Vars {
     static String chatGroup;
     static final String lastChar = "힝";
 
-    enum soundType { PRE, POST, ERR, TESLY, ONLY}
-    static final int[] beepRawIds = { R.raw.a0_pre_sound, R.raw.a1_post_sound, R.raw.a2_alert, R.raw.a3_hello_tesry, R.raw.a4_only};
+    enum soundType { PRE, POST, ERR, TESLY, ONLY, STOCK, BUY_STOCK}
+    static final int[] beepRawIds = { R.raw.a0_pre_sound, R.raw.a1_post_sound, R.raw.a2_alert, R.raw.a3_hello_tesry, R.raw.a4_only,
+            R.raw.a7_buy_stock, R.raw.a6_stock_buy_stock};
 
     public static class DelItem {
         String logNow;
@@ -119,13 +119,8 @@ public class Vars {
 
         FileIO.readyPackageFolder();
         sheetQues = new ArrayList<>();
-        alertLines = new AlertLinesGet().exe(context);
-        if (alertLines.size() == 0) {
-            AlertTable.readFile("var");
-            new AlertLinesPut().exe(alertLines, context);
-        } else {
-            AlertTable.updateMatched();
-            AlertTable.makeArrays();
-        }
+        alertLines = new AlertTableIO().get(context, tableFolder);
+        AlertTable.updateMatched();
+        AlertTable.makeArrays();
     }
 }

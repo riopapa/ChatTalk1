@@ -120,6 +120,39 @@ class Sounds {
             }, 150);
         }
     }
+    public void speakBuyStock(String text) {
+
+        if (isSilent())
+            return;
+//        if (!isTalking) {
+//            if (isPhoneBusy) {
+//                beepOnce(Vars.soundType.BUY_STOCK.ordinal());
+//                return;
+//            } else {
+                beepOnce(Vars.soundType.STOCK.ordinal());
+//            }
+//        }
+        if (canTalk()) {
+            mAudioManager.requestAudioFocus(mFocusGain);
+            new Timer().schedule(new TimerTask() {
+                public void run() {
+                    // 한글, 영문, 숫자만 OK
+//                    final String match = "[^\uAC00-\uD7A3xfe0-9a-zA-Z.,\\-\\s]";
+                    final String match = "[^\uAC00-\uD7A3\\da-zA-Z.,\\-]";
+                    String speakText = text.replaceAll(match, " ");
+                    int idx = speakText.indexOf("http");
+                    if (idx > 0)
+                        speakText = speakText.substring(0, idx) + " 링크 있음";
+                    try {
+                        isTalking = true;
+                        mTTS.speak(speakText, TextToSpeech.QUEUE_ADD, null, TTSId);
+                    } catch (Exception e) {
+                        new Utils().logE(logID, "TTS Error:" + e);
+                    }
+                }
+            }, 150);
+        }
+    }
 
     boolean canTalk() {
         return isNormal() || isBlueTooth();

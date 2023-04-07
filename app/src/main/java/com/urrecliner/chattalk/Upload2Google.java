@@ -84,7 +84,7 @@ public class Upload2Google {
         queue.add(stringRequest);
     }
 
-    static void uploadComment(String group, String who, String percent, String comment) {
+    static void uploadComment(String group, String who, String percent, String talk, String comment) {
         nowUploading = true;
         StringRequest stringRequest = new StringRequest(Request.Method.POST,
                 mContext.getString(R.string.sheets_stock),
@@ -104,6 +104,7 @@ public class Upload2Google {
                 Map<String, String> para = new HashMap<>();
                 para.put("action", "comment");
                 para.put("group", group);     para.put("who", who);
+                para.put("talk", talk);
                 para.put("percent", percent); para.put("comment", comment);
                 return para;
             }

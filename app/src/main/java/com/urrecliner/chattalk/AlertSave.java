@@ -6,8 +6,7 @@ import static com.urrecliner.chattalk.Vars.tableFolder;
 import static com.urrecliner.chattalk.Vars.todayFolder;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
-import com.urrecliner.chattalk.Sub.AlertLinesPut;
-import com.urrecliner.chattalk.Sub.AlertRemove;
+import com.urrecliner.chattalk.Sub.AlertTableIO;
 import com.urrecliner.chattalk.Sub.ByteLength;
 import com.urrecliner.chattalk.Sub.SnackBar;
 
@@ -39,10 +38,10 @@ public class AlertSave {
             s.append(strPad(al.next, (padLen[7]))).append("^");
             s.append("\n");
         }
-        FileIO.writeTextFile( tableFolder,"kTalkAlerts",s.toString());
-        FileIO.writeTextFile( todayFolder,"kTalkAlerts",s.toString());
-        new AlertLinesPut().exe(alertLines, mContext);
-        new AlertRemove().exec(alertLines, mContext);
+//        FileIO.writeTextFile( tableFolder,"kTalkAlerts",s.toString());
+//        FileIO.writeTextFile( todayFolder,"kTalkAlerts",s.toString());
+        new AlertTableIO().put(alertLines, mContext, tableFolder, todayFolder);
+//        new AlertTableIO().remove(alertLines, mContext);
         new SnackBar().show("Alert Table", msg);
     }
 

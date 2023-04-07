@@ -113,7 +113,7 @@ public class EditOneAlertActivity extends AppCompatActivity {
             alertsAdapter.notifyItemRemoved(linePos);
             makeGroupMemo();
         }
-        Upload2Google.uploadComment(mGroup, mWho, mPercent, mMemo);
+        Upload2Google.uploadComment(mGroup, mWho, mPercent, "",mMemo);
         new AlertSave("Delete "+mGroup);
         finish();
     }
@@ -149,7 +149,8 @@ public class EditOneAlertActivity extends AppCompatActivity {
             new AlertSave((al.matched == -1)? ("Save Group "+eGroup.getText().toString()):
                     ("Save "+eGroup.getText().toString() + " " + eWho.getText().toString()));
             makeGroupMemo();
-            Upload2Google.uploadComment(mGroup, mWho, mPercent, mMemo);
+            talk = new SimpleDateFormat("yy/MM/dd\nHH:mm", Locale.KOREA).format(new Date());
+            Upload2Google.uploadComment(mGroup, mWho, mPercent, talk, mMemo);
             alertsAdapter = new AlertsAdapter();
             finish();
 
