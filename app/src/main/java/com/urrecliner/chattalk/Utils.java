@@ -2,9 +2,6 @@ package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.SubFunc.logUpdate;
 import static com.urrecliner.chattalk.SubFunc.sounds;
-import static com.urrecliner.chattalk.Vars.mActivity;
-import static com.urrecliner.chattalk.Vars.mContext;
-import static com.urrecliner.chattalk.Vars.mLayoutView;
 import static com.urrecliner.chattalk.Vars.packageDirectory;
 import static com.urrecliner.chattalk.Vars.replGroup;
 import static com.urrecliner.chattalk.Vars.replGroupCnt;
@@ -14,13 +11,6 @@ import static com.urrecliner.chattalk.Vars.toDay;
 
 import android.os.Environment;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
 import java.io.IOException;
@@ -126,7 +116,7 @@ class Utils {
     String replaceKKHH(String text) {
         return text.replace("ㅇㅋ", " 오케이 ")
                 .replace("ㅋ", " 크 ")
-                .replace("^^", " 호호 ")
+                .replace("^^", " 크 ")
                 .replace("ㅊㅋ", " 축하 ")
                 .replace("ㅠ", " 흑 ")
                 .replace("ㅎ", " 하 ");

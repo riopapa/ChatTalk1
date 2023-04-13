@@ -124,14 +124,8 @@ class Sounds {
 
         if (isSilent())
             return;
-//        if (!isTalking) {
-//            if (isPhoneBusy) {
-//                beepOnce(Vars.soundType.BUY_STOCK.ordinal());
-//                return;
-//            } else {
-                beepOnce(Vars.soundType.STOCK.ordinal());
-//            }
-//        }
+        beepOnce(Vars.soundType.STOCK.ordinal());
+
         if (canTalk()) {
             mAudioManager.requestAudioFocus(mFocusGain);
             new Timer().schedule(new TimerTask() {

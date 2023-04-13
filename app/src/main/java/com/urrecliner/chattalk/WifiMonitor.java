@@ -24,10 +24,9 @@ public class WifiMonitor {
             public void onAvailable(@NonNull Network network) {
                 Network nw = connectivityManager.getActiveNetwork();
                 NetworkCapabilities netCap = connectivityManager.getNetworkCapabilities(nw);
-                assert netCap != null;
-                if (netCap.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                if (netCap != null && netCap.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
                     String newName = WifiName.get(context);
-                    if (!newName.equals(wifiName)) {
+                    if (newName != null && !newName.equals(wifiName)) {
                         if (newName.equals("unknown ssid")) {
                             new Timer().schedule(new TimerTask() {
                                 public void run() {

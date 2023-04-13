@@ -89,9 +89,9 @@ public class Vars {
     static String chatGroup;
     static final String lastChar = "힝";
 
-    enum soundType { PRE, POST, ERR, TESLY, ONLY, STOCK, BUY_STOCK}
-    static final int[] beepRawIds = { R.raw.a0_pre_sound, R.raw.a1_post_sound, R.raw.a2_alert, R.raw.a3_hello_tesry, R.raw.a4_only,
-            R.raw.a7_buy_stock, R.raw.a6_stock_buy_stock};
+    enum soundType { PRE, POST, ERR, TESLY, ONLY, STOCK}
+    static final int[] beepRawIds = { R.raw.a0_pre_sound, R.raw.a1_post_sound, R.raw.a2_alert,
+            R.raw.a3_hello_tesry, R.raw.a4_only, R.raw.a7_buy_stock};
 
     public static class DelItem {
         String logNow;

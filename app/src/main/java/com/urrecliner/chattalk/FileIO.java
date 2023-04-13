@@ -4,7 +4,6 @@ import static com.urrecliner.chattalk.SubFunc.logUpdate;
 import static com.urrecliner.chattalk.Vars.packageDirectory;
 import static com.urrecliner.chattalk.Vars.todayFolder;
 
-import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
