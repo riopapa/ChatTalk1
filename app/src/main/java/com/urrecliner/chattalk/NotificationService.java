@@ -31,7 +31,6 @@ public class NotificationService extends Service {
     NotificationCompat.Builder mBuilder = null;
     NotificationManager mNotificationManager;
     private RemoteViews mRemoteViews;
-    private static final int ERASER1 = 1013;
     private static final int STOP_SAY1 = 10011;
     String who1 = "Chat", msgText1 = "", time1 = "00:99";
     String who2 = "Talk", msgText2 = "", time2 = "00:99";
@@ -89,11 +88,6 @@ public class NotificationService extends Service {
             case HIDE_STOP:
                 show_stop = false;
                 break;
-//
-//            case ERASER1:
-//                msgText1 = "";
-//                who1 = "Chat Talk Now";
-//                break;
 
             default:
                 break;
@@ -134,18 +128,6 @@ public class NotificationService extends Service {
         Intent mainIntent = new Intent(svcContext, MainActivity.class);
         mainIntent.putExtra("load","load");
         mRemoteViews.setOnClickPendingIntent(R.id.ll_customNotification, PendingIntent.getActivity(svcContext, 0, mainIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));
-
-//        Intent erase1Intent = new Intent(this, NotificationService.class);
-//        erase1Intent.putExtra("operation", ERASER1);
-//        PendingIntent erase1Pi = PendingIntent.getService(svcContext, 11, erase1Intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
-//        mBuilder.setContentIntent(erase1Pi);
-//        mRemoteViews.setOnClickPendingIntent(R.id.erase1, erase1Pi);
-//
-//        Intent erase2Intent = new Intent(this, NotificationService.class);
-//        erase2Intent.putExtra("operation", ERASER2);
-//        PendingIntent erase2Pi = PendingIntent.getService(svcContext, 12, erase2Intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
-//        mBuilder.setContentIntent(erase2Pi);
-//        mRemoteViews.setOnClickPendingIntent(R.id.erase2, erase2Pi);
 
         Intent stopSay1Intent = new Intent(this, NotificationService.class);
         stopSay1Intent.putExtra("operation", STOP_SAY1);
