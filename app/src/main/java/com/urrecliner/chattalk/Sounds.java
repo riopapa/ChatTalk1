@@ -1,5 +1,7 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.MainActivity.utils;
+import static com.urrecliner.chattalk.Vars.SHOW_MESSAGE;
 import static com.urrecliner.chattalk.Vars.beepRawIds;
 import static com.urrecliner.chattalk.Vars.isPhoneBusy;
 import static com.urrecliner.chattalk.Vars.mAudioManager;
@@ -14,7 +16,10 @@ import android.media.MediaPlayer;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 
+import com.urrecliner.chattalk.Sub.ByteLength;
+
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -58,6 +63,7 @@ class Sounds {
             public void onDone(String utteranceId) {
                 if (mTTS.isSpeaking())
                     return;
+                NotificationBar.hideStop();
                 beepOnce(Vars.soundType.POST.ordinal());
                 isTalking = false;
                 new Timer().schedule(new TimerTask() {

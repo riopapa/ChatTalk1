@@ -12,7 +12,6 @@ import static com.urrecliner.chattalk.Vars.tableFolder;
 import static com.urrecliner.chattalk.Vars.topTabs;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -21,10 +20,7 @@ import android.text.Editable;
 import android.text.Selection;
 import android.text.Spannable;
 import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.style.BackgroundColorSpan;
-import android.text.style.StyleSpan;
-import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -41,7 +37,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.urrecliner.chattalk.Sub.LogString;
+import com.urrecliner.chattalk.Sub.LogSpann;
 import com.urrecliner.chattalk.Sub.SnackBar;
 
 import java.io.File;
@@ -76,7 +72,7 @@ public class Fragment_1Que extends Fragment {
     public void onResume() {
         topTabs.getTabAt(1).select();
         logQue = logQue.replace("    ","");
-        ss = new LogString().make(logQue, mContext);
+        ss = new LogSpann().make(logQue, mContext);
         sv = ss;
         etTable.setText(ss);
         etTable.setFocusableInTouchMode(true);
@@ -146,14 +142,14 @@ public class Fragment_1Que extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         if (item.getItemId() == R.id.delete_item_que) {
-            showNextQue(new LogString().delItem(etTable.getText().toString(),
+            showNextQue(new LogSpann().delItem(etTable.getText().toString(),
                     etTable.getSelectionStart(), mContext));
 
         } else if (item.getItemId() == R.id.action_reload) {
             reload_loqQue();
 
         } else if (item.getItemId() == R.id.delete_1line_que) {
-            showNextQue(new LogString().delLine(etTable.getText().toString(),
+            showNextQue(new LogSpann().delLine(etTable.getText().toString(),
                     etTable.getSelectionStart(), mContext));
 
         } else if (item.getItemId() == R.id.copy2log) {
@@ -210,7 +206,7 @@ public class Fragment_1Que extends Fragment {
             sb.append(s).append("\n");
         }
         logQue = sb.toString();
-        etTable.setText(new LogString().make(logQue, mContext));
+        etTable.setText(new LogSpann().make(logQue, mContext));
     }
     OnBackPressedCallback callback;
     @Override

@@ -2,6 +2,7 @@ package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.MainActivity.utils;
 import static com.urrecliner.chattalk.SubFunc.sounds;
+import static com.urrecliner.chattalk.Vars.HIDE_STOP;
 import static com.urrecliner.chattalk.Vars.SHOW_MESSAGE;
 
 import android.app.NotificationChannel;
@@ -12,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import androidx.core.app.NotificationCompat;
@@ -31,10 +33,10 @@ public class NotificationService extends Service {
     private RemoteViews mRemoteViews;
     private static final int ERASER1 = 1013;
     private static final int STOP_SAY1 = 10011;
-    private static final int ERASER2 = 1023;
-    private static final int STOP_SAY2 = 10021;
     String who1 = "Chat", msgText1 = "", time1 = "00:99";
     String who2 = "Talk", msgText2 = "", time2 = "00:99";
+
+    boolean show_stop = false;
 
     @Override
     public void onCreate() {
@@ -62,36 +64,40 @@ public class NotificationService extends Service {
         }
         createNotification();
         switch (operation) {
-            case STOP_SAY1:
-            case STOP_SAY2:
-                sounds.stopTTS();
-                break;
 
             case SHOW_MESSAGE:
                 who2 = who1;
                 msgText2 = msgText1;
+                time2 = time1;
+
                 who1 = Objects.requireNonNull(intent.getStringExtra("who"))
                         .replace(" ", "\u00A0");
-                while (ByteLength.get(who1) > 18)
+                while (ByteLength.get(who1) > 22)
                     who1 = who1.substring(0, who1.length()-1);
                 msgText1 = utils.makeEtc(Objects.requireNonNull(intent.getStringExtra("msg")), 100)
                         .replace(" ", "\u00A0");
+                show_stop = true;
+                time1 = new SimpleDateFormat("HH:mm", Locale.KOREA).format(new Date());
+
                 break;
 
-            case ERASER1:
-                msgText1 = "";
-                who1 = "Chat Talk Now";
+            case STOP_SAY1:
+                sounds.stopTTS();
+                show_stop = false;
                 break;
-            case ERASER2:
-                msgText2 = "";
-                who2 = "Prev Chat Talk";
+
+            case HIDE_STOP:
+                show_stop = false;
                 break;
+//
+//            case ERASER1:
+//                msgText1 = "";
+//                who1 = "Chat Talk Now";
+//                break;
+
             default:
                 break;
         }
-
-        time2 = time1;
-        time1 = new SimpleDateFormat("HH:mm", Locale.KOREA).format(new Date());
 
         updateRemoteViews();
         return START_STICKY;
@@ -129,29 +135,23 @@ public class NotificationService extends Service {
         mainIntent.putExtra("load","load");
         mRemoteViews.setOnClickPendingIntent(R.id.ll_customNotification, PendingIntent.getActivity(svcContext, 0, mainIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));
 
-        Intent erase1Intent = new Intent(this, NotificationService.class);
-        erase1Intent.putExtra("operation", ERASER1);
-        PendingIntent erase1Pi = PendingIntent.getService(svcContext, 11, erase1Intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
-        mBuilder.setContentIntent(erase1Pi);
-        mRemoteViews.setOnClickPendingIntent(R.id.erase1, erase1Pi);
-
-        Intent erase2Intent = new Intent(this, NotificationService.class);
-        erase2Intent.putExtra("operation", ERASER2);
-        PendingIntent erase2Pi = PendingIntent.getService(svcContext, 12, erase2Intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
-        mBuilder.setContentIntent(erase2Pi);
-        mRemoteViews.setOnClickPendingIntent(R.id.erase2, erase2Pi);
+//        Intent erase1Intent = new Intent(this, NotificationService.class);
+//        erase1Intent.putExtra("operation", ERASER1);
+//        PendingIntent erase1Pi = PendingIntent.getService(svcContext, 11, erase1Intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+//        mBuilder.setContentIntent(erase1Pi);
+//        mRemoteViews.setOnClickPendingIntent(R.id.erase1, erase1Pi);
+//
+//        Intent erase2Intent = new Intent(this, NotificationService.class);
+//        erase2Intent.putExtra("operation", ERASER2);
+//        PendingIntent erase2Pi = PendingIntent.getService(svcContext, 12, erase2Intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+//        mBuilder.setContentIntent(erase2Pi);
+//        mRemoteViews.setOnClickPendingIntent(R.id.erase2, erase2Pi);
 
         Intent stopSay1Intent = new Intent(this, NotificationService.class);
         stopSay1Intent.putExtra("operation", STOP_SAY1);
         PendingIntent stopSay1Pi = PendingIntent.getService(svcContext, 21, stopSay1Intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(stopSay1Pi);
         mRemoteViews.setOnClickPendingIntent(R.id.stop_now1, stopSay1Pi);
-
-        Intent stopSay2Intent = new Intent(this, NotificationService.class);
-        stopSay2Intent.putExtra("operation", STOP_SAY2);
-        PendingIntent stopSay2Pi = PendingIntent.getService(svcContext, 22, stopSay2Intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
-        mBuilder.setContentIntent(stopSay2Pi);
-        mRemoteViews.setOnClickPendingIntent(R.id.stop_now1, stopSay2Pi);
 
     }
 
@@ -163,6 +163,10 @@ public class NotificationService extends Service {
         mRemoteViews.setTextViewText(R.id.msg_time2, time2);
         mRemoteViews.setTextViewText(R.id.msg_who2, who2);
         mRemoteViews.setTextViewText(R.id.msg_text2, msgText2);
+        if (show_stop)
+            mRemoteViews.setViewVisibility(R.id.stop_now1, View.VISIBLE);
+        else
+            mRemoteViews.setViewVisibility(R.id.stop_now1, View.GONE);
         mNotificationManager.notify(100,mBuilder.build());
     }
 }

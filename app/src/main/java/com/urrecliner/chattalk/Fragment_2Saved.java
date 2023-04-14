@@ -29,7 +29,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.urrecliner.chattalk.Sub.LogString;
+import com.urrecliner.chattalk.Sub.LogSpann;
 import com.urrecliner.chattalk.Sub.SnackBar;
 
 public class Fragment_2Saved extends Fragment {
@@ -59,7 +59,7 @@ public class Fragment_2Saved extends Fragment {
     public void onResume() {
         topTabs.getTabAt(2).select();
         logSave = logSave.replace("    ","");
-        ss = new LogString().make(logSave, mContext);
+        ss = new LogSpann().make(logSave, mContext);
         sv = ss;
         etTable.setText(ss);
         etTable.setFocusableInTouchMode(true);
@@ -142,7 +142,7 @@ public class Fragment_2Saved extends Fragment {
                 logSave = logNow.substring(0, ps) + logNow.substring(pf);
             sharedEditor.putString("logSave", logSave);
             sharedEditor.apply();
-            etTable.setText(new LogString().make(logSave, mContext));
+            etTable.setText(new LogSpann().make(logSave, mContext));
             pf = ps - 1;
             ps = logSave.lastIndexOf("\n", pf - 1) + 1;
             etTable.setSelection(ps, pf);
@@ -160,7 +160,7 @@ public class Fragment_2Saved extends Fragment {
             logSave = logSave.replace("    ","");
             sharedEditor.putString("logSave", logSave);
             sharedEditor.apply();
-            etTable.setText(new LogString().make(logSave, mContext));
+            etTable.setText(new LogSpann().make(logSave, mContext));
             etTable.setSelection(posStart);
 
         } else if (item.getItemId() == R.id.save_log_save) {
@@ -168,7 +168,7 @@ public class Fragment_2Saved extends Fragment {
             logSave = logSave.replace("    ","");
             sharedEditor.putString("logSave", logSave);
             sharedEditor.apply();
-            etTable.setText(new LogString().make(logSave, mContext));
+            etTable.setText(new LogSpann().make(logSave, mContext));
         }
         return super.onOptionsItemSelected(item);
     }

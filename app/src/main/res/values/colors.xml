@@ -34,11 +34,12 @@
     <color name="log_head_f0">#FF611714</color>
     <color name="log_head_b0">#CCE7F2DB</color>
     <color name="log_line_f0">#054407</color>
-    <color name="log_line_b0">#BCB5C9</color>
+    <color name="log_line_b0">#D2C6EA</color>
     <color name="log_line_x0">#BF9B6C</color>
+
     <color name="log_head_f1">#FF0A09AE</color>
     <color name="log_head_b1">#AAE7E1F9</color>
-    <color name="log_line_f1">#2D3D82</color>
-    <color name="log_line_b1">#AAE9E1F9</color>
+    <color name="log_line_f1">#07554E</color>
+    <color name="log_line_b1">#AABEB3D5</color>
     <color name="log_line_x1">#B1A268</color>
 </resources>

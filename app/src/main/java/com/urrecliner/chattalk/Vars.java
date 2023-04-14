@@ -72,6 +72,7 @@ public class Vars {
     public static View mLayoutView;
 
     static final int SHOW_MESSAGE = 1234;
+    static final int HIDE_STOP = 5678;
     static String logQue = "", logSave = "", logStock = "";
     static ActionBar aBar = null;
     static AudioManager mAudioManager = null;

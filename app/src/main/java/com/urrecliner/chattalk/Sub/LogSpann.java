@@ -17,11 +17,12 @@ import com.urrecliner.chattalk.Vars;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class LogString {
+public class LogSpann {
 
     Typeface font1, font2;
     String dayNow = "x";
     SpannableString ss;
+    boolean fontSwitch = true;
 
     public SpannableString make(String log, Context context) {
 
@@ -64,12 +65,13 @@ public class LogString {
                 if (s.substring(0,5).equals(dayNow)) {
                     colorFore = colors[colorIdx][0];
                     colorBack = colors[colorIdx][1];
-                } else {
+                } else {    // new day
                     colorIdx = (colorIdx + 1) % 2;
                     colorFore = colors[colorIdx][0];
                     colorBack = colors[colorIdx][1];
                     dayNow = s.substring(0,5);
-
+                    font = (fontSwitch) ? font1:font2;
+                    fontSwitch = !fontSwitch;
                 }
             } else {
                 colorFore = colors[colorIdx][2];
@@ -78,8 +80,8 @@ public class LogString {
 
             int endPos = nPos + sLen;
             ss.setSpan(new ForegroundColorSpan(colorFore), nPos, endPos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            ss.setSpan(new TypefaceSpan(font), nPos, endPos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             ss.setSpan(new BackgroundColorSpan(colorBack), nPos, endPos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            ss.setSpan(new TypefaceSpan(font), nPos, endPos, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 //            ss.setSpan(new RelativeSizeSpan(fontSize), nPos, nPos + sLen, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             nPos += sLen + 1;
         }

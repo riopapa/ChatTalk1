@@ -35,7 +35,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.urrecliner.chattalk.Sub.LogString;
+import com.urrecliner.chattalk.Sub.LogSpann;
 import com.urrecliner.chattalk.Sub.SnackBar;
 
 import java.io.File;
@@ -70,7 +70,7 @@ public class Fragment_3Stock extends Fragment {
     public void onResume() {
         topTabs.getTabAt(3).select();
         logStock = logStock.replace("    ","");
-        ss = new LogString().make(logStock, mContext);
+        ss = new LogSpann().make(logStock, mContext);
         sv = ss;
         etTable.setText(ss);
         etTable.setFocusableInTouchMode(true);
@@ -140,14 +140,14 @@ public class Fragment_3Stock extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         if (item.getItemId() == R.id.delete_item_stock) {
-            showNextCandidate(new LogString().delItem(etTable.getText().toString(),
+            showNextCandidate(new LogSpann().delItem(etTable.getText().toString(),
                     etTable.getSelectionStart(), mContext));
 
         } else if (item.getItemId() == R.id.action_restock) {
             reload_stock();
 
         } else if (item.getItemId() == R.id.delete_1line_stock) {
-            showNextCandidate(new LogString().delLine(etTable.getText().toString(),
+            showNextCandidate(new LogSpann().delLine(etTable.getText().toString(),
                     etTable.getSelectionStart(), mContext));
 
         } else if (item.getItemId() == R.id.copy2stock) {
@@ -200,7 +200,7 @@ public class Fragment_3Stock extends Fragment {
             sb.append(s).append("\n");
         }
         logStock = sb.toString();
-        etTable.setText(new LogString().make(logStock, mContext));
+        etTable.setText(new LogSpann().make(logStock, mContext));
     }
     OnBackPressedCallback callback;
     @Override

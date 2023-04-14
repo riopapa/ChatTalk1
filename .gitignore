@@ -1,5 +1,6 @@
 *.iml
 .gradle
+/app/src/main/res/values/secrete.xml
 /local.properties
 /.idea/caches
 /.idea/libraries
@@ -12,4 +13,3 @@
 .externalNativeBuild
 .cxx
 local.properties
-/app/src/main/res/values/secrete.xml

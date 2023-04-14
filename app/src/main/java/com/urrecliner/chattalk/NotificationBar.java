@@ -1,5 +1,6 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.Vars.HIDE_STOP;
 import static com.urrecliner.chattalk.Vars.SHOW_MESSAGE;
 import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
@@ -67,5 +68,19 @@ public class NotificationBar {
             }
         };
         timer.schedule(timerTask, LOOP_INTERVAL, LOOP_INTERVAL);
+    }
+
+    static void hideStop() {
+        if (mActivity != null) {
+            Intent updateIntent = new Intent(mContext, NotificationService.class);
+            updateIntent.putExtra("operation", HIDE_STOP);
+            updateIntent.putExtra("who", "None");
+            updateIntent.putExtra("msg", "none");
+            try {
+                mActivity.startService(updateIntent);
+            } catch (Exception e) {
+                Log.e("NotificationBar","updateIntent Error \n"+e);
+            }
+        }
     }
 }
