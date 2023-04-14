@@ -72,7 +72,7 @@ public class NotificationService extends Service {
 
                 who1 = Objects.requireNonNull(intent.getStringExtra("who"))
                         .replace(" ", "\u00A0");
-                while (ByteLength.get(who1) > 22)
+                while (ByteLength.get(who1) > 24)
                     who1 = who1.substring(0, who1.length()-1);
                 msgText1 = utils.makeEtc(Objects.requireNonNull(intent.getStringExtra("msg")), 100)
                         .replace(" ", "\u00A0");
