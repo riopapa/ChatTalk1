@@ -30,6 +30,7 @@ public class NotificationService extends Service {
     private Context svcContext;
     NotificationCompat.Builder mBuilder = null;
     NotificationManager mNotificationManager;
+    String pkgName;
     private RemoteViews mRemoteViews;
     private static final int STOP_SAY1 = 10011;
     String who1 = "Chat", msgText1 = "", time1 = "00:99";
@@ -37,14 +38,25 @@ public class NotificationService extends Service {
 
     boolean show_stop = false;
 
+    public NotificationService() {}
+    public NotificationService(Context context) {
+        svcContext = context;
+        pkgName = context.getPackageName();
+        if (null != mRemoteViews)
+            mRemoteViews = null;
+        mRemoteViews = new RemoteViews(pkgName, R.layout.notification_bar);
+        utils.logW("noti svc","svc class " + pkgName);
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
         svcContext = this;
-        String thisPackageName = getApplicationContext().getPackageName();
+        pkgName = getApplicationContext().getPackageName();
         if (null != mRemoteViews)
             mRemoteViews = null;
-        mRemoteViews = new RemoteViews(thisPackageName, R.layout.notification_bar);
+        mRemoteViews = new RemoteViews(pkgName, R.layout.notification_bar);
+        utils.logW("noti svc","onCreated " + pkgName);
     }
 
     @Override
@@ -55,12 +67,16 @@ public class NotificationService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
+        if (mRemoteViews == null)
+            mRemoteViews = new RemoteViews(pkgName, R.layout.notification_bar);
+
         int operation = -1;
         try {
             operation = intent.getIntExtra("operation", -1);
         } catch (Exception e) {
             Log.e("operation"+operation,e.toString());
         }
+
         createNotification();
         switch (operation) {
 
@@ -101,7 +117,7 @@ public class NotificationService extends Service {
 
         if (null == mNotificationManager) {
             CharSequence name = "Chat Talk";
-            String description = "Chat Talk Description";
+            String description = "Chat Description";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel("ChatTalk", name, importance);
             channel.setDescription(description);
@@ -109,12 +125,13 @@ public class NotificationService extends Service {
             // or other notification behaviors after this
             mNotificationManager = getSystemService(NotificationManager.class);
             mNotificationManager.createNotificationChannel(channel);
-
         }
+
         if (null == mBuilder) {
             who1 = "newly Loaded";
             msgText1 = "";
-            mBuilder = new NotificationCompat.Builder(this,"default")
+            time1 = new SimpleDateFormat("HH:mm", Locale.KOREA).format(new Date());
+            mBuilder = new NotificationCompat.Builder(this, "default")
                     .setSmallIcon(R.drawable.chat_talk)
                     .setColor(getApplicationContext().getColor(R.color.barLine1))
                     .setContent(mRemoteViews)
@@ -124,7 +141,6 @@ public class NotificationService extends Service {
                     .setStyle(new NotificationCompat.BigTextStyle())
                     .setOngoing(true);
         }
-
         Intent mainIntent = new Intent(svcContext, MainActivity.class);
         mainIntent.putExtra("load","load");
         mRemoteViews.setOnClickPendingIntent(R.id.ll_customNotification, PendingIntent.getActivity(svcContext, 0, mainIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));
@@ -134,7 +150,6 @@ public class NotificationService extends Service {
         PendingIntent stopSay1Pi = PendingIntent.getService(svcContext, 21, stopSay1Intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(stopSay1Pi);
         mRemoteViews.setOnClickPendingIntent(R.id.stop_now1, stopSay1Pi);
-
     }
 
     private void updateRemoteViews() {
@@ -145,10 +160,7 @@ public class NotificationService extends Service {
         mRemoteViews.setTextViewText(R.id.msg_time2, time2);
         mRemoteViews.setTextViewText(R.id.msg_who2, who2);
         mRemoteViews.setTextViewText(R.id.msg_text2, msgText2);
-        if (show_stop)
-            mRemoteViews.setViewVisibility(R.id.stop_now1, View.VISIBLE);
-        else
-            mRemoteViews.setViewVisibility(R.id.stop_now1, View.GONE);
+        mRemoteViews.setViewVisibility(R.id.stop_now1, (show_stop)? View.VISIBLE : View.GONE);
         mNotificationManager.notify(100,mBuilder.build());
     }
 }

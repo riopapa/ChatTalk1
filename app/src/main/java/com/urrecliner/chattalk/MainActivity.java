@@ -145,9 +145,10 @@ public class MainActivity extends AppCompatActivity {
 
         new Timer().schedule(new TimerTask() {
             public void run() {
-                Intent updateIntent = new Intent(mContext, NotificationService.class);
-                updateIntent.putExtra("isUpdate", true);
-                mActivity.startService(updateIntent);
+//                Intent updateIntent = new Intent(mContext, NotificationService.class);
+//                updateIntent.putExtra("isUpdate", true);
+//                mActivity.startService(updateIntent);
+                new NotificationServiceStart(mContext);
             }
         }, 20);
 
@@ -157,6 +158,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }, 60000*300, 60000*300);
         super.onResume();
+
+
     }
 
     private boolean isNotificationAllowed(String packageName) {
@@ -169,9 +172,4 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.w("MainActivity","onDestroy()");
-    }
 }

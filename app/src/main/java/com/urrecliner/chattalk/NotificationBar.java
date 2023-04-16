@@ -2,7 +2,6 @@ package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.Vars.HIDE_STOP;
 import static com.urrecliner.chattalk.Vars.SHOW_MESSAGE;
-import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
 
 import android.content.Intent;
@@ -41,13 +40,13 @@ public class NotificationBar {
         savedMessage = new SimpleDateFormat("HH:mm\u00A0", Locale.KOREA).format(new Date());
         savedMessage += msg.substring(0, msg.length()*2/3);
         count = 0;
-        if (mActivity != null) {
+        if (mContext != null) {
             Intent updateIntent = new Intent(mContext, NotificationService.class);
             updateIntent.putExtra("operation", SHOW_MESSAGE);
             updateIntent.putExtra("who", who);
             updateIntent.putExtra("msg", msg);
             try {
-                mActivity.startService(updateIntent);
+                mContext.startService(updateIntent);
             } catch (Exception e) {
                 Log.e("NotificationBar","updateIntent Error \n"+e);
             }
@@ -71,13 +70,13 @@ public class NotificationBar {
     }
 
     static void hideStop() {
-        if (mActivity != null) {
+        if (mContext != null) {
             Intent updateIntent = new Intent(mContext, NotificationService.class);
             updateIntent.putExtra("operation", HIDE_STOP);
             updateIntent.putExtra("who", "None");
             updateIntent.putExtra("msg", "none");
             try {
-                mActivity.startService(updateIntent);
+                mContext.startService(updateIntent);
             } catch (Exception e) {
                 Log.e("NotificationBar","updateIntent Error \n"+e);
             }

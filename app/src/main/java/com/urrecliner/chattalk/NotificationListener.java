@@ -63,7 +63,6 @@ public class NotificationListener extends NotificationListenerService {
             kkWhoTexts = new HashMap<>();
             smsWhoTexts = new HashMap<>();
             whoAndTexts = new HashMap<>();
-            Log.w("notilisten", "onCreate()");
         }
         super.onCreate();
     }
@@ -89,8 +88,8 @@ public class NotificationListener extends NotificationListenerService {
 
                 if (IgnoreThis.contains(sbnText, kkTxtIgnores))
                     return;
-                if (sbnGroup.equals("")) {
-                    if (sbnWho.equals(""))
+                if (sbnGroup.equals("")) {  // no group
+                    if (sbnWho.equals(""))  // nothing
                         return;
                     if (IgnoreThis.contains(sbnWho, kGroupWhoIgnores)||
                         MapWhoText.repeated(kkWhoTexts, sbnWho, sbnText))

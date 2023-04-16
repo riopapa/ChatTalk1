@@ -1,0 +1,38 @@
+package com.urrecliner.chattalk;
+
+import static com.urrecliner.chattalk.NotificationListener.vars;
+
+import android.app.ActivityManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
+
+public class BootReceiver extends BroadcastReceiver {
+
+    @Override
+    public void onReceive(final Context context, Intent intent) {
+
+        if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
+
+            vars = new Vars();
+            vars.set(context, "Booted !");
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                new NotificationServiceStart(context);
+                new Handler(Looper.getMainLooper()).postDelayed(() ->
+                        NotificationBar.update("After Boot", "Rebooted"), 10000);
+            }, 5000);
+        }
+    }
+
+    public static boolean isServiceRunning(Context context, Class serviceClass) {
+        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
