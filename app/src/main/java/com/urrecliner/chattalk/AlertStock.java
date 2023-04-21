@@ -9,6 +9,7 @@ import static com.urrecliner.chattalk.MainActivity.utils;
 import com.urrecliner.chattalk.Sub.AlertLine;
 import com.urrecliner.chattalk.Sub.AlertMatch;
 import com.urrecliner.chattalk.Sub.Dot;
+import com.urrecliner.chattalk.Sub.StockName;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -30,7 +31,7 @@ public class AlertStock {
         sTalk = al.talk;
         String percent = (iText.contains("매도") || iText.contains("익절"))? "1.9" :sTalk;
         key12 = " {" + k1 + "." + k2 + "}";
-        String stockName = getStockName(al.prev, al.next, iText);
+        String stockName = new StockName().get(al.prev, al.next, iText);
         String sText = utils.strReplace(iGroup, iText);
         String head = " [" + group + "." + who + "] "+stockName;
         String keyStr = (sTalk.length() > 0) ? key12+"\n"+sTalk: key12;
@@ -38,31 +39,18 @@ public class AlertStock {
             String timeStamp = new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date());
             String dotText = sText.replace(stockName, new Dot().add(stockName));
             FileIO.uploadStock(group, who, percent, stockName, dotText, keyStr, timeStamp);
-            NotificationBar.update(head, sText);
             logUpdate.addStock(head, sText + key12);
             if (sTalk.length() > 0) {
                 sounds.beepOnce(Vars.soundType.STOCK.ordinal());
                 String[] joins = new String[]{group, group, who, stockName, sTalk, stockName};
-                sounds.speakBuyStock(String.join(" , ", joins)); //.replaceAll("\\d","")
+                sounds.speakBuyStock(String.join(" , ", joins)); //.replaceAll("\\d","", )
+                NotificationBar.update(head, sText, true);
             } else {
+                NotificationBar.update(head, sText, true);
                 sounds.beepOnce(Vars.soundType.ONLY.ordinal());
             }
-//            new AlertTableIO().put(alertLines, mContext);
             new AlertMatch().put(al, mContext);
         });
         thisThread.start();
-    }
-
-    String getStockName(String prev, String next, String iText) {
-        String str = iText;
-        int p1 = str.indexOf(prev);
-        if (p1 >= 0) {
-            str = str.substring(p1+prev.length());
-            p1 = str.indexOf(next);
-            if (p1 > 0)
-                return str.substring(0,p1).replaceAll("[\\d,%:|#()]","").trim();
-            return "NoNext";
-        }
-        return "NoPrev";
     }
 }

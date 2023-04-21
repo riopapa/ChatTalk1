@@ -1,5 +1,6 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.NotificationListener.vars;
 import static com.urrecliner.chattalk.Vars.aBar;
 import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
@@ -35,7 +36,7 @@ import java.util.TimerTask;
 public class MainActivity extends AppCompatActivity {
 
     int count = 0;
-    Vars vars = null;
+//    Vars vars = null;
     SubFunc subFunc = null;
     public static Utils utils = null;
 
@@ -143,23 +144,18 @@ public class MainActivity extends AppCompatActivity {
         aBar.setIcon(R.mipmap.chat_talk_mini);
         WifiMonitor.init(mContext);
 
-        new Timer().schedule(new TimerTask() {
-            public void run() {
-//                Intent updateIntent = new Intent(mContext, NotificationService.class);
-//                updateIntent.putExtra("isUpdate", true);
-//                mActivity.startService(updateIntent);
+//        new Timer().schedule(new TimerTask() {
+//            public void run() {
                 new NotificationServiceStart(mContext);
-            }
-        }, 20);
+//            }
+//        }, 20);
 
-        new Timer().schedule(new TimerTask() {
-            public void run () {
-                Log.w("MainActivity","Count = "+count++);
-            }
-        }, 60000*300, 60000*300);
+//        new Timer().schedule(new TimerTask() {
+//            public void run () {
+//                Log.w("MainActivity","Count = "+count++);
+//            }
+//        }, 60*1000*300, 60*1000*300);
         super.onResume();
-
-
     }
 
     private boolean isNotificationAllowed(String packageName) {

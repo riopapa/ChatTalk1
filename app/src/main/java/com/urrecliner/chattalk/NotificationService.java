@@ -35,8 +35,7 @@ public class NotificationService extends Service {
     private static final int STOP_SAY1 = 10011;
     String who1 = "Chat", msgText1 = "", time1 = "00:99";
     String who2 = "Talk", msgText2 = "", time2 = "00:99";
-
-    boolean show_stop = false;
+    static boolean show_stop = false;
 
     public NotificationService() {}
     public NotificationService(Context context) {
@@ -76,7 +75,6 @@ public class NotificationService extends Service {
         } catch (Exception e) {
             Log.e("operation"+operation,e.toString());
         }
-
         createNotification();
         switch (operation) {
 
@@ -91,8 +89,8 @@ public class NotificationService extends Service {
                     who1 = who1.substring(0, who1.length()-1);
                 msgText1 = utils.makeEtc(Objects.requireNonNull(intent.getStringExtra("msg")), 100)
                         .replace(" ", "\u00A0");
-                show_stop = true;
                 time1 = new SimpleDateFormat("HH:mm", Locale.KOREA).format(new Date());
+                show_stop = intent.getBooleanExtra("stop", false);
 
                 break;
 

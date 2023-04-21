@@ -27,7 +27,7 @@ public class NotificationBar {
     static final long LOOP_INTERVAL = 25 * 60 * 1000;
     static long lastTime = 0;
 
-    static void update(String who, String msg) {
+    static void update(String who, String msg, boolean show_hide) {
 
         if (timerTask != null) {
             timerTask.cancel();
@@ -37,21 +37,24 @@ public class NotificationBar {
             timer.cancel();
             timer = null;
         }
+
         savedMessage = new SimpleDateFormat("HH:mm\u00A0", Locale.KOREA).format(new Date());
         savedMessage += msg.substring(0, msg.length()*2/3);
         count = 0;
         if (mContext != null) {
-            Intent updateIntent = new Intent(mContext, NotificationService.class);
-            updateIntent.putExtra("operation", SHOW_MESSAGE);
-            updateIntent.putExtra("who", who);
-            updateIntent.putExtra("msg", msg);
+            Intent intent = new Intent(mContext, NotificationService.class);
+            intent.putExtra("operation", SHOW_MESSAGE);
+            intent.putExtra("who", who);
+            intent.putExtra("msg", msg);
+            intent.putExtra("stop", show_hide);
             try {
-                mContext.startService(updateIntent);
+                mContext.startService(intent);
             } catch (Exception e) {
-                Log.e("NotificationBar","updateIntent Error \n"+e);
+                Log.e("NotificationBar","intent Error \n"+e);
             }
             if (IsScreen.On(mContext)) {
-                new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(mContext, who + " > " + msg, Toast.LENGTH_SHORT).show());
+                new Handler(Looper.getMainLooper()).post(()
+                        -> Toast.makeText(mContext, who + " > " + msg, Toast.LENGTH_SHORT).show());
             }
         }
         lastTime = System.currentTimeMillis();
@@ -61,7 +64,7 @@ public class NotificationBar {
             @Override
             public void run () {
                 count++;
-                Log.w("NotiBar "+count, (System.currentTimeMillis()-lastTime)/1000+"  " + savedMessage);
+                Log.w("Noty Bar "+count, (System.currentTimeMillis()-lastTime)/1000+"  " + savedMessage);
                 lastTime = System.currentTimeMillis();
                 System.gc();
             }
@@ -71,14 +74,15 @@ public class NotificationBar {
 
     static void hideStop() {
         if (mContext != null) {
-            Intent updateIntent = new Intent(mContext, NotificationService.class);
-            updateIntent.putExtra("operation", HIDE_STOP);
-            updateIntent.putExtra("who", "None");
-            updateIntent.putExtra("msg", "none");
+            Intent intent = new Intent(mContext, NotificationService.class);
+            intent.putExtra("operation", HIDE_STOP);
+            intent.putExtra("who", "None");
+            intent.putExtra("msg", "none");
+            intent.putExtra("stop", false);
             try {
-                mContext.startService(updateIntent);
+                mContext.startService(intent);
             } catch (Exception e) {
-                Log.e("NotificationBar","updateIntent Error \n"+e);
+                Log.e("NotificationBar","intent Error \n"+e);
             }
         }
     }

@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
 import com.urrecliner.chattalk.Sub.Dot;
+import com.urrecliner.chattalk.Sub.StockName;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -180,8 +181,8 @@ public class SelectChats {
         int p1, p2;
         for (int k = 0; k < keyword1.length; k++) {
             p1 = body.indexOf(keyword1[k]);
-            if (p1 >= 0) {
-                p2 = body.indexOf(keyword2[k]);
+            if (p1 > 0) {
+                p2 = body.indexOf(keyword2[k], p1+1);
                 if (p2 >= 0) {      // both matched
                     body = utils.strReplace(chatGroup, body);
                     String keys = "<"+keyword1[k]+"~"+keyword2[k]+">";
@@ -194,12 +195,12 @@ public class SelectChats {
                     if (p1 >= 0) {
                         s.setSpan(new BackgroundColorSpan(mContext.getResources().getColor(R.color.keyMatchedWord, null)), p1, p1 + prev[k].length(), SPAN_EXCLUSIVE_EXCLUSIVE);
                     }
-                    p2 = str.indexOf(next[k]);
+                    p2 = str.indexOf(next[k], p1+1);
                     if (p2 >= 0) {
                         s.setSpan(new BackgroundColorSpan(mContext.getResources().getColor(R.color.keyMatchedWord, null)), p2, p2 + next[k].length(), SPAN_EXCLUSIVE_EXCLUSIVE);
                     }
                     if(upload) {
-                        String stockName = getStockName(prev[k], next[k], body);
+                        String stockName = new StockName().get(prev[k], next[k], body);
                         body = body.replace(stockName, new Dot().add(stockName));
                         FileIO.uploadStock(chatGroup, who, "chats", stockName,
                                 body, keys, time);
@@ -282,18 +283,4 @@ public class SelectChats {
         prev = aPrev.toArray(new String[0]);
         next = aNext.toArray(new String[0]);
     }
-
-    String getStockName(String prev, String next, String iText) {
-        String str = iText;
-        int p1 = str.indexOf(prev);
-        if (p1 >= 0) {
-            str = str.substring(p1+prev.length());
-            p1 = str.indexOf(next);
-            if (p1 > 0)
-                return str.substring(0,p1).replaceAll("[\\d,%|#()]","").trim();
-            return "No Next";
-        }
-        return "No Prev";
-    }
-
 }

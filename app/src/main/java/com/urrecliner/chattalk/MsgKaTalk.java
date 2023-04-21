@@ -66,7 +66,7 @@ class MsgKaTalk {
         } else {    // normal group
             String head = "[카톡 " + iGroup + "." + iWho + "]";
             iText = utils.strReplace(iGroup, iText);
-            NotificationBar.update(iGroup+":"+iWho, iText);
+            NotificationBar.update(iGroup+":"+iWho, iText, true);
             logUpdate.addQue(head, iText);
             if (IsWhoNine.in(nineIgnores, iWho))
                 iText = iText.replaceAll("\\d","");

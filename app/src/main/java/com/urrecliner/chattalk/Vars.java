@@ -94,6 +94,7 @@ public class Vars {
     static final int[] beepRawIds = { R.raw.a0_pre_sound, R.raw.a1_post_sound, R.raw.a2_alert,
             R.raw.a3_hello_tesry, R.raw.a4_only, R.raw.a7_buy_stock};
 
+    public static boolean audioReady = true;
     public static class DelItem {
         String logNow;
         int ps, pf;

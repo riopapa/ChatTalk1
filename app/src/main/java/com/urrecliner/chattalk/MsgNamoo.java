@@ -13,7 +13,7 @@ class MsgNamoo {
         }
         if (text.contains("체결")) {
             String sText = "나무App : " + text;
-            NotificationBar.update("[NH나무]", sText);
+            NotificationBar.update("[NH나무]", sText, false);
             logUpdate.addStock("[NH나무] ", sText);
             if (sText.contains("매도"))
                 return;

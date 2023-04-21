@@ -1,32 +1,27 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.MainActivity.utils;
-import static com.urrecliner.chattalk.Vars.SHOW_MESSAGE;
 import static com.urrecliner.chattalk.Vars.beepRawIds;
+import static com.urrecliner.chattalk.Vars.audioReady;
 import static com.urrecliner.chattalk.Vars.isPhoneBusy;
 import static com.urrecliner.chattalk.Vars.mAudioManager;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.mFocusGain;
 
 import android.content.Context;
-import android.media.AudioDeviceInfo;
 import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 
-import com.urrecliner.chattalk.Sub.ByteLength;
+import com.urrecliner.chattalk.Sub.AudioMgr;
 
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
 class Sounds {
-
-    private final static String logID = "TTS";
-    static private boolean isTalking = false;
+    public static boolean isTalking = false;
     static TextToSpeech mTTS;
     static String TTSId = "";
 
@@ -64,10 +59,10 @@ class Sounds {
                 if (mTTS.isSpeaking())
                     return;
                 NotificationBar.hideStop();
-                beepOnce(Vars.soundType.POST.ordinal());
                 isTalking = false;
                 new Timer().schedule(new TimerTask() {
                     public void run () {
+                        beepOnce(Vars.soundType.POST.ordinal());
                         mAudioManager.abandonAudioFocusRequest(mFocusGain);
                     }
                 }, 300);
@@ -79,8 +74,6 @@ class Sounds {
 
         int result = mTTS.setLanguage(Locale.getDefault());
         if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-
-//            Toast.makeText(mActivity, "Not supported Language", Toast.LENGTH_SHORT).show();
             beepOnce(Vars.soundType.ERR.ordinal());
         } else {
             mTTS.setPitch(1.2f);
@@ -105,7 +98,8 @@ class Sounds {
                 beepOnce(Vars.soundType.PRE.ordinal());
             }
         }
-        if (canTalk()) {
+        audioReady = new AudioMgr().isActive();
+        if (audioReady) {
             mAudioManager.requestAudioFocus(mFocusGain);
             new Timer().schedule(new TimerTask() {
                 public void run() {
@@ -120,7 +114,7 @@ class Sounds {
                         isTalking = true;
                         mTTS.speak(speakText, TextToSpeech.QUEUE_ADD, null, TTSId);
                     } catch (Exception e) {
-                        new Utils().logE(logID, "TTS Error:" + e);
+                        new Utils().logE("Sound", "TTS Error:" + e);
                     }
                 }
             }, 150);
@@ -128,11 +122,14 @@ class Sounds {
     }
     public void speakBuyStock(String text) {
 
-        if (isSilent())
+        if (isSilent()) {
+            audioReady = true;
             return;
+        }
         beepOnce(Vars.soundType.STOCK.ordinal());
 
-        if (canTalk()) {
+        audioReady = new AudioMgr().isActive();
+        if (audioReady) {
             mAudioManager.requestAudioFocus(mFocusGain);
             new Timer().schedule(new TimerTask() {
                 public void run() {
@@ -147,16 +144,13 @@ class Sounds {
                         isTalking = true;
                         mTTS.speak(speakText, TextToSpeech.QUEUE_ADD, null, TTSId);
                     } catch (Exception e) {
-                        new Utils().logE(logID, "TTS Error:" + e);
+                        new Utils().logE("Sound", "TTS Error:" + e);
                     }
                 }
             }, 150);
         }
     }
 
-    boolean canTalk() {
-        return isNormal() || isBlueTooth();
-    }
 
     void beepOnce(int soundNbr) {
 
@@ -169,24 +163,7 @@ class Sounds {
         });
     }
 
-    private boolean isBlueTooth() {
 
-        AudioDeviceInfo[] audioDevices = mAudioManager.getDevices(AudioManager.GET_DEVICES_INPUTS);
-        for(AudioDeviceInfo deviceInfo : audioDevices){
-
-            if(deviceInfo.getType() == AudioDeviceInfo.TYPE_BLUETOOTH_SCO     // 007
-                    || deviceInfo.getType()==AudioDeviceInfo.TYPE_BLUETOOTH_A2DP    // 008
-                    || deviceInfo.getType()==AudioDeviceInfo.TYPE_WIRED_HEADSET
-                    || deviceInfo.getType()==AudioDeviceInfo.TYPE_WIRED_HEADPHONES
-            )
-                return true;
-        }
-        return false;
-    }
-
-    private boolean isNormal() {
-        return mAudioManager.getRingerMode() == AudioManager.RINGER_MODE_NORMAL;
-    }
     boolean isSilent() {
         return mAudioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT;
     }
