@@ -107,7 +107,8 @@ public class NotificationService extends Service {
                 break;
         }
 
-        updateRemoteViews();
+        if (operation != -1)
+            updateRemoteViews();
         return START_STICKY;
     }
 

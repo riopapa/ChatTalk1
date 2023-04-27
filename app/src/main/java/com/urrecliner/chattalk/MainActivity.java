@@ -144,17 +144,13 @@ public class MainActivity extends AppCompatActivity {
         aBar.setIcon(R.mipmap.chat_talk_mini);
         WifiMonitor.init(mContext);
 
+        new NotificationServiceStart(mContext);
+        NotificationBar.update("onResume", "re Started", true);
+        NotificationBar.hideStop();
 //        new Timer().schedule(new TimerTask() {
 //            public void run() {
-                new NotificationServiceStart(mContext);
 //            }
 //        }, 20);
-
-//        new Timer().schedule(new TimerTask() {
-//            public void run () {
-//                Log.w("MainActivity","Count = "+count++);
-//            }
-//        }, 60*1000*300, 60*1000*300);
         super.onResume();
     }
 

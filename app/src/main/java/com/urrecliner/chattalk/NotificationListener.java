@@ -87,7 +87,7 @@ public class NotificationListener extends NotificationListenerService {
 
                 if (IgnoreThis.contains(sbnText, kkTxtIgnores))
                     return;
-                if (sbnGroup.equals("")) {  // no group
+                if (sbnGroup.equals("")) {  // no groupNames
                     if (sbnWho.equals(""))  // nothing
                         return;
                     if (IgnoreThis.contains(sbnWho, kGroupWhoIgnores)||
@@ -237,7 +237,7 @@ public class NotificationListener extends NotificationListenerService {
 
             case BAND:
 
-                // group : null, who : 분당사랑케어,
+                // groupNames : null, who : 분당사랑케어,
 
                 if (sbnText.contains("지금 확인하세요") || MapWhoText.repeated(whoAndTexts, sbnWho, sbnText)
                         || IgnoreThis.contains(sbnText, textIgnores))
@@ -254,18 +254,19 @@ public class NotificationListener extends NotificationListenerService {
                 if (sbnText.contains("곳에서 보냄"))
                     return;
                 sbnText = utils.text2OneLine(sbnText);
-                final String [] stocks = { "바른"};
-                for (String s: stocks) {
-                    if (sbnWho.contains(s)) {
+                final String [] groupChats = { "바른 급", "\uD83C\uDFC5부자"}; // 바른 급등주, 부자 프로젝트
+                final String [] groupNames = {"바른", "부자"};
+                for (int i = 0; i < groupChats.length; i++) {
+                    if (sbnWho.startsWith(groupChats[i])) {
                         if (msgKaTalk == null)
                             msgKaTalk = new MsgKaTalk();
-                        msgKaTalk.say("텔레", sbnWho, sbnText);
+                        msgKaTalk.say(groupNames[i], sbnWho, sbnGroup+sbnText);
                         return;
                     }
                 }
-                head = "[텔레 "+ sbnGroup + "📞" + sbnWho + "]";
+                head = "[텔레 "+ sbnGroup + "|" + sbnWho + "]";
                 subFunc.logUpdate.addQue(head, sbnText);
-                NotificationBar.update(sbnGroup + "📞" + sbnWho, sbnText, true);
+                NotificationBar.update(sbnGroup + "|" + sbnWho, sbnText, true);
                 sbnText = head + " 로 부터. " + sbnText;
                 subFunc.sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
                 break;
@@ -274,8 +275,8 @@ public class NotificationListener extends NotificationListenerService {
 
                 if (MapWhoText.repeated(whoAndTexts, sbnWho, sbnText))
                     return;
-                sbnText = utils.text2OneLine(sbnText);
-                sbnText = "새로운 앱이 설치됨,  group:" + sbnGroup + " who:" + sbnWho + " text:" + sbnText;
+                sbnText = "새로운 앱이 설치됨,  groupNames:" + sbnGroup + ", who:" + sbnWho +
+                        ", text:" + utils.text2OneLine(sbnText);
                 NotificationBar.update("[새 앱]", sbnText, true);
                 subFunc.logUpdate.addQue("[ " + sbnAppFullName + " ]", sbnText);
                 utils.logW("new App "+ sbnGroup, sbnAppFullName +" "+ sbnText);

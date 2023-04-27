@@ -16,14 +16,15 @@ import java.util.TimerTask;
 public class WifiMonitor {
 
     static String wifiName = null;
-
+    static ConnectivityManager cM = null;
     static void init (Context context) {
-        ConnectivityManager connectivityManager = context.getSystemService(ConnectivityManager.class);
-        connectivityManager.registerDefaultNetworkCallback(new ConnectivityManager.NetworkCallback() {
+        if (cM == null)
+            cM = context.getSystemService(ConnectivityManager.class);
+        cM.registerDefaultNetworkCallback(new ConnectivityManager.NetworkCallback() {
             @Override
             public void onAvailable(@NonNull Network network) {
-                Network nw = connectivityManager.getActiveNetwork();
-                NetworkCapabilities netCap = connectivityManager.getNetworkCapabilities(nw);
+                Network nw = cM.getActiveNetwork();
+                NetworkCapabilities netCap = cM.getNetworkCapabilities(nw);
                 if (netCap != null && netCap.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
                     String newName = WifiName.get(context);
                     if (newName != null && !newName.equals(wifiName)) {

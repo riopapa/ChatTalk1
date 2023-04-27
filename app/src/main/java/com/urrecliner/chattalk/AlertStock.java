@@ -16,7 +16,6 @@ import java.util.Date;
 import java.util.Locale;
 
 public class AlertStock {
-
     void sayNlog(String iGroup, String iText, int aIdx) {
 
         String key12, sTalk, group, who;
@@ -46,7 +45,7 @@ public class AlertStock {
                 sounds.speakBuyStock(String.join(" , ", joins)); //.replaceAll("\\d","", )
                 NotificationBar.update(head, sText, true);
             } else {
-                NotificationBar.update(head, sText, true);
+                NotificationBar.update(head, sText, false);
                 sounds.beepOnce(Vars.soundType.ONLY.ordinal());
             }
             new AlertMatch().put(al, mContext);
