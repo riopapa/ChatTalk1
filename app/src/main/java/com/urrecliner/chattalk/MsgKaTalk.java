@@ -13,7 +13,7 @@ import static com.urrecliner.chattalk.Vars.aGroups;
 import static com.urrecliner.chattalk.Vars.alertWhoIndex;
 import static com.urrecliner.chattalk.Vars.alertsAdapter;
 import static com.urrecliner.chattalk.Vars.nineIgnores;
-import static com.urrecliner.chattalk.MainActivity.utils;
+import static com.urrecliner.chattalk.ActivityMain.utils;
 
 import android.util.Log;
 

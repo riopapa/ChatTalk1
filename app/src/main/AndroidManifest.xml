@@ -32,7 +32,7 @@
         android:theme="@style/Theme.ChatTalk"
         >
         <activity
-            android:name=".MainActivity"
+            android:name=".ActivityMain"
             android:requestLegacyExternalStorage="true"
             android:theme="@style/AppTheme"
             android:persistent="true"
@@ -47,9 +47,9 @@
                 android:value="" />
         </activity>
 
-        <activity android:name=".EditTextActivity"/>
-        <activity android:name=".EditReplaceActivity"/>
-        <activity android:name=".EditOneAlertActivity"/>
+        <activity android:name=".ActivityEditText"/>
+        <activity android:name=".ActivityEditReplace"/>
+        <activity android:name=".ActivityEditOneAlert"/>
 
         <service
             android:name=".NotificationListener"

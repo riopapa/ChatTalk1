@@ -1,6 +1,5 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.Vars.aGroups;
 import static com.urrecliner.chattalk.Vars.nowFileName;
 import static com.urrecliner.chattalk.Vars.tableFolder;
 import static com.urrecliner.chattalk.Vars.tableListFile;
@@ -21,12 +20,16 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.stream.Collectors;
 
-public class EditReplaceActivity extends AppCompatActivity {
+public class ActivityEditText extends AppCompatActivity {
 
+    boolean isPackageNames;
     final String dummyHead = "- [ ";
     int pos = -1;
     EditText et;
@@ -36,17 +39,18 @@ public class EditReplaceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_table_edit);
+        isPackageNames = nowFileName.equals("packageNames");
         ActionBar ab = getSupportActionBar() ;
         assert ab != null;
-        ab.setTitle("   Str Replaces ");
+        ab.setTitle("  "+nowFileName);
 
         EditText tv = findViewById(R.id.table_text);
         File file = new File(tableFolder, nowFileName + ".txt");
         String[] lines = tableListFile.readRaw(file);
         String text;
 
-        ImageView ivSearch = findViewById(R.id.searchKeyword);
-        ivSearch.setOnClickListener(v -> {
+        ImageView iv = findViewById(R.id.searchKeyword);
+        iv.setOnClickListener(v -> {
             int cnt = 0;
             et = findViewById(R.id.key_que);
             key = et.getText().toString();           // .replace(" ","\u00A0");
@@ -75,7 +79,7 @@ public class EditReplaceActivity extends AppCompatActivity {
             if (pos > 0)
                 tv.setSelection(pos, pos+key.length());
         });
-        text = insertHeader(lines);
+            text = Arrays.stream(lines).map(s -> s + "\n").collect(Collectors.joining()) + "\n";
         tv.setText(text);
         tv.setFocusable(true);
         tv.setEnabled(true);
@@ -83,37 +87,11 @@ public class EditReplaceActivity extends AppCompatActivity {
         tv.setFocusableInTouchMode(true);
     }
 
-    String insertHeader(String [] textLines) {
-        String svGroup = "x";
-        StringBuilder sb = new StringBuilder();
-        for (String textLine: textLines) {
-            if (textLine.length() < 2)
-                continue;
-            String [] oneL = textLine.split("\\^");
-            if (!oneL[0].equals(svGroup)) {
-                svGroup = oneL[0];
-                int gIdx = Collections.binarySearch(aGroups, svGroup);
-                String del = (gIdx >= 0) ? "":" // 없는 그룹 //";
-                sb.append(dummyHead).append(svGroup).append(del).append(" ] -\n\n");    // dummy some chars between groups
-            }
-            sb.append(textLine).append("\n").append("\n");
-        }
-        return sb.toString();
-    }
-    String removeHeader(String txt) {
+    String sortText(String txt) {
         String[] arrText = txt.split("\n");
         Arrays.sort(arrText);
         StringBuilder sortedText = new StringBuilder();
-        String sv = "";
-        for (String t : arrText) {
-            if (t.length() < 3 || t.startsWith(dummyHead)) // ignore if not "20^주식^aa^some text blank lines"
-                continue;
-            if (!sv.equals(t.substring(0, 3))) {
-                sortedText.append("\n");
-                sv = t.substring(0,3);
-            }
-            sortedText.append(t).append("\n");
-        }
+        Arrays.stream(arrText).filter(t -> txt.length() > 2).forEach(t -> sortedText.append(t).append("\n"));
         return sortedText.toString();
     }
 
@@ -124,30 +102,41 @@ public class EditReplaceActivity extends AppCompatActivity {
         return true;
     }
 
+    private static String strPad(String s, int strLen) {
+        String blank = StringUtils.repeat(" ", 60);
+        s = s.trim();
+        int byteLen = getByteLength(s);
+        if (byteLen >= strLen)
+            return s;
+        int padL = (strLen - byteLen) / 2;
+        int padR = strLen - byteLen - padL;
+        return blank.substring(0, padL) + s + blank.substring(0, padR);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == R.id.save_table) {
             TextView tv = findViewById(R.id.table_text);
             String s = tv.getText().toString();             // .replace("\u00A0"," ");
-            FileIO.writeTextFile(tableFolder, nowFileName, removeHeader(s));
+            FileIO.writeTextFile(tableFolder, nowFileName, (isPackageNames) ? sortPackage(s) : sortText(s));
             new OptionTables().readAll();
             finish();
         } else if (item.getItemId() == R.id.line_copy_add) {
             EditText et = findViewById(R.id.table_text);
-            String strNow = et.getText().toString();
-            StringBuilder sb = new StringBuilder(strNow);
+            String logNow = et.getText().toString();
+            StringBuilder sb=new StringBuilder(logNow);
             int pos = et.getSelectionStart();
-            String s = getClipBoard();
+            String s = insertClipBoard();
             sb.insert(pos, s);
             et.setText(sb.toString());
-            et.setSelection(pos+1);
+            et.setSelection(pos + s.length()-2);
         } else if (item.getItemId() == R.id.remove_this_line) {
             EditText et = findViewById(R.id.table_text);
-            String strNow = et.getText().toString();
+            String logNow = et.getText().toString();
             int lineF = et.getSelectionStart();
-            int lineS = strNow.lastIndexOf("\n", lineF-1);
-            StringBuilder sb = new StringBuilder(strNow);
+            int lineS = logNow.lastIndexOf("\n", lineF-1);
+            StringBuilder sb = new StringBuilder(logNow);
             sb.replace(lineS, lineF,"");
             et.setText(sb.toString());
             et.setSelection(lineS);
@@ -155,11 +144,55 @@ public class EditReplaceActivity extends AppCompatActivity {
         return false;
     }
 
-    String getClipBoard() {
+
+    String sortPackage(String txt) {
+
+        String[] arrText = txt.split("\n");
+        for (int i = 0; i < arrText.length; i++)
+            arrText[i] = arrText[i].trim();
+        Arrays.sort(arrText);
+        int maxLen = 0;
+        for (String t : arrText) {
+            if (t.length() < 2)
+                continue;
+            String[] fields = t.split("\\^");
+            int len = fields[0].trim().length();
+            if (len > maxLen)
+                maxLen = len;
+        }
+        String blank = StringUtils.repeat(" ", maxLen);
+        StringBuilder sortedText = new StringBuilder();
+        for (String t : arrText) {
+            if (t.length() < 2)
+                continue;
+            String[] fields = t.split("\\^");
+            String memo= "";
+            if (fields.length > 3)  // if nothing after ^ then no array return
+                memo = fields[3].trim();
+            String pkg = blank+fields[0].trim()+" ";
+            String oneLine = pkg.substring(pkg.length()-maxLen-1) + "^" +  // package full name
+                    strPad(fields[1], 12) + " ^ "           // package nick name
+                    + strPad(fields[2], 4) + " ^ "          // yyn
+                    + memo;                                       // comment
+            sortedText.append(oneLine).append("\n");
+        }
+        return sortedText.toString();
+    }
+
+    static int getByteLength(String str) {
+        try {
+            return str.getBytes("euc-kr").length;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return str.length();
+    }
+
+    String insertClipBoard() {
         ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         ClipData pData = clipboard.getPrimaryClip();
         ClipData.Item item = pData.getItemAt(0);
-        return "\n^리플^"+item.getText().toString()+"\n";
+        return "\n"+item.getText().toString() + ((isPackageNames)? " ^ @ ^ yyn ^":"") + "\n";
     }
 
 }

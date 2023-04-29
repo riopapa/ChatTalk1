@@ -12,7 +12,7 @@ import static com.urrecliner.chattalk.Vars.sbnWho;
 import static com.urrecliner.chattalk.Vars.smsTextIgnores;
 import static com.urrecliner.chattalk.Vars.smsWhoIgnores;
 import static com.urrecliner.chattalk.Vars.textIgnores;
-import static com.urrecliner.chattalk.MainActivity.utils;
+import static com.urrecliner.chattalk.ActivityMain.utils;
 
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;

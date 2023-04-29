@@ -1,6 +1,6 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.MainActivity.utils;
+import static com.urrecliner.chattalk.ActivityMain.utils;
 import static com.urrecliner.chattalk.SubFunc.sounds;
 import static com.urrecliner.chattalk.Vars.HIDE_STOP;
 import static com.urrecliner.chattalk.Vars.SHOW_MESSAGE;
@@ -44,6 +44,8 @@ public class NotificationService extends Service {
         if (null != mRemoteViews)
             mRemoteViews = null;
         mRemoteViews = new RemoteViews(pkgName, R.layout.notification_bar);
+        if (utils == null)
+            utils = new Utils();
         utils.logW("noti svc","svc class " + pkgName);
     }
 
@@ -140,7 +142,7 @@ public class NotificationService extends Service {
                     .setStyle(new NotificationCompat.BigTextStyle())
                     .setOngoing(true);
         }
-        Intent mainIntent = new Intent(svcContext, MainActivity.class);
+        Intent mainIntent = new Intent(svcContext, ActivityMain.class);
         mainIntent.putExtra("load","load");
         mRemoteViews.setOnClickPendingIntent(R.id.ll_customNotification, PendingIntent.getActivity(svcContext, 0, mainIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));
 

@@ -4,7 +4,7 @@ import static com.urrecliner.chattalk.SubFunc.logUpdate;
 import static com.urrecliner.chattalk.SubFunc.sounds;
 import static com.urrecliner.chattalk.Vars.alertLines;
 import static com.urrecliner.chattalk.Vars.mContext;
-import static com.urrecliner.chattalk.MainActivity.utils;
+import static com.urrecliner.chattalk.ActivityMain.utils;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
 import com.urrecliner.chattalk.Sub.AlertMatch;

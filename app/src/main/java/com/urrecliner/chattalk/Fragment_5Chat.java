@@ -28,7 +28,7 @@ import androidx.fragment.app.Fragment;
 import java.io.File;
 import java.util.Arrays;
 
-import static com.urrecliner.chattalk.MainActivity.utils;
+import static com.urrecliner.chattalk.ActivityMain.utils;
 
 import com.urrecliner.chattalk.Sub.SnackBar;
 

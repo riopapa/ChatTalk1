@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class EditOneAlertActivity extends AppCompatActivity {
+public class ActivityEditOneAlert extends AppCompatActivity {
 
     AlertLine al;
     EditText eGroup, eWho, eKey1, eKey2, eTalk, eMatched, eSkip, eMemo, ePrev, eNext;

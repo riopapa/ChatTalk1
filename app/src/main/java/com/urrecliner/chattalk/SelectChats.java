@@ -1,7 +1,7 @@
 package com.urrecliner.chattalk;
 
 import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
-import static com.urrecliner.chattalk.MainActivity.utils;
+import static com.urrecliner.chattalk.ActivityMain.utils;
 import static com.urrecliner.chattalk.Vars.aGroupWhoKey1;
 import static com.urrecliner.chattalk.Vars.aGroupWhoKey2;
 import static com.urrecliner.chattalk.Vars.aGroupWhoSkip;

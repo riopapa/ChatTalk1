@@ -5,7 +5,7 @@ import static com.urrecliner.chattalk.SubFunc.sounds;
 import static com.urrecliner.chattalk.Vars.lastChar;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.nineIgnores;
-import static com.urrecliner.chattalk.MainActivity.utils;
+import static com.urrecliner.chattalk.ActivityMain.utils;
 
 import com.urrecliner.chattalk.Sub.Dot;
 import com.urrecliner.chattalk.Sub.IsWhoNine;

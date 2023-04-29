@@ -61,13 +61,13 @@ public class Fragment_0Table extends Fragment {
 
     public void edit_table(View v) {
         nowFileName = v.getTag().toString();
-        Intent intent = new Intent(mContext, EditTextActivity.class);
+        Intent intent = new Intent(mContext, ActivityEditText.class);
         startActivity(intent);
     }
 
     public void edit_replace(View v) {
         nowFileName = v.getTag().toString();
-        Intent intent = new Intent(mContext, EditReplaceActivity.class);
+        Intent intent = new Intent(mContext, ActivityEditReplace.class);
         startActivity(intent);
     }
 

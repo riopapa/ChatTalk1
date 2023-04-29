@@ -98,7 +98,7 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
         }
         holder.tCount.setBackgroundColor(colorWho);
         holder.tLine.setOnClickListener(v -> {
-            Intent intent = new Intent(mContext, EditOneAlertActivity.class);
+            Intent intent = new Intent(mContext, ActivityEditOneAlert.class);
             intent.putExtra("linePos", holder.getAdapterPosition());
             mActivity.startActivity(intent);
         });

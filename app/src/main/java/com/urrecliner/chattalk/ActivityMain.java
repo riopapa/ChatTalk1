@@ -1,6 +1,6 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.NotificationListener.vars;
+import static com.urrecliner.chattalk.SubFunc.logUpdate;
 import static com.urrecliner.chattalk.Vars.aBar;
 import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
@@ -33,11 +33,9 @@ import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity {
+public class ActivityMain extends AppCompatActivity {
 
-    int count = 0;
-//    Vars vars = null;
-    SubFunc subFunc = null;
+    static int count = 0;
     public static Utils utils = null;
 
     @Override
@@ -132,14 +130,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        count = 0;
-        if (subFunc == null) {
-            vars = new Vars();
-            vars.set(mContext, "onResume");
-            subFunc = new SubFunc();
-        }
-        if (utils == null)
+        if (logUpdate == null)
+            logUpdate = new LogUpdate(mContext);
+        if (utils == null) {
             utils = new Utils();
+        }
         aBar = getSupportActionBar();
         aBar.setIcon(R.mipmap.chat_talk_mini);
         WifiMonitor.init(mContext);
@@ -147,10 +142,11 @@ public class MainActivity extends AppCompatActivity {
         new NotificationServiceStart(mContext);
         NotificationBar.update("onResume", "re Started", true);
         NotificationBar.hideStop();
-//        new Timer().schedule(new TimerTask() {
-//            public void run() {
-//            }
-//        }, 20);
+        new Timer().schedule(new TimerTask() {
+            public void run() {
+                Log.w("main","stay awake " + ++count);
+            }
+        }, 5000, 30*60*1000);
         super.onResume();
     }
 

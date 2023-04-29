@@ -164,16 +164,15 @@ public class Fragment_1Que extends Fragment {
             ps = logNow.lastIndexOf("\n", ps - 1);
             if (ps == -1)
                 ps = 0;
-            else {
+            else
                 ps = logNow.lastIndexOf("\n", ps - 1);
-            }
+
             String copied = logNow.substring(ps+1, pf);
             logSave += "\n" + copied;
             sharedEditor.putString("logSave", logSave);
             sharedEditor.apply();
             copied = copied.replace("\n", " ▶️ ");
             Toast.makeText(mContext, "que copied " + copied, Toast.LENGTH_SHORT).show();
-
         }
         return super.onOptionsItemSelected(item);
     }

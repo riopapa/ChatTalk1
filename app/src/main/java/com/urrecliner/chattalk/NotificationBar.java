@@ -48,7 +48,7 @@ public class NotificationBar {
             intent.putExtra("msg", msg);
             intent.putExtra("stop", show_hide);
             try {
-                mContext.startService(intent);
+                mContext.startForegroundService(intent);
             } catch (Exception e) {
                 Log.e("NotificationBar","intent Error \n"+e);
             }

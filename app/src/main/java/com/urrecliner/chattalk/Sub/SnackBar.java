@@ -13,6 +13,8 @@ import com.urrecliner.chattalk.R;
 
 public class SnackBar {
     public void show(String title, String text) {
+        if (mLayoutView == null)
+            mLayoutView = mActivity.findViewById(R.id.main_layout);
         Snackbar snackbar = Snackbar.make(mLayoutView, "", Snackbar.LENGTH_SHORT);
         View sView = mActivity.getLayoutInflater().inflate(R.layout.snack_message, null);
 
