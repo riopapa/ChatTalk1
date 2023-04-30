@@ -136,17 +136,19 @@ public class ActivityMain extends AppCompatActivity {
             utils = new Utils();
         }
         aBar = getSupportActionBar();
-        aBar.setIcon(R.mipmap.chat_talk_mini);
+        aBar.setIcon(R.drawable.chat_talk);
         WifiMonitor.init(mContext);
 
         new NotificationServiceStart(mContext);
         NotificationBar.update("onResume", "re Started", true);
         NotificationBar.hideStop();
-        new Timer().schedule(new TimerTask() {
-            public void run() {
-                Log.w("main","stay awake " + ++count);
-            }
-        }, 5000, 30*60*1000);
+//        final int LOOPING = 300*60*1000;
+//        new Timer().schedule(new TimerTask() {
+//            public void run() {
+//                Log.w("main","stay awake " + ++count);
+//            }
+//        }, LOOPING, LOOPING);
+//
         super.onResume();
     }
 

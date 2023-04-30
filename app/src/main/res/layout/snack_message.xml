@@ -17,7 +17,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintRight_toLeftOf="@id/card"
-        android:src="@mipmap/chat_talk" />
+        android:src="@drawable/chat_talk" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card"

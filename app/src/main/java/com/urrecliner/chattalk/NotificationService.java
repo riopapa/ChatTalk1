@@ -33,31 +33,31 @@ public class NotificationService extends Service {
     String pkgName;
     private RemoteViews mRemoteViews;
     private static final int STOP_SAY1 = 10011;
-    String who1 = "Chat", msgText1 = "", time1 = "00:99";
-    String who2 = "Talk", msgText2 = "", time2 = "00:99";
+    static String who1 = "Chat", msgText1 = "", time1 = "00:99";
+    static String who2 = "Talk", msgText2 = "", time2 = "00:99";
     static boolean show_stop = false;
 
-    public NotificationService() {}
-    public NotificationService(Context context) {
-        svcContext = context;
-        pkgName = context.getPackageName();
-        if (null != mRemoteViews)
-            mRemoteViews = null;
-        mRemoteViews = new RemoteViews(pkgName, R.layout.notification_bar);
-        if (utils == null)
-            utils = new Utils();
-        utils.logW("noti svc","svc class " + pkgName);
-    }
+//    public NotificationService() {}
+//    public NotificationService(Context context) {
+//        svcContext = context;
+//        init_svc("on Service");
+//    }
 
     @Override
     public void onCreate() {
         super.onCreate();
         svcContext = this;
-        pkgName = getApplicationContext().getPackageName();
+        init_svc("On Created");
+    }
+
+    private void init_svc(String s) {
+        pkgName = svcContext.getPackageName();
         if (null != mRemoteViews)
             mRemoteViews = null;
         mRemoteViews = new RemoteViews(pkgName, R.layout.notification_bar);
-        utils.logW("noti svc","onCreated " + pkgName);
+        if (utils == null)
+            utils = new Utils();
+        utils.logW("noti svc", s);
     }
 
     @Override
@@ -142,13 +142,16 @@ public class NotificationService extends Service {
                     .setStyle(new NotificationCompat.BigTextStyle())
                     .setOngoing(true);
         }
-        Intent mainIntent = new Intent(svcContext, ActivityMain.class);
-        mainIntent.putExtra("load","load");
-        mRemoteViews.setOnClickPendingIntent(R.id.ll_customNotification, PendingIntent.getActivity(svcContext, 0, mainIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));
+        Intent mIntent = new Intent(svcContext, ActivityMain.class);
+//        mIntent.putExtra("load","load");
+        mRemoteViews.setOnClickPendingIntent(R.id.ll_customNotification,
+            PendingIntent.getActivity(svcContext, 0, mIntent,
+                PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));
 
-        Intent stopSay1Intent = new Intent(this, NotificationService.class);
-        stopSay1Intent.putExtra("operation", STOP_SAY1);
-        PendingIntent stopSay1Pi = PendingIntent.getService(svcContext, 21, stopSay1Intent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent sIntent = new Intent(this, NotificationService.class);
+        sIntent.putExtra("operation", STOP_SAY1);
+        PendingIntent stopSay1Pi = PendingIntent.getService(svcContext, 21, sIntent,
+            PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(stopSay1Pi);
         mRemoteViews.setOnClickPendingIntent(R.id.stop_now1, stopSay1Pi);
     }

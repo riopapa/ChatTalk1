@@ -24,7 +24,6 @@ public class NotificationBar {
     static int count;
     static Timer timer = new Timer();
     static TimerTask timerTask = null;
-    static final long LOOP_INTERVAL = 25 * 60 * 1000;
     static long lastTime = 0;
 
     static void update(String who, String msg, boolean show_hide) {
@@ -59,6 +58,7 @@ public class NotificationBar {
         }
         lastTime = System.currentTimeMillis();
 
+        final long LOOP_INTERVAL = 45 * 60 * 1000;
         timer = new Timer();
         timerTask = new TimerTask() {
             @Override
