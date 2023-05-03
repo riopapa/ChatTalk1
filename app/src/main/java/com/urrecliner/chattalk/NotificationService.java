@@ -92,7 +92,7 @@ public class NotificationService extends Service {
                 msgText1 = utils.makeEtc(Objects.requireNonNull(intent.getStringExtra("msg")), 100)
                         .replace(" ", "\u00A0");
                 time1 = new SimpleDateFormat("HH:mm", Locale.KOREA).format(new Date());
-                show_stop = intent.getBooleanExtra("stop", false);
+                show_stop = intent.getBooleanExtra("stop", true);
 
                 break;
 

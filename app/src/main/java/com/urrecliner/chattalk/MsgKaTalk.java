@@ -1,5 +1,6 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.NotificationListener.notificationBar;
 import static com.urrecliner.chattalk.NotificationListener.subFunc;
 import static com.urrecliner.chattalk.NotificationListener.vars;
 import static com.urrecliner.chattalk.SubFunc.logUpdate;
@@ -39,7 +40,7 @@ class MsgKaTalk {
                 return;
             aGroupSaid[gIdx] = iText;
             if (vars.timeBegin == 0)
-                logUpdate.readyTodayFolderIfNewDay();
+                new ReadyToday();
             long nowTime = System.currentTimeMillis();
             if (nowTime < vars.timeBegin || nowTime > vars.timeEnd) {
                 return;
@@ -66,7 +67,7 @@ class MsgKaTalk {
         } else {    // normal group
             String head = "[카톡 " + iGroup + "." + iWho + "]";
             iText = utils.strReplace(iGroup, iText);
-            NotificationBar.update(iGroup+":"+iWho, iText, true);
+            notificationBar.update(iGroup+":"+iWho, iText, true);
             logUpdate.addQue(head, iText);
             if (IsWhoNine.in(nineIgnores, iWho))
                 iText = iText.replaceAll("\\d","");

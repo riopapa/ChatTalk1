@@ -6,6 +6,7 @@ import static com.urrecliner.chattalk.Vars.isPhoneBusy;
 import static com.urrecliner.chattalk.Vars.mAudioManager;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.mFocusGain;
+import static com.urrecliner.chattalk.NotificationListener.notificationBar;
 
 import android.content.Context;
 import android.media.AudioFocusRequest;
@@ -58,7 +59,7 @@ class Sounds {
             public void onDone(String utteranceId) {
                 if (mTTS.isSpeaking())
                     return;
-                NotificationBar.hideStop();
+                notificationBar.hideStop();
                 isTalking = false;
                 new Timer().schedule(new TimerTask() {
                     public void run () {

@@ -20,7 +20,7 @@ import java.util.TimerTask;
 
 public class NotificationBar {
 
-    static String savedMessage = "";
+    static String svMsg = "";
     static int count;
     static Timer timer = new Timer();
     static TimerTask timerTask = null;
@@ -37,8 +37,8 @@ public class NotificationBar {
             timer = null;
         }
 
-        savedMessage = new SimpleDateFormat("HH:mm\u00A0", Locale.KOREA).format(new Date());
-        savedMessage += msg.substring(0, msg.length()*2/3);
+        svMsg = new SimpleDateFormat("HH:mm\u00A0", Locale.KOREA).format(new Date());
+        svMsg += (msg.length() > 30) ? msg.substring(0, msg.length()*2/3): msg;
         count = 0;
         if (mContext != null) {
             Intent intent = new Intent(mContext, NotificationService.class);
@@ -64,7 +64,7 @@ public class NotificationBar {
             @Override
             public void run () {
                 count++;
-                Log.w("Noty Bar "+count, (System.currentTimeMillis()-lastTime)/1000+"  " + savedMessage);
+                Log.w("Noty Bar "+count, (System.currentTimeMillis()-lastTime)/1000+"  " + svMsg);
                 lastTime = System.currentTimeMillis();
                 System.gc();
             }

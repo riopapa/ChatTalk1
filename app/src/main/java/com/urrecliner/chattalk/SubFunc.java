@@ -13,8 +13,8 @@ public class SubFunc {
         if (logUpdate == null) {
             logUpdate = new LogUpdate(mContext);
         }
-        if (toDay == null || toDay.equals("ToDay")) {
-            logUpdate.readyTodayFolderIfNewDay();
+        if (toDay.length() < 6) {
+            new ReadyToday();
         }
 
         if (sounds == null) {

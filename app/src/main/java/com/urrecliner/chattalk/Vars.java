@@ -30,7 +30,7 @@ public class Vars {
     static File downloadFolder = null;
     static File todayFolder = null;
 
-    public static String toDay = "ToDay";
+    public static String toDay = "To";
     public static long timeBegin = 0, timeEnd = 0;
 
     static ArrayList<String> packageIgnores;

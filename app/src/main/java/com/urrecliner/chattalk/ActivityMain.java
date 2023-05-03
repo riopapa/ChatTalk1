@@ -1,5 +1,6 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.NotificationListener.notificationBar;
 import static com.urrecliner.chattalk.SubFunc.logUpdate;
 import static com.urrecliner.chattalk.Vars.aBar;
 import static com.urrecliner.chattalk.Vars.mActivity;
@@ -140,8 +141,8 @@ public class ActivityMain extends AppCompatActivity {
         WifiMonitor.init(mContext);
 
         new NotificationServiceStart(mContext);
-        NotificationBar.update("onResume", "re Started", true);
-        NotificationBar.hideStop();
+        notificationBar.update("onResume", "re Started", true);
+        notificationBar.hideStop();
 //        final int LOOPING = 300*60*1000;
 //        new Timer().schedule(new TimerTask() {
 //            public void run() {

@@ -2,6 +2,7 @@ package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.SubFunc.logUpdate;
 import static com.urrecliner.chattalk.Vars.packageDirectory;
+import static com.urrecliner.chattalk.Vars.toDay;
 import static com.urrecliner.chattalk.Vars.todayFolder;
 
 import android.os.Environment;
@@ -33,7 +34,7 @@ public class FileIO {
         if (packageDirectory == null)
             packageDirectory = new File(Environment.getExternalStorageDirectory(), "_ChatTalkLog");
 
-        if (packageDirectory.exists()) {
+        if (!packageDirectory.exists()) {
             try {
                 //noinspection ResultOfMethodCallIgnored
                 packageDirectory.mkdirs();
@@ -51,6 +52,10 @@ public class FileIO {
     }
 
     static void append2Today(String filename, String textLine) {
+        if (todayFolder == null) {
+
+            todayFolder = new File(packageDirectory, toDay);
+        }
         final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.KOREA);
         File file = new File(todayFolder, filename);
         String timeInfo = timeFormat.format(new Date()) + " ";
@@ -58,7 +63,7 @@ public class FileIO {
     }
 
     static void append2File(File file, String timeInfo, String textLine) {
-        logUpdate.readyTodayFolderIfNewDay();
+        new ReadyToday();
         BufferedWriter bw = null;
         FileWriter fw = null;
         try {

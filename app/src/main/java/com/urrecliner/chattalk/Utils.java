@@ -31,7 +31,7 @@ class Utils {
         logE writes to download folder, removing by manual operation
      */
     void logW(String tag, String text) {
-        logUpdate.readyTodayFolderIfNewDay();
+        new ReadyToday();
         StackTraceElement[] traces = Thread.currentThread().getStackTrace();
         String logText  =(traces.length>6) ? excludeName(traces[6].getMethodName()):"";
         logText += excludeName(traces[5].getMethodName()) + excludeName(traces[4].getMethodName()) + excludeName(traceClassName(traces[3].getClassName()))+"> "+traces[3].getMethodName() + "#" + traces[3].getLineNumber() + " {"+ tag + "} " + text;

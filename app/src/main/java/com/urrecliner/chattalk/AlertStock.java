@@ -1,5 +1,6 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.NotificationListener.notificationBar;
 import static com.urrecliner.chattalk.SubFunc.logUpdate;
 import static com.urrecliner.chattalk.SubFunc.sounds;
 import static com.urrecliner.chattalk.Vars.alertLines;
@@ -43,9 +44,9 @@ public class AlertStock {
                 sounds.beepOnce(Vars.soundType.STOCK.ordinal());
                 String[] joins = new String[]{group, group, who, stockName, sTalk, stockName};
                 sounds.speakBuyStock(String.join(" , ", joins)); //.replaceAll("\\d","", )
-                NotificationBar.update(head, sText, true);
+                notificationBar.update(head, sText, true);
             } else {
-                NotificationBar.update(head, sText, false);
+                notificationBar.update(head, sText, false);
                 sounds.beepOnce(Vars.soundType.ONLY.ordinal());
             }
             new AlertMatch().put(al, mContext);

@@ -1,5 +1,6 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.NotificationListener.notificationBar;
 import static com.urrecliner.chattalk.NotificationListener.vars;
 
 import android.app.ActivityManager;
@@ -21,7 +22,7 @@ public class BootReceiver extends BroadcastReceiver {
             new Handler(Looper.getMainLooper()).postDelayed(() -> {
                 new NotificationServiceStart(context);
                 new Handler(Looper.getMainLooper()).postDelayed(() ->
-                        NotificationBar.update("After Boot", "Rebooted", false), 10000);
+                        notificationBar.update("After Boot", "Rebooted", false), 10000);
             }, 5000);
         }
     }

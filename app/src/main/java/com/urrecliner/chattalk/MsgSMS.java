@@ -1,5 +1,6 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.NotificationListener.notificationBar;
 import static com.urrecliner.chattalk.SubFunc.logUpdate;
 import static com.urrecliner.chattalk.SubFunc.sounds;
 import static com.urrecliner.chattalk.Vars.lastChar;
@@ -44,7 +45,7 @@ class MsgSMS {
             String head = "[sms "+mWho + "]";
             mText = utils.strReplace(mWho, mText);
             logUpdate.addQue(head, mText);
-            NotificationBar.update("sms "+mWho, mText, true);
+            notificationBar.update("sms "+mWho, mText, true);
             if (IsWhoNine.in(nineIgnores, mWho))
                 mText = mText.replaceAll("\\d", "");
             sounds.speakAfterBeep(head+" 으로부터 "+ utils.makeEtc(mText, 160));
@@ -68,7 +69,7 @@ class MsgSMS {
                     String uPrice = words[5];
                     String sGroup = lastChar + trade;
                     String sayMsg = stockName + " " + amount + " " + uPrice + samPam;
-                    NotificationBar.update(trade +":"+stockName, sayMsg, true);
+                    notificationBar.update(trade +":"+stockName, sayMsg, true);
                     logUpdate.addStock("sms>"+nhStock, sayMsg);
                     FileIO.uploadStock(sGroup, mWho, samPam, stockName,
                             mText.replace(stockName, new Dot().add(stockName)), amount,
@@ -77,9 +78,8 @@ class MsgSMS {
                     sounds.speakAfterBeep(sayMsg.replaceAll("\\d",""));
                 }
             } catch (Exception e) {
-                mText = mText + e;
-                logUpdate.addStock(nhStock, mText);
-                sounds.speakAfterBeep(mText);
+                logUpdate.addStock(nhStock, "Exception " + mText + e);
+//                sounds.speakAfterBeep(mText);
             }
         } else
             sayNormal(mWho, mText);
@@ -88,7 +88,7 @@ class MsgSMS {
     private void sayNormal(String mWho, String mText) {
         String head = "[sms."+ mWho + "] ";
         mText = utils.strReplace("sms", mText);
-        NotificationBar.update(head, mText, true);
+        notificationBar.update(head, mText, true);
         logUpdate.addQue(head, mText);
         sounds.speakAfterBeep(head + utils.makeEtc(mText, 160));
     }
