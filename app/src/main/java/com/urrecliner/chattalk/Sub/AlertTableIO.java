@@ -38,28 +38,6 @@ public class AlertTableIO {
         }
         return list;
     }
-    public void put(ArrayList<AlertLine> alertLines, Context context,
-                    File tableFolder, File todayFolder) {
-        SharedPreferences sharePref = context.getSharedPreferences("alertLine", MODE_PRIVATE);
-        SharedPreferences.Editor sharedEditor = sharePref.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(alertLines);
-        sharedEditor.putString("alertLine", json);
-        json = json.replace("},{","},\n\n{")
-                .replace("\"next\":","\n\"next\":");
-        FileIO.writeFile( tableFolder,"alertTable.json",json,"");
-        FileIO.writeFile( todayFolder,"alertTable.json",json,"");
-
-        for (int i = 0; i < alertLines.size(); i++) {
-            AlertLine al = alertLines.get(i);
-            if (al.matched != -1) {
-                String[] joins = new String[]{"matched", al.group, al.who, al.key1, al.key2};
-                String keyVal = String.join("~~", joins);
-                sharedEditor.putInt(keyVal, al.matched);
-            }
-        }
-        sharedEditor.apply();
-    }
 
     public void remove(ArrayList<AlertLine> alertLines, Context context) {
 
