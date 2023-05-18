@@ -5,6 +5,7 @@ import static com.urrecliner.chattalk.SubFunc.logUpdate;
 import static com.urrecliner.chattalk.Vars.aBar;
 import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
+import static com.urrecliner.chattalk.Vars.packageDirectory;
 import static com.urrecliner.chattalk.Vars.topTabs;
 
 import android.Manifest;
@@ -30,6 +31,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.urrecliner.chattalk.Sub.Permission;
 import com.urrecliner.chattalk.Sub.SnackBar;
 
+import java.io.File;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -133,6 +135,8 @@ public class ActivityMain extends AppCompatActivity {
     protected void onResume() {
         if (logUpdate == null)
             logUpdate = new LogUpdate(mContext);
+        if (packageDirectory == null)
+            packageDirectory = new File(Environment.getExternalStorageDirectory(), "_ChatTalkLog");
         if (utils == null) {
             utils = new Utils();
         }

@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
+import com.urrecliner.chattalk.Sub.AlertTableIO;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -68,6 +69,7 @@ public class ActivityEditOneAlert extends AppCompatActivity {
             tMemo.setText("Memo ~");
             tPrev.setText("Prev/Next");
         }
+        new AlertTableIO().remove(alertLines, mContext);
     }
 
     @Override

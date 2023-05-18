@@ -2,6 +2,8 @@ package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.NotificationListener.vars;
 import static com.urrecliner.chattalk.Vars.aGroups;
+import static com.urrecliner.chattalk.Vars.alertLines;
+import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.nowFileName;
 import static com.urrecliner.chattalk.Vars.tableFolder;
 import static com.urrecliner.chattalk.Vars.tableListFile;
@@ -21,6 +23,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.urrecliner.chattalk.Sub.AlertTableIO;
 
 import java.io.File;
 import java.util.Arrays;
