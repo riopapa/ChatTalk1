@@ -2,8 +2,12 @@ package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.Vars.aBar;
 import static com.urrecliner.chattalk.Vars.chatGroup;
+import static com.urrecliner.chattalk.Vars.mActivity;
+import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.topTabs;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -54,6 +58,15 @@ public class Fragment_5Chat extends Fragment {
         etChat = rootView.findViewById(R.id.table_text);
         setHasOptionsMenu(true);
         return rootView;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (mContext == null) {
+            mContext = context;
+            mActivity = (Activity) mContext;
+        }
     }
 
     @Override
@@ -192,7 +205,7 @@ public class Fragment_5Chat extends Fragment {
         inflater.inflate(R.menu.menu_5chat, menu);
         super.onCreateOptionsMenu(menu, inflater);
         new Handler(Looper.getMainLooper()).post(() -> {
-            uploadMenu = requireActivity().findViewById(R.id.action_upload);
+            uploadMenu = mActivity.findViewById(R.id.action_upload);
             if (uploadMenu != null) {
                 uploadMenu.setOnLongClickListener(view -> {
                     selChat = new SelectChats().generate(nowChatFile, true);

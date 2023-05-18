@@ -1,5 +1,6 @@
 package com.urrecliner.chattalk;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.urrecliner.chattalk.ActivityMain.utils;
 import static com.urrecliner.chattalk.SubFunc.sounds;
 import static com.urrecliner.chattalk.Vars.aAlertLineIdx;
@@ -19,10 +20,10 @@ import static com.urrecliner.chattalk.Vars.alertLines;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.tableListFile;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
-import com.urrecliner.chattalk.Sub.AlertMatch;
 import com.urrecliner.chattalk.Sub.SnackBar;
 
 import java.util.ArrayList;
@@ -83,17 +84,22 @@ class AlertTable {
     static List<String> prev = new ArrayList<>();
     static List<String> next = new ArrayList<>();
     static int gIdx, gwIdx, svIdx;
-
+    static SharedPreferences sharePref;
     static void updateMatched() {
-        AlertMatch alertMatch = new AlertMatch();
+        sharePref = mContext.getSharedPreferences("alertLine", MODE_PRIVATE);
         for (int i = 0; i < alertLines.size(); i++) {
             AlertLine al = alertLines.get(i);
             if (al.matched >= 0) {
-                alertMatch.get(al, mContext);
+                String[] joins = new String[]{"matched", al.group, al.who, al.key1, al.key2 };
+                String keyVal = String.join("~~", joins);
+                int matchCount =  sharePref.getInt(keyVal, -3);
+                if (matchCount != -3)
+                    al.matched = matchCount;
                 alertLines.set(i, al);
             }
         }
     }
+
     static void makeArrays() {
 
         String svGroup = "", svWho = "";

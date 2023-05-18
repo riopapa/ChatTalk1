@@ -1,5 +1,6 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.NotificationListener.vars;
 import static com.urrecliner.chattalk.Vars.aGroups;
 import static com.urrecliner.chattalk.Vars.nowFileName;
 import static com.urrecliner.chattalk.Vars.tableFolder;
@@ -41,6 +42,8 @@ public class ActivityEditReplace extends AppCompatActivity {
         ab.setTitle("   Str Replaces ");
 
         EditText tv = findViewById(R.id.table_text);
+        if (tableFolder == null)
+            vars.set(this, "tableFolder");
         File file = new File(tableFolder, nowFileName + ".txt");
         String[] lines = tableListFile.readRaw(file);
         String text;
@@ -130,7 +133,7 @@ public class ActivityEditReplace extends AppCompatActivity {
         if (item.getItemId() == R.id.save_table) {
             TextView tv = findViewById(R.id.table_text);
             String s = tv.getText().toString();             // .replace("\u00A0"," ");
-            FileIO.writeTextFile(tableFolder, nowFileName, removeHeader(s));
+            FileIO.writeFile(tableFolder, nowFileName, removeHeader(s),".txt");
             new OptionTables().readAll();
             finish();
         } else if (item.getItemId() == R.id.line_copy_add) {

@@ -3,19 +3,17 @@ package com.urrecliner.chattalk;
 import static com.urrecliner.chattalk.Vars.beepRawIds;
 import static com.urrecliner.chattalk.Vars.audioReady;
 import static com.urrecliner.chattalk.Vars.isPhoneBusy;
-import static com.urrecliner.chattalk.Vars.mAudioManager;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.mFocusGain;
 import static com.urrecliner.chattalk.NotificationListener.notificationBar;
 
 import android.content.Context;
+import android.media.AudioDeviceInfo;
 import android.media.AudioFocusRequest;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
-
-import com.urrecliner.chattalk.Sub.AudioMgr;
 
 import java.util.Locale;
 import java.util.Timer;
@@ -25,12 +23,13 @@ class Sounds {
     public static boolean isTalking = false;
     static TextToSpeech mTTS;
     static String TTSId = "";
+    AudioManager audioManager = null;
 
     void init() {
 
         stopTTS();
 
-        mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+        audioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
         mFocusGain = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
                 .build();
         readyTTS();
@@ -64,7 +63,7 @@ class Sounds {
                 new Timer().schedule(new TimerTask() {
                     public void run () {
                         beepOnce(Vars.soundType.POST.ordinal());
-                        mAudioManager.abandonAudioFocusRequest(mFocusGain);
+                        audioManager.abandonAudioFocusRequest(mFocusGain);
                     }
                 }, 300);
             }
@@ -99,9 +98,10 @@ class Sounds {
                 beepOnce(Vars.soundType.PRE.ordinal());
             }
         }
-        audioReady = new AudioMgr().isActive();
-        if (audioReady) {
-            mAudioManager.requestAudioFocus(mFocusGain);
+
+        if (isActive()) {
+            isTalking = true;
+            audioManager.requestAudioFocus(mFocusGain);
             new Timer().schedule(new TimerTask() {
                 public void run() {
                     // 한글, 영문, 숫자만 OK
@@ -112,7 +112,6 @@ class Sounds {
                     if (idx > 0)
                         speakText = speakText.substring(0, idx) + " 링크 있음";
                     try {
-                        isTalking = true;
                         mTTS.speak(speakText, TextToSpeech.QUEUE_ADD, null, TTSId);
                     } catch (Exception e) {
                         new Utils().logE("Sound", "TTS Error:" + e);
@@ -129,9 +128,8 @@ class Sounds {
         }
         beepOnce(Vars.soundType.STOCK.ordinal());
 
-        audioReady = new AudioMgr().isActive();
-        if (audioReady) {
-            mAudioManager.requestAudioFocus(mFocusGain);
+        if (isActive()) {
+            audioManager.requestAudioFocus(mFocusGain);
             new Timer().schedule(new TimerTask() {
                 public void run() {
                     // 한글, 영문, 숫자만 OK
@@ -164,8 +162,25 @@ class Sounds {
         });
     }
 
+    public boolean isActive() {
+        if (audioManager.getRingerMode() == AudioManager.RINGER_MODE_NORMAL) {
+            return true;
+        }
+
+        AudioDeviceInfo[] audioDevices = audioManager.getDevices(AudioManager.GET_DEVICES_INPUTS);
+        for(AudioDeviceInfo deviceInfo : audioDevices){
+            if (deviceInfo.getType() == AudioDeviceInfo.TYPE_BLUETOOTH_SCO     // 007
+                    || deviceInfo.getType()==AudioDeviceInfo.TYPE_BLUETOOTH_A2DP    // 008
+                    || deviceInfo.getType()==AudioDeviceInfo.TYPE_WIRED_HEADSET
+                    || deviceInfo.getType()==AudioDeviceInfo.TYPE_WIRED_HEADPHONES
+            )
+                return true;
+        }
+        return false;
+    }
 
     boolean isSilent() {
-        return mAudioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT;
+        return audioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT;
     }
+
 }

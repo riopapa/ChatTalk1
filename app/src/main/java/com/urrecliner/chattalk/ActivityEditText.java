@@ -119,7 +119,8 @@ public class ActivityEditText extends AppCompatActivity {
         if (item.getItemId() == R.id.save_table) {
             TextView tv = findViewById(R.id.table_text);
             String s = tv.getText().toString();             // .replace("\u00A0"," ");
-            FileIO.writeTextFile(tableFolder, nowFileName, (isPackageNames) ? sortPackage(s) : sortText(s));
+            FileIO.writeFile(tableFolder, nowFileName,
+                    (isPackageNames) ? sortPackage(s) : sortText(s),".txt");
             new OptionTables().readAll();
             finish();
         } else if (item.getItemId() == R.id.line_copy_add) {

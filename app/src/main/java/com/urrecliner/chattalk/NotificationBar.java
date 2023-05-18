@@ -4,6 +4,8 @@ import static com.urrecliner.chattalk.Vars.HIDE_STOP;
 import static com.urrecliner.chattalk.Vars.SHOW_MESSAGE;
 import static com.urrecliner.chattalk.Vars.mContext;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
@@ -47,7 +49,10 @@ public class NotificationBar {
             intent.putExtra("msg", msg);
             intent.putExtra("stop", show_hide);
             try {
-                mContext.startForegroundService(intent);
+                if (isMyServiceRunning(NotificationService.class))
+                    mContext.startService(intent);
+                else
+                    mContext.startForegroundService(intent);
             } catch (Exception e) {
                 Log.e("NotificationBar","intent Error \n"+e);
             }
@@ -85,5 +90,15 @@ public class NotificationBar {
                 Log.e("NotificationBar","intent Error \n"+e);
             }
         }
+    }
+
+    static boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

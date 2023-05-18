@@ -38,8 +38,8 @@ public class AlertSave {
             s.append(strPad(al.next, (padLen[7]))).append("^");
             s.append("\n");
         }
-//        FileIO.writeTextFile( tableFolder,"kTalkAlerts",s.toString());
-//        FileIO.writeTextFile( todayFolder,"kTalkAlerts",s.toString());
+        if (todayFolder == null)
+            new ReadyToday();
         new AlertTableIO().put(alertLines, mContext, tableFolder, todayFolder);
 //        new AlertTableIO().remove(alertLines, mContext);
         new SnackBar().show("Alert Table", msg);

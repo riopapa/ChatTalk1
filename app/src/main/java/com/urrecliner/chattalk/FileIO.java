@@ -1,6 +1,5 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.SubFunc.logUpdate;
 import static com.urrecliner.chattalk.Vars.packageDirectory;
 import static com.urrecliner.chattalk.Vars.toDay;
 import static com.urrecliner.chattalk.Vars.todayFolder;
@@ -89,11 +88,6 @@ public class FileIO {
         }
     }
 
-    public static void writeTextFile(File targetFolder, String fileName, String outText) {
-
-        writeFile(targetFolder, fileName, outText, ".txt");
-    }
-
     public static void writeFile(File targetFolder, String fileName, String outText, String ext) {
         try {
             File targetFile = new File(targetFolder, fileName + ext);
@@ -129,25 +123,6 @@ public class FileIO {
         return myData;
     }
 
-    static void xwriteKR(File file, String textLine) {
-        BufferedWriter bw = null;
-        FileWriter fw = null;
-        file.delete();
-        try {
-            fw = new FileWriter(file.getAbsoluteFile(), true);
-            bw = new BufferedWriter(fw);
-            bw.write(textLine + "\n");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (bw != null) bw.close();
-                if (fw != null) fw.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
     String[] readKR(String filename) {
         final int BUFFER_SIZE = 81920;
         String code = "EUC-KR";
@@ -178,13 +153,11 @@ public class FileIO {
 
 
     static void writeKR(File file, String textLine) {
-        FileOutputStream fileOutputStream = null;
-        BufferedWriter bufferedWriter = null;
         try {
-            fileOutputStream = new FileOutputStream(file);
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
             OutputStreamWriter OutputStreamWriter =
                     new OutputStreamWriter(fileOutputStream, "EUC-KR");
-            bufferedWriter = new BufferedWriter(OutputStreamWriter);
+            BufferedWriter bufferedWriter = new BufferedWriter(OutputStreamWriter);
             bufferedWriter.write(textLine);
             bufferedWriter.close();
         } catch (Exception e) {

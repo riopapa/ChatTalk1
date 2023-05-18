@@ -25,7 +25,6 @@ import java.util.Collections;
 class MsgKaTalk {
 
     public MsgKaTalk() {
-
         utils.logW("kakaoTalk", "Initiated");
     }
 

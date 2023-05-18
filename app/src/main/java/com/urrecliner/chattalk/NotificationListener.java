@@ -65,6 +65,7 @@ public class NotificationListener extends NotificationListenerService {
             kkWhoTexts = new HashMap<>();
             smsWhoTexts = new HashMap<>();
             whoAndTexts = new HashMap<>();
+            notificationBar = new NotificationBar();
         }
         super.onCreate();
     }
@@ -93,6 +94,7 @@ public class NotificationListener extends NotificationListenerService {
 
                 if (IgnoreThis.contains(sbnText, kkTxtIgnores))
                     return;
+//                Log.w("g "+sbnGroup, sbnWho + " : "+utils.text2OneLine(sbnText));
                 if (sbnGroup.equals("")) {  // no groupNames
                     if (sbnWho.equals(""))  // nothing
                         return;
@@ -268,7 +270,7 @@ public class NotificationListener extends NotificationListenerService {
                             msgKaTalk = new MsgKaTalk();
                         if (sbnWho.contains(":"))   // 부자 인 겅우 group : who 로 구성됨
                             sbnWho = sbnWho.substring(sbnWho.indexOf(":")+2).trim();
-                        Log.w(groupNames[i]+"/"+sbnWho, sbnText);
+//                        Log.w(groupNames[i]+"/"+sbnWho, sbnText);
                         msgKaTalk.say(groupNames[i], sbnWho, sbnGroup+sbnText);
                         return;
                     }

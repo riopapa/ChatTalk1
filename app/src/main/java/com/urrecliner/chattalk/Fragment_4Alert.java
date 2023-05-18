@@ -4,6 +4,7 @@ import static com.urrecliner.chattalk.Vars.aBar;
 import static com.urrecliner.chattalk.Vars.alertLines;
 import static com.urrecliner.chattalk.Vars.alertsAdapter;
 import static com.urrecliner.chattalk.Vars.mActivity;
+import static com.urrecliner.chattalk.Vars.todayFolder;
 import static com.urrecliner.chattalk.Vars.topTabs;
 
 import android.annotation.SuppressLint;
@@ -44,6 +45,8 @@ public class Fragment_4Alert extends Fragment {
         if (alertsAdapter == null)
             alertsAdapter = new AlertsAdapter();
         recyclerView.setAdapter(alertsAdapter);
+        if (todayFolder == null)
+            new ReadyToday();
     }
 
     @Override

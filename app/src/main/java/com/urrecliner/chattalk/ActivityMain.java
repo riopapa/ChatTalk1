@@ -141,15 +141,7 @@ public class ActivityMain extends AppCompatActivity {
         WifiMonitor.init(mContext);
 
         new NotificationServiceStart(mContext);
-        notificationBar.update("onResume", "re Started", true);
         notificationBar.hideStop();
-//        final int LOOPING = 300*60*1000;
-//        new Timer().schedule(new TimerTask() {
-//            public void run() {
-//                Log.w("main","stay awake " + ++count);
-//            }
-//        }, LOOPING, LOOPING);
-//
         super.onResume();
     }
 

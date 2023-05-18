@@ -69,10 +69,10 @@ class MsgSMS {
                     String uPrice = words[5];
                     String sGroup = lastChar + trade;
                     String sayMsg = stockName + " " + amount + " " + uPrice + samPam;
-                    notificationBar.update(trade +":"+stockName, sayMsg, true);
+                    notificationBar.update(samPam +":"+stockName, sayMsg, true);
                     logUpdate.addStock("sms>"+nhStock, sayMsg);
                     FileIO.uploadStock(sGroup, mWho, samPam, stockName,
-                            mText.replace(stockName, new Dot().add(stockName)), amount,
+                            mText.replace(stockName, new Dot().add(stockName)), samPam,
                             new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date()));
                     sayMsg = stockName + samPam;
                     sounds.speakAfterBeep(sayMsg.replaceAll("\\d",""));
