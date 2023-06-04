@@ -124,47 +124,57 @@ public class ActivityEditOneAlert extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == R.id.save_alert) {
-            String group = eGroup.getText().toString();
-            String who = eWho.getText().toString();
-            String key1 = eKey1.getText().toString();
-            String key2 = eKey2.getText().toString();
-            String matchStr = eMatched.getText().toString();
-            int matchInt = matchStr.equals("") ? 0: Integer.parseInt(matchStr);
-            String [] memos = eMemo.getText().toString().split("~");
-            String memo = memos[0].trim();
-            String more = (memos.length> 1) ? memos[1].trim() : "";
-            String talk = eTalk.getText().toString();
-            String skip = eSkip.getText().toString();
-            String prev = ePrev.getText().toString(); if (prev.equals("")) prev = key1;
-            String next = eNext.getText().toString(); if (next.equals("")) next = key2;
-            al = new AlertLine(group, who, key1, key2, talk, matchInt, skip, memo, more,
-                    prev, next);
-            alertLines.set(linePos, al);
-            if (al.matched == -1 && newGroup) { // add new group dummy line
-                al = new AlertLine(group, group+"누군가",
-                        "종목명", "매수가", "", 0, "","", "",
-                        "종목명","매수가");
-                alertLines.add(al);
-//                alertsAdapter.notifyItemInserted(linePos);
-                newGroup = false;
-            }
-            new AlertSave((al.matched == -1)? ("Save Group "+eGroup.getText().toString()):
-                    ("Save "+eGroup.getText().toString() + " " + eWho.getText().toString()));
-            makeGroupMemo();
-            talk = new SimpleDateFormat("yy/MM/dd\nHH:mm", Locale.KOREA).format(new Date());
-            Upload2Google.uploadComment(mGroup, mWho, mPercent, talk, mMemo);
-            alertsAdapter = new AlertsAdapter();
-            finish();
+            saveAlert();
 
         } else if (item.getItemId() == R.id.duplicate_alert) {
-            linePos++;
-            alertLines.add(linePos, al);
-            alertsAdapter.notifyItemInserted(linePos);
-            Toast.makeText(mContext,"Duplicated "+ al.group+" / " + al.who, Toast.LENGTH_SHORT).show();
-            if (al.matched == -1)
-                newGroup = true;
+            duplicateAlert();
         }
         return false;
+    }
+
+    private void duplicateAlert() {
+        linePos++;
+        alertLines.add(linePos, al);
+        alertsAdapter.notifyItemInserted(linePos);
+        Toast.makeText(mContext,"Duplicated "+ al.group+" / " + al.who, Toast.LENGTH_SHORT).show();
+        if (al.matched == -1)
+            newGroup = true;
+    }
+
+    private void saveAlert() {
+        String group = eGroup.getText().toString();
+        String who = eWho.getText().toString();
+        String key1 = eKey1.getText().toString();
+        String key2 = eKey2.getText().toString();
+        String matchStr = eMatched.getText().toString();
+        int matchInt = matchStr.equals("") ? 0: Integer.parseInt(matchStr);
+        String [] memos = eMemo.getText().toString().split("~");
+        String memo = memos[0].trim();
+        String more = (memos.length> 1) ? memos[1].trim() : "";
+        String talk = eTalk.getText().toString();
+        String skip = eSkip.getText().toString();
+        String prev = ePrev.getText().toString();
+        if (prev.equals("")) prev = key1;
+        String next = eNext.getText().toString();
+        if (next.equals("")) next = key2;
+        al = new AlertLine(group, who, key1, key2, talk, matchInt, skip, memo, more,
+                prev, next);
+        alertLines.set(linePos, al);
+        if (al.matched == -1 && newGroup) { // add new group dummy line
+            al = new AlertLine(group, group+"누군가",
+                    "종목명", "매수가", "", 0, "","", "",
+                    "종목명","매수가");
+            alertLines.add(al);
+//                alertsAdapter.notifyItemInserted(linePos);
+            newGroup = false;
+        }
+        new AlertSave((al.matched == -1)? ("Save Group "+eGroup.getText().toString()):
+                ("Save "+eGroup.getText().toString() + " " + eWho.getText().toString()));
+        makeGroupMemo();
+        talk = new SimpleDateFormat("yy/MM/dd\nHH:mm", Locale.KOREA).format(new Date());
+        Upload2Google.uploadComment(mGroup, mWho, mPercent, talk, mMemo);
+        alertsAdapter = new AlertsAdapter();
+        finish();
     }
 
     void makeGroupMemo() {

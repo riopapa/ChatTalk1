@@ -1,5 +1,6 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.SubFunc.sounds;
 import static com.urrecliner.chattalk.Vars.HIDE_STOP;
 import static com.urrecliner.chattalk.Vars.SHOW_MESSAGE;
 import static com.urrecliner.chattalk.Vars.mContext;
@@ -47,7 +48,7 @@ public class NotificationBar {
             intent.putExtra("operation", SHOW_MESSAGE);
             intent.putExtra("who", who);
             intent.putExtra("msg", msg);
-            intent.putExtra("stop", show_hide);
+            intent.putExtra("stop", show_hide && !sounds.isSilent());
             try {
                 if (isMyServiceRunning(NotificationService.class))
                     mContext.startService(intent);

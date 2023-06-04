@@ -31,7 +31,7 @@ import java.util.Objects;
 
 public class NotificationService extends Service {
 
-    private Context svcContext;
+    private static Context svcContext;
     NotificationCompat.Builder mBuilder = null;
     NotificationManager mNotificationManager;
     String pkgName;
@@ -171,7 +171,7 @@ public class NotificationService extends Service {
     public static void msgGet() {
 
         if (sharePref == null) {
-            sharePref = mContext.getSharedPreferences("sayText", MODE_PRIVATE);
+            sharePref = svcContext.getSharedPreferences("sayText", MODE_PRIVATE);
             sharedEditor = sharePref.edit();
         }
         who1 = sharePref.getString("who1", "New Loaded 1");

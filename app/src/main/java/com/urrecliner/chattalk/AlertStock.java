@@ -13,6 +13,7 @@ import android.content.SharedPreferences;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
 import com.urrecliner.chattalk.Sub.Dot;
+import com.urrecliner.chattalk.Sub.Hangul;
 import com.urrecliner.chattalk.Sub.StockName;
 
 import java.text.SimpleDateFormat;
@@ -45,9 +46,12 @@ public class AlertStock {
             logUpdate.addStock(head, sText + keyStr);
             if (sTalk.length() > 0) {
                 sounds.beepOnce(Vars.soundType.STOCK.ordinal());
-                notificationBar.update("["+stockName+"]", "<"+who+"> "+sText, true);
-                String[] strs = new String[]{group, group, who, stockName, sTalk, stockName};
-                sounds.speakBuyStock(String.join(" , ", strs)); //.replaceAll("\\d","", )
+                String cho = new Hangul().getCho(stockName);
+                notificationBar.update( cho + "["+stockName+"/"+who+"]", who+"> "+sText, true);
+                if (cho.length() > 3)
+                    cho = cho.substring(0,3);
+                String[] joins = new String[]{who, group, who, stockName, sTalk, cho, stockName, sText};
+                sounds.speakBuyStock(String.join(" , ", joins)); //.replaceAll("\\d","", )
             } else {
                 notificationBar.update(stockName, who+" : "+sText, false);
                 sounds.beepOnce(Vars.soundType.ONLY.ordinal());

@@ -88,19 +88,22 @@ public class LogSpann {
         return ss;
     }
 
-
-    public Vars.DelItem delItem(String logNow, int ps, Context context) {
+    public Vars.DelItem delOneSet(String logNow, int ps, Context context) {
         ps = logNow.lastIndexOf("\n", ps - 1);
         int pf = logNow.indexOf("\n", ps+1);
         if (pf == -1)
             pf = logNow.length() - 1;
         ps = logNow.lastIndexOf("\n", ps - 1);
         if (ps < 2)
-            ps = 1;
-        if (logNow.charAt(ps - 1) == '\n')
+            ps = 0;
+        if (ps > 0 && logNow.charAt(ps - 1) == '\n')
             logNow = logNow.substring(0, ps - 1) + logNow.substring(pf);
         else
             logNow = logNow.substring(0, ps) + logNow.substring(pf);
+        if (logNow.charAt(0) == '\n')
+            logNow = logNow.substring(1);
+        if (logNow.charAt(0) == '\n')
+            logNow = logNow.substring(1);
         ps = logNow.lastIndexOf("\n", ps - 2) + 1;
         pf = logNow.indexOf("\n", ps);
         if (pf == -1)
@@ -111,7 +114,7 @@ public class LogSpann {
         return new Vars.DelItem(logNow, ps, pf, ss);
     }
 
-    public Vars.DelItem delLine(String logNow, int ps, Context context) {
+    public Vars.DelItem delOneLine(String logNow, int ps, Context context) {
         ps = logNow.lastIndexOf("\n", ps -1);
         if (ps == -1)
             ps = 0;

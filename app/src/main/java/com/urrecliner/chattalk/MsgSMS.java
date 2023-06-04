@@ -19,7 +19,7 @@ class MsgSMS {
 
     final static String trade = "체결";
     final static String jrGroup = "찌라";
-    final static String nhStock = "NH투자증권";
+    final static String nhStock = "NH투자";
 
     static MsgKaTalk msgKaTalk = null;
     void say(String mWho, String mText) {
@@ -33,7 +33,7 @@ class MsgSMS {
             if (msgKaTalk == null)
                 msgKaTalk = new MsgKaTalk();
             msgKaTalk.say(jrGroup, mWho, mText);
-        } else if (mWho.equals(nhStock)) {
+        } else if (mWho.contains(nhStock)) {
             // |[NH투자]|매수 전량체결|KMH    |10주|9,870원|주문 0001026052
             //   0       1    2      3       4    5
             if (mText.contains(trade))

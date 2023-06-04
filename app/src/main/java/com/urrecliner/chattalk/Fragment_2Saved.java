@@ -173,23 +173,23 @@ public class Fragment_2Saved extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    OnBackPressedCallback callback;
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-            }
-        };
-        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
-    }
+//    OnBackPressedCallback callback;
+//    @Override
+//    public void onAttach(@NonNull Context context) {
+//        super.onAttach(context);
+//        callback = new OnBackPressedCallback(true) {
+//            @Override
+//            public void handleOnBackPressed() {
+//            }
+//        };
+//        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+//    }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        callback.remove();
-    }
+//    @Override
+//    public void onDetach() {
+//        super.onDetach();
+//        callback.remove();
+//    }
 }
 
 //            View view = mActivity.getCurrentFocus();

@@ -3,6 +3,7 @@ package com.urrecliner.chattalk;
 import static com.urrecliner.chattalk.Vars.alertLines;
 import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
+import static com.urrecliner.chattalk.Vars.tableFolder;
 
 import android.content.Intent;
 import android.text.TextUtils;
@@ -17,11 +18,19 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
+import com.urrecliner.chattalk.Sub.AlertTableIO;
 
 public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder> {
 
     @Override
-    public int getItemCount() { return alertLines.size(); }
+    public int getItemCount() {
+        if (alertLines == null || alertLines.size() == 0) {
+            alertLines = new AlertTableIO().get(mContext, tableFolder);
+            AlertTable.updateMatched();
+            AlertTable.makeArrays();
+        }
+        return alertLines.size();
+    }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 

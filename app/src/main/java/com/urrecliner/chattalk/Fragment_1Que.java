@@ -142,14 +142,14 @@ public class Fragment_1Que extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         if (item.getItemId() == R.id.delete_item_que) {
-            showNextQue(new LogSpann().delItem(etTable.getText().toString(),
+            showNextQue(new LogSpann().delOneSet(etTable.getText().toString(),
                     etTable.getSelectionStart(), mContext));
 
         } else if (item.getItemId() == R.id.action_reload) {
             reload_loqQue();
 
         } else if (item.getItemId() == R.id.delete_1line_que) {
-            showNextQue(new LogSpann().delLine(etTable.getText().toString(),
+            showNextQue(new LogSpann().delOneLine(etTable.getText().toString(),
                     etTable.getSelectionStart(), mContext));
 
         } else if (item.getItemId() == R.id.copy2log) {
@@ -207,21 +207,21 @@ public class Fragment_1Que extends Fragment {
         logQue = sb.toString();
         etTable.setText(new LogSpann().make(logQue, mContext));
     }
-    OnBackPressedCallback callback;
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-            }
-        };
-        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        callback.remove();
-    }
+//    OnBackPressedCallback callback;
+//    @Override
+//    public void onAttach(@NonNull Context context) {
+//        super.onAttach(context);
+//        callback = new OnBackPressedCallback(true) {
+//            @Override
+//            public void handleOnBackPressed() {
+//            }
+//        };
+//        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+//    }
+//
+//    @Override
+//    public void onDetach() {
+//        super.onDetach();
+//        callback.remove();
+//    }
 }

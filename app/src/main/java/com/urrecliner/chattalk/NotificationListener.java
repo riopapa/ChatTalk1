@@ -239,7 +239,8 @@ public class NotificationListener extends NotificationListenerService {
 
                 if (IgnoreThis.contains(sbnText, textIgnores))
                     return;
-                sbnText = sbnGroup + "§" + sbnWho + "§" + utils.text2OneLine(sbnText);
+                Log.w(sbnGroup+" ynn "+sbnWho, sbnText);
+                sbnText = utils.strReplace(sbnWho, utils.text2OneLine(sbnText));
                 subFunc.sounds.speakAfterBeep(sbnPackageNick + " 로 부터 " + sbnText);
                 break;
 

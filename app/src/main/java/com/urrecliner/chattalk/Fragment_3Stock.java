@@ -140,14 +140,14 @@ public class Fragment_3Stock extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         if (item.getItemId() == R.id.delete_item_stock) {
-            showNextCandidate(new LogSpann().delItem(etTable.getText().toString(),
+            showNextCandidate(new LogSpann().delOneSet(etTable.getText().toString(),
                     etTable.getSelectionStart(), mContext));
 
         } else if (item.getItemId() == R.id.action_restock) {
             reload_stock();
 
         } else if (item.getItemId() == R.id.delete_1line_stock) {
-            showNextCandidate(new LogSpann().delLine(etTable.getText().toString(),
+            showNextCandidate(new LogSpann().delOneLine(etTable.getText().toString(),
                     etTable.getSelectionStart(), mContext));
 
         } else if (item.getItemId() == R.id.copy2stock) {
@@ -202,21 +202,21 @@ public class Fragment_3Stock extends Fragment {
         logStock = sb.toString();
         etTable.setText(new LogSpann().make(logStock, mContext));
     }
-    OnBackPressedCallback callback;
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-            }
-        };
-        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        callback.remove();
-    }
+//    OnBackPressedCallback callback;
+//    @Override
+//    public void onAttach(@NonNull Context context) {
+//        super.onAttach(context);
+//        callback = new OnBackPressedCallback(true) {
+//            @Override
+//            public void handleOnBackPressed() {
+//            }
+//        };
+//        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+//    }
+//
+//    @Override
+//    public void onDetach() {
+//        super.onDetach();
+//        callback.remove();
+//    }
 }

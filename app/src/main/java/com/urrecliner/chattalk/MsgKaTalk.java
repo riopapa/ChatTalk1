@@ -55,10 +55,9 @@ class MsgKaTalk {
                     if (subFunc == null)
                         subFunc  = new SubFunc();
                     subFunc.alertStock.sayNlog(iGroup, iText, aAlertLineIdx[gIdx][gwIdx][i]);
-                    if (alertsAdapter != null)
-                        alertsAdapter.notifyItemChanged(aAlertLineIdx[gIdx][gwIdx][i]);
-                    else
-                        Log.w("msgTalk","alertsAdapter is null");
+                    if (alertsAdapter == null)
+                        alertsAdapter = new AlertsAdapter();
+                    alertsAdapter.notifyItemChanged(aAlertLineIdx[gIdx][gwIdx][i]);
                     return;
                 }
             }

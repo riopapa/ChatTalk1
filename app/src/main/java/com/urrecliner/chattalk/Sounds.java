@@ -134,7 +134,7 @@ class Sounds {
                 public void run() {
                     // 한글, 영문, 숫자만 OK
 //                    final String match = "[^\uAC00-\uD7A3xfe0-9a-zA-Z.,\\-\\s]";
-                    final String match = "[^\uAC00-\uD7A3\\da-zA-Z.,\\-]";
+                    final String match = "[^\uAC00-\uD7A3\u3131-\u314E\\da-zA-Z.,\\-]";
                     String speakText = text.replaceAll(match, " ");
                     int idx = speakText.indexOf("http");
                     if (idx > 0)
@@ -149,7 +149,6 @@ class Sounds {
             }, 150);
         }
     }
-
 
     void beepOnce(int soundNbr) {
 
@@ -179,7 +178,7 @@ class Sounds {
         return false;
     }
 
-    boolean isSilent() {
+    public boolean isSilent() {
         return audioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT;
     }
 
