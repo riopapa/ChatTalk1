@@ -28,7 +28,7 @@ public class NotificationListener extends NotificationListenerService {
     final String SMS = "sms";
     final String KATALK = "kk";
     final String NAHMOO = "nh";
-    final String TOSS = "toss";
+    final String TOSS = "tos";
     //                            Say  Que Log
     final String YYY = "yyy"; //   Y    Y   Y
     final String YYN = "yyn"; //   Y    Y   N
@@ -42,9 +42,9 @@ public class NotificationListener extends NotificationListenerService {
 
     long tesla_time = 0;
 
-    static HashMap<String, String> kkWhoTexts = new HashMap<>();
-    static HashMap<String, String> smsWhoTexts = new HashMap<>();
-    static HashMap<String, String> whoAndTexts = new HashMap<>();
+    static HashMap<String, String> kkWhoTexts = null;
+    static HashMap<String, String> smsWhoTexts = null;
+    static HashMap<String, String> whoAndTexts = null;
 
     String head;
 
@@ -94,7 +94,6 @@ public class NotificationListener extends NotificationListenerService {
 
                 if (IgnoreThis.contains(sbnText, kkTxtIgnores))
                     return;
-//                Log.w("g "+sbnGroup, sbnWho + " : "+utils.text2OneLine(sbnText));
                 if (sbnGroup.equals("")) {  // no groupNames
                     if (sbnWho.equals(""))  // nothing
                         return;
@@ -119,10 +118,9 @@ public class NotificationListener extends NotificationListenerService {
 
             case SMS:
 
-                if (sbnWho.replaceAll(mContext.getString(R.string.regex_number_only), "").length() < 5) {
-                    if (!sbnText.contains("스마트폰 배우고"))
-                        break;
-                }
+                if (sbnWho.replaceAll(mContext.getString(R.string.regex_number_only), "").length() < 4 &&
+                    !sbnText.contains("스마트폰 배우고"))
+                        return;
                 if (IgnoreThis.contains(sbnWho, smsWhoIgnores) || IgnoreThis.contains(sbnText, smsTextIgnores))
                     return;
                 if (MapWhoText.repeated(smsWhoTexts, sbnWho, sbnText))
@@ -263,15 +261,14 @@ public class NotificationListener extends NotificationListenerService {
                 if (sbnText.contains("곳에서 보냄"))
                     return;
                 sbnText = utils.text2OneLine(sbnText);
-                final String [] groupChats = {"부자 프로", "바른 급등" }; // 바른 급등주, 부자 프로젝트
-                final String [] groupNames = {"부자",        "바른"};
+                final String [] groupChats = {"부자 프로", "경제적 자유를", "단타의 귀재" };
+                final String [] groupNames = {"부자",        "경자",    "단귀"};
                 for (int i = 0; i < groupChats.length; i++) {
                     if (sbnWho.contains(groupChats[i])) {
-                        if (msgKaTalk == null)
-                            msgKaTalk = new MsgKaTalk();
                         if (sbnWho.contains(":"))   // 부자 인 겅우 group : who 로 구성됨
                             sbnWho = sbnWho.substring(sbnWho.indexOf(":")+2).trim();
-//                        Log.w(groupNames[i]+"/"+sbnWho, sbnText);
+                        if (msgKaTalk == null)
+                            msgKaTalk = new MsgKaTalk();
                         msgKaTalk.say(groupNames[i], sbnWho, sbnGroup+sbnText);
                         return;
                     }
@@ -291,7 +288,6 @@ public class NotificationListener extends NotificationListenerService {
                         ", text:" + utils.text2OneLine(sbnText);
                 notificationBar.update("[새 앱]", sbnText, true);
                 subFunc.logUpdate.addQue("[ " + sbnAppFullName + " ]", sbnText);
-                utils.logW("new App "+ sbnGroup, sbnAppFullName +" "+ sbnText);
                 subFunc.sounds.speakAfterBeep(sbnText);
                 break;
         }

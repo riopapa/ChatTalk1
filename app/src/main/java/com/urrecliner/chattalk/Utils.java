@@ -22,7 +22,6 @@ import java.util.Locale;
 class Utils {
 
     public Utils() {
-        logW("utils","Loaded ...");
         if (packageDirectory == null)
             packageDirectory = new File(Environment.getExternalStorageDirectory(), "_ChatTalkLog");
     }

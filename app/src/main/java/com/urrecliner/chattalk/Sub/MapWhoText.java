@@ -6,7 +6,8 @@ import java.util.Objects;
 public class MapWhoText {
 
     public static boolean repeated(HashMap<String, String> whoSaysWhat, String mWho, String mText) {
-        if (whoSaysWhat.isEmpty()) {
+        if (whoSaysWhat == null || whoSaysWhat.isEmpty()) {
+            whoSaysWhat = new HashMap<>();
             whoSaysWhat.put(mWho, mText);
             return false;
         }

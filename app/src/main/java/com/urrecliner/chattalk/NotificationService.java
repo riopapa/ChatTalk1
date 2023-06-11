@@ -45,17 +45,10 @@ public class NotificationService extends Service {
     public void onCreate() {
         super.onCreate();
         svcContext = this;
-        init_svc("On Created");
-    }
-
-    private void init_svc(String s) {
         pkgName = svcContext.getPackageName();
-        if (null != mRemoteViews)
-            mRemoteViews = null;
         mRemoteViews = new RemoteViews(pkgName, R.layout.notification_bar);
         if (utils == null)
             utils = new Utils();
-        utils.logW("noti svc", s);
         msgGet();
     }
 
@@ -131,7 +124,6 @@ public class NotificationService extends Service {
         }
 
         if (null == mBuilder) {
-//            time1 = new SimpleDateFormat("HH:mm", Locale.KOREA).format(new Date());
             mBuilder = new NotificationCompat.Builder(this, "default")
                     .setSmallIcon(R.drawable.chat_talk)
                     .setColor(getApplicationContext().getColor(R.color.barLine1))
@@ -143,7 +135,6 @@ public class NotificationService extends Service {
                     .setOngoing(true);
         }
         Intent mIntent = new Intent(svcContext, ActivityMain.class);
-//        mIntent.putExtra("load","load");
         mRemoteViews.setOnClickPendingIntent(R.id.ll_customNotification,
             PendingIntent.getActivity(svcContext, 0, mIntent,
                 PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));

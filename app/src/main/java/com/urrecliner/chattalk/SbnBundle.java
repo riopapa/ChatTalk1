@@ -64,7 +64,7 @@ public class SbnBundle {
 
         } else if (sbnAppFullName.equals("viva.republica.toss")) {
                 sbnPackageNick = "토스";
-                sbnPackageType = "toss";
+                sbnPackageType = "tos";
 
         } else {
             if (Collections.binarySearch(packageIgnores, sbnAppFullName) >= 0)

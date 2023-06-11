@@ -32,7 +32,7 @@
         <TextView
             android:id="@+id/msg_who1"
             android:layout_width="0dp"
-            android:layout_weight="10"
+            android:layout_weight="16"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="8dp"
