@@ -104,7 +104,7 @@ public class Vars {
             this.ss = ss;
         }
     }
-    void set(Context context, String msg) {
+    public Vars(Context context, String msg) {
         Log.w("vars","vars set msg="+msg);
         mContext = context;
         sharePref = mContext.getSharedPreferences("sayText", MODE_PRIVATE);

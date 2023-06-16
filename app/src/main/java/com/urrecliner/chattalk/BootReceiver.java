@@ -1,7 +1,7 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.ActivityMain.notificationBar;
-import static com.urrecliner.chattalk.ActivityMain.vars;
+import static com.urrecliner.chattalk.NotificationListener.notificationBar;
+import static com.urrecliner.chattalk.NotificationListener.vars;
 
 import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
@@ -17,8 +17,7 @@ public class BootReceiver extends BroadcastReceiver {
 
         if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
 
-            vars = new Vars();
-            vars.set(context, "Booted !");
+            vars = new Vars(context, "Booted !");
             new Handler(Looper.getMainLooper()).postDelayed(() -> {
                 new NotificationServiceStart(context);
                 new Handler(Looper.getMainLooper()).postDelayed(() ->

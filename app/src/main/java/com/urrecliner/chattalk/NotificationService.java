@@ -1,7 +1,7 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.ActivityMain.subFunc;
-import static com.urrecliner.chattalk.ActivityMain.utils;
+import static com.urrecliner.chattalk.NotificationListener.subFunc;
+import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.HIDE_STOP;
 import static com.urrecliner.chattalk.Vars.SHOW_MESSAGE;
 import static com.urrecliner.chattalk.Vars.sharePref;

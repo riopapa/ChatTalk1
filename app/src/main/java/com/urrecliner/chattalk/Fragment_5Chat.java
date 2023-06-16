@@ -1,5 +1,6 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.aBar;
 import static com.urrecliner.chattalk.Vars.chatGroup;
 import static com.urrecliner.chattalk.Vars.mActivity;
@@ -31,8 +32,6 @@ import androidx.fragment.app.Fragment;
 
 import java.io.File;
 import java.util.Arrays;
-
-import static com.urrecliner.chattalk.ActivityMain.utils;
 
 import com.urrecliner.chattalk.Sub.SnackBar;
 

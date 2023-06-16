@@ -16,15 +16,14 @@ import androidx.core.app.NotificationManagerCompat;
 
 public class ShowMessage {
 
-
     public void send(Context context, String textTitle, String textContent) {
 //        if (!textContent.equals("x"))
 //            return;
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            NotificationChannel channel = new NotificationChannel("Chan Id", "My Noti", NotificationManager.IMPORTANCE_DEFAULT);
-//            NotificationManager manager = context.getSystemService(NotificationManager.class);
-//            manager.createNotificationChannel(channel);
-//        }
+        NotificationManager manager = context.getSystemService(NotificationManager.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("Chan Id", "My Noti", NotificationManager.IMPORTANCE_DEFAULT);
+            manager.createNotificationChannel(channel);
+        }
 
         Intent intent = new Intent(context, NotificationListener.class);
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_MUTABLE);
@@ -42,9 +41,7 @@ public class ShowMessage {
                 .setContentIntent(contentIntent)
                 .setContentInfo("Info");
 
-
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(1, b.build());
+        manager.notify(1, b.build());
 
     }
 }

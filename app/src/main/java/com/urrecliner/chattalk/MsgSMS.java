@@ -1,12 +1,12 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.ActivityMain.msgKaTalk;
-import static com.urrecliner.chattalk.ActivityMain.notificationBar;
-import static com.urrecliner.chattalk.ActivityMain.subFunc;
+import static com.urrecliner.chattalk.NotificationListener.msgKaTalk;
+import static com.urrecliner.chattalk.NotificationListener.notificationBar;
+import static com.urrecliner.chattalk.NotificationListener.subFunc;
+import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.lastChar;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.nineIgnores;
-import static com.urrecliner.chattalk.ActivityMain.utils;
 
 import com.urrecliner.chattalk.Sub.Dot;
 import com.urrecliner.chattalk.Sub.IsWhoNine;

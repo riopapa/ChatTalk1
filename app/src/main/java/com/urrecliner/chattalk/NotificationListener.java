@@ -1,14 +1,5 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.ActivityMain.kkWhoTexts;
-import static com.urrecliner.chattalk.ActivityMain.msgKaTalk;
-import static com.urrecliner.chattalk.ActivityMain.msgSMS;
-import static com.urrecliner.chattalk.ActivityMain.notificationBar;
-import static com.urrecliner.chattalk.ActivityMain.sbnBundle;
-import static com.urrecliner.chattalk.ActivityMain.smsWhoTexts;
-import static com.urrecliner.chattalk.ActivityMain.subFunc;
-import static com.urrecliner.chattalk.ActivityMain.vars;
-import static com.urrecliner.chattalk.ActivityMain.whoAndTexts;
 import static com.urrecliner.chattalk.Vars.kGroupWhoIgnores;
 import static com.urrecliner.chattalk.Vars.kkTxtIgnores;
 import static com.urrecliner.chattalk.Vars.mContext;
@@ -21,7 +12,6 @@ import static com.urrecliner.chattalk.Vars.sbnWho;
 import static com.urrecliner.chattalk.Vars.smsTextIgnores;
 import static com.urrecliner.chattalk.Vars.smsWhoIgnores;
 import static com.urrecliner.chattalk.Vars.textIgnores;
-import static com.urrecliner.chattalk.ActivityMain.utils;
 
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
@@ -29,6 +19,8 @@ import android.util.Log;
 
 import com.urrecliner.chattalk.Sub.IgnoreThis;
 import com.urrecliner.chattalk.Sub.MapWhoText;
+
+import java.util.HashMap;
 
 public class NotificationListener extends NotificationListenerService {
 
@@ -52,6 +44,17 @@ public class NotificationListener extends NotificationListenerService {
     static MapWhoText mapWhoText = null;
     String head;
 
+    public static Utils utils = null;
+
+    static HashMap<String, String> kkWhoTexts = null;
+    static HashMap<String, String> smsWhoTexts = null;
+    static HashMap<String, String> whoAndTexts = null;
+    static Vars vars = null;
+    static SubFunc subFunc = null;
+    static MsgKaTalk msgKaTalk = null;
+    static MsgSMS msgSMS = null;
+    static SbnBundle sbnBundle = null;
+    static NotificationBar notificationBar = null;
 
     @Override
     public void onCreate() {
@@ -61,10 +64,9 @@ public class NotificationListener extends NotificationListenerService {
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
 
-        if (vars == null) {
-            vars = new Vars();
-            vars.set(this, "noti Post");
-        }
+        if (vars == null)
+            vars = new Vars(this, "noti Post");
+
         if (subFunc == null)
             subFunc = new SubFunc();
         if (utils == null)

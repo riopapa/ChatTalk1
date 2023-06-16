@@ -1,8 +1,8 @@
 package com.urrecliner.chattalk;
 
 import static android.content.Context.MODE_PRIVATE;
-import static com.urrecliner.chattalk.ActivityMain.subFunc;
-import static com.urrecliner.chattalk.ActivityMain.utils;
+import static com.urrecliner.chattalk.NotificationListener.subFunc;
+import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.aAlertLineIdx;
 import static com.urrecliner.chattalk.Vars.aGSkip1;
 import static com.urrecliner.chattalk.Vars.aGSkip2;

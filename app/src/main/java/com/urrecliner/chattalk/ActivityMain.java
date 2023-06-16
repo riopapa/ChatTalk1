@@ -1,5 +1,9 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.NotificationListener.notificationBar;
+import static com.urrecliner.chattalk.NotificationListener.subFunc;
+import static com.urrecliner.chattalk.NotificationListener.utils;
+import static com.urrecliner.chattalk.NotificationListener.vars;
 import static com.urrecliner.chattalk.Vars.aBar;
 import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
@@ -30,22 +34,10 @@ import com.urrecliner.chattalk.Sub.Permission;
 import com.urrecliner.chattalk.Sub.SnackBar;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Set;
 
 public class ActivityMain extends AppCompatActivity {
 
-    public static Utils utils = null;
-
-    static HashMap<String, String> kkWhoTexts = null;
-    static HashMap<String, String> smsWhoTexts = null;
-    static HashMap<String, String> whoAndTexts = null;
-    static Vars vars = null;
-    static SubFunc subFunc = null;
-    static MsgKaTalk msgKaTalk = null;
-    static MsgSMS msgSMS = null;
-    static SbnBundle sbnBundle = null;
-    static NotificationBar notificationBar = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +82,7 @@ public class ActivityMain extends AppCompatActivity {
         mContext = this;
         mActivity = this;
 
-        vars = new Vars();
+        vars = new Vars(mContext, "main");
         aBar = getSupportActionBar();
 
         topTabs = findViewById(R.id.tab_layout);
@@ -149,9 +141,14 @@ public class ActivityMain extends AppCompatActivity {
         if (subFunc == null)
             subFunc = new SubFunc();
 
+        if (vars == null)
+            vars = new Vars(mContext, "OnResume");
+
         if (aBar == null)
             aBar = getSupportActionBar();
         aBar.setIcon(R.drawable.chat_talk);
+
+        new OptionTables().readAll();
 
         WifiMonitor.init(mContext);
 

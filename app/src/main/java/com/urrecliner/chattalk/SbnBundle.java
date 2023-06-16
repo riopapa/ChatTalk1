@@ -67,7 +67,7 @@ public class SbnBundle {
                 sbnPackageType = "tos";
 
         } else {
-            if (packageIgnores.size() == 0)
+            if (packageIgnores == null || packageIgnores.size() == 0)
                 new OptionTables().readAll();
             if (Collections.binarySearch(packageIgnores, sbnAppFullName) >= 0)
                 return true;

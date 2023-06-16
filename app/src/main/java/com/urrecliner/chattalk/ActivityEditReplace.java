@@ -1,6 +1,6 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.ActivityMain.vars;
+import static com.urrecliner.chattalk.NotificationListener.vars;
 import static com.urrecliner.chattalk.Vars.aGroups;
 import static com.urrecliner.chattalk.Vars.nowFileName;
 import static com.urrecliner.chattalk.Vars.tableFolder;
@@ -43,7 +43,7 @@ public class ActivityEditReplace extends AppCompatActivity {
 
         EditText tv = findViewById(R.id.table_text);
         if (tableFolder == null)
-            vars.set(this, "tableFolder");
+            vars = new Vars(this, "tableFolder");
         File file = new File(tableFolder, nowFileName + ".txt");
         String[] lines = tableListFile.readRaw(file);
         String text;

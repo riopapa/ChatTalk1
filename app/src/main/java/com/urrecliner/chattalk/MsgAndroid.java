@@ -1,6 +1,6 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.ActivityMain.subFunc;
+import static com.urrecliner.chattalk.NotificationListener.subFunc;
 
 class MsgAndroid {
 

@@ -1,6 +1,6 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.ActivityMain.subFunc;
+import static com.urrecliner.chattalk.NotificationListener.subFunc;
 import static com.urrecliner.chattalk.Vars.kGroupWhoIgnores;
 import static com.urrecliner.chattalk.Vars.kkTxtIgnores;
 import static com.urrecliner.chattalk.Vars.mContext;
@@ -29,6 +29,8 @@ class OptionTables {
 
     void readAll() {
 
+        if (tableListFile == null)
+            tableListFile = new TableListFile();
         kGroupWhoIgnores = tableListFile.read("kGroupWhoIgnores");
         kkTxtIgnores = tableListFile.read("kkTxtIgnores");
         smsWhoIgnores =  tableListFile.read("smsWhoIgnores");

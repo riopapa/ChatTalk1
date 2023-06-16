@@ -1,11 +1,11 @@
 package com.urrecliner.chattalk;
 
 import static android.content.Context.MODE_PRIVATE;
-import static com.urrecliner.chattalk.ActivityMain.notificationBar;
-import static com.urrecliner.chattalk.ActivityMain.subFunc;
+import static com.urrecliner.chattalk.NotificationListener.notificationBar;
+import static com.urrecliner.chattalk.NotificationListener.subFunc;
+import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.alertLines;
 import static com.urrecliner.chattalk.Vars.mContext;
-import static com.urrecliner.chattalk.ActivityMain.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
