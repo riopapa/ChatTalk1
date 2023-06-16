@@ -1,11 +1,11 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.Vars.beepRawIds;
+import static com.urrecliner.chattalk.ActivityMain.notificationBar;
 import static com.urrecliner.chattalk.Vars.audioReady;
+import static com.urrecliner.chattalk.Vars.beepRawIds;
 import static com.urrecliner.chattalk.Vars.isPhoneBusy;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.mFocusGain;
-import static com.urrecliner.chattalk.NotificationListener.notificationBar;
 
 import android.content.Context;
 import android.media.AudioDeviceInfo;

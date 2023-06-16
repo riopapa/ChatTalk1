@@ -1,6 +1,6 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.SubFunc.sounds;
+import static com.urrecliner.chattalk.ActivityMain.subFunc;
 import static com.urrecliner.chattalk.Vars.kGroupWhoIgnores;
 import static com.urrecliner.chattalk.Vars.kkTxtIgnores;
 import static com.urrecliner.chattalk.Vars.mContext;
@@ -37,9 +37,9 @@ class OptionTables {
         textIgnores = tableListFile.read("textIgnores");
         nineIgnores = tableListFile.read("nineIgnores");
         if (kkTxtIgnores == null || smsWhoIgnores == null || systemIgnores == null) {
-            sounds.beepOnce(Vars.soundType.ERR.ordinal());
+            subFunc.sounds.beepOnce(Vars.soundType.ERR.ordinal());
             Toast.makeText(mContext, "\nsome tables is null\n", Toast.LENGTH_LONG).show();
-            sounds.beepOnce(Vars.soundType.ERR.ordinal());
+            subFunc.sounds.beepOnce(Vars.soundType.ERR.ordinal());
         }
         readReplacesFile();
         readPackageTable();
@@ -107,7 +107,7 @@ class OptionTables {
         for (String oneLine : lines) {
             String[] ones = oneLine.split("\\^");
             if (ones.length < 3) {
-                sounds.beepOnce(Vars.soundType.ERR.ordinal());
+                subFunc.sounds.beepOnce(Vars.soundType.ERR.ordinal());
                 Toast.makeText(mContext, "Caret missing "+oneLine, Toast.LENGTH_LONG).show();
                 continue;
             }

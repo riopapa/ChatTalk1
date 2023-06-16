@@ -1,8 +1,8 @@
 package com.urrecliner.chattalk;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.urrecliner.chattalk.ActivityMain.subFunc;
 import static com.urrecliner.chattalk.ActivityMain.utils;
-import static com.urrecliner.chattalk.SubFunc.sounds;
 import static com.urrecliner.chattalk.Vars.aAlertLineIdx;
 import static com.urrecliner.chattalk.Vars.aGSkip1;
 import static com.urrecliner.chattalk.Vars.aGSkip2;
@@ -53,8 +53,8 @@ class AlertTable {
                     utils = new Utils();
                 new SnackBar().show("kTalkAlerts", s);
                 utils.logW("Alert Table "," Error "+line);
-                sounds.speakAfterBeep(s);
-                sounds.beepOnce(Vars.soundType.ERR.ordinal());
+                subFunc.sounds.speakAfterBeep(s);
+                subFunc.sounds.beepOnce(Vars.soundType.ERR.ordinal());
             }
             String tGroup = strings[0].trim();
             String tWho = strings[1].trim();

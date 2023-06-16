@@ -1,8 +1,6 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.SubFunc.logUpdate;
-import static com.urrecliner.chattalk.SubFunc.sounds;
-import static com.urrecliner.chattalk.Vars.mContext;
+import static com.urrecliner.chattalk.ActivityMain.subFunc;
 import static com.urrecliner.chattalk.Vars.packageDirectory;
 import static com.urrecliner.chattalk.Vars.replGroup;
 import static com.urrecliner.chattalk.Vars.replGroupCnt;
@@ -44,7 +42,7 @@ class Utils {
         logText += excludeName(traces[5].getMethodName()) + excludeName(traces[4].getMethodName()) + excludeName(traceClassName(traces[3].getClassName()))+"> "+traces[3].getMethodName() + "#" + traces[3].getLineNumber() + " {"+ tag + "} " + text;
         Log.e("<" + tag + ">" , logText);
         FileIO.append2File(new File(packageDirectory, "zChatTalk.txt"), tag, logText);
-        sounds.beepOnce(Vars.soundType.ERR.ordinal());   // error sound
+        subFunc.sounds.beepOnce(Vars.soundType.ERR.ordinal());   // error sound
     }
 
     private String excludeName(String s) {

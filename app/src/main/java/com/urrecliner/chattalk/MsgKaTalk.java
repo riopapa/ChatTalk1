@@ -1,10 +1,8 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.NotificationListener.notificationBar;
-import static com.urrecliner.chattalk.NotificationListener.subFunc;
-import static com.urrecliner.chattalk.NotificationListener.vars;
-import static com.urrecliner.chattalk.SubFunc.logUpdate;
-import static com.urrecliner.chattalk.SubFunc.sounds;
+import static com.urrecliner.chattalk.ActivityMain.notificationBar;
+import static com.urrecliner.chattalk.ActivityMain.subFunc;
+import static com.urrecliner.chattalk.ActivityMain.vars;
 import static com.urrecliner.chattalk.Vars.aAlertLineIdx;
 import static com.urrecliner.chattalk.Vars.aGroupSaid;
 import static com.urrecliner.chattalk.Vars.aGroupWhoKey1;
@@ -13,18 +11,18 @@ import static com.urrecliner.chattalk.Vars.aGroupWhoSkip;
 import static com.urrecliner.chattalk.Vars.aGroups;
 import static com.urrecliner.chattalk.Vars.alertWhoIndex;
 import static com.urrecliner.chattalk.Vars.alertsAdapter;
+import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.nineIgnores;
 import static com.urrecliner.chattalk.ActivityMain.utils;
 
-import android.util.Log;
-
+import com.urrecliner.chattalk.Sub.AlertToast;
 import com.urrecliner.chattalk.Sub.IsWhoNine;
 
 import java.util.Collections;
 
 class MsgKaTalk {
-
     void say(String iGroup, String iWho, String iText) {
+//        new ShowMessage().send(mContext, iGroup,iText);
         if (utils == null)
             utils = new Utils();
         int gIdx = Collections.binarySearch(aGroups, iGroup);
@@ -62,11 +60,12 @@ class MsgKaTalk {
             String head = "[카톡 " + iGroup + "." + iWho + "]";
             iText = utils.strReplace(iGroup, iText);
             notificationBar.update(iGroup+":"+iWho, iText, true);
-            logUpdate.addQue(head, iText);
+            subFunc.logUpdate.addQue(head, iText);
             if (IsWhoNine.in(nineIgnores, iWho))
                 iText = iText.replaceAll("\\d","");
             iText = "단톡방 " + iGroup + " 에서 " + iWho + " 님이 " + utils.makeEtc(iText, 180);
-            sounds.speakAfterBeep(utils.replaceKKHH(iText));
+            subFunc.sounds.speakAfterBeep(utils.replaceKKHH(iText));
+            new ShowMessage().send(mContext, iGroup,iText);
         }
     }
 }

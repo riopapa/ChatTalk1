@@ -4,9 +4,9 @@ import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.toDay;
 
 public class SubFunc {
-    static LogUpdate logUpdate;
-    static Sounds sounds;
-    static AlertStock alertStock;
+    public LogUpdate logUpdate;
+    public Sounds sounds;
+    public AlertStock alertStock;
 
     public SubFunc() {
 

@@ -1,9 +1,8 @@
 package com.urrecliner.chattalk;
 
 import static android.content.Context.MODE_PRIVATE;
-import static com.urrecliner.chattalk.NotificationListener.notificationBar;
-import static com.urrecliner.chattalk.SubFunc.logUpdate;
-import static com.urrecliner.chattalk.SubFunc.sounds;
+import static com.urrecliner.chattalk.ActivityMain.notificationBar;
+import static com.urrecliner.chattalk.ActivityMain.subFunc;
 import static com.urrecliner.chattalk.Vars.alertLines;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.ActivityMain.utils;
@@ -12,6 +11,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
+import com.urrecliner.chattalk.Sub.AlertToast;
 import com.urrecliner.chattalk.Sub.Dot;
 import com.urrecliner.chattalk.Sub.Hangul;
 import com.urrecliner.chattalk.Sub.StockName;
@@ -43,18 +43,19 @@ public class AlertStock {
             String timeStamp = new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date());
             String dotText = sText.replace(stockName, new Dot().add(stockName));
             FileIO.uploadStock(group, who, percent, stockName, dotText, keyStr, timeStamp);
-            logUpdate.addStock(head, sText + keyStr);
+            subFunc.logUpdate.addStock(head, sText + keyStr);
             if (sTalk.length() > 0) {
-                sounds.beepOnce(Vars.soundType.STOCK.ordinal());
+                subFunc.sounds.beepOnce(Vars.soundType.STOCK.ordinal());
                 String cho = new Hangul().getCho(stockName);
                 notificationBar.update( cho + "["+stockName+"/"+who+"]", who+"> "+sText, true);
+                new AlertToast().show(mContext, cho +  "["+stockName+"] "+who);
                 if (cho.length() > 3)
                     cho = cho.substring(0,3);
                 String[] joins = new String[]{who, group, who, stockName, sTalk, cho, stockName, sText};
-                sounds.speakBuyStock(String.join(" , ", joins)); //.replaceAll("\\d","", )
+                subFunc.sounds.speakBuyStock(String.join(" , ", joins)); //.replaceAll("\\d","", )
             } else {
                 notificationBar.update(stockName, who+" : "+sText, false);
-                sounds.beepOnce(Vars.soundType.ONLY.ordinal());
+                subFunc.sounds.beepOnce(Vars.soundType.ONLY.ordinal());
             }
             save(al, mContext);
         });

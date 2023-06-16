@@ -51,24 +51,49 @@ public class LogUpdate {
     }
 
     private String squeezeQue(String logStr) {
-        logStr = logStr.substring(5000);    // remove old 3000 bytes
-        logStr = logStr.substring(logStr.indexOf("\n")+1);
-        if (!StringUtils.isNumeric(""+logStr.charAt(0))) {  // start with MMDD ...
-            logStr = logStr.substring(logStr.indexOf("\n")+1);
+//        logStr = logStr.substring(5000);    // remove old 3000 bytes
+//        logStr = logStr.substring(logStr.indexOf("\n")+1);
+//        if (!StringUtils.isNumeric(""+logStr.charAt(0))) {  // start with MMDD ...
+//            logStr = logStr.substring(logStr.indexOf("\n")+1);
+//        }
+        String [] sLog = logStr.split("\n");
+        StringBuilder sb = new StringBuilder();
+        int sLen = sLog.length;
+        int r = sLen / 3;
+
+        if (sLog[r].length()> 0 && !StringUtils.isNumeric(""+sLog[r].charAt(0)))
+            r++;
+        for (; r < sLen * 2/3; r++) {
+            if (sLog[r].length() > 80)
+                sLog[r] = sLog[r].substring(0,80);
+            sb.append(sLog[r]).append("\n");
         }
-        String front = logStr.substring(0, logStr.length()*2/3);
-        front = front.substring(0, front.lastIndexOf("\n"));
-        int pos = front.lastIndexOf("\n", front.length()-2);
-        if (!StringUtils.isNumeric(""+front.charAt(pos))) {  // start with MMDD ...
-            pos = front.lastIndexOf("\n", pos-2);
+        sb.append("\n\n" + TIME_INFO.format(new Date()) + " **/" +
+                "\n---- squeezed  -----\n");
+        for (; r < sLen; r++) {
+            if (sLog[r].length() > 80)
+                sLog[r] = sLog[r].substring(0,80);
+            else if (StringUtils.isNumeric(""+sLog[r].charAt(0)))
+                sb.append("\n");
+            sb.append("\n").append(sLog[r]);
         }
-        front = logStr.substring(0, pos).replace("\n\n","\n");
-        front = front.replace("\n\n","\n");
-        String remain = logStr.substring(pos);
-        logStr = front+"\n\n" + TIME_INFO.format(new Date()) + " **/" +
-                "\n---- squeezed to "+ (front.length()+remain.length()) + " -------" +
-                "\n"+remain +
-                "\n---- squeezed " + TIME_INFO.format(new Date()) + "\n";
+        logStr = sb.toString();
+
+//                "\n"+remain +
+//                "\n---- squeezed " + TIME_INFO.format(new Date()) + "\n";)
+//        String front = logStr.substring(0, logStr.length()*2/3);
+//        front = front.substring(0, front.lastIndexOf("\n"));
+//        int pos = front.lastIndexOf("\n", front.length()-2);
+//        if (!StringUtils.isNumeric(""+front.charAt(pos))) {  // start with MMDD ...
+//            pos = front.lastIndexOf("\n", pos-2);
+//        }
+//        front = logStr.substring(0, pos).replace("\n\n","\n");
+//        front = front.replace("\n\n","\n");
+//        String remain = logStr.substring(pos);
+//        logStr = front+"\n\n" + TIME_INFO.format(new Date()) + " **/" +
+//                "\n---- squeezed to "+ (front.length()+remain.length()) + " -------" +
+//                "\n"+remain +
+//                "\n---- squeezed " + TIME_INFO.format(new Date()) + "\n";
         return logStr;
     }
 

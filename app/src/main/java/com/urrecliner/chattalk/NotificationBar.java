@@ -1,6 +1,6 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.SubFunc.sounds;
+import static com.urrecliner.chattalk.ActivityMain.subFunc;
 import static com.urrecliner.chattalk.Vars.HIDE_STOP;
 import static com.urrecliner.chattalk.Vars.SHOW_MESSAGE;
 import static com.urrecliner.chattalk.Vars.mContext;
@@ -29,16 +29,8 @@ public class NotificationBar {
     static TimerTask timerTask = null;
     static long lastTime = 0;
 
-    static void update(String who, String msg, boolean show_hide) {
+    public void update(String who, String msg, boolean show_hide) {
 
-        if (timerTask != null) {
-            timerTask.cancel();
-            timerTask = null;
-        }
-        if (timer != null) {
-            timer.cancel();
-            timer = null;
-        }
 
         svMsg = new SimpleDateFormat("HH:mm\u00A0", Locale.KOREA).format(new Date());
         svMsg += (msg.length() > 30) ? msg.substring(0, msg.length()*2/3): msg;
@@ -48,7 +40,7 @@ public class NotificationBar {
             intent.putExtra("operation", SHOW_MESSAGE);
             intent.putExtra("who", who);
             intent.putExtra("msg", msg);
-            intent.putExtra("stop", show_hide && !sounds.isSilent());
+            intent.putExtra("stop", show_hide && !subFunc.sounds.isSilent());
             try {
                 if (isMyServiceRunning(NotificationService.class))
                     mContext.startService(intent);
@@ -65,6 +57,12 @@ public class NotificationBar {
         lastTime = System.currentTimeMillis();
 
         final long LOOP_INTERVAL = 45 * 60 * 1000;
+
+        if (timerTask != null)
+            timerTask.cancel();
+        if (timer != null)
+            timer.cancel();
+
         timer = new Timer();
         timerTask = new TimerTask() {
             @Override
