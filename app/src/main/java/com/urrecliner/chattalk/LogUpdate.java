@@ -33,7 +33,7 @@ public class LogUpdate {
     void addQue(String header, String text) {
         new ReadyToday();
         logQue += "\n" + TIME_INFO.format(new Date()) + header + "\n" + text+"\n";
-        if (logQue.length() > 10000)
+        if (logQue.length() > 18000)
             logQue = squeezeQue(logQue);
 
         sharedEditor.putString("logQue", logQue);
