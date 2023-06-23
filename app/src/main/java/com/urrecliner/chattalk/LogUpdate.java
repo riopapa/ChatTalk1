@@ -66,18 +66,19 @@ public class LogUpdate {
             r++;
         StringBuilder sb = new StringBuilder();
         for (; r < sLen * 2/3; r++) {   // without blank line
-            if (sLog[r].length() > 80)
+            if (sLog[r].length() > 90)
                 sLog[r] = sLog[r].substring(0,80) + " ....";
             sb.append(sLog[r]).append("\n");
         }
         for (; r < sLen; r++) { // with blank line
-            if (sLog[r].length() > 80)
-                sLog[r] = sLog[r].substring(0,80);
-            else if (sLog[r].length() == 0)
-                continue;;
-            if (StringUtils.isNumeric(""+sLog[r].charAt(0)))
-                sb.append("\n");
-            sb.append("\n").append(sLog[r]);
+            String s = sLog[r].trim();
+            if (s.length() > 0) {
+                if (s.length() > 90)
+                    s = s.substring(0, 80) + " .... ";
+                if (StringUtils.isNumeric("" + s.charAt(0)))
+                    sb.append("\n");
+                sb.append("\n").append(s);
+            }
         }
         sb.append("\n\n").append(TIME_INFO.format(new Date()))
                 .append(" **/").append("\n---- squeezed  -----\n\n");
