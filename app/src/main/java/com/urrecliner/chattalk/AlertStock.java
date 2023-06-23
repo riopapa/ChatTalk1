@@ -2,6 +2,8 @@ package com.urrecliner.chattalk;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.urrecliner.chattalk.NotificationListener.notificationBar;
+import static com.urrecliner.chattalk.NotificationListener.phoneVibrate;
+import static com.urrecliner.chattalk.NotificationListener.stockName;
 import static com.urrecliner.chattalk.NotificationListener.subFunc;
 import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.alertLines;
@@ -9,11 +11,13 @@ import static com.urrecliner.chattalk.Vars.mContext;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
 import com.urrecliner.chattalk.Sub.AlertToast;
 import com.urrecliner.chattalk.Sub.Dot;
 import com.urrecliner.chattalk.Sub.Hangul;
+import com.urrecliner.chattalk.Sub.PhoneVibrate;
 import com.urrecliner.chattalk.Sub.StockName;
 
 import java.text.SimpleDateFormat;
@@ -35,33 +39,45 @@ public class AlertStock {
         sTalk = al.talk;
         String percent = (iText.contains("매도") || iText.contains("익절"))? "1.9" :sTalk;
         key12 = " {" + k1 + "." + k2 + "}";
-        String stockName = new StockName().get(al.prev, al.next, iText);
+        if (stockName == null)
+            stockName = new StockName();
+        String stock_Name = stockName.parse(al.prev, al.next, iText);
         String sText = utils.strReplace(iGroup, iText);
-        String head = " [" + group + "." + who + "] "+stockName;
+        String head = " [" + group + "." + who + "] "+stock_Name;
         String keyStr = key12+sTalk;
         Thread thisThread = new Thread(() -> {
-            String timeStamp = new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date());
-            String dotText = sText.replace(stockName, new Dot().add(stockName));
-            FileIO.uploadStock(group, who, percent, stockName, dotText, keyStr, timeStamp);
-            subFunc.logUpdate.addStock(head, sText + keyStr);
             if (sTalk.length() > 0) {
                 subFunc.sounds.beepOnce(Vars.soundType.STOCK.ordinal());
-                String cho = new Hangul().getCho(stockName);
-                notificationBar.update( cho + "["+stockName+"/"+who+"]", who+"> "+sText, true);
-                new AlertToast().show(mContext, cho +  "["+stockName+"] "+who);
-                if (cho.length() > 3)
-                    cho = cho.substring(0,3);
-                String[] joins = new String[]{who, group, who, stockName, sTalk, cho, stockName, sText};
+                String cho = new Hangul().getCho(stock_Name);
+                if (cho.length() > 4)
+                    cho = cho.substring(0,4);
+                String[] joins = new String[]{who, group, who, stock_Name, sTalk, cho, stock_Name, sText};
                 subFunc.sounds.speakBuyStock(String.join(" , ", joins)); //.replaceAll("\\d","", )
+
+                if (isSilentNow()) {
+                    if (phoneVibrate == null)
+                        phoneVibrate = new PhoneVibrate();
+                    phoneVibrate.vib();
+                }
+                String title = cho + "["+stock_Name+"/"+who+"]";
+                String text = group + " : " + who+" > "+sText;
+                notificationBar.update( title, text, true);
+                new ShowMessage().send(mContext, title,text);
+                new AlertToast().show(mContext, title);
             } else {
-                notificationBar.update(stockName, who+" : "+sText, false);
+                notificationBar.update(stock_Name, who+" : "+sText, false);
                 subFunc.sounds.beepOnce(Vars.soundType.ONLY.ordinal());
             }
             save(al, mContext);
+            String timeStamp = new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date());
+            String dotText = sText.replace(stock_Name, new Dot().add(stock_Name));
+            FileIO.uploadStock(group, who, percent, stock_Name, dotText, keyStr, timeStamp);
+            subFunc.logUpdate.addStock(head, sText + keyStr);
         });
         thisThread.start();
     }
-    void save(AlertLine al, Context context) {
+
+    private void save(AlertLine al, Context context) {
 
         SharedPreferences sharePref = context.getSharedPreferences("alertLine", MODE_PRIVATE);
         SharedPreferences.Editor sharedEditor = sharePref.edit();
@@ -69,6 +85,11 @@ public class AlertStock {
         String keyVal = String.join("~~", joins);
         sharedEditor.putInt(keyVal, al.matched);
         sharedEditor.apply();
+    }
+    boolean isSilentNow() {
+        AudioManager mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+        return (mAudioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT ||
+                mAudioManager.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE);
     }
 
 }

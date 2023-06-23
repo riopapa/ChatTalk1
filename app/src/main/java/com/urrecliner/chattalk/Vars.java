@@ -46,7 +46,7 @@ public class Vars {
     static int [][][] aAlertLineIdx;
 
     static List<String> aGroups;    // {고선, 텔레, 힐}
-    static String[] aGSkip1, aGSkip2, aGSkip3, aGSkip4;
+    static String[] aGSkip1, aGSkip2, aGSkip3, aGSkip4, aGSkip5, aGSkip6;
     static String[][] aGroupWhos;     // [2] 이진홍, 김선수
     static String[][][] aGroupWhoKey1, aGroupWhoKey2, aGroupWhoSkip, aGroupWhoPrev, aGroupWhoNext;
 
@@ -105,7 +105,6 @@ public class Vars {
         }
     }
     public Vars(Context context, String msg) {
-        Log.w("vars","vars set msg="+msg);
         mContext = context;
         sharePref = mContext.getSharedPreferences("sayText", MODE_PRIVATE);
         sharedEditor = sharePref.edit();

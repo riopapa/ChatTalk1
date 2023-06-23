@@ -6,11 +6,6 @@ import java.util.Objects;
 public class MapWhoText {
 
     public boolean repeated(HashMap<String, String> whoSaysWhat, String mWho, String mText) {
-        if (whoSaysWhat == null || whoSaysWhat.isEmpty()) {
-            whoSaysWhat = new HashMap<>();
-            whoSaysWhat.put(mWho, mText);
-            return false;
-        }
 
         if (whoSaysWhat.containsKey(mWho)) {
             if (Objects.equals(whoSaysWhat.get(mWho), mText))
@@ -23,4 +18,8 @@ public class MapWhoText {
         return false;
     }
 
+    public void build(HashMap<String, String> whoSaysWhat, String mWho, String mText) {
+        whoSaysWhat = new HashMap<>();
+        whoSaysWhat.put(mWho, mText);
+    }
 }

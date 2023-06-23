@@ -1,47 +1,42 @@
 package com.urrecliner.chattalk;
 
-import android.Manifest;
+import static com.urrecliner.chattalk.Vars.mContext;
+
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 
-import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
+
+import java.util.Random;
 
 public class ShowMessage {
 
+    static NotificationManager manager = null;
+    static NotificationChannel channel = null;
+    static NotificationCompat.Builder notificationBuilder = null;
     public void send(Context context, String textTitle, String textContent) {
-//        if (!textContent.equals("x"))
-//            return;
-        NotificationManager manager = context.getSystemService(NotificationManager.class);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("Chan Id", "My Noti", NotificationManager.IMPORTANCE_DEFAULT);
+
+        if (channel == null)
+            channel = new NotificationChannel("M_CH_ID", "M_CH_ID", NotificationManager.IMPORTANCE_DEFAULT);
+        if (manager == null) {
+            manager = context.getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
         }
+        if (notificationBuilder ==  null)
+            notificationBuilder = new NotificationCompat.Builder(mContext, "M_CH_ID");
 
-        Intent intent = new Intent(context, NotificationListener.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_MUTABLE);
-
-        NotificationCompat.Builder b = new NotificationCompat.Builder(context);
-
-        b.setAutoCancel(true)
+        notificationBuilder.setAutoCancel(true)
                 .setDefaults(Notification.DEFAULT_ALL)
                 .setWhen(System.currentTimeMillis())
-                .setSmallIcon(R.drawable.chat_talk)
-                .setTicker("Hearty365")
-                .setContentTitle("Default notification")
-                .setContentText("Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
-                .setDefaults(Notification.DEFAULT_LIGHTS| Notification.DEFAULT_SOUND)
-                .setContentIntent(contentIntent)
+                .setSmallIcon(R.drawable.stock_icon)
+                .setContentTitle(textTitle)
+                .setContentText(textContent)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText("Big " + textContent))
                 .setContentInfo("Info");
-
-        manager.notify(1, b.build());
-
+        int id = new Random().nextInt(2000)+1000;
+        manager.notify(id, notificationBuilder.build());
     }
 }

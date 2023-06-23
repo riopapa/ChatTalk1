@@ -29,7 +29,7 @@ public class NotificationBar {
     static TimerTask timerTask = null;
     static long lastTime = 0;
 
-    public void update(String who, String msg, boolean show_hide) {
+    public void update(String who, String msg, boolean show_icon) {
 
 
         svMsg = new SimpleDateFormat("HH:mm\u00A0", Locale.KOREA).format(new Date());
@@ -40,7 +40,7 @@ public class NotificationBar {
             intent.putExtra("operation", SHOW_MESSAGE);
             intent.putExtra("who", who);
             intent.putExtra("msg", msg);
-            intent.putExtra("stop", show_hide && !subFunc.sounds.isSilent());
+            intent.putExtra("stop", show_icon && !subFunc.sounds.isSilent());
             try {
                 if (isMyServiceRunning(NotificationService.class))
                     mContext.startService(intent);

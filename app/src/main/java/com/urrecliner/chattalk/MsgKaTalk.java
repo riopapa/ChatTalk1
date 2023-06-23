@@ -12,58 +12,65 @@ import static com.urrecliner.chattalk.Vars.aGroupWhoSkip;
 import static com.urrecliner.chattalk.Vars.aGroups;
 import static com.urrecliner.chattalk.Vars.alertWhoIndex;
 import static com.urrecliner.chattalk.Vars.alertsAdapter;
+import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.nineIgnores;
+
 import com.urrecliner.chattalk.Sub.IsWhoNine;
 
 import java.util.Collections;
 
 class MsgKaTalk {
-    void say(String iGroup, String iWho, String iText) {
-//        new ShowMessage().send(mContext, iGroup,iText);
-        if (utils == null)
-            utils = new Utils();
-        int gIdx = Collections.binarySearch(aGroups, iGroup);
-        if (gIdx >= 0) {    // within Alert Group
-            if (iText.length() < 8 || iText.contains("http"))
-                return;
-            if (aGroupSaid[gIdx].equals(iText))
-                return;
-            aGroupSaid[gIdx] = iText;
-            if (vars.timeBegin == 0)
-                new ReadyToday();
-            long nowTime = System.currentTimeMillis();
-            if (nowTime < vars.timeBegin || nowTime > vars.timeEnd) {
-                return;
-            }
-            int gwIdx = alertWhoIndex.get(gIdx, iWho, iText);
-            if (gwIdx == -1)
-                return;
-            iText = utils.removeSpecialChars(iText);
-            for (int i = 0; i < aGroupWhoKey1[gIdx][gwIdx].length; i++) {
-                if ((iText.contains(aGroupWhoKey1[gIdx][gwIdx][i])) &&
-                    (iText.contains(aGroupWhoKey2[gIdx][gwIdx][i])) &&
-                    (!iText.contains(aGroupWhoSkip[gIdx][gwIdx][i]))) {
-                    if (subFunc == null)
-                        subFunc  = new SubFunc();
-                    subFunc.alertStock.sayNlog(iGroup, iText, aAlertLineIdx[gIdx][gwIdx][i]);
-                    if (alertsAdapter == null)
-                        alertsAdapter = new AlertsAdapter();
-                    alertsAdapter.notifyItemChanged(aAlertLineIdx[gIdx][gwIdx][i]);
+    void say(String iGroup, String who, String text) {
+        final String iText = text;
+        Thread thisThread = new Thread(() -> {
+            if (utils == null)
+                utils = new Utils();
+            int gIdx = Collections.binarySearch(aGroups, iGroup);
+            if (gIdx >= 0) {    // within Alert Group
+                if (iText.length() < 8 || iText.contains("http"))
+                    return;
+                if (aGroupSaid[gIdx].equals(iText))
+                    return;
+                aGroupSaid[gIdx] = iText;
+                if (vars.timeBegin == 0)
+                    new ReadyToday();
+                long nowTime = System.currentTimeMillis();
+                if (nowTime < vars.timeBegin || nowTime > vars.timeEnd) {
                     return;
                 }
-            }
+                int gwIdx = alertWhoIndex.get(gIdx, who, iText);
+                if (gwIdx == -1)
+                    return;
+                String sText = utils.removeSpecialChars(text);
+                for (int i = 0; i < aGroupWhoKey1[gIdx][gwIdx].length; i++) {
+                    if ((sText.contains(aGroupWhoKey1[gIdx][gwIdx][i])) &&
+                            (sText.contains(aGroupWhoKey2[gIdx][gwIdx][i])) &&
+                            (!sText.contains(aGroupWhoSkip[gIdx][gwIdx][i]))) {
+                        if (subFunc == null)
+                            subFunc  = new SubFunc();
+                        subFunc.alertStock.sayNlog(iGroup, sText, aAlertLineIdx[gIdx][gwIdx][i]);
+                        int finalI = i;
+                        mActivity.runOnUiThread(() -> {
+                            if (alertsAdapter == null)
+                                alertsAdapter = new AlertsAdapter();
+                            alertsAdapter.notifyItemChanged(aAlertLineIdx[gIdx][gwIdx][finalI]);
+                        });
+                        return;
+                    }
+                }
 
-        } else {    // normal group
-            String head = "[카톡 " + iGroup + "." + iWho + "]";
-            iText = utils.strReplace(iGroup, iText);
-            notificationBar.update(iGroup+":"+iWho, iText, true);
-            subFunc.logUpdate.addQue(head, iText);
-            if (IsWhoNine.in(nineIgnores, iWho))
-                iText = iText.replaceAll("\\d","");
-            iText = "단톡방 " + iGroup + " 에서 " + iWho + " 님이 " + utils.makeEtc(iText, 180);
-            subFunc.sounds.speakAfterBeep(utils.replaceKKHH(iText));
-            new ShowMessage().send(mContext, iGroup,iText);
-        }
+            } else {    // normal group
+                String head = "[카톡 " + iGroup + "." + who + "]";
+                String sText = utils.strReplace(iGroup, iText);
+                notificationBar.update(iGroup+":"+ who, sText, true);
+                subFunc.logUpdate.addQue(head, sText);
+                if (IsWhoNine.in(nineIgnores, who))
+                    sText = sText.replaceAll("\\d","");
+                sText = "단톡방 " + iGroup + " 에서 " + who + " 님이 " + utils.makeEtc(sText, 180);
+                subFunc.sounds.speakAfterBeep(utils.replaceKKHH(sText));
+            }
+        });
+        thisThread.start();
     }
 }

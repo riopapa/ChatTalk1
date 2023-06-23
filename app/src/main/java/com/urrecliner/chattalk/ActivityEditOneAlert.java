@@ -61,7 +61,7 @@ public class ActivityEditOneAlert extends AppCompatActivity {
             tKey1.setText("Skip 1,2");
             tTalk.setText("Skip 3,4"); tMatched.setText("Matched");
             tMemo.setText("Say More");
-            tPrev.setText("Prev/Next");
+            tPrev.setText("Skip 5,6");
         } else {
             tGroup.setText("Group Name"); tWho.setText("Who");
             tKey1.setText("Key 1,2");
@@ -169,7 +169,7 @@ public class ActivityEditOneAlert extends AppCompatActivity {
             newGroup = false;
         }
         new AlertSave((al.matched == -1)? ("Save Group "+eGroup.getText().toString()):
-                ("Save "+eGroup.getText().toString() + " " + eWho.getText().toString()));
+                ("Save "+eGroup.getText().toString() + " : " + eWho.getText().toString()));
         makeGroupMemo();
         talk = new SimpleDateFormat("yy/MM/dd\nHH:mm", Locale.KOREA).format(new Date());
         Upload2Google.uploadComment(mGroup, mWho, mPercent, talk, mMemo);
@@ -184,16 +184,16 @@ public class ActivityEditOneAlert extends AppCompatActivity {
             if (al.group.equals(mGroup)) {
                 if (al.matched == -1) {
                     mWho = al.who + ((al.memo.length()> 1) ? "\n"+al.memo:"");
-                    mPercent = "s("+al.key1+","+al.key2+"\n"+al.talk+","+al.skip+")";
+                    mPercent = "s("+al.key1+","+al.key2+"\n"+al.talk+","+al.skip+al.prev+","+al.next+")";
                 } else {
                     if (sb.length() > 1)
                         sb.append("\n");
-                    sb.append(al.who).append(", k( ")
+                    sb.append(al.who).append(", k(")
                         .append(al.key1).append(", ")
-                        .append(al.key2).append(" ), ")
+                        .append(al.key2).append("), ")
                         .append(al.matched).append(" ")
-                        .append((al.talk.length()>1)? " t( "+al.talk+" ) ":"")
-                        .append((al.skip.length()>1)? " s( "+al.skip+" ) ":"")
+                        .append((al.talk.length()>1)? " t("+al.talk+") ":"")
+                        .append((al.skip.length()>1)? " s("+al.skip+") ":"")
                         .append((al.memo.length()>1)? ", "+al.memo:"")
                         .append(" pn<").append(al.prev).append(",").append(al.next)
                         .append(">");

@@ -82,7 +82,8 @@ public class ActivityMain extends AppCompatActivity {
         mContext = this;
         mActivity = this;
 
-        vars = new Vars(mContext, "main");
+        if (vars == null)
+            vars = new Vars(mContext, "main");
         aBar = getSupportActionBar();
 
         topTabs = findViewById(R.id.tab_layout);
@@ -148,13 +149,10 @@ public class ActivityMain extends AppCompatActivity {
             aBar = getSupportActionBar();
         aBar.setIcon(R.drawable.chat_talk);
 
-        new OptionTables().readAll();
-
         WifiMonitor.init(mContext);
 
         new NotificationServiceStart(mContext);
         notificationBar.hideStop();
-        new ShowMessage().send(mContext, "Title","Resumed app");
         super.onResume();
 
     }

@@ -162,7 +162,7 @@ public class ActivityEditReplace extends AppCompatActivity {
         ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         ClipData pData = clipboard.getPrimaryClip();
         ClipData.Item item = pData.getItemAt(0);
-        return "\n^리플^"+item.getText().toString()+"\n";
+        return "\n^단축^"+item.getText().toString()+"\n";
     }
 
 }

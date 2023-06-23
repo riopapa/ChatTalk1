@@ -71,7 +71,6 @@ public class Fragment_1Que extends Fragment {
     @Override
     public void onResume() {
         topTabs.getTabAt(1).select();
-        logQue = logQue.replace("    ","");
         ss = new LogSpann().make(logQue, mContext);
         sv = ss;
         etTable.setText(ss);

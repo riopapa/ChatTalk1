@@ -33,7 +33,7 @@ public class LogUpdate {
     void addQue(String header, String text) {
         new ReadyToday();
         logQue += "\n" + TIME_INFO.format(new Date()) + header + "\n" + text+"\n";
-        if (logQue.length() > 15000)
+        if (logQue.length() > 10000)
             logQue = squeezeQue(logQue);
 
         sharedEditor.putString("logQue", logQue);
@@ -43,7 +43,7 @@ public class LogUpdate {
     void addStock(String header, String text) {
         new ReadyToday();
         logStock += "\n" + TIME_INFO.format(new Date()) + header + "\n" + text+"\n";
-        if (logStock.length() > 8000)
+        if (logStock.length() > 6000)
             logStock = squeezeQue(logStock);
 
         sharedEditor.putString("logStock", logStock);
@@ -54,31 +54,33 @@ public class LogUpdate {
         Remove 1/3 lines, then 2/3 is without \n
      */
     private String squeezeQue(String logStr) {
-        logStr = logStr.replace("\n\n","\n");
+        logStr = logStr.replace("    ","")
+                        .replace("\n\n","\n");
         String [] sLog = logStr.split("\n");
         int sLen = sLog.length;
-        int r = sLen / 3;
+        int r = sLen / 3;   // remove 1/3 front part
 
         while (sLog[r].length() < 2)
             r++;
         while (!StringUtils.isNumeric(""+sLog[r].charAt(0)))
             r++;
         StringBuilder sb = new StringBuilder();
-        for (; r < sLen * 2/3; r++) {
+        for (; r < sLen * 2/3; r++) {   // without blank line
             if (sLog[r].length() > 80)
-                sLog[r] = sLog[r].substring(0,80);
+                sLog[r] = sLog[r].substring(0,80) + " ....";
             sb.append(sLog[r]).append("\n");
         }
-        sb.append("\n\n").append(TIME_INFO.format(new Date()))
-            .append(" **/").append("\n---- squeezed  -----\n\n");
-        for (; r < sLen; r++) {
+        for (; r < sLen; r++) { // with blank line
             if (sLog[r].length() > 80)
                 sLog[r] = sLog[r].substring(0,80);
-            else if (StringUtils.isNumeric(""+sLog[r].charAt(0)))
+            else if (sLog[r].length() == 0)
+                continue;;
+            if (StringUtils.isNumeric(""+sLog[r].charAt(0)))
                 sb.append("\n");
             sb.append("\n").append(sLog[r]);
         }
-        sb.append("\n");
+        sb.append("\n\n").append(TIME_INFO.format(new Date()))
+                .append(" **/").append("\n---- squeezed  -----\n\n");
         return  sb.toString();
 
     }

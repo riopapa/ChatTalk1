@@ -200,7 +200,7 @@ public class SelectChats {
                         s.setSpan(new BackgroundColorSpan(mContext.getResources().getColor(R.color.keyMatchedWord, null)), p2, p2 + next[k].length(), SPAN_EXCLUSIVE_EXCLUSIVE);
                     }
                     if(upload) {
-                        String stockName = new StockName().get(prev[k], next[k], body);
+                        String stockName = new StockName().parse(prev[k], next[k], body);
                         body = body.replace(stockName, new Dot().add(stockName));
                         FileIO.uploadStock(chatGroup, who, "chats", stockName,
                                 body, keys, time);

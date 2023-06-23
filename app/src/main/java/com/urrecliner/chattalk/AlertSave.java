@@ -102,7 +102,7 @@ public class AlertSave {
         return maxLen;
     }
 
-    String blank = StringUtils.repeat(" ", 20);
+    String blank = StringUtils.repeat(" ", 30);
 
     int calcBytes(String s) {
         return ByteLength.get(s) + 4;
