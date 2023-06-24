@@ -17,6 +17,8 @@ import static com.urrecliner.chattalk.Vars.smsTextIgnores;
 import static com.urrecliner.chattalk.Vars.smsWhoIgnores;
 import static com.urrecliner.chattalk.Vars.systemIgnores;
 import static com.urrecliner.chattalk.Vars.tableListFile;
+import static com.urrecliner.chattalk.Vars.teleChannels;
+import static com.urrecliner.chattalk.Vars.teleGroups;
 import static com.urrecliner.chattalk.Vars.textIgnores;
 
 import android.widget.Toast;
@@ -45,6 +47,7 @@ class OptionTables {
         }
         readReplacesFile();
         readPackageTable();
+        readTelegramTable();
 //        String[] groupIgs =  tableListFile.read("kGroupIgnores");
 //        StringBuilder sb = new StringBuilder();
 //        for (String groupIg : groupIgs) sb.append("!").append(groupIg).append("!");
@@ -80,6 +83,28 @@ class OptionTables {
                     pkgNickNames.add(nickName);
                     pkgTypes.add(type);
                 }
+            }
+        }
+    }
+
+    private void readTelegramTable() {
+        /*
+         * group ^ channel name
+         * 부자   ^ 부자 프로젝트
+         */
+        String [] lists =  tableListFile.read("teleGroup");
+
+        teleGroups = new String[lists.length];
+        teleChannels = new String[lists.length];
+
+        for (int i = 0; i < lists.length; i++) {
+            String pLine = lists[i];
+            String [] strings = pLine.split("\\^");
+            if (strings.length < 2) {
+                new SnackBar().show("Telegram Table Error ", pLine);
+            } else {
+                teleGroups[i] = strings[0].trim();
+                teleChannels[i] = strings[1].trim();
             }
         }
     }

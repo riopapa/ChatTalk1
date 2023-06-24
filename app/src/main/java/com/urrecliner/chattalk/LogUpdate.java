@@ -66,9 +66,12 @@ public class LogUpdate {
             r++;
         StringBuilder sb = new StringBuilder();
         for (; r < sLen * 2/3; r++) {   // without blank line
-            if (sLog[r].length() > 90)
-                sLog[r] = sLog[r].substring(0,80) + " ....";
-            sb.append(sLog[r]).append("\n");
+            String s = sLog[r].trim();
+            if (s.length() > 0) {
+                if (s.length() > 90)
+                    s = s.substring(0, 80) + " .... ";
+                sb.append(s).append("\n");
+            }
         }
         for (; r < sLen; r++) { // with blank line
             String s = sLog[r].trim();

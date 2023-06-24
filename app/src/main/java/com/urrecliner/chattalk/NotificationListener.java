@@ -11,6 +11,8 @@ import static com.urrecliner.chattalk.Vars.sbnText;
 import static com.urrecliner.chattalk.Vars.sbnWho;
 import static com.urrecliner.chattalk.Vars.smsTextIgnores;
 import static com.urrecliner.chattalk.Vars.smsWhoIgnores;
+import static com.urrecliner.chattalk.Vars.teleChannels;
+import static com.urrecliner.chattalk.Vars.teleGroups;
 import static com.urrecliner.chattalk.Vars.textIgnores;
 
 import android.os.VibrationEffect;
@@ -303,22 +305,21 @@ public class NotificationListener extends NotificationListenerService {
                     mapWhoText.build(whoAndTexts, sbnWho, sbnText);
                 else if (mapWhoText.repeated(whoAndTexts, sbnWho, sbnText))
                     return;
-                final String [] groupChats = {"부자 프로", "단타의 귀재", "주식봇"};
-                final String [] groupNames = {"부자",      "단귀",      "주봇"};
-                for (int i = 0; i < groupChats.length; i++) {
-                    if (sbnWho.contains(groupChats[i])) {
+                for (int i = 0; i < teleChannels.length; i++) {
+                    if (sbnWho.contains(teleChannels[i])) {
+                        sbnGroup = teleGroups[i];
                         if (sbnWho.contains(":"))   // 부자 인 겅우 group : who 로 구성됨
                             sbnWho = sbnWho.substring(sbnWho.indexOf(":")+2).trim();
                         if (msgKaTalk == null)
                             msgKaTalk = new MsgKaTalk();
-                        if (sbnWho.contains("Ai")) {
-                            String head = groupNames[i] + ">" + sbnWho;
-                            String sText = sbnText;
-                            notificationBar.update( head, sText, true);
-                            new AlertToast().show(mContext, head);
-                            subFunc.logUpdate.addQue(head, sText);
-                        }
-                        msgKaTalk.say(groupNames[i], sbnWho, sbnGroup+sbnText);
+//                        if (sbnWho.contains("Ai")) {
+//                            String head = sbnGroup + ">" + sbnWho;
+//                            String sText = sbnText;
+//                            notificationBar.update( head, sText, true);
+//                            new AlertToast().show(mContext, head);
+//                            subFunc.logUpdate.addQue(head, sText);
+//                        }
+                        msgKaTalk.say(sbnGroup, sbnWho, sbnGroup+sbnText);
                         return;
                     }
                 }

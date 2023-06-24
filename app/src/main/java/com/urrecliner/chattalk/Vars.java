@@ -55,6 +55,9 @@ public class Vars {
     static String[] systemIgnores = null;
     static String[] textIgnores = null;
     static String[] nineIgnores = null;
+
+    static String[] teleGroups = null;
+    static String[] teleChannels = null;
     static String nowFileName;
 
     static int replGroupCnt = 0;

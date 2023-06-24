@@ -184,6 +184,21 @@
             android:textSize="@dimen/table_font_size"
             android:tag="strReplaces"
             android:text="글짜를 짧게 대체" />
+
+        <TextView
+            android:id="@+id/group_telegrams"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_button2"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_margin="@dimen/button_margin_size"
+            android:padding="@dimen/table_padding_size"
+            android:textSize="@dimen/table_font_size"
+            android:tag="teleGroup"
+            android:text="텔레그램 그룹" />
     </LinearLayout>
     <TextView
         android:id="@+id/tv_wifi_state"
