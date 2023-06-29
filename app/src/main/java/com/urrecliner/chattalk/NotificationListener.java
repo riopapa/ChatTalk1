@@ -105,7 +105,6 @@ public class NotificationListener extends NotificationListenerService {
             return;
         svText = sbnText;
 
-//        Log.w("All "+sbnWho,sbnPackageType+" "+sbnGroup +" "+sbnWho+" "+sbnText);
         switch (sbnPackageType) {
 
             case KATALK:
@@ -139,6 +138,40 @@ public class NotificationListener extends NotificationListenerService {
                         msgKaTalk = new MsgKaTalk();
                     msgKaTalk.say(sbnGroup, sbnWho, utils.text2OneLine(sbnText));
                 }
+                break;
+
+            case TELEGRAM:
+
+                if (sbnText.contains("곳에서 보냄"))
+                    return;
+                sbnText = utils.text2OneLine(sbnText);
+                if (whoAndTexts == null)
+                    mapWhoText.build(whoAndTexts, sbnWho, sbnText);
+                else if (mapWhoText.repeated(whoAndTexts, sbnWho, sbnText))
+                    return;
+                for (int i = 0; i < teleChannels.length; i++) {
+                    if (sbnWho.contains(teleChannels[i])) {
+                        sbnGroup = teleGroups[i];
+                        if (sbnWho.contains(":"))   // 부자 인 겅우 group : who 로 구성됨
+                            sbnWho = sbnWho.substring(sbnWho.indexOf(":")+2).trim();
+                        if (msgKaTalk == null)
+                            msgKaTalk = new MsgKaTalk();
+                        if (sbnGroup.equals("상한")) {
+                            String head = sbnGroup + ">" + sbnWho;
+                            String sText = sbnText;
+                            notificationBar.update( head, sText, true);
+                            new AlertToast().show(mContext, head);
+                            subFunc.logUpdate.addQue(head, sText);
+                        }
+                        msgKaTalk.say(sbnGroup, sbnWho, sbnGroup+sbnText);
+                        return;
+                    }
+                }
+                head = "[텔레 "+ sbnGroup + "|" + sbnWho + "]";
+                subFunc.logUpdate.addQue(head, sbnText);
+                notificationBar.update(sbnGroup + "|" + sbnWho, sbnText, true);
+                sbnText = head + " 로 부터. " + sbnText;
+                subFunc.sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
                 break;
 
             case SMS:
@@ -294,40 +327,6 @@ public class NotificationListener extends NotificationListenerService {
                 notificationBar.update(sbnGroup + "🗼"+ sbnWho, sbnText, true);
                 sbnText = head + " 로부터 "+ sbnText;
                 subFunc.sounds.speakAfterBeep(sbnPackageNick + " " + sbnText);
-                break;
-
-            case TELEGRAM:
-
-                if (sbnText.contains("곳에서 보냄"))
-                    return;
-                sbnText = utils.text2OneLine(sbnText);
-                if (whoAndTexts == null)
-                    mapWhoText.build(whoAndTexts, sbnWho, sbnText);
-                else if (mapWhoText.repeated(whoAndTexts, sbnWho, sbnText))
-                    return;
-                for (int i = 0; i < teleChannels.length; i++) {
-                    if (sbnWho.contains(teleChannels[i])) {
-                        sbnGroup = teleGroups[i];
-                        if (sbnWho.contains(":"))   // 부자 인 겅우 group : who 로 구성됨
-                            sbnWho = sbnWho.substring(sbnWho.indexOf(":")+2).trim();
-                        if (msgKaTalk == null)
-                            msgKaTalk = new MsgKaTalk();
-//                        if (sbnWho.contains("Ai")) {
-//                            String head = sbnGroup + ">" + sbnWho;
-//                            String sText = sbnText;
-//                            notificationBar.update( head, sText, true);
-//                            new AlertToast().show(mContext, head);
-//                            subFunc.logUpdate.addQue(head, sText);
-//                        }
-                        msgKaTalk.say(sbnGroup, sbnWho, sbnGroup+sbnText);
-                        return;
-                    }
-                }
-                head = "[텔레 "+ sbnGroup + "|" + sbnWho + "]";
-                subFunc.logUpdate.addQue(head, sbnText);
-                notificationBar.update(sbnGroup + "|" + sbnWho, sbnText, true);
-                sbnText = head + " 로 부터. " + sbnText;
-                subFunc.sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
                 break;
 
             default:

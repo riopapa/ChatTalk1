@@ -184,7 +184,7 @@ public class ActivityEditOneAlert extends AppCompatActivity {
             if (al.group.equals(mGroup)) {
                 if (al.matched == -1) {
                     mWho = al.who + ((al.memo.length()> 1) ? "\n"+al.memo:"");
-                    mPercent = "s("+al.key1+","+al.key2+"\n"+al.talk+","+al.skip+al.prev+","+al.next+")";
+                    mPercent = "s("+al.key1+", "+al.key2+"\n"+al.talk+", "+al.skip+"\n"+al.prev+", "+al.next+")";
                 } else {
                     if (sb.length() > 1)
                         sb.append("\n");

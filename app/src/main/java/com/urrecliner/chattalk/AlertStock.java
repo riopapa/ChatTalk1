@@ -1,5 +1,6 @@
 package com.urrecliner.chattalk;
 
+import static android.content.Context.CLIPBOARD_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 import static com.urrecliner.chattalk.NotificationListener.notificationBar;
 import static com.urrecliner.chattalk.NotificationListener.phoneVibrate;
@@ -9,6 +10,8 @@ import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.alertLines;
 import static com.urrecliner.chattalk.Vars.mContext;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
@@ -48,22 +51,23 @@ public class AlertStock {
         Thread thisThread = new Thread(() -> {
             if (sTalk.length() > 0) {
                 subFunc.sounds.beepOnce(Vars.soundType.STOCK.ordinal());
-                String cho = new Hangul().getCho(stock_Name);
-                if (cho.length() > 4)
-                    cho = cho.substring(0,4);
-                String[] joins = new String[]{who, group, who, stock_Name, sTalk, cho, stock_Name, sText};
+//                String cho = new Hangul().getCho(stock_Name);
+//                if (cho.length() > 4)
+//                    cho = cho.substring(0,4);
+//                String[] joins = new String[]{who, group, who, stock_Name, sTalk, cho, stock_Name, sText};
+                String[] joins = new String[]{group, who, stock_Name, sTalk, stock_Name, sText};
                 subFunc.sounds.speakBuyStock(String.join(" , ", joins)); //.replaceAll("\\d","", )
-
                 if (isSilentNow()) {
                     if (phoneVibrate == null)
                         phoneVibrate = new PhoneVibrate();
                     phoneVibrate.vib();
                 }
-                String title = cho + "["+stock_Name+"/"+who+"]";
+                String title = "["+stock_Name+"/"+who+"]";
                 String text = group + " : " + who+" > "+sText;
                 notificationBar.update( title, text, true);
                 new ShowMessage().send(mContext, title,text);
                 new AlertToast().show(mContext, title);
+                copyToClipBoard(stock_Name);
             } else {
                 notificationBar.update(stock_Name, who+" : "+sText, false);
                 subFunc.sounds.beepOnce(Vars.soundType.ONLY.ordinal());
@@ -90,6 +94,12 @@ public class AlertStock {
         AudioManager mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
         return (mAudioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT ||
                 mAudioManager.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE);
+    }
+
+    void copyToClipBoard(String s) {
+        ClipboardManager clipboard = (ClipboardManager) mContext.getSystemService(CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("stock", s);
+        clipboard.setPrimaryClip(clip);
     }
 
 }

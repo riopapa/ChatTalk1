@@ -8,10 +8,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioFocusRequest;
-import android.media.AudioManager;
 import android.os.Environment;
 import android.text.SpannableString;
-import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.ActionBar;
@@ -46,6 +44,7 @@ public class Vars {
     static int [][][] aAlertLineIdx;
 
     static List<String> aGroups;    // {고선, 텔레, 힐}
+    static List<Boolean> aGroupsPass;
     static String[] aGSkip1, aGSkip2, aGSkip3, aGSkip4, aGSkip5, aGSkip6;
     static String[][] aGroupWhos;     // [2] 이진홍, 김선수
     static String[][][] aGroupWhoKey1, aGroupWhoKey2, aGroupWhoSkip, aGroupWhoPrev, aGroupWhoNext;
@@ -94,7 +93,7 @@ public class Vars {
 
     enum soundType { PRE, POST, ERR, TESLY, ONLY, STOCK}
     static final int[] beepRawIds = { R.raw.a0_pre_sound, R.raw.a1_post_sound, R.raw.a2_alert,
-            R.raw.a3_hello_tesry, R.raw.a4_only, R.raw.a7_buy_stock};
+            R.raw.a3_hello_tesry, R.raw.a4_only, R.raw.a5_metalic_crank};
 
     public static boolean audioReady = true;
     public static class DelItem {

@@ -74,11 +74,11 @@ public class Fragment_4Alert extends Fragment {
                 AlertLine al = alertLines.get(i);
                 if (al.matched != -1) {
                     if (al.matched > 100)
-                        al.matched = 200;
+                        al.matched = 1000;
                     else if (al.talk.length() > 0)
-                        al.matched = 100;
+                        al.matched = 500;
                     else if (al.matched > 0)
-                        al.matched = 50;
+                        al.matched = 100;
                 }
                 alertLines.set(i, al);
             }

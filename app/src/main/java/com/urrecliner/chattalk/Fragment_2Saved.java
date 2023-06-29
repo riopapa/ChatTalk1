@@ -6,7 +6,6 @@ import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.sharedEditor;
 import static com.urrecliner.chattalk.Vars.topTabs;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -25,7 +24,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
@@ -173,28 +171,4 @@ public class Fragment_2Saved extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-//    OnBackPressedCallback callback;
-//    @Override
-//    public void onAttach(@NonNull Context context) {
-//        super.onAttach(context);
-//        callback = new OnBackPressedCallback(true) {
-//            @Override
-//            public void handleOnBackPressed() {
-//            }
-//        };
-//        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
-//    }
-
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//        callback.remove();
-//    }
 }
-
-//            View view = mActivity.getCurrentFocus();
-//            if (view != null) {
-//                InputMethodManager imm = (InputMethodManager)
-//                        mActivity.getSystemService(INPUT_METHOD_SERVICE);
-//                imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.SHOW_IMPLICIT);
-//            }

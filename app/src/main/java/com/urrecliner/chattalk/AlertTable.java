@@ -18,6 +18,7 @@ import static com.urrecliner.chattalk.Vars.aGroupWhoPrev;
 import static com.urrecliner.chattalk.Vars.aGroupWhoSkip;
 import static com.urrecliner.chattalk.Vars.aGroupWhos;
 import static com.urrecliner.chattalk.Vars.aGroups;
+import static com.urrecliner.chattalk.Vars.aGroupsPass;
 import static com.urrecliner.chattalk.Vars.alertLines;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.tableListFile;
@@ -106,9 +107,11 @@ class AlertTable {
         String svGroup = "", svWho = "";
         int alertSize = alertLines.size();
         aGroups = new ArrayList<>();
+        aGroupsPass = new ArrayList<>();
         for (AlertLine al: alertLines) {
             if (!svGroup.equals(al.group)) {
                 aGroups.add(al.group);
+                aGroupsPass.add(al.more.length() > 0);
                 String key;
                 key = al.key1; if (key.equals("")) key = "업씀"; gSkip1.add(key);
                 key = al.key2; if (key.equals("")) key = "업씀"; gSkip2.add(key);

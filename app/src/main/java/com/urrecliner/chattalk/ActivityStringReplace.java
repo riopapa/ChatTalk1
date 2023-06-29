@@ -26,7 +26,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class ActivityEditReplace extends AppCompatActivity {
+public class ActivityStringReplace extends AppCompatActivity {
 
     final String dummyHead = "- [ ";
     int pos = -1;

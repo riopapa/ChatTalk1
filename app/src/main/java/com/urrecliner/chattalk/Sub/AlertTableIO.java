@@ -57,7 +57,7 @@ public class AlertTableIO {
                     }
                 }
                 if (idx == -1) {
-                    Log.w("sharedPref","removing ... " +entry.getKey());
+//                    Log.w("sharedPref","removing ... " +entry.getKey());
                     sharedEditor.remove(entry.getKey());
                 }
             }

@@ -10,7 +10,6 @@ import static com.urrecliner.chattalk.Vars.sharedEditor;
 import static com.urrecliner.chattalk.Vars.tableFolder;
 import static com.urrecliner.chattalk.Vars.topTabs;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -31,7 +30,6 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
@@ -202,21 +200,4 @@ public class Fragment_3Stock extends Fragment {
         logStock = sb.toString();
         etTable.setText(new LogSpann().make(logStock, mContext));
     }
-//    OnBackPressedCallback callback;
-//    @Override
-//    public void onAttach(@NonNull Context context) {
-//        super.onAttach(context);
-//        callback = new OnBackPressedCallback(true) {
-//            @Override
-//            public void handleOnBackPressed() {
-//            }
-//        };
-//        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
-//    }
-//
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//        callback.remove();
-//    }
 }
