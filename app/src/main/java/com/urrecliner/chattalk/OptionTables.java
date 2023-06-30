@@ -48,10 +48,6 @@ class OptionTables {
         readReplacesFile();
         readPackageTable();
         readTelegramTable();
-//        String[] groupIgs =  tableListFile.read("kGroupIgnores");
-//        StringBuilder sb = new StringBuilder();
-//        for (String groupIg : groupIgs) sb.append("!").append(groupIg).append("!");
-//        kGroupWhoIgnores = sb.toString();
     }
 
     private void readPackageTable() {

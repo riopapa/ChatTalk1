@@ -26,9 +26,9 @@ import java.util.Locale;
 public class ActivityEditOneAlert extends AppCompatActivity {
 
     AlertLine al;
-    EditText eGroup, eWho, eKey1, eKey2, eTalk, eMatched, eSkip, eMemo, ePrev, eNext;
-    TextView tGroup, tWho, tKey1, tTalk, tMatched, tMemo, tPrev;
-    String mGroup, mWho, mPercent, mMemo;
+    EditText eGroup, eWho, eKey1, eKey2, eTalk, eMatched, eSkip, eMore, ePrev, eNext;
+    TextView tGroup, tWho, tKey1, tTalk, tMatched, tMore, tPrev;
+    String mGroup, mWho, mPercent, mStatement;
     View deleteMenu;
     boolean newGroup = false;
     int linePos;
@@ -48,25 +48,25 @@ public class ActivityEditOneAlert extends AppCompatActivity {
         eTalk = findViewById(R.id.e_talk);  eTalk.setText(al.talk);
         eMatched = findViewById(R.id.e_matched);  eMatched.setText(""+al.matched);
         eSkip = findViewById(R.id.e_skip); eSkip.setText(al.skip);
-        eMemo = findViewById(R.id.e_memo); eMemo.setText(al.memo.replace("~","\n"));
+        eMore = findViewById(R.id.e_more); eMore.setText(al.more);
         ePrev = findViewById(R.id.e_prev); ePrev.setText(al.prev);
         eNext = findViewById(R.id.e_next); eNext.setText(al.next);
         tGroup = findViewById(R.id.t_group); tWho = findViewById(R.id.t_who);
         tKey1 = findViewById(R.id.t_key1);
         tTalk = findViewById(R.id.t_talk); tMatched = findViewById(R.id.t_matched);
-        tMemo = findViewById(R.id.t_memo);
+        tMore = findViewById(R.id.t_more);
         tPrev = findViewById(R.id.t_prev);
         if (al.matched == -1) { // group line
             tGroup.setText("Group"); tWho.setText("Info");
             tKey1.setText("Skip 1,2");
             tTalk.setText("Skip 3,4"); tMatched.setText("Matched");
-            tMemo.setText("Say More");
+            tMore.setText("More");
             tPrev.setText("Skip 5,6");
         } else {
             tGroup.setText("Group Name"); tWho.setText("Who");
             tKey1.setText("Key 1,2");
             tTalk.setText("Talk,Skip"); tMatched.setText("Matched");
-            tMemo.setText("Memo ~");
+            tMore.setText("More");
             tPrev.setText("Prev/Next");
         }
         new AlertTableIO().remove(alertLines, mContext);
@@ -115,7 +115,7 @@ public class ActivityEditOneAlert extends AppCompatActivity {
             alertsAdapter.notifyItemRemoved(linePos);
             makeGroupMemo();
         }
-        Upload2Google.uploadComment(mGroup, mWho, mPercent, "",mMemo);
+        Upload2Google.uploadComment(mGroup, mWho, mPercent, "", mStatement);
         new AlertSave("Delete "+mGroup);
         finish();
     }
@@ -148,21 +148,19 @@ public class ActivityEditOneAlert extends AppCompatActivity {
         String key2 = eKey2.getText().toString();
         String matchStr = eMatched.getText().toString();
         int matchInt = matchStr.equals("") ? 0: Integer.parseInt(matchStr);
-        String [] memos = eMemo.getText().toString().split("~");
-        String memo = memos[0].trim();
-        String more = (memos.length> 1) ? memos[1].trim() : "";
-        String talk = eTalk.getText().toString();
+        String more = eMore.getText().toString();
+        String mTalk = eTalk.getText().toString();
         String skip = eSkip.getText().toString();
         String prev = ePrev.getText().toString();
         if (prev.equals("")) prev = key1;
         String next = eNext.getText().toString();
         if (next.equals("")) next = key2;
-        al = new AlertLine(group, who, key1, key2, talk, matchInt, skip, memo, more,
+        al = new AlertLine(group, who, key1, key2, mTalk, matchInt, skip, more,
                 prev, next);
         alertLines.set(linePos, al);
         if (al.matched == -1 && newGroup) { // add new group dummy line
             al = new AlertLine(group, group+"누군가",
-                    "종목명", "매수가", "", 0, "","", "",
+                    "종목명", "매수가", "", 0, "","",
                     "종목명","매수가");
             alertLines.add(al);
 //                alertsAdapter.notifyItemInserted(linePos);
@@ -171,9 +169,10 @@ public class ActivityEditOneAlert extends AppCompatActivity {
         new AlertSave((al.matched == -1)? ("Save Group "+eGroup.getText().toString()):
                 ("Save "+eGroup.getText().toString() + " : " + eWho.getText().toString()));
         makeGroupMemo();
-        talk = new SimpleDateFormat("yy/MM/dd\nHH:mm", Locale.KOREA).format(new Date());
-        Upload2Google.uploadComment(mGroup, mWho, mPercent, talk, mMemo);
+        mTalk = new SimpleDateFormat("yy/MM/dd\nHH:mm", Locale.KOREA).format(new Date());
+        Upload2Google.uploadComment(mGroup, mWho, mPercent, mTalk, mStatement);
         alertsAdapter = new AlertsAdapter();
+        AlertTable.makeArrays();
         finish();
     }
 
@@ -183,7 +182,7 @@ public class ActivityEditOneAlert extends AppCompatActivity {
         for (AlertLine al: alertLines) {
             if (al.group.equals(mGroup)) {
                 if (al.matched == -1) {
-                    mWho = al.who + ((al.memo.length()> 1) ? "\n"+al.memo:"");
+                    mWho = al.who;
                     mPercent = "s("+al.key1+", "+al.key2+"\n"+al.talk+", "+al.skip+"\n"+al.prev+", "+al.next+")";
                 } else {
                     if (sb.length() > 1)
@@ -194,12 +193,12 @@ public class ActivityEditOneAlert extends AppCompatActivity {
                         .append(al.matched).append(" ")
                         .append((al.talk.length()>1)? " t("+al.talk+") ":"")
                         .append((al.skip.length()>1)? " s("+al.skip+") ":"")
-                        .append((al.memo.length()>1)? ", "+al.memo:"")
+                        .append((al.more.length()>1)? ", "+al.more:"")
                         .append(" pn<").append(al.prev).append(",").append(al.next)
                         .append(">");
                 }
             }
         }
-        mMemo = sb.toString();
+        mStatement = sb.toString();
     }
 }

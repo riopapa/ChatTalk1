@@ -66,12 +66,10 @@ class AlertTable {
             String tTalk = strings[4].trim();
             int matched = Integer.parseInt(strings[5].trim());
             String tSkip = strings[6].trim();
-            String [] tMemos = strings[7].split("~");
-            String tMemo = tMemos[0].trim();
-            String tMore = (tMemos.length>1) ? tMemos[1].trim():"";
+            String tMore = strings[7];
             String prev = strings[8].trim(); if (prev.equals("")) prev = tKey1;
             String next = strings[9].trim(); if (next.equals("")) next = tKey2;
-            alertLines.add(new AlertLine(tGroup, tWho, tKey1, tKey2, tTalk, matched, tSkip, tMemo, tMore, prev, next));
+            alertLines.add(new AlertLine(tGroup, tWho, tKey1, tKey2, tTalk, matched, tSkip, tMore, prev, next));
         }
         updateMatched();
         makeArrays();
@@ -122,7 +120,6 @@ class AlertTable {
                 svGroup = al.group;
             }
         }
-
         int groupCnt = aGroups.size();
         aGSkip1 = gSkip1.toArray(new String[groupCnt]);
         aGSkip2 = gSkip2.toArray(new String[groupCnt]);

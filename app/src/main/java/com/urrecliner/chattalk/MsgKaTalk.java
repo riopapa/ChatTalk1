@@ -16,6 +16,8 @@ import static com.urrecliner.chattalk.Vars.alertsAdapter;
 import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.nineIgnores;
 
+import android.util.Log;
+
 import com.urrecliner.chattalk.Sub.IsWhoNine;
 
 import java.util.Collections;
@@ -28,6 +30,7 @@ class MsgKaTalk {
                 utils = new Utils();
             int gIdx = Collections.binarySearch(aGroups, group);
             if (gIdx >= 0) {    // within Alert Group
+                Log.w("Group "+gIdx,group+" "+aGroupsPass.get(gIdx));
                 if (aGroupsPass.get(gIdx) || fText.length() < 8 || fText.contains("http"))
                     return;
                 if (aGroupSaid[gIdx].equals(fText))

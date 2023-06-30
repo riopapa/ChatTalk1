@@ -114,7 +114,7 @@ public class FileIO {
                     new BufferedReader(new InputStreamReader(in));
             String strLine;
             while ((strLine = br.readLine()) != null) {
-                myData = myData + strLine;
+                myData += strLine;
             }
             in.close();
         } catch (IOException e) {

@@ -19,7 +19,6 @@ import android.media.AudioManager;
 import com.urrecliner.chattalk.Sub.AlertLine;
 import com.urrecliner.chattalk.Sub.AlertToast;
 import com.urrecliner.chattalk.Sub.Dot;
-import com.urrecliner.chattalk.Sub.Hangul;
 import com.urrecliner.chattalk.Sub.PhoneVibrate;
 import com.urrecliner.chattalk.Sub.StockName;
 

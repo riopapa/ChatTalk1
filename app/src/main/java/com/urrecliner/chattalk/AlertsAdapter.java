@@ -34,7 +34,7 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tGroup, tWho, tKey1, tKey2, tTalk, tCount, tSkip, tMemo;
+        TextView tGroup, tWho, tKey1, tKey2, tTalk, tCount, tSkip, tMore;
         View tLine;
 
         ViewHolder(final View itemView) {
@@ -47,7 +47,7 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
             tTalk = itemView.findViewById(R.id.one_talk);
             tCount = itemView.findViewById(R.id.one_matched);
             tSkip = itemView.findViewById(R.id.one_skip);
-            tMemo = itemView.findViewById(R.id.one_memo);
+            tMore = itemView.findViewById(R.id.one_memo);
         }
     }
 
@@ -89,9 +89,9 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
             holder.tTalk.setTextColor(ContextCompat.getColor(mContext, R.color.textFore));
             holder.tSkip.setText(al.skip);
             holder.tSkip.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 2f));
-            holder.tMemo.setText((al.more.length() > 1) ? al.memo+">>" : al.memo);
-            holder.tMemo.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 3f));
-            holder.tMemo.setBackgroundColor(colorWho);
+            holder.tMore.setText(al.more);
+            holder.tMore.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 3f));
+            holder.tMore.setBackgroundColor(colorWho);
             holder.tLine.setBackgroundColor(ContextCompat.getColor(mContext, R.color.headLine));
         } else {
             holder.tKey2.setBackgroundColor(colorWho);
@@ -101,8 +101,8 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
             holder.tSkip.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0.5f));
             holder.tTalk.setText(al.talk);
             holder.tTalk.setTextColor(ContextCompat.getColor(mContext, R.color.alertTalk));
-            holder.tMemo.setText(al.memo);
-            holder.tMemo.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, .5f));
+            holder.tMore.setText(al.more);
+            holder.tMore.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, .5f));
             holder.tLine.setBackgroundColor(ContextCompat.getColor(mContext, R.color.lightLine));
         }
         holder.tCount.setBackgroundColor(colorWho);

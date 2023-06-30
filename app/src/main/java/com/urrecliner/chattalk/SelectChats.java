@@ -234,7 +234,7 @@ public class SelectChats {
                     if (al.matched == -1) { // head
                         gSkip1 = al.key1; gSkip2 = al.key2; gSkip3 = al.talk; gSkip4 = al.skip;
                         groupInfo = "("+al.who + ") skip |"+ gSkip1 + "|"+ gSkip2 + "|"
-                                + gSkip3 +"|" + gSkip4 +"|\n" + al.memo;
+                                + gSkip3 +"|" + gSkip4 +"|\n" + al.more;
                         if (gSkip1.equals("")) gSkip1 = "업슴";
                         if (gSkip2.equals("")) gSkip2 = "업슴";
                         if (gSkip3.equals("")) gSkip3 = "업슴";

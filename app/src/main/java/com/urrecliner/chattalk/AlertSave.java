@@ -6,7 +6,6 @@ import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.tableFolder;
 import static com.urrecliner.chattalk.Vars.todayFolder;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
@@ -15,9 +14,6 @@ import com.urrecliner.chattalk.Sub.ByteLength;
 import com.urrecliner.chattalk.Sub.SnackBar;
 
 import org.apache.commons.lang3.StringUtils;
-
-import java.io.File;
-import java.util.ArrayList;
 
 public class AlertSave {
     public AlertSave(String msg) {
@@ -39,8 +35,7 @@ public class AlertSave {
             String m = "     "+al.matched+"  ";
             s.append(m.substring(m.length()-7)).append("^");
             s.append(strPad(al.skip, (padLen[5]))).append("^");
-            s.append(" ").append(al.memo);
-            s.append("~").append(al.more).append("^");
+            s.append(al.more).append("^");
             s.append(strPad(al.prev, (padLen[6]))).append("^");
             s.append(strPad(al.next, (padLen[7]))).append("^");
             s.append("\n");
@@ -48,7 +43,6 @@ public class AlertSave {
         if (todayFolder == null)
             new ReadyToday();
         saveTable();
-//        new AlertTableIO().remove(alertLines, mContext);
         new SnackBar().show("Alert Table", msg);
     }
 
@@ -62,7 +56,7 @@ public class AlertSave {
                 .replace("\"next\":","\n\"next\":");
         FileIO.writeFile( tableFolder,"alertTable.json",json,"");
         FileIO.writeFile( todayFolder,"alertTable.json",json,"");
-
+        AlertTable.makeArrays();
         for (int i = 0; i < alertLines.size(); i++) {
             AlertLine al = alertLines.get(i);
             if (al.matched != -1) {

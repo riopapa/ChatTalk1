@@ -20,7 +20,6 @@ import android.os.Vibrator;
 import android.os.VibratorManager;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
-import android.util.Log;
 
 import com.urrecliner.chattalk.Sub.AlertToast;
 import com.urrecliner.chattalk.Sub.IgnoreThis;
