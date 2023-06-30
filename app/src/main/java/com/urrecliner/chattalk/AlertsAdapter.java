@@ -76,14 +76,11 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
             colorWho = position + position*206 + position*206*206;
             colorWho |= 0xADA0A0A0;
         }
-        holder.tWho.setBackgroundColor(colorWho);
-        holder.tWho.setSingleLine(true);
-        holder.tWho.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-        holder.tWho.setSelected(true);
 
         holder.tKey1.setText(al.key1);
         holder.tKey2.setText(al.key2);
         if (al.matched == -1) {
+            holder.tWho.setBackgroundColor(colorWho);
             holder.tCount.setVisibility(View.GONE);
             holder.tTalk.setText(al.talk);
             holder.tTalk.setTextColor(ContextCompat.getColor(mContext, R.color.textFore));
@@ -92,8 +89,13 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
             holder.tMore.setText(al.more);
             holder.tMore.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 3f));
             holder.tMore.setBackgroundColor(colorWho);
-            holder.tLine.setBackgroundColor(ContextCompat.getColor(mContext, R.color.headLine));
+            holder.tLine.setBackground(ContextCompat.getDrawable(mContext, R.drawable.border_box));
         } else {
+            holder.tGroup.setText("");
+            holder.tWho.setBackgroundColor(colorWho);
+            holder.tWho.setSingleLine(true);
+            holder.tWho.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+            holder.tWho.setSelected(true);
             holder.tKey2.setBackgroundColor(colorWho);
             holder.tCount.setVisibility(View.VISIBLE);
             holder.tCount.setText("" + matched);

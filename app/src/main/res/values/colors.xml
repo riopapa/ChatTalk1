@@ -16,8 +16,8 @@
 
     <color name="colorLine1">#FFFFFF</color>
     <color name="colorLine2">#FFFFFF</color>
-    <color name="headLine">#EBE3B2</color>
-    <color name="lightLine">#ACAFBD</color>
+    <color name="headLine">#DCC645</color>
+    <color name="lightLine">#F7E489</color>
     <color name="textFore">#222233</color>
     <color name="alertBack">#805B79A6</color>
     <color name="alertTalk">#7E1E8F</color>

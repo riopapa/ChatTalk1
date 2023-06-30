@@ -38,8 +38,8 @@ class AlertTable {
 //   group^ group name  ^     skip1  ^  skip2    ^ skip3 ^  -1  ^ skip4    ^ sayMore
 //    고선 ^ VIP리딩방 CA ^     !!     ^     해외  ^  BTC  ^       ^    0%    ^ 개장전
 
-//   group^  who        ^  keyword1 ^ keyword2 ^ talk ^ count ^ skip     ^ memo ^ prev ^ next
-//    고선 ^ 고선생       ^    매수    ^   목표가  ^      ^  101  ^          ^ 01/11
+//   group^  who        ^  keyword1 ^ keyword2 ^ talk ^ count ^ skip     ^ more ^ prev ^ next
+//    고선 ^ 고선생       ^    매수    ^   목표가  ^      ^  101  ^          ^ 중지
 
     static void readFile(String msg) {
 
