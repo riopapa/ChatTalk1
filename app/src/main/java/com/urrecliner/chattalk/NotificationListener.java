@@ -15,11 +15,13 @@ import static com.urrecliner.chattalk.Vars.teleChannels;
 import static com.urrecliner.chattalk.Vars.teleGroups;
 import static com.urrecliner.chattalk.Vars.textIgnores;
 
+import android.content.Context;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.os.VibratorManager;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
+import android.util.Log;
 
 import com.urrecliner.chattalk.Sub.AlertToast;
 import com.urrecliner.chattalk.Sub.IgnoreThis;
@@ -28,6 +30,8 @@ import com.urrecliner.chattalk.Sub.PhoneVibrate;
 import com.urrecliner.chattalk.Sub.StockName;
 
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class NotificationListener extends NotificationListenerService {
 

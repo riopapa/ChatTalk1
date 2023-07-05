@@ -24,17 +24,12 @@ import java.util.TimerTask;
 public class NotificationBar {
 
     static String svMsg = "";
-    static int count;
-    static Timer timer = new Timer();
-    static TimerTask timerTask = null;
-    static long lastTime = 0;
 
     public void update(String who, String msg, boolean show_icon) {
 
 
         svMsg = new SimpleDateFormat("HH:mm\u00A0", Locale.KOREA).format(new Date());
         svMsg += (msg.length() > 30) ? msg.substring(0, msg.length()*2/3): msg;
-        count = 0;
         if (mContext != null) {
             Intent intent = new Intent(mContext, NotificationService.class);
             intent.putExtra("operation", SHOW_MESSAGE);
@@ -54,26 +49,7 @@ public class NotificationBar {
                         -> Toast.makeText(mContext, who + " > " + msg, Toast.LENGTH_SHORT).show());
             }
         }
-        lastTime = System.currentTimeMillis();
 
-        final long LOOP_INTERVAL = 45 * 60 * 1000;
-
-        if (timerTask != null)
-            timerTask.cancel();
-        if (timer != null)
-            timer.cancel();
-
-        timer = new Timer();
-        timerTask = new TimerTask() {
-            @Override
-            public void run () {
-                count++;
-                Log.w("Noty Bar "+count, (System.currentTimeMillis()-lastTime)/1000+"  " + svMsg);
-                lastTime = System.currentTimeMillis();
-                System.gc();
-            }
-        };
-        timer.schedule(timerTask, LOOP_INTERVAL, LOOP_INTERVAL);
     }
 
     static void hideStop() {

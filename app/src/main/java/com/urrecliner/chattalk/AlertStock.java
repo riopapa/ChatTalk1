@@ -68,7 +68,7 @@ public class AlertStock {
                 new AlertToast().show(mContext, title);
                 copyToClipBoard(stock_Name);
             } else {
-                notificationBar.update(stock_Name, who+" : "+sText, false);
+                notificationBar.update(stock_Name+" | "+who, who+" : "+sText, false);
                 subFunc.sounds.beepOnce(Vars.soundType.ONLY.ordinal());
             }
             save(al, mContext);

@@ -69,12 +69,13 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
 
         holder.tGroup.setText(al.group);
         int matched = al.matched;
-        String who = " " + al.who + " ";
+        String who = al.who;
         holder.tWho.setText(who);
         if (!svWho.equals(al.who)) {
             svWho = al.who;
-            colorWho = position + position*206 + position*206*206;
-            colorWho |= 0xADA0A0A0;
+            colorWho = position + 100;
+            colorWho = colorWho + colorWho*206 + colorWho*206*206;
+            colorWho |= 0xADC0A0C0;
         }
 
         holder.tKey1.setText(al.key1);

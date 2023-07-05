@@ -93,7 +93,9 @@ public class ActivityEditOneAlert extends AppCompatActivity {
     }
 
     private void deleteAlert() {
+        String info;
         if (alertLines.get(linePos).matched == -1) {    // group delete
+            info = alertLines.get(linePos).group;
             makeGroupMemo();
             mWho = "\n삭제됨\n" + mWho + "\n"
                     + new SimpleDateFormat(".MM/dd HH:mm", Locale.KOREA).format(new Date())
@@ -111,12 +113,13 @@ public class ActivityEditOneAlert extends AppCompatActivity {
                     i++;
             }
         } else {
+            info = alertLines.get(linePos).group+" "+ alertLines.get(linePos).who;
             alertLines.remove(linePos);
             alertsAdapter.notifyItemRemoved(linePos);
             makeGroupMemo();
         }
         Upload2Google.uploadComment(mGroup, mWho, mPercent, "", mStatement);
-        new AlertSave("Delete "+mGroup);
+        new AlertSave("Delete "+info);
         finish();
     }
 
