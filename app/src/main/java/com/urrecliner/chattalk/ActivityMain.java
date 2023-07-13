@@ -151,7 +151,9 @@ public class ActivityMain extends AppCompatActivity {
 
         WifiMonitor.init(mContext);
 
-        new NotificationServiceStart(mContext);
+//        new NotificationServiceStart(mContext);
+        Intent updateIntent = new Intent(mContext, NotificationService.class);
+        mContext.startForegroundService(updateIntent);
         notificationBar.hideStop();
         super.onResume();
 

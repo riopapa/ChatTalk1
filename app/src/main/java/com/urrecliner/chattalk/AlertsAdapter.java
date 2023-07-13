@@ -59,6 +59,7 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
     }
 
     String svGroup = "sv", svWho = "sv";
+    int textColor;
     int colorWho = 0xFFA0A0A0;
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
@@ -81,6 +82,9 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
         holder.tKey1.setText(al.key1);
         holder.tKey2.setText(al.key2);
         if (al.matched == -1) {
+            textColor = 0xFF000000;
+            if (al.more.length() > 1)
+                textColor = 0x90000000;
             holder.tWho.setBackgroundColor(colorWho);
             holder.tCount.setVisibility(View.GONE);
             holder.tTalk.setText(al.talk);
@@ -109,6 +113,16 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
             holder.tLine.setBackgroundColor(ContextCompat.getColor(mContext, R.color.lightLine));
         }
         holder.tCount.setBackgroundColor(colorWho);
+
+        holder.tGroup.setTextColor(textColor);
+        holder.tWho.setTextColor(textColor);
+        holder.tKey1.setTextColor(textColor);
+        holder.tKey2.setTextColor(textColor);
+        holder.tCount.setTextColor(textColor);
+        holder.tSkip.setTextColor(textColor);
+        holder.tMore.setTextColor(textColor);
+        holder.tTalk.setTextColor(textColor);
+
         holder.tLine.setOnClickListener(v -> {
             Intent intent = new Intent(mContext, ActivityEditOneAlert.class);
             intent.putExtra("linePos", holder.getAdapterPosition());

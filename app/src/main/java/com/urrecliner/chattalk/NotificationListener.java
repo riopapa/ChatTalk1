@@ -3,6 +3,7 @@ package com.urrecliner.chattalk;
 import static com.urrecliner.chattalk.Vars.kGroupWhoIgnores;
 import static com.urrecliner.chattalk.Vars.kkTxtIgnores;
 import static com.urrecliner.chattalk.Vars.mContext;
+import static com.urrecliner.chattalk.Vars.nineIgnores;
 import static com.urrecliner.chattalk.Vars.sbnAppFullName;
 import static com.urrecliner.chattalk.Vars.sbnGroup;
 import static com.urrecliner.chattalk.Vars.sbnPackageNick;
@@ -25,7 +26,9 @@ import android.util.Log;
 
 import com.urrecliner.chattalk.Sub.AlertToast;
 import com.urrecliner.chattalk.Sub.IgnoreThis;
+import com.urrecliner.chattalk.Sub.IsWhoNine;
 import com.urrecliner.chattalk.Sub.MapWhoText;
+import com.urrecliner.chattalk.Sub.Numbers;
 import com.urrecliner.chattalk.Sub.PhoneVibrate;
 import com.urrecliner.chattalk.Sub.StockName;
 
@@ -75,6 +78,7 @@ public class NotificationListener extends NotificationListenerService {
     public static VibrationEffect vibEffect = null;
     public static final long[] vibPattern = {0, 20, 200, 300, 300, 400, 400, 500, 550, 10, 20, 200, 300, 300};
 
+    public static Sounds sounds;
 
     @Override
     public void onCreate() {
@@ -127,7 +131,9 @@ public class NotificationListener extends NotificationListenerService {
                     String head = "{카톡!"+ sbnWho + "} ";
                     notificationBar.update("카톡!"+sbnWho, sbnText, true);
                     subFunc.logUpdate.addQue( head, sbnText);
-                    subFunc.sounds.speakAfterBeep(" 카톡왔음 " + sbnWho + " 님이 " + utils.replaceKKHH(utils.makeEtc(sbnText, 150)));
+                    if (IsWhoNine.in(nineIgnores, sbnWho))
+                        sbnText = new Numbers().out(sbnText);
+                    sounds.speakAfterBeep(" 카톡왔음 " + sbnWho + " 님이 " + utils.replaceKKHH(utils.makeEtc(sbnText, 150)));
                 } else {    // with group name
                     if (IgnoreThis.contains(sbnGroup, kGroupWhoIgnores))
                         return;
@@ -159,13 +165,6 @@ public class NotificationListener extends NotificationListenerService {
                             sbnWho = sbnWho.substring(sbnWho.indexOf(":")+2).trim();
                         if (msgKaTalk == null)
                             msgKaTalk = new MsgKaTalk();
-                        if (sbnGroup.equals("상한")) {
-                            String head = sbnGroup + ">" + sbnWho;
-                            String sText = sbnText;
-                            notificationBar.update( head, sText, true);
-                            new AlertToast().show(mContext, head);
-                            subFunc.logUpdate.addQue(head, sText);
-                        }
                         msgKaTalk.say(sbnGroup, sbnWho, sbnGroup+sbnText);
                         return;
                     }
@@ -174,7 +173,7 @@ public class NotificationListener extends NotificationListenerService {
                 subFunc.logUpdate.addQue(head, sbnText);
                 notificationBar.update(sbnGroup + "|" + sbnWho, sbnText, true);
                 sbnText = head + " 로 부터. " + sbnText;
-                subFunc.sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
+                sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
                 break;
 
             case SMS:
@@ -208,7 +207,7 @@ public class NotificationListener extends NotificationListenerService {
                 if (sbnText.contains("연결됨")) {
                     long nowTime = System.currentTimeMillis();
                     if ((nowTime - tesla_time) > 30 * 60 * 1000)    // 30 min.
-                        subFunc.sounds.beepOnce(Vars.soundType.TESLY.ordinal());
+                        sounds.beepOnce(Vars.soundType.TESLY.ordinal());
                     tesla_time = nowTime;
                     break;
                 }
@@ -219,7 +218,7 @@ public class NotificationListener extends NotificationListenerService {
                 subFunc.logUpdate.addQue("[ 테스리 ]", sbnText);
                 notificationBar.update(sbnPackageNick, sbnText, true);
 //                FileIO.append2Today("Tesla.txt", sbnText);
-                subFunc.sounds.speakAfterBeep("테스리로 부터 " + sbnText);
+                sounds.speakAfterBeep("테스리로 부터 " + sbnText);
                 break;
 
             case TOSS:
@@ -233,8 +232,10 @@ public class NotificationListener extends NotificationListenerService {
                 sbnText = sbnWho+"🖐"+ utils.text2OneLine(sbnText);
                 subFunc.logUpdate.addQue(head , sbnText);
                 notificationBar.update(sbnPackageNick, sbnText, true);
+                if (IsWhoNine.in(nineIgnores, sbnPackageNick))
+                    sbnText = new Numbers().out(sbnText);
                 sbnText = "토스 로부터 " + sbnText;
-                subFunc.sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
+                sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
                 break;
 
             case YYX:     // exclude Group e.g. bank app
@@ -249,8 +250,10 @@ public class NotificationListener extends NotificationListenerService {
                 head = "[" + sbnPackageNick + "🖐️"+ sbnWho +"] ";
                 subFunc.logUpdate.addQue(head , sbnText);
                 notificationBar.update(sbnPackageNick + ":"+ sbnWho, sbnText, true);
+                if (IsWhoNine.in(nineIgnores, sbnPackageNick))
+                    sbnText = new Numbers().out(sbnText);
                 sbnText = sbnPackageNick + " 로부터 " + head + sbnText;
-                subFunc.sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
+                sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
                 break;
 
             case YNX: // no who, log Yes, say Yes
@@ -259,7 +262,9 @@ public class NotificationListener extends NotificationListenerService {
                     return;
                 sbnText = sbnGroup + "✓" + utils.text2OneLine(sbnText);
                 subFunc.logUpdate.addQue("["+sbnPackageNick+"]", sbnText);
-                subFunc.sounds.speakAfterBeep(sbnPackageNick + " 로 부터 " + sbnText);
+                if (IsWhoNine.in(nineIgnores, sbnPackageNick))
+                    sbnText = new Numbers().out(sbnText);
+                sounds.speakAfterBeep(sbnPackageNick + " 로 부터 " + sbnText);
                 break;
 
             case YWX: // treat who as text
@@ -269,7 +274,9 @@ public class NotificationListener extends NotificationListenerService {
                 sbnText = sbnWho + "✓" + utils.text2OneLine(sbnText);
                 subFunc.logUpdate.addQue(sbnPackageNick, sbnText);
                 notificationBar.update(sbnPackageNick, sbnText, true);
-                subFunc.sounds.speakAfterBeep(sbnPackageNick + " 로 부터 " + sbnText);
+                if (IsWhoNine.in(nineIgnores, sbnPackageNick))
+                    sbnText = new Numbers().out(sbnText);
+                sounds.speakAfterBeep(sbnPackageNick + " 로 부터 " + sbnText);
                 break;
 
             case YYN:   //
@@ -286,8 +293,10 @@ public class NotificationListener extends NotificationListenerService {
                 subFunc.logUpdate.addQue(head, sbnText);
                 notificationBar.update((sbnGroup.equals("")) ? sbnPackageNick + "🖐️"+ sbnWho
                         : sbnGroup + "🖐️"+ sbnWho, sbnText, true);
+                if (IsWhoNine.in(nineIgnores, sbnPackageNick))
+                    sbnText = new Numbers().out(sbnText);
                 sbnText = sbnPackageNick + " 로부터 " + head + sbnText;
-                subFunc.sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
+                sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
                 break;
 
             case YYY:
@@ -302,9 +311,11 @@ public class NotificationListener extends NotificationListenerService {
                 head = sbnGroup + "👍"+ sbnWho +"👍";
                 subFunc.logUpdate.addQue("[" + sbnPackageNick + "] "+head, sbnText);
                 notificationBar.update(sbnGroup + "👍"+ sbnWho, sbnText, true);
-                utils.logW(sbnPackageNick, head+sbnText);
+//                utils.logW(sbnPackageNick, head+sbnText);
+                if (IsWhoNine.in(nineIgnores, sbnPackageNick))
+                    sbnText = new Numbers().out(sbnText);
                 sbnText = sbnPackageNick + " 로부터 " + head + sbnText;
-                subFunc.sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
+                sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
                 break;
 
             case YNN: // talk only
@@ -312,7 +323,9 @@ public class NotificationListener extends NotificationListenerService {
                 if (IgnoreThis.contains(sbnText, textIgnores))
                     return;
                 sbnText = utils.strReplace(sbnWho, utils.text2OneLine(sbnText));
-                subFunc.sounds.speakAfterBeep(sbnPackageNick + " 로 부터 " + sbnText);
+                if (IsWhoNine.in(nineIgnores, sbnPackageNick))
+                    sbnText = new Numbers().out(sbnText);
+                sounds.speakAfterBeep(sbnPackageNick + " 로 부터 " + sbnText);
                 break;
 
             case BAND:
@@ -329,7 +342,7 @@ public class NotificationListener extends NotificationListenerService {
                 head = sbnGroup + "🗼"+ sbnWho +"🗼";
                 notificationBar.update(sbnGroup + "🗼"+ sbnWho, sbnText, true);
                 sbnText = head + " 로부터 "+ sbnText;
-                subFunc.sounds.speakAfterBeep(sbnPackageNick + " " + sbnText);
+                sounds.speakAfterBeep(sbnPackageNick + " " + sbnText);
                 break;
 
             default:
@@ -338,7 +351,7 @@ public class NotificationListener extends NotificationListenerService {
                         ", text:" + utils.text2OneLine(sbnText);
                 notificationBar.update("[새 앱]", sbnText, true);
                 subFunc.logUpdate.addQue("[ " + sbnAppFullName + " ]", sbnText);
-                subFunc.sounds.speakAfterBeep(sbnText);
+                sounds.speakAfterBeep(sbnText);
                 break;
         }
     }

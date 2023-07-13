@@ -1,11 +1,12 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.NotificationListener.vars;
 import static com.urrecliner.chattalk.Vars.logQue;
 import static com.urrecliner.chattalk.Vars.logStock;
 import static com.urrecliner.chattalk.Vars.packageDirectory;
 import static com.urrecliner.chattalk.Vars.sharedEditor;
 import static com.urrecliner.chattalk.Vars.tableFolder;
+import static com.urrecliner.chattalk.Vars.timeBegin;
+import static com.urrecliner.chattalk.Vars.timeEnd;
 import static com.urrecliner.chattalk.Vars.toDay;
 import static com.urrecliner.chattalk.Vars.todayFolder;
 
@@ -25,9 +26,9 @@ public class ReadyToday {
         c.setTimeInMillis(System.currentTimeMillis());
         c.set(Calendar.HOUR_OF_DAY, 8);
         c.set(Calendar.MINUTE, 30);
-        vars.timeBegin = c.getTimeInMillis();
+        timeBegin =c.getTimeInMillis();
         c.set(Calendar.HOUR_OF_DAY, 16);
-        vars.timeEnd = c.getTimeInMillis();
+        timeEnd = c.getTimeInMillis();
 
         todayFolder = new File(packageDirectory, toDay);
         if (!todayFolder.exists()) {
@@ -39,11 +40,11 @@ public class ReadyToday {
                 sharedEditor.putString("logQue", logQue);
                 sharedEditor.putString("logStock", logStock);
                 sharedEditor.apply();
-                String logStockFile = "logStock " + toDay + ".txt";
-                FileIO.writeKR(new File(todayFolder, logStockFile), logStock);
+//                String logStockFile = "logStock " + toDay + ".txt";
+//                FileIO.writeKR(new File(todayFolder, logStockFile), logStock);
                 FileIO.writeKR(new File(tableFolder, "logStock.txt"), logStock);
-                String logQueFile = "logQue " + toDay + ".txt";
-                FileIO.writeKR(new File(todayFolder, logQueFile), logQue);
+//                String logQueFile = "logQue " + toDay + ".txt";
+//                FileIO.writeKR(new File(todayFolder, logQueFile), logQue);
                 FileIO.writeKR(new File(tableFolder, "logQue.txt"), logQue);
                 new Utils().deleteOldFiles();
             }

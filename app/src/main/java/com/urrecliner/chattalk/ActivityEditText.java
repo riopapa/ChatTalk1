@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
 public class ActivityEditText extends AppCompatActivity {
 
     boolean isPackageNames;
-    final String dummyHead = "- [ ";
     int pos = -1;
     EditText et;
     String key, fullText;

@@ -19,7 +19,10 @@ public class BootReceiver extends BroadcastReceiver {
 
             vars = new Vars(context, "Booted !");
             new Handler(Looper.getMainLooper()).postDelayed(() -> {
-                new NotificationServiceStart(context);
+//                new NotificationServiceStart(context);
+                Intent updateIntent = new Intent(context, NotificationService.class);
+                context.startForegroundService(updateIntent);
+
                 new Handler(Looper.getMainLooper()).postDelayed(() ->
                         notificationBar.update("After Boot", "Rebooted", false), 10000);
             }, 5000);

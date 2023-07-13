@@ -1,5 +1,6 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.NotificationListener.sounds;
 import static com.urrecliner.chattalk.NotificationListener.subFunc;
 import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.HIDE_STOP;
@@ -77,17 +78,18 @@ public class NotificationService extends Service {
 
                 who1 = Objects.requireNonNull(intent.getStringExtra("who"))
                         .replace(" ", "\u00A0");
-//                while (ByteLength.get(who1) > 24)
-//                    who1 = who1.substring(0, who1.length()-1);
                 msg1 = utils.makeEtc(Objects.requireNonNull(intent.getStringExtra("msg")), 100)
                         .replace(" ", "\u00A0");
                 time1 = new SimpleDateFormat("HH:mm", Locale.KOREA).format(new Date());
                 show_stop = intent.getBooleanExtra("stop", true);
-
+                if (msg1.length() > 400)
+                    msg1 = msg1.substring(0,400);
+                if (msg2.length() > 400)
+                    msg2 = msg2.substring(0,400);
                 break;
 
             case STOP_SAY1:
-                subFunc.sounds.stopTTS();
+                sounds.stopTTS();
                 show_stop = false;
                 break;
 
@@ -121,6 +123,7 @@ public class NotificationService extends Service {
         if (null == mBuilder) {
             mBuilder = new NotificationCompat.Builder(this, "default")
                     .setSmallIcon(R.drawable.chat_talk)
+                    .setBadgeIconType(NotificationCompat.BADGE_ICON_LARGE)
                     .setColor(getApplicationContext().getColor(R.color.barLine1))
                     .setContent(mRemoteViews)
                     .setOnlyAlertOnce(true)
@@ -144,8 +147,8 @@ public class NotificationService extends Service {
 
     private void updateRemoteViews() {
 
-        String timeA = time1.substring(0,3)+"\n"+time1.substring(3);
-        mRemoteViews.setTextViewText(R.id.msg_time1, timeA);
+//        String timeA = time1.substring(0,3)+"\n"+time1.substring(3);
+        mRemoteViews.setTextViewText(R.id.msg_time1, time1);
         mRemoteViews.setTextViewText(R.id.msg_who1, who1);
         mRemoteViews.setTextViewText(R.id.msg_text1, msg1);
         mRemoteViews.setTextViewText(R.id.msg_time2, time2);

@@ -8,7 +8,7 @@ public class StockName {
             str = str.substring(p1+prev.length());
             p1 = str.indexOf(next);
             if (p1 > 0) {
-                sName = str.substring(0, p1).replaceAll("[\\d,%:|#+()\\s]", "").trim();
+                sName = str.substring(0, p1).replaceAll("[\\d,%:|#+()]", "").trim();
                 if (sName.length() > 10)
                     sName = sName.substring(0,8);
             }

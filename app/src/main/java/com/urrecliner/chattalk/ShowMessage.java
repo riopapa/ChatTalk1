@@ -34,7 +34,7 @@ public class ShowMessage {
                 .setContentTitle(textTitle)
                 .setContentText(textContent)
                 .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText("Big " + textContent))
+                        .bigText(textContent))
                 .setContentInfo("Info");
         int id = new Random().nextInt(2000)+1000;
         manager.notify(id, notificationBuilder.build());

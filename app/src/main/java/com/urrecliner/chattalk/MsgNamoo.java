@@ -1,6 +1,7 @@
 package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.NotificationListener.notificationBar;
+import static com.urrecliner.chattalk.NotificationListener.sounds;
 import static com.urrecliner.chattalk.NotificationListener.subFunc;
 
 class MsgNamoo {
@@ -18,18 +19,18 @@ class MsgNamoo {
             String[] words = text.split(" ");
             if (words.length < 6) {
                 subFunc.logUpdate.addStock("[NH나무App 에러]" + words.length, text);
-                subFunc.sounds.speakAfterBeep("체결 메시지 에러 " + text);
+                sounds.speakAfterBeep("체결 메시지 에러 " + text);
             } else {
                 String[] joins = new String[]{ words[1], words[3], ";", words[4], words[5],
                         words[1], words[1]};
                 sText = String.join(" ", joins);
-                subFunc.sounds.speakAfterBeep(sText);
+                sounds.speakAfterBeep(sText);
             }
             notificationBar.update(words[3]+"."+words[1], sText, true);
             subFunc.logUpdate.addStock("[NH나무] "+words[3], sText);
         } else {
             subFunc.logUpdate.addStock("[NH나무App]", text);
-            subFunc.sounds.speakAfterBeep("나무 증권 " + text);
+            sounds.speakAfterBeep("나무 증권 " + text);
         }
     }
 }

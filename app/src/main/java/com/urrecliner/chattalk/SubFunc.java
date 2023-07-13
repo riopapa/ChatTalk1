@@ -2,10 +2,10 @@ package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.toDay;
+import static com.urrecliner.chattalk.NotificationListener.sounds;
 
 public class SubFunc {
     public LogUpdate logUpdate;
-    public Sounds sounds;
     public AlertStock alertStock;
 
     public SubFunc() {

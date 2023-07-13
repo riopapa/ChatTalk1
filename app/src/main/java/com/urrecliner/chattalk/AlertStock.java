@@ -4,6 +4,7 @@ import static android.content.Context.CLIPBOARD_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 import static com.urrecliner.chattalk.NotificationListener.notificationBar;
 import static com.urrecliner.chattalk.NotificationListener.phoneVibrate;
+import static com.urrecliner.chattalk.NotificationListener.sounds;
 import static com.urrecliner.chattalk.NotificationListener.stockName;
 import static com.urrecliner.chattalk.NotificationListener.subFunc;
 import static com.urrecliner.chattalk.NotificationListener.utils;
@@ -19,6 +20,7 @@ import android.media.AudioManager;
 import com.urrecliner.chattalk.Sub.AlertLine;
 import com.urrecliner.chattalk.Sub.AlertToast;
 import com.urrecliner.chattalk.Sub.Dot;
+import com.urrecliner.chattalk.Sub.Numbers;
 import com.urrecliner.chattalk.Sub.PhoneVibrate;
 import com.urrecliner.chattalk.Sub.StockName;
 
@@ -36,7 +38,6 @@ public class AlertStock {
         al.matched++;
         alertLines.set(aIdx, al);
         String k1 = al.key1, k2 = al.key2;
-        group = al.group;
         who = al.who;
         sTalk = al.talk;
         String percent = (iText.contains("매도") || iText.contains("익절"))? "1.9" :sTalk;
@@ -45,36 +46,36 @@ public class AlertStock {
             stockName = new StockName();
         String stock_Name = stockName.parse(al.prev, al.next, iText);
         String sText = utils.strReplace(iGroup, iText);
-        String head = " [" + group + "." + who + "] "+stock_Name;
+        String head = " [" + iGroup + "." + who + "] "+stock_Name;
         String keyStr = key12+sTalk;
         Thread thisThread = new Thread(() -> {
             if (sTalk.length() > 0) {
-                subFunc.sounds.beepOnce(Vars.soundType.STOCK.ordinal());
+                sounds.beepOnce(Vars.soundType.STOCK.ordinal());
 //                String cho = new Hangul().getCho(stock_Name);
 //                if (cho.length() > 4)
 //                    cho = cho.substring(0,4);
 //                String[] joins = new String[]{who, group, who, stock_Name, sTalk, cho, stock_Name, sText};
-                String[] joins = new String[]{group, who, stock_Name, sTalk, stock_Name, sText};
-                subFunc.sounds.speakBuyStock(String.join(" , ", joins)); //.replaceAll("\\d","", )
+                String[] joins = new String[]{iGroup, who, stock_Name, sTalk, stock_Name, new Numbers().out(sText)};
+                sounds.speakBuyStock(String.join(" , ", joins));
                 if (isSilentNow()) {
                     if (phoneVibrate == null)
                         phoneVibrate = new PhoneVibrate();
                     phoneVibrate.vib();
                 }
                 String title = "["+stock_Name+"/"+who+"]";
-                String text = group + " : " + who+" > "+sText;
+                String text = iGroup + " : " + who+" > "+sText;
                 notificationBar.update( title, text, true);
                 new ShowMessage().send(mContext, title,text);
                 new AlertToast().show(mContext, title);
                 copyToClipBoard(stock_Name);
             } else {
-                notificationBar.update(stock_Name+" | "+who, who+" : "+sText, false);
-                subFunc.sounds.beepOnce(Vars.soundType.ONLY.ordinal());
+                notificationBar.update(stock_Name+" | "+iGroup+","+who, who+" : "+sText, false);
+                sounds.beepOnce(Vars.soundType.ONLY.ordinal());
             }
             save(al, mContext);
             String timeStamp = new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date());
             String dotText = sText.replace(stock_Name, new Dot().add(stock_Name));
-            FileIO.uploadStock(group, who, percent, stock_Name, dotText, keyStr, timeStamp);
+            FileIO.uploadStock(iGroup, who, percent, stock_Name, dotText, keyStr, timeStamp);
             subFunc.logUpdate.addStock(head, sText + keyStr);
         });
         thisThread.start();

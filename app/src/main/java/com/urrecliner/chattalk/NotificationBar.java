@@ -1,5 +1,6 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.NotificationListener.sounds;
 import static com.urrecliner.chattalk.NotificationListener.subFunc;
 import static com.urrecliner.chattalk.Vars.HIDE_STOP;
 import static com.urrecliner.chattalk.Vars.SHOW_MESSAGE;
@@ -15,27 +16,17 @@ import android.widget.Toast;
 
 import com.urrecliner.chattalk.Sub.IsScreen;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class NotificationBar {
-
-    static String svMsg = "";
 
     public void update(String who, String msg, boolean show_icon) {
 
-
-        svMsg = new SimpleDateFormat("HH:mm\u00A0", Locale.KOREA).format(new Date());
-        svMsg += (msg.length() > 30) ? msg.substring(0, msg.length()*2/3): msg;
         if (mContext != null) {
+            final String iMsg = (msg.length() > 500) ?msg.substring(0,500) : msg;
             Intent intent = new Intent(mContext, NotificationService.class);
             intent.putExtra("operation", SHOW_MESSAGE);
             intent.putExtra("who", who);
-            intent.putExtra("msg", msg);
-            intent.putExtra("stop", show_icon && !subFunc.sounds.isSilent());
+            intent.putExtra("msg", iMsg);
+            intent.putExtra("stop", show_icon && !sounds.isSilent());
             try {
                 if (isMyServiceRunning(NotificationService.class))
                     mContext.startService(intent);
@@ -46,7 +37,7 @@ public class NotificationBar {
             }
             if (IsScreen.On(mContext)) {
                 new Handler(Looper.getMainLooper()).post(()
-                        -> Toast.makeText(mContext, who + " > " + msg, Toast.LENGTH_SHORT).show());
+                        -> Toast.makeText(mContext, who + " > " + iMsg, Toast.LENGTH_SHORT).show());
             }
         }
 

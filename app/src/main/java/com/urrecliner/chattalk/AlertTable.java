@@ -1,6 +1,7 @@
 package com.urrecliner.chattalk;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.urrecliner.chattalk.NotificationListener.sounds;
 import static com.urrecliner.chattalk.NotificationListener.subFunc;
 import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.aAlertLineIdx;
@@ -36,7 +37,7 @@ import java.util.List;
 class AlertTable {
 
 //   group^ group name  ^     skip1  ^  skip2    ^ skip3 ^  -1  ^ skip4    ^ sayMore
-//    고선 ^ VIP리딩방 CA ^     !!     ^     해외  ^  BTC  ^       ^    0%    ^ 개장전
+//    고선 ^ 리딩방 CA ^     !!     ^     해외  ^  BTC  ^       ^    0%    ^ 개장전
 
 //   group^  who        ^  keyword1 ^ keyword2 ^ talk ^ count ^ skip     ^ more ^ prev ^ next
 //    고선 ^ 고선생       ^    매수    ^   목표가  ^      ^  101  ^          ^ 중지
@@ -56,8 +57,8 @@ class AlertTable {
                     utils = new Utils();
                 new SnackBar().show("kTalkAlerts", s);
                 utils.logW("Alert Table "," Error "+line);
-                subFunc.sounds.speakAfterBeep(s);
-                subFunc.sounds.beepOnce(Vars.soundType.ERR.ordinal());
+                sounds.beepOnce(Vars.soundType.ERR.ordinal());
+                sounds.speakAfterBeep(s);
             }
             String tGroup = strings[0].trim();
             String tWho = strings[1].trim();
