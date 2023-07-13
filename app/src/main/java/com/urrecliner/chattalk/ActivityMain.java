@@ -32,6 +32,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.urrecliner.chattalk.Sub.Permission;
 import com.urrecliner.chattalk.Sub.SnackBar;
+import com.urrecliner.chattalk.Sub.StockName;
 
 import java.io.File;
 import java.util.Set;

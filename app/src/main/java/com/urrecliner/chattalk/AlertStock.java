@@ -44,9 +44,8 @@ public class AlertStock {
         key12 = " {" + k1 + "." + k2 + "}";
         if (stockName == null)
             stockName = new StockName();
-        String stock_Name = stockName.parse(al.prev, al.next, iText);
         String sText = utils.strReplace(iGroup, iText);
-        String head = " [" + iGroup + "." + who + "] "+stock_Name;
+        String []sParse = stockName.parse(al.prev, al.next, sText);
         String keyStr = key12+sTalk;
         Thread thisThread = new Thread(() -> {
             if (sTalk.length() > 0) {
@@ -55,28 +54,27 @@ public class AlertStock {
 //                if (cho.length() > 4)
 //                    cho = cho.substring(0,4);
 //                String[] joins = new String[]{who, group, who, stock_Name, sTalk, cho, stock_Name, sText};
-                String[] joins = new String[]{iGroup, who, stock_Name, sTalk, stock_Name, new Numbers().out(sText)};
+                String[] joins = new String[]{iGroup, who, sParse[0], sTalk, sParse[0], new Numbers().out(sText)};
                 sounds.speakBuyStock(String.join(" , ", joins));
                 if (isSilentNow()) {
                     if (phoneVibrate == null)
                         phoneVibrate = new PhoneVibrate();
                     phoneVibrate.vib();
                 }
-                String title = "["+stock_Name+"/"+who+"]";
-                String text = iGroup + " : " + who+" > "+sText;
+                String title = "["+sParse[0]+"/"+who+"]";
+                String text = iGroup + " : " + who+" > "+sParse[1];
                 notificationBar.update( title, text, true);
                 new ShowMessage().send(mContext, title,text);
                 new AlertToast().show(mContext, title);
-                copyToClipBoard(stock_Name);
+                copyToClipBoard(sParse[0]);
             } else {
-                notificationBar.update(stock_Name+" | "+iGroup+","+who, who+" : "+sText, false);
+                notificationBar.update(sParse[0]+" | "+iGroup+","+who, who+" : "+sParse[1], false);
                 sounds.beepOnce(Vars.soundType.ONLY.ordinal());
             }
             save(al, mContext);
             String timeStamp = new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date());
-            String dotText = sText.replace(stock_Name, new Dot().add(stock_Name));
-            FileIO.uploadStock(iGroup, who, percent, stock_Name, dotText, keyStr, timeStamp);
-            subFunc.logUpdate.addStock(head, sText + keyStr);
+            FileIO.uploadStock(iGroup, who, percent, sParse[0], sParse[1], keyStr, timeStamp);
+//            subFunc.logUpdate.addStock(head, sText + keyStr);
         });
         thisThread.start();
     }

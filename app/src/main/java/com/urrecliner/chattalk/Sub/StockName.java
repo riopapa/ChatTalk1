@@ -1,21 +1,29 @@
 package com.urrecliner.chattalk.Sub;
 
 public class StockName {
-    public String parse(String prev, String next, String iText) {
-        String str = iText, sName;
-        int p1 = str.indexOf(prev);
+
+    // returns stockname, and dot added iText
+    final String shorten = "[\\d,%:|#+()]";
+    public String[] parse(String prev, String next, String iText) {
+        String str = iText;
+        String sName;
+        int p1 = iText.indexOf(prev);
         if (p1 >= 0) {
-            str = str.substring(p1+prev.length());
-            p1 = str.indexOf(next);
-            if (p1 > 0) {
-                sName = str.substring(0, p1).replaceAll("[\\d,%:|#+()]", "").trim();
-                if (sName.length() > 10)
+            p1 += prev.length() + 1;
+            int p2 = str.indexOf(next, p1);
+            if (p2 > 0) {
+                sName = str.substring(p1, p2).replaceAll(shorten, "").trim();
+                if (sName.length() > 8)
                     sName = sName.substring(0,8);
+                str = str.substring(0, p1) + new StringBuffer(sName).insert(1, ".")
+                        + str.substring(p2);
+            } else {
+                sName = str.substring(p1, p1+10).replaceAll(shorten, "").trim();
+                str = str.substring(0, p1) + new StringBuffer(sName).insert(1, ".")
+                        + str.substring(p1+10);
             }
-            else
-                sName = str.substring(0,8);
-            return sName;
+            return new String[]{sName, str};
         }
-        return "No Prev";
+        return new String[]{"noPrv", str};
     }
 }
