@@ -1,8 +1,10 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.NotificationListener.alertStock;
+import static com.urrecliner.chattalk.NotificationListener.logUpdate;
 import static com.urrecliner.chattalk.NotificationListener.notificationBar;
 import static com.urrecliner.chattalk.NotificationListener.sounds;
-import static com.urrecliner.chattalk.NotificationListener.subFunc;
+import static com.urrecliner.chattalk.NotificationListener.loadFuncs;
 import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.aAlertLineIdx;
 import static com.urrecliner.chattalk.Vars.aGroupSaid;
@@ -50,9 +52,9 @@ class MsgKaTalk {
                     if ((sText.contains(aGroupWhoKey1[gIdx][gwIdx][i])) &&
                             (sText.contains(aGroupWhoKey2[gIdx][gwIdx][i])) &&
                             (!sText.contains(aGroupWhoSkip[gIdx][gwIdx][i]))) {
-                        if (subFunc == null)
-                            subFunc  = new SubFunc();
-                        subFunc.alertStock.sayNlog(group, sText, aAlertLineIdx[gIdx][gwIdx][i]);
+                        if (loadFuncs == null)
+                            loadFuncs = new LoadFuncs();
+                        alertStock.sayNlog(group, sText, aAlertLineIdx[gIdx][gwIdx][i]);
                         int fI = i;
                         mActivity.runOnUiThread(() -> {
                             if (alertsAdapter == null)
@@ -67,7 +69,7 @@ class MsgKaTalk {
                 String head = "[카톡 " + group + "." + who + "]";
                 String sText = utils.strReplace(group, fText);
                 notificationBar.update(group+":"+ who, sText, true);
-                subFunc.logUpdate.addQue(head, sText);
+                logUpdate.addQue(head, sText);
                 if (IsWhoNine.in(nineIgnores, who))
                     sText = new Numbers().out(sText);
                 sText = "단톡방 " + group + " 에서 " + who + " 님이 " + utils.makeEtc(sText, 180);

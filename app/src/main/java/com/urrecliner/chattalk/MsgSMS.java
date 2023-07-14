@@ -1,9 +1,9 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.NotificationListener.logUpdate;
 import static com.urrecliner.chattalk.NotificationListener.msgKaTalk;
 import static com.urrecliner.chattalk.NotificationListener.notificationBar;
 import static com.urrecliner.chattalk.NotificationListener.sounds;
-import static com.urrecliner.chattalk.NotificationListener.subFunc;
 import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.lastChar;
 import static com.urrecliner.chattalk.Vars.mContext;
@@ -43,7 +43,7 @@ class MsgSMS {
             if (utils == null)
                 utils = new Utils();
             mText = utils.strReplace(mWho, mText);
-            subFunc.logUpdate.addQue(head, mText);
+            logUpdate.addQue(head, mText);
             notificationBar.update("sms "+mWho, mText, true);
             if (IsWhoNine.in(nineIgnores, mWho))
                 mText = new Numbers().out(mText);
@@ -58,7 +58,7 @@ class MsgSMS {
             try {
                 String[] words = mText.split("\\|");
                 if (words.length < 5) {
-                    subFunc.logUpdate.addStock("SMS NH 증권 에러 " + words.length, mText);
+                    logUpdate.addStock("SMS NH 증권 에러 " + words.length, mText);
                     sounds.speakAfterBeep(mText);
                 } else {
                     String stockName = words[3].trim();  // 종목명
@@ -69,7 +69,7 @@ class MsgSMS {
                     String sGroup = lastChar + trade;
                     String sayMsg = stockName + " " + amount + " " + uPrice + samPam;
                     notificationBar.update(samPam +":"+stockName, sayMsg, true);
-                    subFunc.logUpdate.addStock("sms>"+nhStock, sayMsg);
+                    logUpdate.addStock("sms>"+nhStock, sayMsg);
                     FileIO.uploadStock(sGroup, mWho, samPam, stockName,
                             mText.replace(stockName, new Dot().add(stockName)), samPam,
                             new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date()));
@@ -77,7 +77,7 @@ class MsgSMS {
                     sounds.speakAfterBeep(new Numbers().out(sayMsg));
                 }
             } catch (Exception e) {
-                subFunc.logUpdate.addStock(nhStock, "Exception " + mText + e);
+                logUpdate.addStock(nhStock, "Exception " + mText + e);
 //                sounds.speakAfterBeep(mText);
             }
         } else
@@ -88,7 +88,7 @@ class MsgSMS {
         String head = "[sms."+ mWho + "] ";
         mText = utils.strReplace("sms", mText);
         notificationBar.update(head, mText, true);
-        subFunc.logUpdate.addQue(head, mText);
+        logUpdate.addQue(head, mText);
         if (utils == null)
             utils = new Utils();
         if (IsWhoNine.in(nineIgnores, mWho))

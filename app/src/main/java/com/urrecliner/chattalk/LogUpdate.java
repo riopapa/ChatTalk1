@@ -1,11 +1,6 @@
 package com.urrecliner.chattalk;
 
 import static android.content.Context.MODE_PRIVATE;
-import static com.urrecliner.chattalk.NotificationListener.notificationBar;
-import static com.urrecliner.chattalk.NotificationListener.phoneVibrate;
-import static com.urrecliner.chattalk.NotificationListener.sounds;
-import static com.urrecliner.chattalk.NotificationListener.subFunc;
-import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.logQue;
 import static com.urrecliner.chattalk.Vars.logSave;
 import static com.urrecliner.chattalk.Vars.logStock;
@@ -13,13 +8,8 @@ import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.packageDirectory;
 import static com.urrecliner.chattalk.Vars.sharePref;
 import static com.urrecliner.chattalk.Vars.sharedEditor;
-import static com.urrecliner.chattalk.Vars.todayFolder;
 
 import android.content.Context;
-
-import com.urrecliner.chattalk.Sub.AlertToast;
-import com.urrecliner.chattalk.Sub.Numbers;
-import com.urrecliner.chattalk.Sub.PhoneVibrate;
 
 import org.apache.commons.lang3.StringUtils;
 

@@ -1,7 +1,7 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.NotificationListener.logUpdate;
 import static com.urrecliner.chattalk.NotificationListener.sounds;
-import static com.urrecliner.chattalk.NotificationListener.subFunc;
 import static com.urrecliner.chattalk.Vars.mContext;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -96,7 +96,7 @@ public class Upload2Google {
                 },
                 error -> {
                     String s = "코멘트 올리기 에러남 "+error;
-                    subFunc.logUpdate.addQue("Google", s);
+                    logUpdate.addQue("Google", s);
                     sounds.speakAfterBeep(s);
                     nowUploading = false;
                 }

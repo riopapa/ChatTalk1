@@ -1,7 +1,7 @@
 package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.NotificationListener.notificationBar;
-import static com.urrecliner.chattalk.NotificationListener.subFunc;
+import static com.urrecliner.chattalk.NotificationListener.loadFuncs;
 import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.NotificationListener.vars;
 import static com.urrecliner.chattalk.Vars.aBar;
@@ -32,7 +32,6 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.urrecliner.chattalk.Sub.Permission;
 import com.urrecliner.chattalk.Sub.SnackBar;
-import com.urrecliner.chattalk.Sub.StockName;
 
 import java.io.File;
 import java.util.Set;
@@ -140,8 +139,8 @@ public class ActivityMain extends AppCompatActivity {
         if (utils == null)
             utils = new Utils();
 
-        if (subFunc == null)
-            subFunc = new SubFunc();
+        if (loadFuncs == null)
+            loadFuncs = new LoadFuncs();
 
         if (vars == null)
             vars = new Vars(mContext, "OnResume");

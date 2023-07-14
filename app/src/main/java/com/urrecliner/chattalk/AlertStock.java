@@ -2,11 +2,11 @@ package com.urrecliner.chattalk;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
+import static com.urrecliner.chattalk.NotificationListener.logUpdate;
 import static com.urrecliner.chattalk.NotificationListener.notificationBar;
 import static com.urrecliner.chattalk.NotificationListener.phoneVibrate;
 import static com.urrecliner.chattalk.NotificationListener.sounds;
 import static com.urrecliner.chattalk.NotificationListener.stockName;
-import static com.urrecliner.chattalk.NotificationListener.subFunc;
 import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.alertLines;
 import static com.urrecliner.chattalk.Vars.mContext;
@@ -19,7 +19,6 @@ import android.media.AudioManager;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
 import com.urrecliner.chattalk.Sub.AlertToast;
-import com.urrecliner.chattalk.Sub.Dot;
 import com.urrecliner.chattalk.Sub.Numbers;
 import com.urrecliner.chattalk.Sub.PhoneVibrate;
 import com.urrecliner.chattalk.Sub.StockName;
@@ -64,7 +63,7 @@ public class AlertStock {
                 String title = sParse[0]+" /"+who;
                 String text = iGroup + " : " + who+" > "+sParse[1];
                 notificationBar.update( title, text, true);
-                subFunc.logUpdate.addStock(title, text);
+                logUpdate.addStock("["+iGroup+":"+who+"]"+sParse[0], text);
                 new ShowMessage().send(mContext, title,text);
                 new AlertToast().show(mContext, title);
                 copyToClipBoard(sParse[0]);
@@ -72,13 +71,13 @@ public class AlertStock {
                 String title = sParse[0]+" | "+iGroup+"."+who;
                 String text = who+" : "+sParse[1];
                 notificationBar.update(title, text, false);
-                subFunc.logUpdate.addStock(title, text);
+                logUpdate.addStock(title, text);
                 sounds.beepOnce(Vars.soundType.ONLY.ordinal());
             }
             save(al, mContext);
             String timeStamp = new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date());
             FileIO.uploadStock(iGroup, who, percent, sParse[0], sParse[1], keyStr, timeStamp);
-//            subFunc.logUpdate.addStock(head, sText + keyStr);
+//            logUpdate.addStock(head, sText + keyStr);
         });
         thisThread.start();
     }

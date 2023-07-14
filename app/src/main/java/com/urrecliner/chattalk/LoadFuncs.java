@@ -1,14 +1,14 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.NotificationListener.alertStock;
+import static com.urrecliner.chattalk.NotificationListener.logUpdate;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.toDay;
 import static com.urrecliner.chattalk.NotificationListener.sounds;
 
-public class SubFunc {
-    public LogUpdate logUpdate;
-    public AlertStock alertStock;
+public class LoadFuncs {
 
-    public SubFunc() {
+    public LoadFuncs() {
 
         if (logUpdate == null) {
             logUpdate = new LogUpdate(mContext);

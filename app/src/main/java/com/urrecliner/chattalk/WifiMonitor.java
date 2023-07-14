@@ -1,5 +1,7 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.NotificationListener.utils;
+
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.Network;
@@ -44,18 +46,20 @@ public class WifiMonitor {
 
             private void showWifiName(String newName) {
                 wifiName = newName;
+                utils.logW("wifi status", wifiName+" Connected");
 //                String s = wifiName + "에 연결됨";
-                int qSize = Upload2Google.getQueSize();
-                if (qSize > 0) {
-//                    s += "\nUploading QSize=" + qSize;
-                    Upload2Google.uploadStock();
-                }
+//                int qSize = Upload2Google.getQueSize();
+//                if (qSize > 0) {
+////                    s += "\nUploading QSize=" + qSize;
+//                    Upload2Google.uploadStock();
+//                }
 //                utils.showToast(s, 0);
             }
 
             @Override
             public void onLost(@NonNull Network network) {
                 super.onLost(network);
+                utils.logW("wifi status", wifiName+" Gone");
                 if (wifiName != null) {
                     new ToastText().show(wifiName+" 연결 끊어짐");
                     wifiName = null;
