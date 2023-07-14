@@ -9,7 +9,7 @@ public class StockName {
         String sName;
         int p1 = iText.indexOf(prev);
         if (p1 >= 0) {
-            p1 += prev.length() + 1;
+            p1 += prev.length();
             int p2 = str.indexOf(next, p1);
             if (p2 > 0) {
                 sName = str.substring(p1, p2).replaceAll(shorten, "").trim();

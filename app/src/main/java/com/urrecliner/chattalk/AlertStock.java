@@ -61,14 +61,18 @@ public class AlertStock {
                         phoneVibrate = new PhoneVibrate();
                     phoneVibrate.vib();
                 }
-                String title = "["+sParse[0]+"/"+who+"]";
+                String title = sParse[0]+" /"+who;
                 String text = iGroup + " : " + who+" > "+sParse[1];
                 notificationBar.update( title, text, true);
+                subFunc.logUpdate.addStock(title, text);
                 new ShowMessage().send(mContext, title,text);
                 new AlertToast().show(mContext, title);
                 copyToClipBoard(sParse[0]);
             } else {
-                notificationBar.update(sParse[0]+" | "+iGroup+","+who, who+" : "+sParse[1], false);
+                String title = sParse[0]+" | "+iGroup+"."+who;
+                String text = who+" : "+sParse[1];
+                notificationBar.update(title, text, false);
+                subFunc.logUpdate.addStock(title, text);
                 sounds.beepOnce(Vars.soundType.ONLY.ordinal());
             }
             save(al, mContext);

@@ -223,7 +223,7 @@ public class NotificationListener extends NotificationListenerService {
 
             case TOSS:
 
-                final String [] ignoreToss = { "원 적립", "퀴즈 정답" };
+                final String [] ignoreToss = { "원 적립", "퀴즈 정답", "환전했", "구매했" };
                 for (String s: ignoreToss) {
                     if (sbnText.contains(s) || sbnWho.contains(s))
                         return;
@@ -232,9 +232,7 @@ public class NotificationListener extends NotificationListenerService {
                 sbnText = sbnWho+"🖐"+ utils.text2OneLine(sbnText);
                 subFunc.logUpdate.addQue(head , sbnText);
                 notificationBar.update(sbnPackageNick, sbnText, true);
-                if (IsWhoNine.in(nineIgnores, sbnPackageNick))
-                    sbnText = new Numbers().out(sbnText);
-                sbnText = "토스 로부터 " + sbnText;
+                sbnText = "토스 로부터 " + new Numbers().out(sbnText);
                 sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
                 break;
 
