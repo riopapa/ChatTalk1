@@ -45,25 +45,19 @@ public class WifiMonitor {
             }
 
             private void showWifiName(String newName) {
-                wifiName = newName;
+                wifiName = new WifiName().get(context);
                 utils.logW("wifi status", wifiName+" Connected");
-//                String s = wifiName + "에 연결됨";
-//                int qSize = Upload2Google.getQueSize();
-//                if (qSize > 0) {
-////                    s += "\nUploading QSize=" + qSize;
-//                    Upload2Google.uploadStock();
-//                }
-//                utils.showToast(s, 0);
+                new ToastText().show(wifiName+"에 연결됨");
             }
 
             @Override
             public void onLost(@NonNull Network network) {
-                super.onLost(network);
                 utils.logW("wifi status", wifiName+" Gone");
                 if (wifiName != null) {
                     new ToastText().show(wifiName+" 연결 끊어짐");
                     wifiName = null;
                 }
+                super.onLost(network);
             }
         });
     }

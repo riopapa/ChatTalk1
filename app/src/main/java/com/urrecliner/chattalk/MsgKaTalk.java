@@ -67,7 +67,7 @@ class MsgKaTalk {
 
             } else {    // normal group
                 String head = "[카톡 " + group + "." + who + "]";
-                String sText = utils.strReplace(group, fText);
+                String sText = utils.strShorten(group, fText);
                 notificationBar.update(group+":"+ who, sText, true);
                 logUpdate.addQue(head, sText);
                 if (IsWhoNine.in(nineIgnores, who))

@@ -43,7 +43,7 @@ public class AlertStock {
         key12 = " {" + k1 + "." + k2 + "}";
         if (stockName == null)
             stockName = new StockName();
-        String sText = utils.strReplace(iGroup, iText);
+        String sText = utils.strShorten(iGroup, iText);
         String []sParse = stockName.parse(al.prev, al.next, sText);
         String keyStr = key12+sTalk;
         Thread thisThread = new Thread(() -> {

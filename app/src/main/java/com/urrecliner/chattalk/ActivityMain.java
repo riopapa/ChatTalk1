@@ -87,7 +87,7 @@ public class ActivityMain extends AppCompatActivity {
         aBar = getSupportActionBar();
 
         topTabs = findViewById(R.id.tab_layout);
-        topTabs.addTab(topTabs.newTab().setText("Tables"));
+        topTabs.addTab(topTabs.newTab().setText("Table"));
         topTabs.addTab(topTabs.newTab().setText("Que"));
         topTabs.addTab(topTabs.newTab().setText("Save"));
         topTabs.addTab(topTabs.newTab().setText("Stock"));

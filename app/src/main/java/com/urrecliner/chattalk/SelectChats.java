@@ -23,7 +23,6 @@ import android.text.style.UnderlineSpan;
 import android.widget.Toast;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
-import com.urrecliner.chattalk.Sub.Dot;
 import com.urrecliner.chattalk.Sub.StockName;
 
 import java.io.File;
@@ -181,14 +180,16 @@ public class SelectChats {
         int p1, p2;
         for (int k = 0; k < keyword1.length; k++) {
             p1 = body.indexOf(keyword1[k]);
-            if (p1 > 0) {
+            if (p1 >= 0) {
                 p2 = body.indexOf(keyword2[k], p1+1);
                 if (p2 >= 0) {      // both matched
-                    body = utils.strReplace(chatGroup, body);
+                    body = utils.strShorten(chatGroup, body);
+                    String [] sNames = new StockName().parse(prev[k], next[k], body);
                     String keys = "<"+keyword1[k]+"~"+keyword2[k]+">";
-                    String str = time+", "+who+" , "+ body + " " + keys;
+                    String str = sNames[0]+" "+ time+", "+who+" , "+ sNames[1] + " " + keys;
                     SpannableString s = new SpannableString(str+"\n\n");
                     s.setSpan(new BackgroundColorSpan(mContext.getResources().getColor(R.color.keyMatchedBack, null)), 0, s.length()-1, SPAN_EXCLUSIVE_EXCLUSIVE);
+                    s.setSpan(new BackgroundColorSpan(mContext.getResources().getColor(R.color.tabBackSelected, null)), 0, sNames[0].length(), SPAN_EXCLUSIVE_EXCLUSIVE);
                     if (str.contains(keyWhose[k]))
                         s.setSpan(new UnderlineSpan(), 0, s.length()-1, SPAN_EXCLUSIVE_EXCLUSIVE);
                     p1 = str.indexOf(prev[k]);
@@ -250,9 +251,9 @@ public class SelectChats {
                         + ((al.talk.length() > 1) ? ", talk[" + al.talk + "]" : "")
                         + " <" +al.prev+"x"+al.next+">")
                     ;
-                    if (al.key1.length()> 1) aKeywords.add(al.key1);
-                    if (al.key2.length()> 1) aKeywords.add(al.key2);
-                    if (al.key1.length()> 1) {
+                    if (al.key1.length()> 0) aKeywords.add(al.key1);
+                    if (al.key2.length()> 0) aKeywords.add(al.key2);
+                    if (al.key1.length()> 0) {
                         aKeyWhose.add(al.who);
                         aKey1.add(al.key1);
                         aKey2.add(al.key2);

@@ -92,7 +92,7 @@ class Utils {
         ;
     }
 
-    String strReplace(String groupOrWho, String text) {
+    String strShorten(String groupOrWho, String text) {
         for (int i = 0; i < replGroupCnt; i++) {
             int compared = groupOrWho.compareTo(replGroup[i]);
             if (compared == 0) {

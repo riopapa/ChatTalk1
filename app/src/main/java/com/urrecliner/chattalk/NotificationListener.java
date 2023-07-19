@@ -124,7 +124,7 @@ public class NotificationListener extends NotificationListenerService {
                         mapWhoText.build(kkWhoTexts, sbnWho, sbnText);
                     else if (mapWhoText.repeated(kkWhoTexts, sbnWho, sbnText))
                         return;
-                    sbnText = utils.strReplace(sbnWho, utils.text2OneLine(sbnText));
+                    sbnText = utils.strShorten(sbnWho, utils.text2OneLine(sbnText));
                     String head = "{카톡!"+ sbnWho + "} ";
                     notificationBar.update("카톡!"+sbnWho, sbnText, true);
                     logUpdate.addQue( head, sbnText);
@@ -241,7 +241,7 @@ public class NotificationListener extends NotificationListenerService {
                     mapWhoText.build(whoAndTexts, sbnWho, sbnText);
                 else if (mapWhoText.repeated(whoAndTexts, sbnPackageNick, sbnText))
                     return;
-                sbnText = utils.strReplace(sbnWho, utils.text2OneLine(sbnText));
+                sbnText = utils.strShorten(sbnWho, utils.text2OneLine(sbnText));
                 head = "[" + sbnPackageNick + "🖐️"+ sbnWho +"] ";
                 logUpdate.addQue(head , sbnText);
                 notificationBar.update(sbnPackageNick + ":"+ sbnWho, sbnText, true);
@@ -283,7 +283,7 @@ public class NotificationListener extends NotificationListenerService {
                else if (mapWhoText.repeated(whoAndTexts, sbnWho, sbnText))
                     return;
                 sbnText = utils.text2OneLine(sbnText);
-                sbnText = utils.strReplace(sbnGroup.equals("")? sbnWho:sbnGroup, sbnText);
+                sbnText = utils.strShorten(sbnGroup.equals("")? sbnWho:sbnGroup, sbnText);
                 head = "[" + sbnPackageNick + "🖐️"+ sbnGroup + "🖐️"+ sbnWho +"] ";
                 logUpdate.addQue(head, sbnText);
                 notificationBar.update((sbnGroup.equals("")) ? sbnPackageNick + "🖐️"+ sbnWho
@@ -302,7 +302,7 @@ public class NotificationListener extends NotificationListenerService {
                     mapWhoText.build(whoAndTexts, sbnWho, sbnText);
                 else if (mapWhoText.repeated(whoAndTexts, sbnPackageNick, sbnText))
                     return;
-                sbnText = utils.strReplace(sbnWho, utils.text2OneLine(sbnText));
+                sbnText = utils.strShorten(sbnWho, utils.text2OneLine(sbnText));
                 head = sbnGroup + "👍"+ sbnWho +"👍";
                 logUpdate.addQue("[" + sbnPackageNick + "] "+head, sbnText);
                 notificationBar.update(sbnGroup + "👍"+ sbnWho, sbnText, true);
@@ -317,7 +317,7 @@ public class NotificationListener extends NotificationListenerService {
 
                 if (IgnoreThis.contains(sbnText, textIgnores))
                     return;
-                sbnText = utils.strReplace(sbnWho, utils.text2OneLine(sbnText));
+                sbnText = utils.strShorten(sbnWho, utils.text2OneLine(sbnText));
                 if (IsWhoNine.in(nineIgnores, sbnPackageNick))
                     sbnText = new Numbers().out(sbnText);
                 sounds.speakAfterBeep(sbnPackageNick + " 로 부터 " + sbnText);
@@ -333,7 +333,7 @@ public class NotificationListener extends NotificationListenerService {
                     mapWhoText.build(whoAndTexts, sbnWho, sbnText);
                 else if (mapWhoText.repeated(whoAndTexts, sbnWho, sbnText))
                     return;
-                sbnText = utils.strReplace(sbnWho, utils.text2OneLine(sbnText));
+                sbnText = utils.strShorten(sbnWho, utils.text2OneLine(sbnText));
                 head = sbnGroup + "🗼"+ sbnWho +"🗼";
                 notificationBar.update(sbnGroup + "🗼"+ sbnWho, sbnText, true);
                 sbnText = head + " 로부터 "+ sbnText;

@@ -35,11 +35,9 @@ public class LogUpdate {
     void addQue(String header, String text) {
         new ReadyToday();
         logQue += "\n" + TIME_INFO.format(new Date()) + header + "\n" + text+"\n";
-        if (logQue.length() > 21000) {
+        if (logQue.length() > 32000) {
             Thread logThread = new Thread(() -> {
-                FileIO.append2File(new File(packageDirectory, "oldQue.txt"),
-                        "OldQuw", logQue);
-                logQue = squeezeQue(logQue);
+                logQue = squeezeQue(logQue, "logQue");
                 sharedEditor.putString("logQue", logQue);
                 sharedEditor.apply();
             });
@@ -53,11 +51,9 @@ public class LogUpdate {
     void addStock(String header, String text) {
         new ReadyToday();
         logStock += "\n" + TIME_INFO.format(new Date()) + header + "\n" + text+"\n";
-        if (logStock.length() > 8000) {
+        if (logStock.length() > 12000) {
             Thread stockThread = new Thread(() -> {
-                FileIO.append2File(new File(packageDirectory, "oldStock.txt"),
-                        "OldStock", logStock);
-                logStock = squeezeQue(logStock);
+                logStock = squeezeQue(logStock, "logStock");
                 sharedEditor.putString("logStock", logStock);
                 sharedEditor.apply();
             });
@@ -71,7 +67,7 @@ public class LogUpdate {
     /*
         Remove upper lines, then 3/4 is without \n
      */
-    private String squeezeQue(String logStr) {
+    private String squeezeQue(String logStr, String queName) {
         logStr = logStr.replace("    ","")
                         .replace("\n\n","\n");
         String [] sLog = logStr.split("\n");
@@ -82,20 +78,24 @@ public class LogUpdate {
             row++;
         while (!StringUtils.isNumeric(""+sLog[row].charAt(0)))
             row++;
+
         StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < row; i++)
+            sb.append(sLog[i].trim()).append("\n");
+        FileIO.append2File(new File(packageDirectory, queName+".txt"), "\n- backUp -\n", sb+"\n");
+
+        sb = new StringBuilder();
         for (; row < sLen * 3/4; row++) {   // without blank line
             String s = sLog[row].trim();
             if (s.length() > 0) {
-                if (s.length() > 90)
-                    s = s.substring(0, 80) + " .=> ";
+                if (s.length() > 100)
+                    s = s.substring(0, 100) + " => ";
                 sb.append(s).append("\n");
             }
         }
         for (; row < sLen; row++) { // with blank line
             String s = sLog[row].trim();
             if (s.length() > 0) {
-                if (s.length() > 90)
-                    s = s.substring(0, 80) + " .=> ";
                 if (StringUtils.isNumeric("" + s.charAt(0)))
                     sb.append("\n");
                 sb.append("\n").append(s);

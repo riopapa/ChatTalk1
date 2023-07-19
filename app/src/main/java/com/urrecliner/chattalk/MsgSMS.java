@@ -42,7 +42,7 @@ class MsgSMS {
             String head = "[sms "+mWho + "]";
             if (utils == null)
                 utils = new Utils();
-            mText = utils.strReplace(mWho, mText);
+            mText = utils.strShorten(mWho, mText);
             logUpdate.addQue(head, mText);
             notificationBar.update("sms "+mWho, mText, true);
             if (IsWhoNine.in(nineIgnores, mWho))
@@ -86,7 +86,7 @@ class MsgSMS {
 
     private void sayNormal(String mWho, String mText) {
         String head = "[sms."+ mWho + "] ";
-        mText = utils.strReplace("sms", mText);
+        mText = utils.strShorten("sms", mText);
         notificationBar.update(head, mText, true);
         logUpdate.addQue(head, mText);
         if (utils == null)
