@@ -46,10 +46,9 @@ public class WifiMonitor {
 
             private void showWifiName(String newName) {
                 wifiName = new WifiName().get(context);
-                utils.logW("wifi status", wifiName+" Connected");
+//                utils.logW("wifi status", wifiName+" Connected");
                 new ToastText().show(wifiName+"에 연결됨");
             }
-
             @Override
             public void onLost(@NonNull Network network) {
                 utils.logW("wifi status", wifiName+" Gone");

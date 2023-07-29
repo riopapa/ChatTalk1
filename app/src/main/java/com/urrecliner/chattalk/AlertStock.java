@@ -30,7 +30,7 @@ import java.util.Locale;
 public class AlertStock {
     void sayNlog(String iGroup, String iText, int aIdx) {
 
-        String key12, sTalk, group, who;
+        String key12, sTalk, who;
         if (utils == null)
             utils = new Utils();
         AlertLine al = alertLines.get(aIdx);
@@ -63,13 +63,13 @@ public class AlertStock {
                 String title = sParse[0]+" /"+who;
                 String text = iGroup + " : " + who+" > "+sParse[1];
                 notificationBar.update( title, text, true);
-                logUpdate.addStock("["+iGroup+":"+who+"]"+sParse[0], text);
+                logUpdate.addStock("["+iGroup+":"+who+"]"+sParse[0], sParse[1]+key12);
                 new ShowMessage().send(mContext, title,text);
                 new AlertToast().show(mContext, title);
                 copyToClipBoard(sParse[0]);
             } else {
                 String title = sParse[0]+" | "+iGroup+"."+who;
-                String text = who+" : "+sParse[1];
+                String text = who+" : "+sParse[1] + key12;
                 notificationBar.update(title, text, false);
                 logUpdate.addStock(title, text);
                 sounds.beepOnce(Vars.soundType.ONLY.ordinal());

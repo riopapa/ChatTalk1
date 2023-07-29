@@ -40,11 +40,7 @@ public class ReadyToday {
                 sharedEditor.putString("logQue", logQue);
                 sharedEditor.putString("logStock", logStock);
                 sharedEditor.apply();
-//                String logStockFile = "logStock " + toDay + ".txt";
-//                FileIO.writeKR(new File(todayFolder, logStockFile), logStock);
                 FileIO.writeKR(new File(tableFolder, "logStock.txt"), logStock);
-//                String logQueFile = "logQue " + toDay + ".txt";
-//                FileIO.writeKR(new File(todayFolder, logQueFile), logQue);
                 FileIO.writeKR(new File(tableFolder, "logQue.txt"), logQue);
                 new Utils().deleteOldFiles();
             }

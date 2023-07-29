@@ -2,6 +2,7 @@ package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.Vars.aBar;
 import static com.urrecliner.chattalk.Vars.alertLines;
+import static com.urrecliner.chattalk.Vars.alertPos;
 import static com.urrecliner.chattalk.Vars.alertsAdapter;
 import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.todayFolder;
@@ -28,6 +29,7 @@ public class Fragment_4Alert extends Fragment {
     ViewGroup rootView;
     RecyclerView recyclerView;
     boolean isRotate = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,6 +49,12 @@ public class Fragment_4Alert extends Fragment {
         recyclerView.setAdapter(alertsAdapter);
         if (todayFolder == null)
             new ReadyToday();
+        if (alertPos == -1)
+            alertPos = alertsAdapter.getItemCount() / 2;
+        mActivity.runOnUiThread(() -> {
+            recyclerView.smoothScrollToPosition(2);
+            recyclerView.smoothScrollToPosition(alertPos);
+        });
     }
 
     @Override

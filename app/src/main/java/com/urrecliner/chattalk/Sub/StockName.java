@@ -15,11 +15,11 @@ public class StockName {
                 sName = str.substring(p1, p2).replaceAll(shorten, "").trim();
                 if (sName.length() > 8)
                     sName = sName.substring(0,8);
-                str = str.substring(0, p1) + new StringBuffer(sName).insert(1, ".")
+                str = str.substring(0, p1) + " " + new StringBuffer(sName).insert(1, ".") + " "
                         + str.substring(p2);
             } else {
                 sName = str.substring(p1, p1+10).replaceAll(shorten, "").trim();
-                str = str.substring(0, p1) + new StringBuffer(sName).insert(1, ".")
+                str = str.substring(0, p1) + " " + new StringBuffer(sName).insert(1, ".") + " "
                         + str.substring(p1+10);
             }
             return new String[]{sName, str};

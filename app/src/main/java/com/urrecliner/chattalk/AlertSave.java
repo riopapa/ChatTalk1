@@ -17,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 
 public class AlertSave {
     public AlertSave(String msg) {
+        new SnackBar().show("Alert Table", msg);
         AlertTable.sort();
         AlertTable.makeArrays();
         String sv = "sv";
@@ -43,7 +44,6 @@ public class AlertSave {
         if (todayFolder == null)
             new ReadyToday();
         saveTable();
-        new SnackBar().show("Alert Table", msg);
     }
 
     void saveTable() {
@@ -55,7 +55,7 @@ public class AlertSave {
         json = json.replace("},{","},\n\n{")
                 .replace("\"next\":","\n\"next\":");
         FileIO.writeFile( tableFolder,"alertTable.json",json,"");
-        FileIO.writeFile( todayFolder,"alertTable.json",json,"");
+//        FileIO.writeFile( todayFolder,"alertTable.json",json,"");
         AlertTable.makeArrays();
         for (int i = 0; i < alertLines.size(); i++) {
             AlertLine al = alertLines.get(i);

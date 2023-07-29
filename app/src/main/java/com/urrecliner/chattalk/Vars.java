@@ -90,6 +90,7 @@ public class Vars {
 
     static String chatGroup;
     static final String lastChar = "힝";
+    static int alertPos = -1;
 
     enum soundType { PRE, POST, ERR, TESLY, ONLY, STOCK}
     static final int[] beepRawIds = { R.raw.a0_pre_sound, R.raw.a1_post_sound, R.raw.a2_alert,
@@ -118,7 +119,6 @@ public class Vars {
         alertWhoIndex = new AlertWhoIndex();
         tableListFile = new TableListFile();
         new OptionTables().readAll();
-
         FileIO.readyPackageFolder();
         sheetQues = new ArrayList<>();
         alertLines = new AlertTableIO().get(context, tableFolder);
