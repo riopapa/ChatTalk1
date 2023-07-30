@@ -13,7 +13,7 @@
     <style name="tab" parent="@android:style/TextAppearance.Widget.TabWidget">
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">#D35986</item>
+        <item name="android:textColor">#60122F</item>
     </style>
 
     <style name="up_down_scroll_thumb">

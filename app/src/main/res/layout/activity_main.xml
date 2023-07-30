@@ -15,9 +15,10 @@
         app:layout_constraintTop_toTopOf="parent"
         android:background="@color/tabBackUnselected"
         android:elevation="1dp"
-        android:minHeight="?attr/actionBarSize"
+        app:tabPaddingStart="-4dp"
+        app:tabPaddingEnd="-4dp"        android:minHeight="?attr/actionBarSize"
         app:tabTextAppearance="@style/tab"
-            app:tabSelectedTextColor="@color/tabSelected"
+        app:tabSelectedTextColor="@color/tabSelected"
         app:tabIndicatorColor="@color/tabSelected"
         app:tabBackground="@drawable/tab_color_selector"
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar"/>
