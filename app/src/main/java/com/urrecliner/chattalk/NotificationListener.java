@@ -203,9 +203,7 @@ public class NotificationListener extends NotificationListenerService {
                     tesla_time = nowTime;
                     break;
                 }
-                if (whoAndTexts == null)
-                    mapWhoText.build(whoAndTexts, sbnWho, sbnText);
-                else if (mapWhoText.repeated(whoAndTexts, sbnWho, sbnText))
+                if (mapWhoText.repeated(whoAndTexts, sbnWho, sbnText))
                     break;
                 logUpdate.addQue("[ 테스리 ]", sbnText);
                 notificationBar.update(sbnPackageNick, sbnText, true);
@@ -232,9 +230,7 @@ public class NotificationListener extends NotificationListenerService {
 
                 if (IgnoreThis.contains(sbnText, textIgnores))
                     break;
-                if (whoAndTexts == null)
-                    mapWhoText.build(whoAndTexts, sbnWho, sbnText);
-                else if (mapWhoText.repeated(whoAndTexts, sbnPackageNick, sbnText))
+                if (mapWhoText.repeated(whoAndTexts, sbnPackageNick, sbnText))
                     return;
                 sbnText = utils.strShorten(sbnWho, utils.text2OneLine(sbnText));
                 head = "[" + sbnPackageNick + "🖐️"+ sbnWho +"] ";
@@ -321,9 +317,7 @@ public class NotificationListener extends NotificationListenerService {
 
                 if (sbnText.contains("지금 확인하세요") || IgnoreThis.contains(sbnText, textIgnores))
                     return;
-                if (whoAndTexts == null)
-                    mapWhoText.build(whoAndTexts, sbnWho, sbnText);
-                else if (mapWhoText.repeated(whoAndTexts, sbnWho, sbnText))
+                if (mapWhoText.repeated(whoAndTexts, sbnWho, sbnText))
                     return;
                 sbnText = utils.strShorten(sbnWho, utils.text2OneLine(sbnText));
                 head = sbnGroup + "🗼"+ sbnWho +"🗼";
