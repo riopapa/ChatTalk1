@@ -60,24 +60,21 @@ public class AlertStock {
                         phoneVibrate = new PhoneVibrate();
                     phoneVibrate.vib();
                 }
-                String title = sParse[0]+" /"+who;
-                String text = iGroup + " : " + who+" > "+sParse[1];
-                notificationBar.update( title, text, true);
+                String title = sParse[0]+" / "+who;
+                notificationBar.update( title, sParse[1], true);
                 logUpdate.addStock("["+iGroup+":"+who+"]"+sParse[0], sParse[1]+key12);
-                new ShowMessage().send(mContext, title,text);
+                new NotifyStock().send(mContext, title,sParse[1]);
                 new AlertToast().show(mContext, title);
                 copyToClipBoard(sParse[0]);
             } else {
                 String title = sParse[0]+" | "+iGroup+"."+who;
-                String text = who+" : "+sParse[1] + key12;
-                notificationBar.update(title, text, false);
-                logUpdate.addStock(title, text);
+                notificationBar.update(title, sParse[1] + key12, false);
+                logUpdate.addStock(title, sParse[1] + key12);
                 sounds.beepOnce(Vars.soundType.ONLY.ordinal());
             }
             save(al, mContext);
             String timeStamp = new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date());
             FileIO.uploadStock(iGroup, who, percent, sParse[0], sParse[1], keyStr, timeStamp);
-//            logUpdate.addStock(head, sText + keyStr);
         });
         thisThread.start();
     }

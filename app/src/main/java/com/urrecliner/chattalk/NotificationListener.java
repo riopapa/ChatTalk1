@@ -50,7 +50,7 @@ public class NotificationListener extends NotificationListenerService {
 
     long tesla_time = 0;
 
-    static MapWhoText mapWhoText = null;
+    public static MapWhoText mapWhoText = null;
     String head;
 
     public static Utils utils = null;
@@ -120,11 +120,10 @@ public class NotificationListener extends NotificationListenerService {
                         return;
                     if (IgnoreThis.contains(sbnWho, kGroupWhoIgnores))
                         return;
-                    if (kkWhoTexts == null)
-                        mapWhoText.build(kkWhoTexts, sbnWho, sbnText);
-                    else if (mapWhoText.repeated(kkWhoTexts, sbnWho, sbnText))
+                    sbnText = utils.text2OneLine(sbnText);
+                    if (mapWhoText.repeated(kkWhoTexts, sbnWho, sbnText))
                         return;
-                    sbnText = utils.strShorten(sbnWho, utils.text2OneLine(sbnText));
+                    sbnText = utils.strShorten(sbnWho, sbnText);
                     String head = "{카톡!"+ sbnWho + "} ";
                     notificationBar.update("카톡!"+sbnWho, sbnText, true);
                     logUpdate.addQue( head, sbnText);
@@ -136,13 +135,12 @@ public class NotificationListener extends NotificationListenerService {
                         return;
                     else if (!sbnWho.equals("") && IgnoreThis.contains(sbnWho, kGroupWhoIgnores))
                         return;
-                    if (kkWhoTexts == null)
-                        mapWhoText.build(kkWhoTexts, sbnWho, sbnText);
-                    else if (mapWhoText.repeated(kkWhoTexts, sbnWho, sbnText))
+                    sbnText = utils.text2OneLine(sbnText);
+                    if (mapWhoText.repeated(kkWhoTexts, sbnWho, sbnText))
                         return;
                     if (msgKaTalk == null)
                         msgKaTalk = new MsgKaTalk();
-                    msgKaTalk.say(sbnGroup, sbnWho, utils.text2OneLine(sbnText));
+                    msgKaTalk.say(sbnGroup, sbnWho, sbnText);
                 }
                 break;
 
@@ -151,9 +149,7 @@ public class NotificationListener extends NotificationListenerService {
                 if (sbnText.contains("곳에서 보냄"))
                     return;
                 sbnText = utils.text2OneLine(sbnText);
-                if (whoAndTexts == null)
-                    mapWhoText.build(whoAndTexts, sbnWho, sbnText);
-                else if (mapWhoText.repeated(whoAndTexts, sbnWho, sbnText))
+                if (mapWhoText.repeated(whoAndTexts, sbnWho, sbnText))
                     return;
                 for (int i = 0; i < teleChannels.length; i++) {
                     if (sbnWho.contains(teleChannels[i])) {
@@ -180,9 +176,8 @@ public class NotificationListener extends NotificationListenerService {
                         return;
                 if (IgnoreThis.contains(sbnWho, smsWhoIgnores) || IgnoreThis.contains(sbnText, smsTextIgnores))
                     return;
-                if (smsWhoTexts == null)
-                    mapWhoText.build(smsWhoTexts, sbnWho, sbnText);
-                else if (mapWhoText.repeated(smsWhoTexts, sbnWho, sbnText))
+                sbnText = utils.text2OneLine(sbnText);
+                if (mapWhoText.repeated(smsWhoTexts, sbnWho, sbnText))
                     return;
                 if (msgSMS == null)
                     msgSMS = new MsgSMS();
@@ -278,11 +273,9 @@ public class NotificationListener extends NotificationListenerService {
 
                 if (IgnoreThis.contains(sbnText, textIgnores) || IgnoreThis.contains(sbnWho, textIgnores))
                     return;
-                if (whoAndTexts == null)
-                    mapWhoText.build(whoAndTexts, sbnWho, sbnText);
-               else if (mapWhoText.repeated(whoAndTexts, sbnWho, sbnText))
-                    return;
                 sbnText = utils.text2OneLine(sbnText);
+                if (mapWhoText.repeated(whoAndTexts, sbnWho, sbnText))
+                    return;
                 sbnText = utils.strShorten(sbnGroup.equals("")? sbnWho:sbnGroup, sbnText);
                 head = "[" + sbnPackageNick + "🖐️"+ sbnGroup + "🖐️"+ sbnWho +"] ";
                 logUpdate.addQue(head, sbnText);
@@ -298,11 +291,10 @@ public class NotificationListener extends NotificationListenerService {
 
                 if (IgnoreThis.contains(sbnText, textIgnores))
                     return;
-                if (whoAndTexts == null)
-                    mapWhoText.build(whoAndTexts, sbnWho, sbnText);
-                else if (mapWhoText.repeated(whoAndTexts, sbnPackageNick, sbnText))
+                sbnText = utils.text2OneLine(sbnText);
+                if (mapWhoText.repeated(whoAndTexts, sbnPackageNick, sbnText))
                     return;
-                sbnText = utils.strShorten(sbnWho, utils.text2OneLine(sbnText));
+                sbnText = utils.strShorten(sbnWho, sbnText);
                 head = sbnGroup + "👍"+ sbnWho +"👍";
                 logUpdate.addQue("[" + sbnPackageNick + "] "+head, sbnText);
                 notificationBar.update(sbnGroup + "👍"+ sbnWho, sbnText, true);

@@ -11,7 +11,7 @@ import androidx.core.app.NotificationCompat;
 
 import java.util.Random;
 
-public class ShowMessage {
+public class NotifyStock {
 
     static NotificationManager manager = null;
     static NotificationChannel channel = null;

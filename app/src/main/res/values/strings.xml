@@ -6,4 +6,8 @@
     <string name="active_say_table_list">Active say Table List</string>
     <string name="search">Search</string>
     <string name="enter_search_key">Enter Search Key</string>
+    <string name = "chat_talk">Chat Talk</string>
+    <string name = "header">Header</string>
+    <string name = "body_nnext_line">body\nnext line</string>
+    <string name = "_09_99">09:99</string>
 </resources>

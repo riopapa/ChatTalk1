@@ -1,6 +1,5 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.NotificationListener.notificationBar;
 import static com.urrecliner.chattalk.NotificationListener.loadFuncs;
 import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.NotificationListener.vars;
@@ -147,14 +146,15 @@ public class ActivityMain extends AppCompatActivity {
 
         if (aBar == null)
             aBar = getSupportActionBar();
-        aBar.setIcon(R.drawable.chat_talk);
+        if (aBar != null) {
+            aBar.setIcon(R.drawable.chat_talk);
+        }
 
         WifiMonitor.init(mContext);
 
-//        new NotificationServiceStart(mContext);
         Intent updateIntent = new Intent(mContext, NotificationService.class);
         mContext.startForegroundService(updateIntent);
-        notificationBar.hideStop();
+        NotificationBar.hideStop();
         super.onResume();
 
     }
