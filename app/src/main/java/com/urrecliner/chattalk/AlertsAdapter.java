@@ -26,7 +26,7 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
     @Override
     public int getItemCount() {
         if (alertLines == null || alertLines.size() == 0) {
-            alertLines = new AlertTableIO().get(mContext, tableFolder);
+            alertLines = new AlertTableIO().get();
             AlertTable.updateMatched();
             AlertTable.makeArrays();
         }

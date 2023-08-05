@@ -43,7 +43,7 @@ public class ActivityStringReplace extends AppCompatActivity {
 
         EditText tv = findViewById(R.id.table_text);
         if (tableFolder == null)
-            vars = new Vars(this, "tableFolder");
+            vars = new Vars(this);
         File file = new File(tableFolder, nowFileName + ".txt");
         String[] lines = tableListFile.readRaw(file);
         String text;

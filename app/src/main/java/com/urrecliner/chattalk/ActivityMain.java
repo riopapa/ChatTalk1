@@ -82,7 +82,7 @@ public class ActivityMain extends AppCompatActivity {
         mActivity = this;
 
         if (vars == null)
-            vars = new Vars(mContext, "main");
+            vars = new Vars(mContext);
         aBar = getSupportActionBar();
 
         topTabs = findViewById(R.id.tab_layout);
@@ -142,7 +142,7 @@ public class ActivityMain extends AppCompatActivity {
             loadFuncs = new LoadFuncs();
 
         if (vars == null)
-            vars = new Vars(mContext, "OnResume");
+            vars = new Vars(mContext);
 
         if (aBar == null)
             aBar = getSupportActionBar();

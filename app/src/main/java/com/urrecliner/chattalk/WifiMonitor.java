@@ -28,23 +28,23 @@ public class WifiMonitor {
                 Network nw = cM.getActiveNetwork();
                 NetworkCapabilities netCap = cM.getNetworkCapabilities(nw);
                 if (netCap != null && netCap.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
-                    String newName = WifiName.get(context);
-                    if (newName != null && !newName.equals(wifiName)) {
-                        if (newName.equals("unknown ssid")) {
+//                    String newName = WifiName.get(context);
+//                    if (newName != null && !newName.equals(wifiName)) {
+//                        if (newName.equals("unknown ssid")) {
                             new Timer().schedule(new TimerTask() {
                                 public void run() {
-                                    showWifiName(WifiName.get(context));
+                                    showWifiName();
                                 }
                             }, 3000);
-                        } else {
-                            showWifiName(newName);
-                        }
-                    }
+//                        } else {
+//                            showWifiName();
+//                        }
+//                    }
                 }
                 super.onAvailable(network);
             }
 
-            private void showWifiName(String newName) {
+            private void showWifiName() {
                 wifiName = new WifiName().get(context);
 //                utils.logW("wifi status", wifiName+" Connected");
                 new ToastText().show(wifiName+"에 연결됨");

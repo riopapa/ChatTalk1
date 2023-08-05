@@ -24,8 +24,8 @@ import java.util.List;
 
 public class Vars {
     static File packageDirectory = null;
-    static File tableFolder = null;
-    static File downloadFolder = null;
+    public static File tableFolder = null;
+    public static File downloadFolder = null;
     static File todayFolder = null;
 
     public static String toDay = "To";
@@ -107,7 +107,7 @@ public class Vars {
             this.ss = ss;
         }
     }
-    public Vars(Context context, String msg) {
+    public Vars(Context context) {
         mContext = context;
         sharePref = mContext.getSharedPreferences("sayText", MODE_PRIVATE);
         sharedEditor = sharePref.edit();
@@ -121,7 +121,7 @@ public class Vars {
         new OptionTables().readAll();
         FileIO.readyPackageFolder();
         sheetQues = new ArrayList<>();
-        alertLines = new AlertTableIO().get(context, tableFolder);
+        alertLines = new AlertTableIO().get();
         AlertTable.updateMatched();
         AlertTable.makeArrays();
     }

@@ -74,7 +74,7 @@ public class LogUpdate {
         int sLen = sLog.length;
         int row = sLen / 4;   // remove 1/4 front part
 
-        while (sLog[row].length() < 2)
+        while (sLog[row].length() < 6)
             row++;
         while (!StringUtils.isNumeric(""+sLog[row].charAt(0)))
             row++;
@@ -88,8 +88,8 @@ public class LogUpdate {
         for (; row < sLen * 3/4; row++) {   // without blank line
             String s = sLog[row].trim();
             if (s.length() > 0) {
-                if (s.length() > 100)
-                    s = s.substring(0, 100) + " => ";
+                if (s.length() > 70)
+                    s = s.substring(0, 70) + " => ";
                 sb.append(s).append("\n");
             }
         }

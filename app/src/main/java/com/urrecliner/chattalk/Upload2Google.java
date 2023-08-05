@@ -39,11 +39,11 @@ public class Upload2Google {
 //        new asyncUpload().execute();
     }
 
-    static int getQueSize() {
-        if (sheetQues == null)
-            return 0;
-        return sheetQues.size();
-    }
+//    static int getQueSize() {
+//        if (sheetQues == null)
+//            return 0;
+//        return sheetQues.size();
+//    }
     static void uploadStock() {
         if (sheetQues.size() == 0 || nowUploading ) //  || WifiMonitor.wifiName.equals(none))
             return;

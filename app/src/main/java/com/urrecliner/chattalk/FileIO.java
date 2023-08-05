@@ -104,9 +104,8 @@ public class FileIO {
     }
 
     public static String readFile(File targetFolder, String fileName) {
-        String myData = "";
         File jFile = new File(targetFolder, fileName);
-
+        StringBuilder sb = new StringBuilder();
         try {
             FileInputStream fis = new FileInputStream(jFile);
             DataInputStream in = new DataInputStream(fis);
@@ -114,13 +113,14 @@ public class FileIO {
                     new BufferedReader(new InputStreamReader(in));
             String strLine;
             while ((strLine = br.readLine()) != null) {
-                myData += strLine;
+                sb.append(strLine);
+//                myData = myData + strLine;
             }
             in.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return myData;
+        return sb.toString();
     }
 
     String[] readKR(String filename) {

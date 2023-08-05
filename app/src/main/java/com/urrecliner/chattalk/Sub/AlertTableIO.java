@@ -2,14 +2,16 @@ package com.urrecliner.chattalk.Sub;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import static com.urrecliner.chattalk.Vars.downloadFolder;
+import static com.urrecliner.chattalk.Vars.tableFolder;
+
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
+import android.os.Environment;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.urrecliner.chattalk.FileIO;
-import com.urrecliner.chattalk.ReadyToday;
 
 import java.io.File;
 import java.lang.reflect.Type;
@@ -19,16 +21,15 @@ import java.util.Map;
 
 public class AlertTableIO {
 
-    public ArrayList<AlertLine> get(Context context, File tableFolder) {
+    public ArrayList<AlertLine> get() {
+        if (tableFolder ==  null) {
+            downloadFolder = new File(Environment.getExternalStorageDirectory(), "download");
+            tableFolder = new File(downloadFolder, "_ChatTalk");
+        }
 
         ArrayList<AlertLine> list;
         Gson gson = new Gson();
         String json = FileIO.readFile(tableFolder, "alertTable.json");
-//
-//        } else {
-//            SharedPreferences sharePref = context.getSharedPreferences("alertLine", MODE_PRIVATE);
-//            json = sharePref.getString("alertLine", "");
-//        }
         if (json.isEmpty()) {
             list = new ArrayList<>();
         } else {

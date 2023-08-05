@@ -17,7 +17,7 @@ public class BootReceiver extends BroadcastReceiver {
 
         if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
 
-            vars = new Vars(context, "Booted !");
+            vars = new Vars(context);
             new Handler(Looper.getMainLooper()).postDelayed(() -> {
 //                new NotificationServiceStart(context);
                 Intent updateIntent = new Intent(context, NotificationService.class);

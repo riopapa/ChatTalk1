@@ -86,7 +86,7 @@ public class NotificationListener extends NotificationListenerService {
     public void onNotificationPosted(StatusBarNotification sbn) {
 
         if (vars == null)
-            vars = new Vars(this, "noti");
+            vars = new Vars(this);
 
         if (loadFuncs == null)
             loadFuncs = new LoadFuncs();
@@ -230,6 +230,7 @@ public class NotificationListener extends NotificationListenerService {
 
                 if (IgnoreThis.contains(sbnText, textIgnores))
                     break;
+                sbnText = utils.text2OneLine(sbnText);
                 if (mapWhoText.repeated(whoAndTexts, sbnPackageNick, sbnText))
                     return;
                 sbnText = utils.strShorten(sbnWho, utils.text2OneLine(sbnText));
