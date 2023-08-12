@@ -77,14 +77,10 @@ public class NotificationService extends Service {
 
                 who1 = Objects.requireNonNull(intent.getStringExtra("who"))
                         .replace(" ", "\u00A0");
-                msg1 = utils.makeEtc(Objects.requireNonNull(intent.getStringExtra("msg")), 100)
+                msg1 = utils.makeEtc(Objects.requireNonNull(intent.getStringExtra("msg")), 300)
                         .replace(" ", "\u00A0");
-                time1 = new SimpleDateFormat("HH:mm", Locale.KOREA).format(new Date());
+                time1 = new SimpleDateFormat("HH:\nmm", Locale.KOREA).format(new Date());
                 show_stop = intent.getBooleanExtra("stop", true);
-                if (msg1.length() > 400)
-                    msg1 = msg1.substring(0,400);
-                if (msg2.length() > 400)
-                    msg2 = msg2.substring(0,400);
                 break;
 
             case STOP_SAY1:

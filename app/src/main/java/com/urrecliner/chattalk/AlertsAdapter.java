@@ -60,7 +60,7 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
     }
 
     String svGroup = "sv", svWho = "sv";
-    int textColor;
+    int textColor, backColor;
     int colorWho = 0xFFA0A0A0;
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
@@ -80,13 +80,17 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
             colorWho |= 0xADC0A0C0;
         }
 
+
         holder.tKey1.setText(al.key1);
         holder.tKey2.setText(al.key2);
         if (al.matched == -1) {
             textColor = 0xFF000000;
-            if (al.more.length() > 1)
-                textColor = 0x90000000;
-            holder.tWho.setBackgroundColor(colorWho);
+            backColor = 0xFFFFFFFF;
+            if (al.more.length() > 1) {
+                textColor = 0x60000000;
+                backColor = 0x90AAAAAA;
+            }
+            holder.tWho.setBackgroundColor(colorWho & backColor);
             holder.tCount.setVisibility(View.GONE);
             holder.tTalk.setText(al.talk);
             holder.tTalk.setTextColor(ContextCompat.getColor(mContext, R.color.textFore));
@@ -94,15 +98,15 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
             holder.tSkip.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 2f));
             holder.tMore.setText(al.more);
             holder.tMore.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 3f));
-            holder.tMore.setBackgroundColor(colorWho);
+            holder.tMore.setBackgroundColor(colorWho & backColor);
             holder.tLine.setBackground(ContextCompat.getDrawable(mContext, R.drawable.border_box));
         } else {
             holder.tGroup.setText("");
-            holder.tWho.setBackgroundColor(colorWho);
+            holder.tWho.setBackgroundColor(colorWho & backColor);
             holder.tWho.setSingleLine(true);
             holder.tWho.setEllipsize(TextUtils.TruncateAt.MARQUEE);
             holder.tWho.setSelected(true);
-            holder.tKey2.setBackgroundColor(colorWho);
+            holder.tKey2.setBackgroundColor(colorWho & backColor);
             holder.tCount.setVisibility(View.VISIBLE);
             holder.tCount.setText("" + matched);
             holder.tSkip.setText(al.skip);
@@ -111,7 +115,7 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
             holder.tTalk.setTextColor(ContextCompat.getColor(mContext, R.color.alertTalk));
             holder.tMore.setText(al.more);
             holder.tMore.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, .5f));
-            holder.tLine.setBackgroundColor(ContextCompat.getColor(mContext, R.color.lightLine));
+            holder.tLine.setBackgroundColor(ContextCompat.getColor(mContext, R.color.lightLine) & backColor);
         }
         holder.tCount.setBackgroundColor(colorWho);
 

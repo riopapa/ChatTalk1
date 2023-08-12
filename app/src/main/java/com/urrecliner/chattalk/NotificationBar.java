@@ -20,7 +20,7 @@ public class NotificationBar {
     public void update(String who, String msg, boolean show_icon) {
 
         if (mContext != null) {
-            final String iMsg = (msg.length() > 500) ?msg.substring(0,500) : msg;
+            final String iMsg = (msg.length() > 400) ?msg.substring(0,400) : msg;
             Intent intent = new Intent(mContext, NotificationService.class);
             intent.putExtra("operation", SHOW_MESSAGE);
             intent.putExtra("who", who);

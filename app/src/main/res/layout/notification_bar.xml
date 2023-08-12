@@ -82,25 +82,25 @@
             <TextView
                 android:id="@+id/msg_time2"
                 android:layout_width="0dp"
-                android:layout_weight="4"
+                android:layout_weight="3"
                 android:layout_height="match_parent"
                 android:textSize="14sp"
                 android:text="@string/_09_99"
-                android:textColor="@color/colorLine2"
+                android:textColor="@color/colorLine1"
                 android:layout_gravity="center"
                 android:gravity="center"
                 />
             <TextView
                 android:id="@+id/msg_who2"
                 android:layout_width="0dp"
-                android:layout_weight="16"
+                android:layout_weight="19"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_margin="8dp"
                 android:text="@string/app_name"
                 android:textSize="14sp"
-                android:textColor="@color/colorLine2"
+                android:textColor="@color/colorLine1"
                 />
-
         </LinearLayout>
         <LinearLayout
             android:id="@+id/msg_line2"

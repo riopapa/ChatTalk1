@@ -17,7 +17,7 @@ import java.util.TimerTask;
 
 public class WifiMonitor {
 
-    static String wifiName = null;
+    public static String wifiName = "wiFi";
     static ConnectivityManager cM = null;
     static void init (Context context) {
         if (cM == null)
@@ -45,17 +45,16 @@ public class WifiMonitor {
             }
 
             private void showWifiName() {
-                wifiName = new WifiName().get(context);
-//                utils.logW("wifi status", wifiName+" Connected");
-                new ToastText().show(wifiName+"에 연결됨");
+                String wiFi = new WifiName().get(context);
+                if (!wiFi.equals(wifiName)) {
+                    wifiName = wiFi;
+                    new ToastText().show(wifiName + "에 연결됨");
+                }
             }
             @Override
             public void onLost(@NonNull Network network) {
-                utils.logW("wifi status", wifiName+" Gone");
-                if (wifiName != null) {
-                    new ToastText().show(wifiName+" 연결 끊어짐");
-                    wifiName = null;
-                }
+                new ToastText().show(wifiName+" 연결 끊어짐");
+                wifiName = "wiFi";
                 super.onLost(network);
             }
         });

@@ -88,8 +88,8 @@ public class LogUpdate {
         for (; row < sLen * 3/4; row++) {   // without blank line
             String s = sLog[row].trim();
             if (s.length() > 0) {
-                if (s.length() > 70)
-                    s = s.substring(0, 70) + " => ";
+                if (s.length() > 50)
+                    s = s.substring(0, 50) + " ▶";
                 sb.append(s).append("\n");
             }
         }
