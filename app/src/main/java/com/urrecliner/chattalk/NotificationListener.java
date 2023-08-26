@@ -32,7 +32,6 @@ import com.urrecliner.chattalk.Sub.StockName;
 import java.util.HashMap;
 
 public class NotificationListener extends NotificationListenerService {
-
     final String SMS = "sms";
     final String KATALK = "kk";
     final String NAHMOO = "nh";

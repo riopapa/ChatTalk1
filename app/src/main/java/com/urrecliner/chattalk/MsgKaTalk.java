@@ -27,7 +27,7 @@ import java.util.Collections;
 
 class MsgKaTalk {
     void say(String group, String who, String text) {
-        final String fText = text;
+        final String fText = text.trim();
         Thread thisThread = new Thread(() -> {
             if (utils == null)
                 utils = new Utils();

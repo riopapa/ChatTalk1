@@ -2,6 +2,7 @@ package com.urrecliner.chattalk;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 import static com.urrecliner.chattalk.Vars.aBar;
+import static com.urrecliner.chattalk.Vars.logQue;
 import static com.urrecliner.chattalk.Vars.logSave;
 import static com.urrecliner.chattalk.Vars.logStock;
 import static com.urrecliner.chattalk.Vars.mActivity;
@@ -138,14 +139,14 @@ public class Fragment_3Stock extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         if (item.getItemId() == R.id.delete_item_stock) {
-            showNextCandidate(new LogSpann().delOneSet(etTable.getText().toString(),
+            showNextQue(new LogSpann().delOneSet(etTable.getText().toString(),
                     etTable.getSelectionStart(), mContext));
 
         } else if (item.getItemId() == R.id.action_restock) {
             reload_stock();
 
         } else if (item.getItemId() == R.id.delete_1line_stock) {
-            showNextCandidate(new LogSpann().delOneLine(etTable.getText().toString(),
+            showNextQue(new LogSpann().delOneLine(etTable.getText().toString(),
                     etTable.getSelectionStart(), mContext));
 
         } else if (item.getItemId() == R.id.copy2stock) {
@@ -174,21 +175,23 @@ public class Fragment_3Stock extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private void showNextCandidate(Vars.DelItem delItem) {
-        InputMethodManager imm = (InputMethodManager) mActivity.getSystemService(INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(etTable.getWindowToken(), 0);
-        etTable.setText(delItem.ss);
+    private void showNextQue(Vars.DelItem delItem) {
         logStock = delItem.logNow;
         sharedEditor.putString("logStock", logStock);
         sharedEditor.apply();
-        Editable etText = etTable.getText();
-        Selection.setSelection(etText, delItem.ps, delItem.pf);
-        etTable.requestFocus();
-        scrollView1.post(() -> new Timer().schedule(new TimerTask() {
-            public void run() {
-                mActivity.runOnUiThread(() -> scrollView1.scrollBy(0, delItem.ps - delItem.pf));
-            }
-        }, 30));
+        etTable.setText(delItem.ss);
+
+        scrollView1.post(() -> {
+            new Timer().schedule(new TimerTask() {
+                public void run() {
+                    mActivity.runOnUiThread(() -> {
+                        Editable etText = etTable.getText();
+                        Selection.setSelection(etText, delItem.ps, delItem.pf);
+                        etTable.requestFocus();
+                    });
+                }
+            }, 50);
+        });
     }
 
     private void reload_stock() {

@@ -61,10 +61,10 @@ public class Upload2Google {
                 },
                 error -> {
                     nowUploading = false;
-                    String s = group+", "+who+", "+timeStamp+", "+percent+", "+statement;
-                    new Utils().logW("uploadStock()", s+"\n Error "+s+"\n"+error);
-                    sounds.speakAfterBeep("Google Upload Error "+ s);
-                    sounds.beepOnce(Vars.soundType.ERR.ordinal());
+//                    String s = group+", "+who+", "+timeStamp+", "+percent+", "+statement;
+//                    new Utils().logW("uploadStock()", s+"\n Error "+s+"\n"+error);
+//                    sounds.speakAfterBeep("Google Upload Error "+ s);
+//                    sounds.beepOnce(Vars.soundType.ERR.ordinal());
                 }
         ) {
             @Override

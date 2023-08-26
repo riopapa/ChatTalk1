@@ -138,14 +138,14 @@ public class Fragment_1Que extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        if (item.getItemId() == R.id.delete_item_que) {
+        if (item.getItemId() == R.id.delete_one_set) {
             showNextQue(new LogSpann().delOneSet(etTable.getText().toString(),
                     etTable.getSelectionStart(), mContext));
 
         } else if (item.getItemId() == R.id.action_reload) {
             reload_loqQue();
 
-        } else if (item.getItemId() == R.id.delete_1line_que) {
+        } else if (item.getItemId() == R.id.delete_1_line) {
             showNextQue(new LogSpann().delOneLine(etTable.getText().toString(),
                     etTable.getSelectionStart(), mContext));
 
@@ -175,20 +175,23 @@ public class Fragment_1Que extends Fragment {
     }
 
     private void showNextQue(Vars.DelItem delItem) {
-        InputMethodManager imm = (InputMethodManager) mActivity.getSystemService(INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(etTable.getWindowToken(), 0);
+//        InputMethodManager imm = (InputMethodManager) mActivity.getSystemService(INPUT_METHOD_SERVICE);
+//        imm.hideSoftInputFromWindow(etTable.getWindowToken(), 0);
         logQue = delItem.logNow;
         sharedEditor.putString("logQue", logQue);
         sharedEditor.apply();
         etTable.setText(delItem.ss);
-        Editable etText = etTable.getText();
-        Selection.setSelection(etText, delItem.ps, delItem.pf);
-        etTable.requestFocus();
-        scrollView1.post(() -> new Timer().schedule(new TimerTask() {
-            public void run() {
-                mActivity.runOnUiThread(() -> scrollView1.scrollBy(0, delItem.ps - delItem.pf));
-            }
-        }, 30));
+        scrollView1.post(() -> {
+            new Timer().schedule(new TimerTask() {
+                public void run() {
+                    mActivity.runOnUiThread(() -> {
+                        Editable etText = etTable.getText();
+                        Selection.setSelection(etText, delItem.ps, delItem.pf);
+                        etTable.requestFocus();
+                    });
+                }
+            }, 50);
+        });
     }
 
     private void reload_loqQue() {

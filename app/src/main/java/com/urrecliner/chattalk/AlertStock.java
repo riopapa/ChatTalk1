@@ -45,6 +45,7 @@ public class AlertStock {
             stockName = new StockName();
         String sText = utils.strShorten(iGroup, iText);
         String []sParse = stockName.parse(al.prev, al.next, sText);
+        // sParse[0] : stockName, sParse[1] : replaced text
         String keyStr = key12+sTalk;
         Thread thisThread = new Thread(() -> {
             if (sTalk.length() > 0) {
@@ -63,7 +64,7 @@ public class AlertStock {
                 String title = sParse[0]+" / "+who;
                 notificationBar.update( title, sParse[1], true);
                 logUpdate.addStock("["+iGroup+":"+who+"]"+sParse[0], sParse[1]+key12);
-                new NotifyStock().send(mContext, title,sParse[1]);
+                new NotifyStock().send(mContext, title, sParse[0], sParse[1]);
                 new AlertToast().show(mContext, title);
                 copyToClipBoard(sParse[0]);
             } else {
