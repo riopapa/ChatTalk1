@@ -62,7 +62,7 @@ class Utils {
     /* delete old packageDirectory / files if storage is less than x days */
     void deleteOldFiles() {
         final SimpleDateFormat dateFormat = new SimpleDateFormat("yy-MM-dd", Locale.KOREA);
-        String weekAgo = dateFormat.format(System.currentTimeMillis() - 5*24*60*60*1000L);
+        String weekAgo = dateFormat.format(System.currentTimeMillis() - 3*24*60*60*1000L);
         File[] files = packageDirectory.listFiles();
         if (files == null)
             return;

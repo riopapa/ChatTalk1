@@ -4,6 +4,8 @@ import static com.urrecliner.chattalk.NotificationListener.logUpdate;
 import static com.urrecliner.chattalk.NotificationListener.sounds;
 import static com.urrecliner.chattalk.Vars.mContext;
 
+import android.util.Log;
+
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -38,12 +40,6 @@ public class Upload2Google {
         uploadStock();
 //        new asyncUpload().execute();
     }
-
-//    static int getQueSize() {
-//        if (sheetQues == null)
-//            return 0;
-//        return sheetQues.size();
-//    }
     static void uploadStock() {
         if (sheetQues.size() == 0 || nowUploading ) //  || WifiMonitor.wifiName.equals(none))
             return;
@@ -57,20 +53,22 @@ public class Upload2Google {
                 mContext.getString(R.string.sheets_stock),
                 response -> {
                     nowUploading = false;
+                    Log.w("stock add response",response);
+                    logUpdate.addQue("sheet stock response", response);
                     uploadStock();
                 },
                 error -> {
                     nowUploading = false;
-//                    String s = group+", "+who+", "+timeStamp+", "+percent+", "+statement;
-//                    new Utils().logW("uploadStock()", s+"\n Error "+s+"\n"+error);
-//                    sounds.speakAfterBeep("Google Upload Error "+ s);
-//                    sounds.beepOnce(Vars.soundType.ERR.ordinal());
+                    String s = group+", "+who+", "+timeStamp+", "+percent+", "+statement;
+                    new Utils().logW("uploadStock()", s+"\n Error "+s+"\n"+error);
+                    sounds.speakAfterBeep("Google Upload Error "+ s);
+                    sounds.beepOnce(Vars.soundType.ERR.ordinal());
                 }
         ) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> para = new HashMap<>();
-                para.put("action", "addItem");
+                para.put("action", "stock");
                 para.put("group", group);      para.put("timeStamp", timeStamp);
                 para.put("who", who);          para.put("percent", percent);
                 para.put("talk", talk);        para.put("statement", statement);
@@ -86,28 +84,30 @@ public class Upload2Google {
         queue.add(stringRequest);
     }
 
-    static void uploadComment(String group, String who, String percent, String talk, String comment) {
+    static void uploadGroupInfo(String group, String who, String percent, String talk, String statement) {
         nowUploading = true;
         StringRequest stringRequest = new StringRequest(Request.Method.POST,
                 mContext.getString(R.string.sheets_stock),
                 response -> {
                     nowUploading = false;
+                    Log.w("sheet response",response);
+                    logUpdate.addQue("sheet group response", response);
                     uploadStock();
                 },
                 error -> {
-                    String s = "코멘트 올리기 에러남 "+error;
-                    logUpdate.addQue("Google", s);
-                    sounds.speakAfterBeep(s);
+                    String ss = "코멘트 올리기 에러남 "+error.networkResponse.statusCode;
+                    logUpdate.addQue("sheet", ss);
+                    sounds.speakAfterBeep(ss);
                     nowUploading = false;
                 }
         ) {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> para = new HashMap<>();
-                para.put("action", "comment");
+                para.put("action", "group");
                 para.put("group", group);     para.put("who", who);
                 para.put("talk", talk);
-                para.put("percent", percent); para.put("comment", comment);
+                para.put("percent", percent); para.put("statement", statement);
                 return para;
             }
         };

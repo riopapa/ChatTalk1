@@ -52,7 +52,6 @@ public class FileIO {
 
     static void append2Today(String filename, String textLine) {
         if (todayFolder == null) {
-
             todayFolder = new File(packageDirectory, toDay);
         }
         final SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.KOREA);
