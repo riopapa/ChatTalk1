@@ -58,7 +58,7 @@ public class NotificationListener extends NotificationListenerService {
     static HashMap<String, String> smsWhoTexts = null;
     static HashMap<String, String> whoAndTexts = null;
     static Vars vars = null;
-    static LoadFuncs loadFuncs = null;
+    static LoadFunction loadFunction = null;
     static MsgKaTalk msgKaTalk = null;
     static MsgSMS msgSMS = null;
     static SbnBundle sbnBundle = null;
@@ -87,8 +87,8 @@ public class NotificationListener extends NotificationListenerService {
         if (vars == null)
             vars = new Vars(this);
 
-        if (loadFuncs == null)
-            loadFuncs = new LoadFuncs();
+        if (loadFunction == null)
+            loadFunction = new LoadFunction();
         if (utils == null)
             utils = new Utils();
 

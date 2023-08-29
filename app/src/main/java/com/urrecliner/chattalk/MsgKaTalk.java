@@ -4,7 +4,7 @@ import static com.urrecliner.chattalk.NotificationListener.alertStock;
 import static com.urrecliner.chattalk.NotificationListener.logUpdate;
 import static com.urrecliner.chattalk.NotificationListener.notificationBar;
 import static com.urrecliner.chattalk.NotificationListener.sounds;
-import static com.urrecliner.chattalk.NotificationListener.loadFuncs;
+import static com.urrecliner.chattalk.NotificationListener.loadFunction;
 import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.aAlertLineIdx;
 import static com.urrecliner.chattalk.Vars.aGroupSaid;
@@ -52,8 +52,8 @@ class MsgKaTalk {
                     if ((sText.contains(aGroupWhoKey1[gIdx][gwIdx][i])) &&
                             (sText.contains(aGroupWhoKey2[gIdx][gwIdx][i])) &&
                             (!sText.contains(aGroupWhoSkip[gIdx][gwIdx][i]))) {
-                        if (loadFuncs == null)
-                            loadFuncs = new LoadFuncs();
+                        if (loadFunction == null)
+                            loadFunction = new LoadFunction();
                         alertStock.sayNlog(group, sText, aAlertLineIdx[gIdx][gwIdx][i]);
                         int fI = i;
                         mActivity.runOnUiThread(() -> {

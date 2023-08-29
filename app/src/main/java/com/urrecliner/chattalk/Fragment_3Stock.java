@@ -1,8 +1,6 @@
 package com.urrecliner.chattalk;
 
-import static android.content.Context.INPUT_METHOD_SERVICE;
 import static com.urrecliner.chattalk.Vars.aBar;
-import static com.urrecliner.chattalk.Vars.logQue;
 import static com.urrecliner.chattalk.Vars.logSave;
 import static com.urrecliner.chattalk.Vars.logStock;
 import static com.urrecliner.chattalk.Vars.mActivity;
@@ -25,7 +23,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;

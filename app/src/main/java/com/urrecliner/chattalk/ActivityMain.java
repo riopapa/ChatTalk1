@@ -1,6 +1,6 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.NotificationListener.loadFuncs;
+import static com.urrecliner.chattalk.NotificationListener.loadFunction;
 import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.NotificationListener.vars;
 import static com.urrecliner.chattalk.Vars.aBar;
@@ -138,8 +138,8 @@ public class ActivityMain extends AppCompatActivity {
         if (utils == null)
             utils = new Utils();
 
-        if (loadFuncs == null)
-            loadFuncs = new LoadFuncs();
+        if (loadFunction == null)
+            loadFunction = new LoadFunction();
 
         if (vars == null)
             vars = new Vars(mContext);

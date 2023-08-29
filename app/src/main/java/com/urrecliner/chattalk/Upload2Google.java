@@ -38,7 +38,6 @@ public class Upload2Google {
     static void add2Que(String group, String timeStamp, String who, String percent, String talk, String statement, String key12) {
         sheetQues.add(new SheetQue(group, timeStamp, who, percent, talk, statement, key12));
         uploadStock();
-//        new asyncUpload().execute();
     }
     static void uploadStock() {
         if (sheetQues.size() == 0 || nowUploading ) //  || WifiMonitor.wifiName.equals(none))

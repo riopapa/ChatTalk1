@@ -24,7 +24,9 @@ class Sounds {
     static TextToSpeech mTTS;
     static String TTSId = "";
     AudioManager audioManager = null;
-
+    // 한글, 영문, 숫자만 OK
+//                    final String match = "[^\uAC00-\uD7A3xfe0-9a-zA-Z.,\\-\\s]";
+    final String match = "[^\uAC00-\uD7A3\u3131-\u314E\\da-zA-Z.,\\-]";     // 가~힣 ㄱ~ㅎ
     void init() {
 
         stopTTS();
@@ -104,9 +106,6 @@ class Sounds {
             audioManager.requestAudioFocus(mFocusGain);
             new Timer().schedule(new TimerTask() {
                 public void run() {
-                    // 한글, 영문, 숫자만 OK
-//                    final String match = "[^\uAC00-\uD7A3xfe0-9a-zA-Z.,\\-\\s]";
-                    final String match = "[^\uAC00-\uD7A3\\da-zA-Z.,\\-]";
                     String speakText = text.replaceAll(match, " ");
                     int idx = speakText.indexOf("http");
                     if (idx > 0)
@@ -132,9 +131,6 @@ class Sounds {
             audioManager.requestAudioFocus(mFocusGain);
             new Timer().schedule(new TimerTask() {
                 public void run() {
-                    // 한글, 영문, 숫자만 OK
-//                    final String match = "[^\uAC00-\uD7A3xfe0-9a-zA-Z.,\\-\\s]";
-                    final String match = "[^\uAC00-\uD7A3\u3131-\u314E\\da-zA-Z.,\\-]";
                     String speakText = text.replaceAll(match, " ");
                     int idx = speakText.indexOf("http");
                     if (idx > 0)

@@ -6,9 +6,9 @@ import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.toDay;
 import static com.urrecliner.chattalk.NotificationListener.sounds;
 
-public class LoadFuncs {
+public class LoadFunction {
 
-    public LoadFuncs() {
+    public LoadFunction() {
 
         if (logUpdate == null) {
             logUpdate = new LogUpdate(mContext);
