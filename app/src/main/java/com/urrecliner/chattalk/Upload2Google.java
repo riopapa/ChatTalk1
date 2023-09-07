@@ -53,7 +53,8 @@ public class Upload2Google {
                 response -> {
                     nowUploading = false;
                     Log.w("stock add response",response);
-                    logUpdate.addQue("sheet stock response", response);
+                    if (!response.startsWith("ok"))
+                        logUpdate.addQue("sheet stock response", response);
                     uploadStock();
                 },
                 error -> {

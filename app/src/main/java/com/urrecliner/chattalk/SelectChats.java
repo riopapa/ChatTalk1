@@ -122,7 +122,7 @@ public class SelectChats {
                 } else
                     selectedSS = concatSS(selectedSS, checkKeywords(time+", "+who+" , "+body));
             } else if (inWhoList(who)) {
-                selectedSS = concatSS(selectedSS, new SpannableString("▣ "+time+" , "+who+" , "+makeDot(body)+"\n\n"));
+                selectedSS = concatSS(selectedSS, new SpannableString("▣ "+time+" , "+who+" , "+ cutTail(body)+"\n\n"));
             } else if (hasKeywords(txt)) {
                 selectedSS = concatSS(selectedSS, checkKeywords(time+", "+who+" , "+body));
             }
@@ -132,9 +132,9 @@ public class SelectChats {
         return new SpannableString(TextUtils.concat(new SpannableString(headStr+"\n"),
                 matchedSS, selectedSS));
     }
-    private String makeDot(String txt) {
-        if (txt.length() > 100)
-            return txt.substring(0, 95) + " ⋙";
+    private String cutTail(String txt) {
+        if (txt.length() > 80)
+            return txt.substring(0, 80) + " ⋙";
         return txt;
     }
 
@@ -249,7 +249,7 @@ public class SelectChats {
                         + ((al.skip.length() > 1) ? ", skip[" + al.skip + "]" : "")
                         + (" ("+al.matched+") ")
                         + ((al.talk.length() > 1) ? ", talk[" + al.talk + "]" : "")
-                        + " <" +al.prev+"x"+al.next+">")
+                        + " <" +al.prev+"&"+al.next+">")
                     ;
                     if (al.key1.length()> 0) aKeywords.add(al.key1);
                     if (al.key2.length()> 0) aKeywords.add(al.key2);

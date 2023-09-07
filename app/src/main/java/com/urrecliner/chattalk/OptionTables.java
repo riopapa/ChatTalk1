@@ -111,55 +111,60 @@ class OptionTables {
          * priority ^ group ^ repl To ^ repl from
          * 20       ^  퍼플  ^ pp1   ^ $매수 하신분들 【 매수 】
          */
-        class GrpReplace {
+        class StrLong2Short {
             final String grpName;
             final ArrayList<String> grpLong;
             final ArrayList<String> grpShort;
 
-            GrpReplace(String grpName, ArrayList<String> grpLong, ArrayList<String> grpShort) {
+            StrLong2Short(String grpName, ArrayList<String> grpLong, ArrayList<String> grpShort) {
                 this.grpName = grpName;
                 this.grpLong = grpLong;
                 this.grpShort = grpShort;
             }
         }
-        ArrayList<GrpReplace> grpReplaces = new ArrayList<>();
+        ArrayList<StrLong2Short> strLong2Shorts = new ArrayList<>();
         String[] lines = tableListFile.read("strReplaces");
         String svGroup = "";
         ArrayList<String> gLong = new ArrayList<>();
         ArrayList<String> gShort = new ArrayList<>();
+        String prvLine = "";
         for (String oneLine : lines) {
             String[] ones = oneLine.split("\\^");
             if (ones.length < 3) {
+                if (sounds == null)
+                    sounds = new Sounds();
                 sounds.beepOnce(Vars.soundType.ERR.ordinal());
-                Toast.makeText(mContext, "Caret missing "+oneLine, Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext,"Caret missing : "+oneLine+"\nprv line : "+prvLine,
+                        Toast.LENGTH_LONG).show();
                 continue;
             }
             if (!svGroup.equals(ones[0])) {
                 if (!svGroup.equals(""))
-                    grpReplaces.add(new GrpReplace(svGroup, gLong, gShort));
+                    strLong2Shorts.add(new StrLong2Short(svGroup, gLong, gShort));
                 svGroup = ones[0];
                 gLong = new ArrayList<>();
                 gShort = new ArrayList<>();
             }
             gLong.add(ones[2]);
             gShort.add(ones[1]);
+            prvLine = oneLine;
         }
         if (gLong.size() > 0)
-            grpReplaces.add(new GrpReplace(svGroup, gLong, gShort));
+            strLong2Shorts.add(new StrLong2Short(svGroup, gLong, gShort));
 
-        replGroupCnt = grpReplaces.size();
+        replGroupCnt = strLong2Shorts.size();
         replGroup = new String[replGroupCnt];
         replLong = new String[replGroupCnt][];
         replShort = new String[replGroupCnt][];
 
         for (int i = 0; i < replGroupCnt; i++) {
-            GrpReplace grpReplace = grpReplaces.get(i);
-            replGroup[i] = grpReplace.grpName;
-            String[] sLong = new String[grpReplace.grpLong.size()];
-            String[] sShort = new String[grpReplace.grpLong.size()];
-            for (int j = 0; j < grpReplace.grpLong.size(); j++) {
-                sLong[j] = grpReplace.grpLong.get(j);
-                sShort[j] = grpReplace.grpShort.get(j);
+            StrLong2Short strLong2Short = strLong2Shorts.get(i);
+            replGroup[i] = strLong2Short.grpName;
+            String[] sLong = new String[strLong2Short.grpLong.size()];
+            String[] sShort = new String[strLong2Short.grpLong.size()];
+            for (int j = 0; j < strLong2Short.grpLong.size(); j++) {
+                sLong[j] = strLong2Short.grpLong.get(j);
+                sShort[j] = strLong2Short.grpShort.get(j);
             }
             replLong[i] = sLong;
             replShort[i] = sShort;

@@ -3,7 +3,7 @@ package com.urrecliner.chattalk.Sub;
 public class StockName {
 
     // returns stockname, and dot added iText
-    final String shorten = "[\\d,%:|#+()]";
+    final String shorten = "[\\d,%:|#+()/]";
     public String[] parse(String prev, String next, String iText) {
         String str = iText;
         String sName;
