@@ -91,7 +91,8 @@ public class Upload2Google {
                 response -> {
                     nowUploading = false;
                     Log.w("sheet response",response);
-                    logUpdate.addQue("sheet group response", response);
+                    if (!response.startsWith("ok group"))
+                        logUpdate.addQue("sheet group response", response);
                     uploadStock();
                 },
                 error -> {

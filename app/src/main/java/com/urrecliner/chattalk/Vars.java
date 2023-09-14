@@ -1,6 +1,11 @@
 package com.urrecliner.chattalk;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.urrecliner.chattalk.NotificationListener.kvCommon;
+import static com.urrecliner.chattalk.NotificationListener.kvKakao;
+import static com.urrecliner.chattalk.NotificationListener.kvSMS;
+import static com.urrecliner.chattalk.NotificationListener.kvStock;
+import static com.urrecliner.chattalk.NotificationListener.kvTelegram;
 import static com.urrecliner.chattalk.Upload2Google.sheetQues;
 
 import android.annotation.SuppressLint;
@@ -17,6 +22,7 @@ import androidx.appcompat.app.ActionBar;
 import com.google.android.material.tabs.TabLayout;
 import com.urrecliner.chattalk.Sub.AlertLine;
 import com.urrecliner.chattalk.Sub.AlertTableIO;
+import com.urrecliner.chattalk.Sub.KeyVal;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -75,6 +81,7 @@ public class Vars {
 
     static final int SHOW_MESSAGE = 1234;
     static final int HIDE_STOP = 5678;
+    static final int LOAD_NH_STOCK = 4321;
     static String logQue = "", logSave = "", logStock = "";
     static ActionBar aBar = null;
     static AudioFocusRequest mFocusGain = null;
@@ -94,7 +101,7 @@ public class Vars {
 
     enum soundType { PRE, POST, ERR, TESLY, ONLY, STOCK}
     static final int[] beepRawIds = { R.raw.a0_pre_sound, R.raw.a1_post_sound, R.raw.a2_alert,
-            R.raw.a3_hello_tesry, R.raw.a4_only, R.raw.a5_metalic_crank};
+            R.raw.a3_hello_tesry, R.raw.a4_only, R.raw.a5_stock_check};
 
     public static boolean audioReady = true;
     public static class DelItem {
@@ -124,5 +131,11 @@ public class Vars {
         alertLines = new AlertTableIO().get();
         AlertTable.updateMatched();
         AlertTable.makeArrays();
+
+        kvKakao = new KeyVal();
+        kvTelegram = new KeyVal();
+        kvCommon = new KeyVal();
+        kvSMS = new KeyVal();
+        kvStock = new KeyVal();
     }
 }

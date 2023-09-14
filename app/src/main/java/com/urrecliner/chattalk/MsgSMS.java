@@ -26,11 +26,7 @@ class MsgSMS {
 
         mWho = mWho.replaceAll("[\\u200C-\\u206F]", "");
         mText = mText.replace(mContext.getString(R.string.web_sent), "").replaceAll("[\\u200C-\\u206F]", "");
-        if (mWho.startsWith(jrGroup)) {
-            if (msgKaTalk == null)
-                msgKaTalk = new MsgKaTalk();
-            msgKaTalk.say(jrGroup, mWho, mText);
-        } else if (mWho.contains(nhStock)) {
+        if (mWho.contains(nhStock)) {
             // |[NH투자]|매수 전량체결|KMH    |10주|9,870원|주문 0001026052
             //   0       1    2      3       4    5
             if (mText.contains(trade))
@@ -38,16 +34,21 @@ class MsgSMS {
             else {
                 sayNormal(mWho, mText);
             }
+        } else if (mWho.startsWith(jrGroup)) {
+                if (msgKaTalk == null)
+                    msgKaTalk = new MsgKaTalk();
+                msgKaTalk.say(jrGroup, mWho, mText);
         } else {
             String head = "[sms "+mWho + "]";
             if (utils == null)
                 utils = new Utils();
             mText = utils.strShorten(mWho, mText);
             logUpdate.addQue(head, mText);
+            mText = utils.makeEtc(mText, 120);
             notificationBar.update("sms "+mWho, mText, true);
             if (IsWhoNine.in(nineIgnores, mWho))
                 mText = new Numbers().out(mText);
-            sounds.speakAfterBeep(head+" 으로부터 "+ utils.makeEtc(mText, 160));
+            sounds.speakAfterBeep(head+" 으로부터 "+ mText);
         }
     }
 

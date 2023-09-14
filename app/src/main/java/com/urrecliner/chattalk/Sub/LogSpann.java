@@ -48,7 +48,7 @@ public class LogSpann {
         int colorFore, colorBack;
 
         Typeface font = font1;
-        String tmp = (log+"\n").replace("\n\n\n","\n\n");
+        String tmp = (log+"\n").replace("\n\n\n","\n\n").trim();
         ss = new SpannableString(tmp);
         String[] msgLine = tmp.split("\n");
         for (String s : msgLine) {
@@ -113,6 +113,7 @@ public class LogSpann {
         pf = logNow.indexOf("\n", ps);
         if (pf == -1)
             pf = logNow.length() - 1;
+        logNow = logNow.trim();
         SpannableString ss = make(logNow, context);
         ss.setSpan(new StyleSpan(Typeface.ITALIC), ps, pf, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ss.setSpan(new UnderlineSpan(), ps, pf,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

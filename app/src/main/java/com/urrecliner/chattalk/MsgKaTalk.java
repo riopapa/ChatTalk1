@@ -1,10 +1,10 @@
 package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.NotificationListener.alertStock;
+import static com.urrecliner.chattalk.NotificationListener.loadFunction;
 import static com.urrecliner.chattalk.NotificationListener.logUpdate;
 import static com.urrecliner.chattalk.NotificationListener.notificationBar;
 import static com.urrecliner.chattalk.NotificationListener.sounds;
-import static com.urrecliner.chattalk.NotificationListener.loadFunction;
 import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.aAlertLineIdx;
 import static com.urrecliner.chattalk.Vars.aGroupSaid;
@@ -15,7 +15,6 @@ import static com.urrecliner.chattalk.Vars.aGroups;
 import static com.urrecliner.chattalk.Vars.aGroupsPass;
 import static com.urrecliner.chattalk.Vars.alertWhoIndex;
 import static com.urrecliner.chattalk.Vars.alertsAdapter;
-import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.nineIgnores;
 import static com.urrecliner.chattalk.Vars.timeBegin;
 import static com.urrecliner.chattalk.Vars.timeEnd;
@@ -28,6 +27,7 @@ import java.util.Collections;
 class MsgKaTalk {
     void say(String group, String who, String text) {
         final String fText = text.trim();
+
         Thread thisThread = new Thread(() -> {
             if (utils == null)
                 utils = new Utils();
@@ -56,11 +56,12 @@ class MsgKaTalk {
                             loadFunction = new LoadFunction();
                         alertStock.sayNlog(group, sText, aAlertLineIdx[gIdx][gwIdx][i]);
                         int fI = i;
-                        mActivity.runOnUiThread(() -> {
+//                        mActivity.runOnUiThread(() -> {
                             if (alertsAdapter == null)
                                 alertsAdapter = new AlertsAdapter();
-                            alertsAdapter.notifyItemChanged(aAlertLineIdx[gIdx][gwIdx][fI]);
-                        });
+                            else
+                                alertsAdapter.notifyItemChanged(aAlertLineIdx[gIdx][gwIdx][fI]);
+//                        });
                         return;
                     }
                 }

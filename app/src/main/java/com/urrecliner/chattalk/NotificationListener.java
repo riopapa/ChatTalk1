@@ -24,12 +24,10 @@ import android.service.notification.StatusBarNotification;
 
 import com.urrecliner.chattalk.Sub.IgnoreThis;
 import com.urrecliner.chattalk.Sub.IsWhoNine;
-import com.urrecliner.chattalk.Sub.MapWhoText;
+import com.urrecliner.chattalk.Sub.KeyVal;
 import com.urrecliner.chattalk.Sub.Numbers;
 import com.urrecliner.chattalk.Sub.PhoneVibrate;
 import com.urrecliner.chattalk.Sub.StockName;
-
-import java.util.HashMap;
 
 public class NotificationListener extends NotificationListenerService {
     final String SMS = "sms";
@@ -49,14 +47,15 @@ public class NotificationListener extends NotificationListenerService {
 
     long tesla_time = 0;
 
-    public static MapWhoText mapWhoText = null;
     String head;
 
     public static Utils utils = null;
 
-    static HashMap<String, String> kkWhoTexts = null;
-    static HashMap<String, String> smsWhoTexts = null;
-    static HashMap<String, String> whoAndTexts = null;
+    public static KeyVal kvCommon = null;
+    static KeyVal kvKakao = null;
+    static KeyVal kvSMS = null;
+    static KeyVal kvTelegram = null;
+    static KeyVal kvStock = null;
     static Vars vars = null;
     static LoadFunction loadFunction = null;
     static MsgKaTalk msgKaTalk = null;
@@ -64,13 +63,12 @@ public class NotificationListener extends NotificationListenerService {
     static SbnBundle sbnBundle = null;
     static NotificationBar notificationBar = null;
     static StockName stockName = null;
-
-    static String svText = "";
     public static PhoneVibrate phoneVibrate = null;
     public static VibratorManager vibManager = null;
     public static Vibrator vibrator = null;
     public static VibrationEffect vibEffect = null;
-    public static final long[] vibPattern = {0, 20, 200, 300, 300, 400, 400, 500, 550, 10, 20, 200, 300, 300};
+//    public static final long[] vibPattern = {0, 20, 200, 300, 300, 400, 400, 500, 550, 10, 20, 200, 300, 300};
+    public static final long[] vibPattern = {0, 20, 200, 300, 300, 400};
 
     public static Sounds sounds;
     public static LogUpdate logUpdate;
@@ -84,9 +82,9 @@ public class NotificationListener extends NotificationListenerService {
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
 
+        mContext = this.getApplicationContext();
         if (vars == null)
             vars = new Vars(this);
-
         if (loadFunction == null)
             loadFunction = new LoadFunction();
         if (utils == null)
@@ -98,15 +96,12 @@ public class NotificationListener extends NotificationListenerService {
         if (notificationBar == null)
             notificationBar = new NotificationBar();
 
-        if (mapWhoText == null)
-            mapWhoText = new MapWhoText();
+        if (kvCommon == null)
+            kvCommon = new KeyVal();
 
         if (sbnBundle.bypassSbn(sbn))
             return;
 
-        if (svText.equals(sbnText))
-            return;
-        svText = sbnText;
 
         switch (sbnPackageType) {
 
@@ -120,7 +115,7 @@ public class NotificationListener extends NotificationListenerService {
                     if (IgnoreThis.contains(sbnWho, kGroupWhoIgnores))
                         return;
                     sbnText = utils.text2OneLine(sbnText);
-                    if (mapWhoText.repeated(kkWhoTexts, sbnWho, sbnText))
+                    if (kvKakao.check(sbnGroup, sbnText))
                         return;
                     sbnText = utils.strShorten(sbnWho, sbnText);
                     String head = "{카톡!"+ sbnWho + "} ";
@@ -135,7 +130,7 @@ public class NotificationListener extends NotificationListenerService {
                     else if (!sbnWho.equals("") && IgnoreThis.contains(sbnWho, kGroupWhoIgnores))
                         return;
                     sbnText = utils.text2OneLine(sbnText);
-                    if (mapWhoText.repeated(kkWhoTexts, sbnWho, sbnText))
+                    if (kvKakao.check(sbnGroup, sbnText))
                         return;
                     if (msgKaTalk == null)
                         msgKaTalk = new MsgKaTalk();
@@ -148,7 +143,7 @@ public class NotificationListener extends NotificationListenerService {
                 if (sbnText.contains("곳에서 보냄"))
                     return;
                 sbnText = utils.text2OneLine(sbnText);
-                if (mapWhoText.repeated(whoAndTexts, sbnWho, sbnText))
+                if (kvTelegram.check(sbnGroup, sbnText))
                     return;
                 for (int i = 0; i < teleChannels.length; i++) {
                     if (sbnWho.contains(teleChannels[i])) {
@@ -176,7 +171,7 @@ public class NotificationListener extends NotificationListenerService {
                 if (IgnoreThis.contains(sbnWho, smsWhoIgnores) || IgnoreThis.contains(sbnText, smsTextIgnores))
                     return;
                 sbnText = utils.text2OneLine(sbnText);
-                if (mapWhoText.repeated(smsWhoTexts, sbnWho, sbnText))
+                if (kvSMS.check(sbnWho, sbnText))
                     return;
                 if (msgSMS == null)
                     msgSMS = new MsgSMS();
@@ -190,6 +185,8 @@ public class NotificationListener extends NotificationListenerService {
 
             case TESLA:
 
+                if (kvCommon.check("tesla", sbnText))
+                    return;
                 final String [] ignoreTesla = { "연결 중", "연결 해제됨", "핸드폰을 키로"};
                 for (String s: ignoreTesla) {
                     if (sbnText.contains(s))
@@ -202,7 +199,7 @@ public class NotificationListener extends NotificationListenerService {
                     tesla_time = nowTime;
                     break;
                 }
-                if (mapWhoText.repeated(whoAndTexts, sbnWho, sbnText))
+                if (kvCommon.check(sbnWho, sbnText))
                     break;
                 logUpdate.addQue("[ 테스리 ]", sbnText);
                 notificationBar.update(sbnPackageNick, sbnText, true);
@@ -230,7 +227,7 @@ public class NotificationListener extends NotificationListenerService {
                 if (IgnoreThis.contains(sbnText, textIgnores))
                     break;
                 sbnText = utils.text2OneLine(sbnText);
-                if (mapWhoText.repeated(whoAndTexts, sbnPackageNick, sbnText))
+                if (kvCommon.check(sbnWho, sbnText))
                     return;
                 sbnText = utils.strShorten(sbnWho, utils.text2OneLine(sbnText));
                 head = "[" + sbnPackageNick + "🖐️"+ sbnWho +"] ";
@@ -270,7 +267,7 @@ public class NotificationListener extends NotificationListenerService {
                 if (IgnoreThis.contains(sbnText, textIgnores) || IgnoreThis.contains(sbnWho, textIgnores))
                     return;
                 sbnText = utils.text2OneLine(sbnText);
-                if (mapWhoText.repeated(whoAndTexts, sbnWho, sbnText))
+                if (kvCommon.check(sbnWho, sbnText))
                     return;
                 sbnText = utils.strShorten(sbnGroup.equals("")? sbnWho:sbnGroup, sbnText);
                 head = "[" + sbnPackageNick + "🖐️"+ sbnGroup + "🖐️"+ sbnWho +"] ";
@@ -288,7 +285,7 @@ public class NotificationListener extends NotificationListenerService {
                 if (IgnoreThis.contains(sbnText, textIgnores))
                     return;
                 sbnText = utils.text2OneLine(sbnText);
-                if (mapWhoText.repeated(whoAndTexts, sbnPackageNick, sbnText))
+                if (kvCommon.check(sbnWho, sbnText))
                     return;
                 sbnText = utils.strShorten(sbnWho, sbnText);
                 head = sbnGroup + "👍"+ sbnWho +"👍";
@@ -317,7 +314,7 @@ public class NotificationListener extends NotificationListenerService {
 
                 if (sbnText.contains("지금 확인하세요") || IgnoreThis.contains(sbnText, textIgnores))
                     return;
-                if (mapWhoText.repeated(whoAndTexts, sbnWho, sbnText))
+                if (kvCommon.check(sbnWho, sbnText))
                     return;
                 sbnText = utils.strShorten(sbnWho, utils.text2OneLine(sbnText));
                 head = sbnGroup + "🗼"+ sbnWho +"🗼";

@@ -3,6 +3,7 @@ package com.urrecliner.chattalk;
 import static com.urrecliner.chattalk.NotificationListener.sounds;
 import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.HIDE_STOP;
+import static com.urrecliner.chattalk.Vars.LOAD_NH_STOCK;
 import static com.urrecliner.chattalk.Vars.SHOW_MESSAGE;
 import static com.urrecliner.chattalk.Vars.sharePref;
 import static com.urrecliner.chattalk.Vars.sharedEditor;
@@ -83,8 +84,14 @@ public class NotificationService extends Service {
                 show_stop = intent.getBooleanExtra("stop", true);
                 break;
 
+            case LOAD_NH_STOCK:
+
+                launchNHStock();
+                break;
+
             case STOP_SAY1:
-                sounds.stopTTS();
+                if (sounds != null)
+                    sounds.stopTTS();
                 show_stop = false;
                 break;
 
@@ -93,12 +100,21 @@ public class NotificationService extends Service {
                 break;
 
             default:
+                Log.e("Notivication SVC","Case "+operation);
                 break;
         }
 
         if (operation != -1)
             updateRemoteViews();
         return START_STICKY;
+    }
+
+    private void launchNHStock() {
+        Intent appIntent = svcContext.getPackageManager().getLaunchIntentForPackage(
+                "com.wooriwm.txsmart");
+        appIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP |
+                Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+        svcContext.startActivity(appIntent);
     }
 
     private void createNotification() {

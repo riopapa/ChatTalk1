@@ -1,8 +1,5 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.NotificationListener.kkWhoTexts;
-import static com.urrecliner.chattalk.NotificationListener.smsWhoTexts;
-import static com.urrecliner.chattalk.NotificationListener.whoAndTexts;
 import static com.urrecliner.chattalk.Vars.logQue;
 import static com.urrecliner.chattalk.Vars.logStock;
 import static com.urrecliner.chattalk.Vars.packageDirectory;
@@ -48,8 +45,5 @@ public class ReadyToday {
                 new Utils().deleteOldFiles();
             }
         }
-        kkWhoTexts = null;
-        smsWhoTexts = null;
-        whoAndTexts = null;
     }
 }
