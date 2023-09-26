@@ -9,6 +9,7 @@ import static com.urrecliner.chattalk.NotificationListener.sounds;
 import static com.urrecliner.chattalk.NotificationListener.stockName;
 import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.alertLines;
+import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
 
 import android.content.ClipData;
@@ -19,7 +20,6 @@ import android.media.AudioManager;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
 import com.urrecliner.chattalk.Sub.AlertToast;
-import com.urrecliner.chattalk.Sub.Numbers;
 import com.urrecliner.chattalk.Sub.PhoneVibrate;
 import com.urrecliner.chattalk.Sub.StockName;
 
@@ -39,7 +39,7 @@ public class AlertStock {
         String k1 = al.key1, k2 = al.key2;
         who = al.who;
         sTalk = al.talk;
-        String percent = (iText.contains("매도") || iText.contains("익절"))? "1.9" :sTalk;
+        String percent = (!iText.contains("매수") && (iText.contains("매도") || iText.contains("익절")))? "1.9" :sTalk;
         key12 = " {" + k1 + "." + k2 + "}";
         if (stockName == null)
             stockName = new StockName();
@@ -62,21 +62,21 @@ public class AlertStock {
                     phoneVibrate.vib();
                 }
                 copyToClipBoard(sParse[0]);
-                String[] joins = new String[]{iGroup, who, sParse[0], sTalk, sParse[0], new Numbers().out(sText)};
+                logUpdate.addStock(sParse[0] + " ["+iGroup+":"+who+"]", sParse[1]+key12);
+                if (sParse[1].length() > 50)
+                    sParse[1] = sParse[1].substring(0, 50);
+                String[] joins = new String[]{iGroup, who, sParse[0], sTalk, sParse[0]};
                 sounds.speakBuyStock(String.join(" , ", joins));
                 String title = sParse[0]+" / "+who;
-                logUpdate.addStock(sParse[0] + " ["+iGroup+":"+who+"]", sParse[1]+key12);
-                if (sParse[1].length() > 70)
-                    sParse[1] = sParse[1].substring(0, 70);
                 notificationBar.update(title, sParse[1], true);
-                new AlertToast().show(mContext, title);
+                new AlertToast().show(mContext, mActivity, title);
                 new NotifyStock().send(mContext, title, sParse[0], sParse[1]);
             } else {
                 String title = sParse[0]+" | "+iGroup+". "+who;
                 logUpdate.addStock(title, sParse[1] + key12);
                 sounds.beepOnce(Vars.soundType.ONLY.ordinal());
-                if (sParse[1].length() > 70)
-                    sParse[1] = sParse[1].substring(0, 70);
+                if (sParse[1].length() > 50)
+                    sParse[1] = sParse[1].substring(0, 50);
                 notificationBar.update(title, sParse[1], false);
             }
             save(al, mContext);

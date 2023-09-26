@@ -39,15 +39,15 @@ class MsgSMS {
                     msgKaTalk = new MsgKaTalk();
                 msgKaTalk.say(jrGroup, mWho, mText);
         } else {
-            String head = "[sms "+mWho + "]";
+            String head = "[SMS "+mWho + "]";
             if (utils == null)
                 utils = new Utils();
             mText = utils.strShorten(mWho, mText);
             logUpdate.addQue(head, mText);
-            mText = utils.makeEtc(mText, 120);
+            mText = utils.makeEtc(mText, 100);
             notificationBar.update("sms "+mWho, mText, true);
             if (IsWhoNine.in(nineIgnores, mWho))
-                mText = new Numbers().out(mText);
+                mText = new Numbers().deduct(mText);
             sounds.speakAfterBeep(head+" 으로부터 "+ mText);
         }
     }
@@ -75,7 +75,7 @@ class MsgSMS {
                             mText.replace(stockName, new Dot().add(stockName)), samPam,
                             new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date()));
                     sayMsg = stockName + samPam;
-                    sounds.speakAfterBeep(new Numbers().out(sayMsg));
+                    sounds.speakAfterBeep(new Numbers().deduct(sayMsg));
                 }
             } catch (Exception e) {
                 logUpdate.addStock(nhStock, "Exception " + mText + e);
@@ -93,7 +93,7 @@ class MsgSMS {
         if (utils == null)
             utils = new Utils();
         if (IsWhoNine.in(nineIgnores, mWho))
-            mText = new Numbers().out(mText);
-        sounds.speakAfterBeep(head + utils.makeEtc(mText, 160));
+            mText = new Numbers().deduct(mText);
+        sounds.speakAfterBeep(head + utils.makeEtc(mText, 120));
     }
 }

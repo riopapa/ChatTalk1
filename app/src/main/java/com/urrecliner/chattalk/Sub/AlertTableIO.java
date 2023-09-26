@@ -40,6 +40,25 @@ public class AlertTableIO {
         return list;
     }
 
+    public ArrayList<AlertLine> put() {
+        if (tableFolder ==  null) {
+            downloadFolder = new File(Environment.getExternalStorageDirectory(), "download");
+            tableFolder = new File(downloadFolder, "_ChatTalk");
+        }
+
+        ArrayList<AlertLine> list;
+        Gson gson = new Gson();
+        String json = FileIO.readFile(tableFolder, "alertTable.json");
+        if (json.isEmpty()) {
+            list = new ArrayList<>();
+        } else {
+            Type type = new TypeToken<List<AlertLine>>() {
+            }.getType();
+            list = gson.fromJson(json, type);
+        }
+        return list;
+    }
+
     public void remove(ArrayList<AlertLine> alertLines, Context context) {
 
         SharedPreferences sharePref = context.getSharedPreferences("alertLine", MODE_PRIVATE);

@@ -18,6 +18,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.urrecliner.chattalk.Sub.AlertTableIO;
 import com.urrecliner.chattalk.Sub.SnackBar;
 import com.urrecliner.chattalk.Sub.WifiName;
 
@@ -85,7 +86,10 @@ public class Fragment_0Table extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.reload_all_tables) {
             new OptionTables().readAll();
-            AlertTable.readFile("read All");
+//            AlertTable.readFile("read All");
+            new AlertTableIO().get();
+            AlertTable.updateMatched();
+            AlertTable.makeArrays();
             new SnackBar().show("All Table", "Reloaded");
         }
         return super.onOptionsItemSelected(item);

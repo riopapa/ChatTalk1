@@ -29,6 +29,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
+import com.urrecliner.chattalk.Sub.AlertTableIO;
 import com.urrecliner.chattalk.Sub.Permission;
 import com.urrecliner.chattalk.Sub.SnackBar;
 
@@ -124,7 +125,11 @@ public class ActivityMain extends AppCompatActivity {
 
         if (item.getItemId() == R.id.reload_all_tables) {
             new OptionTables().readAll();
-            AlertTable.readFile("Main");
+            new AlertTableIO().get();
+            AlertTable.updateMatched();
+            AlertTable.makeArrays();
+
+//            AlertTable.readFile("Main");
             new SnackBar().show("All Table","Reloaded");
         }
         return false;

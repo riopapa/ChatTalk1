@@ -5,25 +5,24 @@ import java.util.Map;
 
 public class KeyVal {
 
-    Map<String, String> maps = null;
+    Map<String, String> maps;
     boolean exist;
     public KeyVal () {
         maps = new HashMap<>();
     }
-    public boolean check (String key, String val) {
+    public boolean isDup(String key, String val) {
         exist = false;
         if (maps == null) {
             maps = new HashMap<>();
             maps.put(key, val);
+            return false;
         } else if (maps.containsKey(key)) {
             if (maps.get(key).equals(val))
-                exist = true;
-            else {
-                maps.replace(key, val);
-            }
-        } else
-            maps.put(key, val);
-        return exist;
+                return true;
+            maps.replace(key, val);
+            return false;
+        }
+        maps.put(key, val);
+        return false;
     }
-
 }

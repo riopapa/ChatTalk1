@@ -118,7 +118,7 @@ public class AlertService extends Service {
 
         if (null == mBuilder) {
             mBuilder = new NotificationCompat.Builder(this, "default")
-                    .setSmallIcon(R.drawable.stock_icon)
+                    .setSmallIcon(R.drawable.stock1_icon)
                     .setBadgeIconType(NotificationCompat.BADGE_ICON_LARGE)
                     .setColor(getApplicationContext().getColor(R.color.barLine1))
                     .setContent(mRemoteViews)

@@ -53,7 +53,7 @@ public class ActivityStringReplace extends AppCompatActivity {
             int cnt = 0;
             et = findViewById(R.id.key_que);
             key = et.getText().toString();           // .replace(" ","\u00A0");
-            fullText = tv.getText().toString();
+            fullText = tv.getText().toString().trim();
             tv.setText(fullText);   // reset previous searched color
             Spannable Word2Span = new SpannableString( tv.getText() );
             int offsetEnd = fullText.indexOf(key);
@@ -111,6 +111,7 @@ public class ActivityStringReplace extends AppCompatActivity {
         for (String t : arrText) {
             if (t.length() < 3 || t.startsWith(dummyHead)) // ignore if not "20^주식^aa^some text blank lines"
                 continue;
+            t = t.trim();
             if (!sv.equals(t.substring(0, 3))) {
                 sortedText.append("\n");
                 sv = t.substring(0,3);

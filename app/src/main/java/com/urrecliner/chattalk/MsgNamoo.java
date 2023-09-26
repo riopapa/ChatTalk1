@@ -34,7 +34,7 @@ class MsgNamoo {
             logUpdate.addStock("[NH나무] "+words[3], sText);
         } else {
             logUpdate.addStock("[NH나무App]", text);
-            sounds.speakAfterBeep("나무 증권 " + new Numbers().out(text));
+            sounds.speakAfterBeep("나무 증권 " + new Numbers().deduct(text));
         }
     }
 }
