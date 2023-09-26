@@ -105,6 +105,7 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
             holder.tWho.setSingleLine(true);
             holder.tWho.setEllipsize(TextUtils.TruncateAt.MARQUEE);
             holder.tWho.setSelected(true);
+            holder.tKey1.setBackgroundColor(colorWho & backColor);
             holder.tKey2.setBackgroundColor(colorWho & backColor);
             holder.tCount.setVisibility(View.VISIBLE);
             holder.tCount.setText("" + matched);
@@ -114,9 +115,9 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
             holder.tTalk.setTextColor(ContextCompat.getColor(mContext, R.color.alertTalk));
             holder.tMore.setText(al.more);
             holder.tMore.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, .5f));
-            holder.tLine.setBackgroundColor(ContextCompat.getColor(mContext, R.color.lightLine) & backColor);
+//            holder.tLine.setBackgroundColor(ContextCompat.getColor(mContext, R.color.lightLine) & backColor);
         }
-        holder.tCount.setBackgroundColor(colorWho);
+//        holder.tCount.setBackgroundColor(colorWho);
 
         holder.tGroup.setTextColor(textColor);
         holder.tWho.setTextColor(textColor);
