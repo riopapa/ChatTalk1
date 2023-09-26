@@ -77,10 +77,6 @@ public class Fragment_4Alert extends Fragment {
             AlertTable.makeArrays();
             AlertTable.sort();
             alertsAdapter.notifyDataSetChanged();
-        } else if (item.getItemId() == R.id.rotate_screen) {
-            isRotate = !isRotate;
-            mActivity.setRequestedOrientation((isRotate) ? ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-                    : ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         } else if (item.getItemId() == R.id.clear_matched_number) {
             for (int i = 0; i < alertLines.size(); i++) {
                 AlertLine al = alertLines.get(i);

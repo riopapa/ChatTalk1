@@ -34,7 +34,7 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tGroup, tWho, tKey1, tKey2, tTalk, tCount, tSkip, tMore;
+        TextView tGroup, tWho, tKey1, tKey2, tPrev, tNext, tTalk, tCount, tSkip, tMore;
         View tLine;
 
         ViewHolder(final View itemView) {
@@ -44,6 +44,8 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
             tWho = itemView.findViewById(R.id.one_who);
             tKey1 = itemView.findViewById(R.id.one_key1);
             tKey2 = itemView.findViewById(R.id.one_key2);
+            tPrev = itemView.findViewById(R.id.one_prev);
+            tNext = itemView.findViewById(R.id.one_next);
             tTalk = itemView.findViewById(R.id.one_talk);
             tCount = itemView.findViewById(R.id.one_matched);
             tSkip = itemView.findViewById(R.id.one_skip);
@@ -82,6 +84,8 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
 
         holder.tKey1.setText(al.key1);
         holder.tKey2.setText(al.key2);
+        holder.tPrev.setText(al.prev);
+        holder.tNext.setText(al.next);
         if (al.matched == -1) {
             textColor = 0xFF000000;
             backColor = 0xFFFFFFFF;

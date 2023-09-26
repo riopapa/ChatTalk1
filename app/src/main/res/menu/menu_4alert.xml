@@ -10,13 +10,6 @@
         android:title="@string/todo" />
 
     <item
-        android:id="@+id/rotate_screen"
-        android:orderInCategory="100"
-        android:icon="@drawable/rotate"
-        app:showAsAction="always"
-        android:title="@string/todo" />
-
-    <item
         android:id="@+id/clear_matched_number"
         android:orderInCategory="100"
         android:icon="@drawable/clear"
