@@ -52,20 +52,18 @@ public class ActivityEditOneAlert extends AppCompatActivity {
         eNext = findViewById(R.id.e_next); eNext.setText(al.next);
         tGroup = findViewById(R.id.t_group); tWho = findViewById(R.id.t_who);
         tKey1 = findViewById(R.id.t_key1);
-        tTalk = findViewById(R.id.t_talk); tMatched = findViewById(R.id.t_matched);
-        tMore = findViewById(R.id.t_more);
         tPrev = findViewById(R.id.t_prev);
         if (al.matched == -1) { // group line
             tGroup.setText("Group"); tWho.setText("Info");
             tKey1.setText("Skip 1,2");
-            tTalk.setText("Skip 3,4"); tMatched.setText("Matched");
-            tMore.setText("More");
+            eTalk.setHint("Skip 3"); eSkip.setHint("Skip 4");
+            eMatched.setHint("-1"); eMore.setHint("More");
+
             tPrev.setText("Skip 5,6");
         } else {
             tGroup.setText("Group Name"); tWho.setText("Who");
             tKey1.setText("Key 1,2");
-            tTalk.setText("Talk,Skip"); tMatched.setText("Matched");
-            tMore.setText("More");
+            eMatched.setHint("Matched Hint"); eMore.setHint("More Hint");
             tPrev.setText("Prev/Next");
         }
     }

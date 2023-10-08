@@ -29,7 +29,6 @@ public class Fragment_4Alert extends Fragment {
 
     ViewGroup rootView;
     RecyclerView recyclerView;
-    boolean isRotate = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,7 +61,7 @@ public class Fragment_4Alert extends Fragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_4alert, menu);
-        aBar.setTitle("  Alert Table");
+        aBar.setTitle(topTabs.getTabAt(5).getText().toString());
         aBar.setSubtitle(null);
     }
     @SuppressLint("NotifyDataSetChanged")

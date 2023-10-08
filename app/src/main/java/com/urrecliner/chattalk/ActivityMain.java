@@ -94,7 +94,6 @@ public class ActivityMain extends AppCompatActivity {
         topTabs.addTab(topTabs.newTab().setText("Alerts"));
         topTabs.addTab(topTabs.newTab().setText("Chats"));
         topTabs.setTabGravity(TabLayout.GRAVITY_FILL);
-
         ViewPager2 viewPager2 = findViewById(R.id.pager2);
         FragmentStateAdapter pagerAdapter = new PagerAdapter(this);
         viewPager2.setAdapter(pagerAdapter);

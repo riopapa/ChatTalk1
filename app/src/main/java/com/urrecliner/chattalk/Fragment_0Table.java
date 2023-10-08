@@ -78,8 +78,9 @@ public class Fragment_0Table extends Fragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.menu_0table, menu);
         super.onCreateOptionsMenu(menu, inflater);
-        aBar.setTitle("    Manage Tables");
+        aBar.setTitle(topTabs.getTabAt(0).getText().toString());
         aBar.setSubtitle(null);
+
     }
 
     @Override

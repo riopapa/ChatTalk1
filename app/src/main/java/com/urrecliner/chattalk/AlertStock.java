@@ -63,21 +63,19 @@ public class AlertStock {
                 }
                 copyToClipBoard(sParse[0]);
                 logUpdate.addStock(sParse[0] + " ["+iGroup+":"+who+"]", sParse[1]+key12);
-                if (sParse[1].length() > 50)
-                    sParse[1] = sParse[1].substring(0, 50);
+                String shortParse1 = (sParse[1].length() > 50) ? sParse[1].substring(0, 60) : sParse[1];
                 String[] joins = new String[]{iGroup, who, sParse[0], sTalk, sParse[0]};
                 sounds.speakBuyStock(String.join(" , ", joins));
                 String title = sParse[0]+" / "+who;
-                notificationBar.update(title, sParse[1], true);
+                notificationBar.update(title, shortParse1, true);
                 new AlertToast().show(mContext, mActivity, title);
-                new NotifyStock().send(mContext, title, sParse[0], sParse[1]);
+                new NotifyStock().send(mContext, title, sParse[0], shortParse1);
             } else {
                 String title = sParse[0]+" | "+iGroup+". "+who;
                 logUpdate.addStock(title, sParse[1] + key12);
                 sounds.beepOnce(Vars.soundType.ONLY.ordinal());
-                if (sParse[1].length() > 50)
-                    sParse[1] = sParse[1].substring(0, 50);
-                notificationBar.update(title, sParse[1], false);
+                String shortParse1 = (sParse[1].length() > 50) ? sParse[1].substring(0, 60) : sParse[1];
+                notificationBar.update(title, shortParse1, false);
             }
             save(al, mContext);
             String timeStamp = new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date());

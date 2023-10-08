@@ -120,7 +120,7 @@ public class Fragment_2Saved extends Fragment {
         mainMenu = menu;
         inflater.inflate(R.menu.menu_2save, menu);
         super.onCreateOptionsMenu(menu, inflater);
-        aBar.setTitle("  Saved");
+        aBar.setTitle(topTabs.getTabAt(2).getText().toString());
         aBar.setSubtitle(null);
     }
 

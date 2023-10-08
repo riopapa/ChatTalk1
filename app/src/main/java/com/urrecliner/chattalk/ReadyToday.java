@@ -36,9 +36,8 @@ public class ReadyToday {
                 String new_day = "\n" + new SimpleDateFormat("MM-dd (EEE) HH:mm ", Locale.KOREA).format(new Date())
                         + " NEW DAY " + " **/\nNew Day" + "\n";
                 logQue += new_day;
-                logStock += new_day;
-                sharedEditor.putString("logQue", logQue);
-                sharedEditor.putString("logStock", logStock);
+//                logStock += new_day;
+//                sharedEditor.putString("logQue", logQue);
                 sharedEditor.apply();
                 FileIO.writeKR(new File(tableFolder, "logStock.txt"), logStock);
                 FileIO.writeKR(new File(tableFolder, "logQue.txt"), logQue);

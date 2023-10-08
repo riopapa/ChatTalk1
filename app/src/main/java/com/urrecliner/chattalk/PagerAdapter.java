@@ -19,7 +19,7 @@ public PagerAdapter(FragmentActivity fm) {
             case 0:
                 return new Fragment_0Table();
             case 1:
-                return new Fragment_1Que();
+                return new Fragment_1Logs();
             case 2:
                 return new Fragment_2Saved();
             case 3:
@@ -29,7 +29,7 @@ public PagerAdapter(FragmentActivity fm) {
             case 5:
                 return new Fragment_5Chat();
         }
-        return new Fragment_1Que();
+        return new Fragment_1Logs();
     }
 
     @Override

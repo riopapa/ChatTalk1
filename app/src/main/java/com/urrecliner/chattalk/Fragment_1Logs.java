@@ -40,7 +40,7 @@ import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Fragment_1Que extends Fragment {
+public class Fragment_1Logs extends Fragment {
 
     ViewGroup rootView;
     ScrollView scrollView1;
@@ -129,7 +129,7 @@ public class Fragment_1Que extends Fragment {
         mainMenu = menu;
         inflater.inflate(R.menu.menu_1que, menu);
         super.onCreateOptionsMenu(menu, inflater);
-        aBar.setTitle("  Que");
+        aBar.setTitle(topTabs.getTabAt(1).getText().toString());
         aBar.setSubtitle(null);
     }
 

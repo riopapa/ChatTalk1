@@ -65,39 +65,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/e_talk"
         app:layout_constraintTop_toBottomOf="@id/t_key1"
-        app:layout_constraintBottom_toTopOf="@id/t_matched"
+        app:layout_constraintBottom_toTopOf="@id/l_matched"
         android:gravity="center"
-        />
-
-    <TextView
-        android:id="@+id/t_matched"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_width="0dp"
-        app:layout_constraintHorizontal_weight="3"
-        android:layout_height="wrap_content"
-        android:text="@string/todo"
-        android:textSize="@dimen/alert_font_size"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/e_matched"
-        app:layout_constraintTop_toBottomOf="@id/t_talk"
-        app:layout_constraintBottom_toTopOf="@id/t_more"
-        android:gravity="center"
-        />
-
-    <TextView
-        android:id="@+id/t_more"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/todo"
-        android:textSize="@dimen/alert_font_size"
-        app:layout_constraintHorizontal_weight="3"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/e_more"
-        app:layout_constraintTop_toBottomOf="@id/t_matched"
         />
 
     <TextView
@@ -112,7 +81,7 @@
         app:layout_constraintHorizontal_weight="3"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/e_prev"
-        app:layout_constraintTop_toBottomOf="@id/t_more"
+        app:layout_constraintTop_toBottomOf="@id/l_matched"
         />
 
     <EditText
@@ -199,33 +168,54 @@
         app:layout_constraintBottom_toBottomOf="@id/t_talk"
         />
 
-    <EditText
-        android:id="@+id/e_matched"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/l_matched"
         android:layout_width="0dp"
-        app:layout_constraintHorizontal_weight="8"
+        app:layout_constraintHorizontal_weight="4"
         android:layout_height="wrap_content"
-        android:inputType="numberSigned"
-        android:text="@string/todo"
-        android:textSize="@dimen/alert_font_size"
-        app:layout_constraintLeft_toRightOf="@id/t_matched"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/t_matched"
-        app:layout_constraintBottom_toBottomOf="@id/t_matched"
+        app:boxStrokeColor="#66FF66"
+        app:hintTextColor="#66FF66"
+        style="@style/AppTheme"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/l_more"
+        app:layout_constraintTop_toBottomOf="@id/t_talk"
+        app:layout_constraintBottom_toTopOf="@id/t_prev"
+        >
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/e_matched"
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:hint="Matched"
+            android:inputType="numberSigned"
+            android:text="@string/todo"
+            android:textSize="@dimen/alert_font_size"
         />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/e_more"
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/l_more"
         android:layout_width="0dp"
-        app:layout_constraintHorizontal_weight="8"
+        app:layout_constraintHorizontal_weight="4"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:text="@string/todo"
-        android:textSize="@dimen/alert_font_size"
-        app:layout_constraintLeft_toRightOf="@id/t_more"
+        app:boxStrokeColor="#66FF66"
+        app:hintTextColor="#66FF66"
+        style="@style/AppTheme"
+        app:layout_constraintLeft_toRightOf="@id/l_matched"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/t_more"
-        app:layout_constraintBottom_toBottomOf="@id/t_more"
-        />
+        app:layout_constraintTop_toBottomOf="@id/t_talk"
+        app:layout_constraintBottom_toTopOf="@id/t_prev"
+        >
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/e_more"
+            android:layout_width = "match_parent"
+            android:layout_height = "wrap_content"
+            android:hint="More"
+            android:inputType="numberSigned"
+            android:text="@string/todo"
+            android:textSize="@dimen/alert_font_size"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <EditText
         android:id="@+id/e_prev"

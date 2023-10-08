@@ -128,7 +128,7 @@ public class Fragment_3Stock extends Fragment {
         mainMenu = menu;
         inflater.inflate(R.menu.menu_3stock, menu);
         super.onCreateOptionsMenu(menu, inflater);
-        aBar.setTitle(" Stock");
+        aBar.setTitle(topTabs.getTabAt(3).getText().toString());
         aBar.setSubtitle(null);
     }
 
