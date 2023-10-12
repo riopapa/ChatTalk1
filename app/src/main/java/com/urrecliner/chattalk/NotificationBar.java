@@ -26,15 +26,15 @@ public class NotificationBar {
             intent.putExtra("who", who);
             intent.putExtra("msg", iMsg);
             intent.putExtra("stop", show_icon && !sounds.isSilent());
-            mContext.startService(intent);
-//            try {
-//                if (isMyServiceRunning(NotificationService.class))
-//                    mContext.startService(intent);
-//                else
-//                    mContext.startForegroundService(intent);
-//            } catch (Exception e) {
-//                Log.e("NotificationBar","intent Error \n"+e);
-//            }
+//            mContext.startService(intent);
+            try {
+                if (isMyServiceRunning(NotificationService.class))
+                    mContext.startService(intent);
+                else
+                    mContext.startForegroundService(intent);
+            } catch (Exception e) {
+                Log.e("NotificationBar","intent Error \n"+e);
+            }
             if (IsScreen.On(mContext)) {
                 new Handler(Looper.getMainLooper()).post(()
                         -> Toast.makeText(mContext, who + " > " + iMsg, Toast.LENGTH_SHORT).show());

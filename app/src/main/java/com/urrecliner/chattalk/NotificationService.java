@@ -5,6 +5,7 @@ import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.HIDE_STOP;
 import static com.urrecliner.chattalk.Vars.LOAD_NH_STOCK;
 import static com.urrecliner.chattalk.Vars.SHOW_MESSAGE;
+import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.sharePref;
 import static com.urrecliner.chattalk.Vars.sharedEditor;
 
@@ -27,7 +28,6 @@ import java.util.Objects;
 
 public class NotificationService extends Service {
 
-    private static Context svcContext;
     NotificationCompat.Builder mBuilder = null;
     NotificationManager mNotificationManager;
     String pkgName;
@@ -40,8 +40,8 @@ public class NotificationService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        svcContext = this;
-        pkgName = svcContext.getPackageName();
+        mContext = this;
+        pkgName = mContext.getPackageName();
         mRemoteViews = new RemoteViews(pkgName, R.layout.notification_bar);
         if (utils == null)
             utils = new Utils();
@@ -110,11 +110,11 @@ public class NotificationService extends Service {
     }
 
     private void launchNHStock() {
-        Intent appIntent = svcContext.getPackageManager().getLaunchIntentForPackage(
+        Intent appIntent = mContext.getPackageManager().getLaunchIntentForPackage(
                 "com.wooriwm.txsmart");
         appIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP |
                 Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-        svcContext.startActivity(appIntent);
+        mContext.startActivity(appIntent);
     }
 
     private void createNotification() {
@@ -143,14 +143,14 @@ public class NotificationService extends Service {
                     .setStyle(new NotificationCompat.BigTextStyle())
                     .setOngoing(true);
         }
-        Intent mIntent = new Intent(svcContext, ActivityMain.class);
+        Intent mIntent = new Intent(mContext, ActivityMain.class);
         mRemoteViews.setOnClickPendingIntent(R.id.ll_customNotification,
-            PendingIntent.getActivity(svcContext, 0, mIntent,
+            PendingIntent.getActivity(mContext, 0, mIntent,
                 PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));
 
         Intent sIntent = new Intent(this, NotificationService.class);
         sIntent.putExtra("operation", STOP_SAY1);
-        PendingIntent stopSay1Pi = PendingIntent.getService(svcContext, 21, sIntent,
+        PendingIntent stopSay1Pi = PendingIntent.getService(mContext, 21, sIntent,
             PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(stopSay1Pi);
         mRemoteViews.setOnClickPendingIntent(R.id.stop_now1, stopSay1Pi);
@@ -172,7 +172,7 @@ public class NotificationService extends Service {
     public static void msgGet() {
 
         if (sharePref == null) {
-            sharePref = svcContext.getSharedPreferences("sayText", MODE_PRIVATE);
+            sharePref = mContext.getSharedPreferences("sayText", MODE_PRIVATE);
             sharedEditor = sharePref.edit();
         }
         who1 = sharePref.getString("who1", "New Loaded 1");

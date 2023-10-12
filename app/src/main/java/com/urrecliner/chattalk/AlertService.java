@@ -4,6 +4,7 @@ import static com.urrecliner.chattalk.NotificationListener.sounds;
 import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.HIDE_STOP;
 import static com.urrecliner.chattalk.Vars.SHOW_MESSAGE;
+import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.sharePref;
 import static com.urrecliner.chattalk.Vars.sharedEditor;
 
@@ -11,7 +12,6 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
@@ -27,7 +27,6 @@ import java.util.Objects;
 
 public class AlertService extends Service {
 
-    private static Context svcContext;
     NotificationCompat.Builder mBuilder = null;
     NotificationManager mNotificationManager;
     String pkgName;
@@ -40,8 +39,8 @@ public class AlertService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        svcContext = this;
-        pkgName = svcContext.getPackageName();
+        mContext = this;
+        pkgName = mContext.getPackageName();
         mRemoteViews = new RemoteViews(pkgName, R.layout.notification_bar);
         if (utils == null)
             utils = new Utils();
@@ -128,14 +127,14 @@ public class AlertService extends Service {
                     .setStyle(new NotificationCompat.BigTextStyle())
                     .setOngoing(true);
         }
-        Intent mIntent = new Intent(svcContext, ActivityMain.class);
+        Intent mIntent = new Intent(mContext, ActivityMain.class);
         mRemoteViews.setOnClickPendingIntent(R.id.ll_customNotification,
-            PendingIntent.getActivity(svcContext, 0, mIntent,
+            PendingIntent.getActivity(mContext, 0, mIntent,
                 PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));
 
         Intent sIntent = new Intent(this, AlertService.class);
         sIntent.putExtra("operation", STOP_SAY1);
-        PendingIntent stopSay1Pi = PendingIntent.getService(svcContext, 21, sIntent,
+        PendingIntent stopSay1Pi = PendingIntent.getService(mContext, 21, sIntent,
             PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(stopSay1Pi);
         mRemoteViews.setOnClickPendingIntent(R.id.stop_now1, stopSay1Pi);
@@ -157,7 +156,7 @@ public class AlertService extends Service {
     public static void msgGet() {
 
         if (sharePref == null) {
-            sharePref = svcContext.getSharedPreferences("sayText", MODE_PRIVATE);
+            sharePref = mContext.getSharedPreferences("sayText", MODE_PRIVATE);
             sharedEditor = sharePref.edit();
         }
         who1 = sharePref.getString("who1", "New Loaded 1");
