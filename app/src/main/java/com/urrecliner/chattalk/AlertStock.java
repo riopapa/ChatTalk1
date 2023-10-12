@@ -68,6 +68,7 @@ public class AlertStock {
                 sounds.speakBuyStock(String.join(" , ", joins));
                 String title = sParse[0]+" / "+who;
                 notificationBar.update(title, shortParse1, true);
+
                 new AlertToast().show(mContext, mActivity, title);
                 new NotifyStock().send(mContext, title, sParse[0], shortParse1);
             } else {

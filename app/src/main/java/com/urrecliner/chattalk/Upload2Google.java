@@ -52,7 +52,7 @@ public class Upload2Google {
                 mContext.getString(R.string.sheets_stock),
                 response -> {
                     nowUploading = false;
-                    Log.w("stock add response",response);
+//                    Log.w("stock add response",response);
                     if (!response.startsWith("ok"))
                         logUpdate.addQue("sheet stock response", response);
                     uploadStock();

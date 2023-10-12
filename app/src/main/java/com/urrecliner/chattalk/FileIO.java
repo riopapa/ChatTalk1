@@ -38,7 +38,7 @@ public class FileIO {
                 //noinspection ResultOfMethodCallIgnored
                 packageDirectory.mkdirs();
             } catch (Exception e) {
-                Log.e("Package Folder", packageDirectory.toString() + "_" + e);
+                Log.e("Exception", "Package Folder "+ packageDirectory.toString() + "_" + e);
             }
         }
     }

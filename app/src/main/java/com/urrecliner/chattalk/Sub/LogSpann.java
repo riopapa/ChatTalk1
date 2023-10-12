@@ -96,8 +96,10 @@ public class LogSpann {
     public Vars.DelItem delOneSet(String logNow, int ps, Context context) {
         ps = logNow.lastIndexOf("\n", ps - 1);
         int pf = logNow.indexOf("\n", ps+1);
-        if (pf == -1)
-            pf = logNow.length() - 1;
+        if (pf == -1) {
+            pf = logNow.length();
+            logNow += "\n";
+        }
         ps = logNow.lastIndexOf("\n", ps - 1);
         if (ps < 2)
             ps = 0;

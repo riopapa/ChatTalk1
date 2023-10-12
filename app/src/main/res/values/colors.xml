@@ -26,21 +26,23 @@
     <color name="textEdit">#80C2D59A</color>
     <color name="tabSelected">#0D2367</color>
 
-    <color name="tabBackSelected">#805B79A6</color>
-    <color name="tabBackUnselected">#aaDDB9</color>
+    <color name="tabBackText">#FF17335E</color>
+    <color name="tabBackSelected">#8017335E</color>
+    <color name="tabBackUnselected">#808BCA9F</color>
 
     <color name="keyMatchedBack">#60CFAE1D</color>
     <color name="keyMatchedWord">#8FB68F</color>
 
     <color name="log_head_f0">#FF611714</color>
     <color name="log_head_b0">#CCE7F2DB</color>
-    <color name="log_line_f0">#054407</color>
-    <color name="log_line_b0">#D2C6EA</color>
+    <color name="log_line_f0">#0C1F8A</color>
+    <color name="log_line_b0">#C6C4CA</color>
     <color name="log_line_x0">#BF9B6C</color>
 
     <color name="log_head_f1">#FF0A09AE</color>
     <color name="log_head_b1">#AAE7E1F9</color>
-    <color name="log_line_f1">#07554E</color>
-    <color name="log_line_b1">#AABEB3D5</color>
+    <color name="log_line_f1">#042C29</color>
+    <color name="log_line_b1">#AAD9D5E3</color>
     <color name="log_line_x1">#B1A268</color>
+
 </resources>

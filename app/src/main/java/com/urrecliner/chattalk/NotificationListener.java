@@ -143,7 +143,7 @@ public class NotificationListener extends NotificationListenerService {
                 if (sbnText.contains("곳에서 보냄"))
                     return;
                 sbnText = utils.text2OneLine(sbnText);
-                if (kvTelegram.isDup(sbnGroup, sbnText))
+                if (kvTelegram.isDup(sbnGroup+sbnWho, sbnText))
                     return;
                 for (int i = 0; i < teleChannels.length; i++) {
                     if (sbnWho.contains(teleChannels[i])) {
@@ -194,7 +194,7 @@ public class NotificationListener extends NotificationListenerService {
                 }
                 if (sbnText.contains("연결됨")) {
                     long nowTime = System.currentTimeMillis();
-                    if ((nowTime - tesla_time) > 30 * 60 * 1000)    // 30 min.
+                    if ((nowTime - tesla_time) > 50 * 60 * 1000)    // 30 min.
                         sounds.beepOnce(Vars.soundType.TESLY.ordinal());
                     tesla_time = nowTime;
                     break;

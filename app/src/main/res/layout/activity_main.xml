@@ -19,7 +19,7 @@
         app:tabPaddingEnd="-4dp"        android:minHeight="?attr/actionBarSize"
         app:tabTextAppearance="@style/tab"
         app:tabSelectedTextColor="@color/tabSelected"
-        app:tabIndicatorColor="@color/tabSelected"
+        app:tabIndicatorColor="@color/tabBackText"
         app:tabBackground="@drawable/tab_color_selector"
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar"/>
 

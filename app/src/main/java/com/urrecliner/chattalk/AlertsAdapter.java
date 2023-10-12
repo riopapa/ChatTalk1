@@ -39,7 +39,7 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
 
         ViewHolder(final View itemView) {
             super(itemView);
-            tLine = itemView.findViewById(R.id.one_line);
+            tLine = itemView.findViewById(R.id.one_alert_line);
             tGroup = itemView.findViewById(R.id.one_group);
             tWho = itemView.findViewById(R.id.one_who);
             tKey1 = itemView.findViewById(R.id.one_key1);
@@ -61,8 +61,8 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
     }
 
     String svGroup = "sv", svWho = "sv";
-    int textColor, backColor;
-    int colorWho = 0xFFA0A0A0;
+    int textColor;
+//    int colorWho = 0xFFA0A0A0;
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
 
@@ -74,26 +74,15 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
         int matched = al.matched;
         String who = al.who;
         holder.tWho.setText(who);
-        if (!svWho.equals(al.who)) {
+        if (!svWho.equals(al.who))
             svWho = al.who;
-            colorWho = position + 100;
-            colorWho = colorWho + colorWho*206 + colorWho*206*206;
-            colorWho |= 0xADC0A0C0;
-        }
-
 
         holder.tKey1.setText(al.key1);
         holder.tKey2.setText(al.key2);
         holder.tPrev.setText(al.prev);
         holder.tNext.setText(al.next);
         if (al.matched == -1) {
-            textColor = 0xFF000000;
-            backColor = 0xFFFFFFFF;
-            if (al.more.length() > 1) {
-                textColor = 0x60000000;
-                backColor = 0x90AAAAAA;
-            }
-            holder.tWho.setBackgroundColor(colorWho & backColor);
+            textColor = (al.more.length() > 1)? 0x60000000: 0xFF000000;
             holder.tCount.setVisibility(View.GONE);
             holder.tTalk.setText(al.talk);
             holder.tTalk.setTextColor(ContextCompat.getColor(mContext, R.color.textFore));
@@ -101,16 +90,12 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
             holder.tSkip.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 2f));
             holder.tMore.setText(al.more);
             holder.tMore.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 3f));
-            holder.tMore.setBackgroundColor(colorWho & backColor);
-            holder.tLine.setBackground(ContextCompat.getDrawable(mContext, R.drawable.border_box));
+            holder.tLine.setBackground(ContextCompat.getDrawable(mContext, R.drawable.border_header));
         } else {
             holder.tGroup.setText("");
-            holder.tWho.setBackgroundColor(colorWho & backColor);
             holder.tWho.setSingleLine(true);
             holder.tWho.setEllipsize(TextUtils.TruncateAt.MARQUEE);
             holder.tWho.setSelected(true);
-            holder.tKey1.setBackgroundColor(colorWho & backColor);
-            holder.tKey2.setBackgroundColor(colorWho & backColor);
             holder.tCount.setVisibility(View.VISIBLE);
             holder.tCount.setText("" + matched);
             holder.tSkip.setText(al.skip);
@@ -119,9 +104,8 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
             holder.tTalk.setTextColor(ContextCompat.getColor(mContext, R.color.alertTalk));
             holder.tMore.setText(al.more);
             holder.tMore.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, .5f));
-//            holder.tLine.setBackgroundColor(ContextCompat.getColor(mContext, R.color.lightLine) & backColor);
+            holder.tLine.setBackground(ContextCompat.getDrawable(mContext, R.drawable.border_line));
         }
-//        holder.tCount.setBackgroundColor(colorWho);
 
         holder.tGroup.setTextColor(textColor);
         holder.tWho.setTextColor(textColor);
