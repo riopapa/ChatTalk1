@@ -6,8 +6,6 @@ import static com.urrecliner.chattalk.Vars.aGSkip1;
 import static com.urrecliner.chattalk.Vars.aGSkip2;
 import static com.urrecliner.chattalk.Vars.aGSkip3;
 import static com.urrecliner.chattalk.Vars.aGSkip4;
-import static com.urrecliner.chattalk.Vars.aGSkip5;
-import static com.urrecliner.chattalk.Vars.aGSkip6;
 import static com.urrecliner.chattalk.Vars.aGroupSaid;
 import static com.urrecliner.chattalk.Vars.aGroupWhoKey1;
 import static com.urrecliner.chattalk.Vars.aGroupWhoKey2;
@@ -71,8 +69,8 @@ class AlertTable {
     }
 
     static ArrayList<String> gSkip1 = new ArrayList<>(), gSkip2 = new ArrayList<>(),
-            gSkip3 = new ArrayList<>(), gSkip4 = new ArrayList<>(),
-            gSkip5 = new ArrayList<>(), gSkip6 = new ArrayList<>();
+            gSkip3 = new ArrayList<>(), gSkip4 = new ArrayList<>();
+//            gSkip5 = new ArrayList<>(), gSkip6 = new ArrayList<>();
     static List<String> key1 = new ArrayList<>();
     static List<String> key2 = new ArrayList<>();
     static List<String> skip = new ArrayList<>();
@@ -110,8 +108,8 @@ class AlertTable {
                 key = al.key2; if (key.equals("")) key = "업씀"; gSkip2.add(key);
                 key = al.talk; if (key.equals("")) key = "업씀"; gSkip3.add(key);
                 key = al.skip; if (key.equals("")) key = "업씀"; gSkip4.add(key);
-                key = al.prev; if (key.equals("")) key = "업씀"; gSkip5.add(key);
-                key = al.next; if (key.equals("")) key = "업씀"; gSkip6.add(key);
+//                key = al.prev; if (key.equals("")) key = "업씀"; gSkip5.add(key);
+//                key = al.next; if (key.equals("")) key = "업씀"; gSkip6.add(key);
                 svGroup = al.group;
             }
         }
@@ -120,8 +118,8 @@ class AlertTable {
         aGSkip2 = gSkip2.toArray(new String[groupCnt]);
         aGSkip3 = gSkip3.toArray(new String[groupCnt]);
         aGSkip4 = gSkip4.toArray(new String[groupCnt]);
-        aGSkip5 = gSkip5.toArray(new String[groupCnt]);
-        aGSkip6 = gSkip6.toArray(new String[groupCnt]);
+//        aGSkip5 = gSkip5.toArray(new String[groupCnt]);
+//        aGSkip6 = gSkip6.toArray(new String[groupCnt]);
         aGroupWhos = new String[groupCnt][];
         aGroupWhoKey1 = new String[groupCnt][][];
         aGroupWhoKey2 = new String[groupCnt][][];

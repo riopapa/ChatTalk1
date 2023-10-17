@@ -49,19 +49,20 @@ public class AlertStock {
         String keyStr = key12+sTalk;
         Thread thisThread = new Thread(() -> {
             if (sTalk.length() > 0) {
-                if (sounds == null)
-                    sounds = new Sounds();
-                sounds.beepOnce(Vars.soundType.STOCK.ordinal());
 //                String cho = new Hangul().getCho(stock_Name);
 //                if (cho.length() > 4)
 //                    cho = cho.substring(0,4);
 //                String[] joins = new String[]{who, group, who, stock_Name, sTalk, cho, stock_Name, sText};
+                copyToClipBoard(sParse[0]);
                 if (isSilentNow()) {
                     if (phoneVibrate == null)
                         phoneVibrate = new PhoneVibrate();
                     phoneVibrate.vib();
+                } else {
+                    if (sounds == null)
+                        sounds = new Sounds();
+                    sounds.beepOnce(Vars.soundType.STOCK.ordinal());
                 }
-                copyToClipBoard(sParse[0]);
                 logUpdate.addStock(sParse[0] + " ["+iGroup+":"+who+"]", sParse[1]+key12);
                 String shortParse1 = (sParse[1].length() > 50) ? sParse[1].substring(0, 60) : sParse[1];
                 String[] joins = new String[]{iGroup, who, sParse[0], sTalk, sParse[0]};
@@ -74,7 +75,9 @@ public class AlertStock {
             } else {
                 String title = sParse[0]+" | "+iGroup+". "+who;
                 logUpdate.addStock(title, sParse[1] + key12);
-                sounds.beepOnce(Vars.soundType.ONLY.ordinal());
+                if (!isSilentNow()) {
+                    sounds.beepOnce(Vars.soundType.ONLY.ordinal());
+                }
                 String shortParse1 = (sParse[1].length() > 50) ? sParse[1].substring(0, 60) : sParse[1];
                 notificationBar.update(title, shortParse1, false);
             }

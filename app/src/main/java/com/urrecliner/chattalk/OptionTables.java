@@ -20,6 +20,7 @@ import static com.urrecliner.chattalk.Vars.tableListFile;
 import static com.urrecliner.chattalk.Vars.teleChannels;
 import static com.urrecliner.chattalk.Vars.teleGroups;
 import static com.urrecliner.chattalk.Vars.textIgnores;
+import static com.urrecliner.chattalk.Vars.tossIgnores;
 
 import android.widget.Toast;
 
@@ -40,6 +41,7 @@ class OptionTables {
         systemIgnores = tableListFile.read("systemIgnores");
         textIgnores = tableListFile.read("textIgnores");
         nineIgnores = tableListFile.read("nineIgnores");
+        tossIgnores = tableListFile.read("tossIgnores");
         if (kkTxtIgnores == null || smsWhoIgnores == null || systemIgnores == null) {
             sounds.beepOnce(Vars.soundType.ERR.ordinal());
             Toast.makeText(mContext, "\nsome tables is null\n", Toast.LENGTH_LONG).show();

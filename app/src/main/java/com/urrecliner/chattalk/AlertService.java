@@ -2,11 +2,11 @@ package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.NotificationListener.sounds;
 import static com.urrecliner.chattalk.NotificationListener.utils;
+import static com.urrecliner.chattalk.NotificationService.msgGet;
+import static com.urrecliner.chattalk.NotificationService.msgPut;
 import static com.urrecliner.chattalk.Vars.HIDE_STOP;
 import static com.urrecliner.chattalk.Vars.SHOW_MESSAGE;
 import static com.urrecliner.chattalk.Vars.mContext;
-import static com.urrecliner.chattalk.Vars.sharePref;
-import static com.urrecliner.chattalk.Vars.sharedEditor;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -104,10 +104,10 @@ public class AlertService extends Service {
     private void createNotification() {
 
         if (null == mNotificationManager) {
-            CharSequence name = "Chat Talk";
+            CharSequence name = "ChatTalk";
             String description = "Chat Description";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("ChatTalk", name, importance);
+            NotificationChannel channel = new NotificationChannel("ChatTalk1", name, importance);
             channel.setDescription(description);
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
@@ -153,26 +153,4 @@ public class AlertService extends Service {
         mNotificationManager.notify(100,mBuilder.build());
         msgPut();
     }
-    public static void msgGet() {
-
-        if (sharePref == null) {
-            sharePref = mContext.getSharedPreferences("sayText", MODE_PRIVATE);
-            sharedEditor = sharePref.edit();
-        }
-        who1 = sharePref.getString("who1", "New Loaded 1");
-        who2 = sharePref.getString("who2", "New Loaded 2");
-        msg1 = sharePref.getString("msg1", "None 1");
-        msg2 = sharePref.getString("msg2", "None 2");
-        time1 = sharePref.getString("time1","00:99");
-        time2 = sharePref.getString("time2","00:99");
     }
-    public void msgPut() {
-        sharedEditor.putString("who1", who1);
-        sharedEditor.putString("who2", who2);
-        sharedEditor.putString("msg1", msg1);
-        sharedEditor.putString("msg2", msg2);
-        sharedEditor.putString("time1", time1);
-        sharedEditor.putString("time2", time2);
-        sharedEditor.apply();
-    }
-}

@@ -60,6 +60,7 @@ public class Vars {
     static String[] systemIgnores = null;
     static String[] textIgnores = null;
     static String[] nineIgnores = null;
+    static String[] tossIgnores = null;
 
     static String[] teleGroups = null;
     static String[] teleChannels = null;

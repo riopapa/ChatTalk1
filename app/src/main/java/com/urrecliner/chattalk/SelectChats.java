@@ -138,12 +138,12 @@ public class SelectChats {
         return txt;
     }
 
-    final String [] chatIgnores = {"http", "항셍", "나스닥", "무료", "반갑", "발동", "사진", "상담", "선물",
-            "입장", "파생", "프로필", "현황"};
+    final String [] chatIgnores = {"http", "항셍", "나스닥", "무료", "반갑", "발동", "사진", "상담",
+            "입장", "파생", "프로필" };
 
     boolean canIgnore(String mergedLine) {
-        for (String ig : chatIgnores) {
-            if (mergedLine.contains(ig))
+        for (String igWord : chatIgnores) {
+            if (mergedLine.contains(igWord))
                 return true;
         }
         return false;

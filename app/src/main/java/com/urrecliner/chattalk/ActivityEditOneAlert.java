@@ -28,7 +28,7 @@ public class ActivityEditOneAlert extends AppCompatActivity {
 
     AlertLine al;
     EditText eGroup, eWho, eKey1, eKey2, eTalk, eMatched, eSkip, eMore, ePrev, eNext;
-    TextView tGroup, tWho, tKey1, tTalk, tMatched, tMore, tPrev;
+    TextView tGroup, tWho, tKey1, tPrev;
     String mGroup, mWho, mPercent, mStatement;
     View deleteMenu;
     boolean newGroup = false;
@@ -59,7 +59,7 @@ public class ActivityEditOneAlert extends AppCompatActivity {
             eTalk.setHint("Skip 3"); eSkip.setHint("Skip 4");
             eMatched.setHint("-1"); eMore.setHint("More");
 
-            tPrev.setText("Skip 5,6");
+            tPrev.setText("의미 없음");
         } else {
             tGroup.setText("Group Name"); tWho.setText("Who");
             tKey1.setText("Key 1,2");

@@ -36,6 +36,14 @@ public class NotificationService extends Service {
     static String who1 = null, msg1 = "", time1 = "00:99";
     static String who2 = "Talk", msg2 = "", time2 = "00:99";
     static boolean show_stop = false;
+    Context nContext;
+//
+    public NotificationService() {}
+
+//    public NotificationService(Context nContext) {
+//        this.nContext = nContext;
+//    }
+
 
     @Override
     public void onCreate() {
@@ -46,6 +54,15 @@ public class NotificationService extends Service {
         if (utils == null)
             utils = new Utils();
         msgGet();
+        createNotification();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                createNotification();
+                updateRemoteViews();
+//            }
+//        }).start();
+
     }
 
     @Override
@@ -104,7 +121,7 @@ public class NotificationService extends Service {
                 break;
         }
 
-        if (operation != -1)
+//        if (operation != -1)
             updateRemoteViews();
         return START_STICKY;
     }
@@ -119,20 +136,22 @@ public class NotificationService extends Service {
 
     private void createNotification() {
 
+        Log.w("chck1","mNotification Manaager");
         if (null == mNotificationManager) {
-            CharSequence name = "Chat Talk";
-            String description = "Chat Description";
+            CharSequence name = "Chat_Talk";
+            String description = "Chat Talk Desc";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel("ChatTalk", name, importance);
-            channel.setDescription(description);
+            NotificationChannel mChannel = new NotificationChannel("ChatTalkId", name, importance);
+            mChannel.setDescription(description);
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
-            mNotificationManager = getSystemService(NotificationManager.class);
-            mNotificationManager.createNotificationChannel(channel);
+            mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE); // NotificationManager.class);
+            mNotificationManager.createNotificationChannel(mChannel);
         }
+        Log.w("chck1","mNotification Builder");
 
         if (null == mBuilder) {
-            mBuilder = new NotificationCompat.Builder(this, "default")
+            mBuilder = new NotificationCompat.Builder(this, "chatChannel")
                     .setSmallIcon(R.drawable.chat_talk)
                     .setBadgeIconType(NotificationCompat.BADGE_ICON_LARGE)
                     .setColor(getApplicationContext().getColor(R.color.barLine1))
@@ -142,6 +161,8 @@ public class NotificationService extends Service {
                     .setCustomBigContentView(mRemoteViews)
                     .setStyle(new NotificationCompat.BigTextStyle())
                     .setOngoing(true);
+
+
         }
         Intent mIntent = new Intent(mContext, ActivityMain.class);
         mRemoteViews.setOnClickPendingIntent(R.id.ll_customNotification,
@@ -150,7 +171,7 @@ public class NotificationService extends Service {
 
         Intent sIntent = new Intent(this, NotificationService.class);
         sIntent.putExtra("operation", STOP_SAY1);
-        PendingIntent stopSay1Pi = PendingIntent.getService(mContext, 21, sIntent,
+        PendingIntent stopSay1Pi = PendingIntent.getService(mContext, STOP_SAY1, sIntent,
             PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(stopSay1Pi);
         mRemoteViews.setOnClickPendingIntent(R.id.stop_now1, stopSay1Pi);
@@ -166,7 +187,7 @@ public class NotificationService extends Service {
         mRemoteViews.setTextViewText(R.id.msg_who2, who2);
         mRemoteViews.setTextViewText(R.id.msg_text2, msg2);
         mRemoteViews.setViewVisibility(R.id.stop_now1, (show_stop)? View.VISIBLE : View.GONE);
-        mNotificationManager.notify(100,mBuilder.build());
+        mNotificationManager.notify(110,mBuilder.build());
         msgPut();
     }
     public static void msgGet() {
@@ -182,7 +203,7 @@ public class NotificationService extends Service {
         time1 = sharePref.getString("time1","00:99");
         time2 = sharePref.getString("time2","00:99");
     }
-    public void msgPut() {
+    public static void msgPut() {
         sharedEditor.putString("who1", who1);
         sharedEditor.putString("who2", who2);
         sharedEditor.putString("msg1", msg1);

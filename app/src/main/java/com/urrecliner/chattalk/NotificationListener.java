@@ -15,6 +15,7 @@ import static com.urrecliner.chattalk.Vars.smsWhoIgnores;
 import static com.urrecliner.chattalk.Vars.teleChannels;
 import static com.urrecliner.chattalk.Vars.teleGroups;
 import static com.urrecliner.chattalk.Vars.textIgnores;
+import static com.urrecliner.chattalk.Vars.tossIgnores;
 
 import android.os.VibrationEffect;
 import android.os.Vibrator;
@@ -178,6 +179,20 @@ public class NotificationListener extends NotificationListenerService {
                 msgSMS.say(sbnWho, utils.strShorten(sbnWho, sbnText));
                 break;
 
+            case TOSS:
+
+                for (String s: tossIgnores) {
+                    if (sbnText.contains(s))
+                        return;
+                }
+                head = "[" + sbnPackageNick + "]";
+                sbnText = sbnWho+"🖐"+ utils.text2OneLine(sbnText);
+                logUpdate.addQue(head , sbnText);
+                notificationBar.update(sbnPackageNick, sbnText, true);
+                sbnText = "토스 로부터 " + new Numbers().deduct(sbnText);
+                sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
+                break;
+
             case NAHMOO:
 
                 new MsgNamoo().say(utils.text2OneLine(sbnText));
@@ -205,21 +220,6 @@ public class NotificationListener extends NotificationListenerService {
                 notificationBar.update(sbnPackageNick, sbnText, true);
 //                FileIO.append2Today("Tesla.txt", sbnText);
                 sounds.speakAfterBeep("테스리로 부터 " + sbnText);
-                break;
-
-            case TOSS:
-
-                final String [] ignoreToss = { "원 적립", "퀴즈 정답", "환전했", "구매했" };
-                for (String s: ignoreToss) {
-                    if (sbnText.contains(s) || sbnWho.contains(s))
-                        return;
-                }
-                head = "[" + sbnPackageNick + "]";
-                sbnText = sbnWho+"🖐"+ utils.text2OneLine(sbnText);
-                logUpdate.addQue(head , sbnText);
-                notificationBar.update(sbnPackageNick, sbnText, true);
-                sbnText = "토스 로부터 " + new Numbers().deduct(sbnText);
-                sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
                 break;
 
             case YYX:     // exclude Group e.g. bank app
@@ -324,6 +324,8 @@ public class NotificationListener extends NotificationListenerService {
 
             default:
 
+                if (kvCommon.isDup("none", sbnText))
+                    return;
                 sbnText = "새로운 앱이 설치됨,  groupNames:" + sbnGroup + ", who:" + sbnWho +
                         ", text:" + utils.text2OneLine(sbnText);
                 notificationBar.update("[새 앱]", sbnText, true);

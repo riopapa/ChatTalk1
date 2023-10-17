@@ -111,6 +111,16 @@ public class ActivityMain extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {}
         });
 
+
+        //        new NotificationStart(pContext);
+        NotificationService notificationService  = new NotificationService();
+        if (!BootReceiver.isServiceRunning(mContext, notificationService.getClass())) {
+            Intent mBackgroundServiceIntent;
+            mBackgroundServiceIntent = new Intent(mContext, notificationService.getClass());
+//            pContext.startForegroundService(mBackgroundServiceIntent);
+            mContext.startService(mBackgroundServiceIntent);
+        }
+
     }
 
     @Override

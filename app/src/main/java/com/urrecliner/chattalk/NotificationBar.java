@@ -21,12 +21,14 @@ public class NotificationBar {
 
         if (mContext != null) {
             final String iMsg = (msg.length() > 400) ?msg.substring(0,400) : msg;
-            Intent intent = new Intent(mContext, NotificationService.class);
+            NotificationService notificationService  = new NotificationService();
+
+            Intent intent = new Intent(mContext, notificationService.getClass());
             intent.putExtra("operation", SHOW_MESSAGE);
             intent.putExtra("who", who);
             intent.putExtra("msg", iMsg);
             intent.putExtra("stop", show_icon && !sounds.isSilent());
-//            mContext.startService(intent);
+//            mContext.startForegroundService(intent);
             try {
                 if (isMyServiceRunning(NotificationService.class))
                     mContext.startService(intent);
