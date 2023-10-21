@@ -254,6 +254,8 @@ public class NotificationListener extends NotificationListenerService {
 
                 if (IgnoreThis.contains(sbnText, textIgnores))
                     return;
+                if (kvCommon.isDup(sbnWho, sbnText))
+                    return;
                 sbnText = sbnWho + "✓" + utils.text2OneLine(sbnText);
                 logUpdate.addQue(sbnPackageNick, sbnText);
                 notificationBar.update(sbnPackageNick, sbnText, true);

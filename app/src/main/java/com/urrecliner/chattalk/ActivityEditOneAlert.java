@@ -92,7 +92,7 @@ public class ActivityEditOneAlert extends AppCompatActivity {
         String info;
         if (alertLines.get(alertPos).matched == -1) {    // group delete
             info = alertLines.get(alertPos).group;
-            makeGroupMemo();
+            mStatement = makeGroupMemo();
             mWho = "\n삭제됨\n" + mWho + "\n"
                     + new SimpleDateFormat(".MM/dd HH:mm", Locale.KOREA).format(new Date())
                     + "\n삭제됨\n";
@@ -112,7 +112,7 @@ public class ActivityEditOneAlert extends AppCompatActivity {
             info = alertLines.get(alertPos).group+" "+ alertLines.get(alertPos).who;
             alertLines.remove(alertPos);
             alertsAdapter.notifyItemRemoved(alertPos);
-            makeGroupMemo();
+            mStatement =makeGroupMemo();
         }
         Upload2Google.uploadGroupInfo(mGroup, mWho, mPercent, "", mStatement);
         new AlertSave("Delete "+info);
@@ -152,9 +152,9 @@ public class ActivityEditOneAlert extends AppCompatActivity {
         String mTalk = eTalk.getText().toString();
         String skip = eSkip.getText().toString();
         String prev = ePrev.getText().toString();
-        if (prev.equals("")) prev = key1;
+//        if (prev.equals("")) prev = key1;
         String next = eNext.getText().toString();
-        if (next.equals("")) next = key2;
+//        if (next.equals("")) next = key2;
         al = new AlertLine(group, who, key1, key2, mTalk, matchInt, skip, more,
                 prev, next);
         alertLines.set(alertPos, al);
@@ -177,7 +177,7 @@ public class ActivityEditOneAlert extends AppCompatActivity {
         alertsAdapter.notifyItemChanged(alertPos);
     }
 
-    void makeGroupMemo() {
+    String makeGroupMemo() {
         mGroup = al.group;
         StringBuilder sb = new StringBuilder();
         for (AlertLine al: alertLines) {
@@ -200,6 +200,6 @@ public class ActivityEditOneAlert extends AppCompatActivity {
                 }
             }
         }
-        mStatement = sb.toString();
+        return sb.toString();
     }
 }
