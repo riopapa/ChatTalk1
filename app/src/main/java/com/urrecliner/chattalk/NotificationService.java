@@ -82,7 +82,7 @@ public class NotificationService extends Service {
 
                 who1 = Objects.requireNonNull(intent.getStringExtra("who"))
                         .replace(" ", "\u00A0");
-                msg1 = utils.makeEtc(Objects.requireNonNull(intent.getStringExtra("msg")), 300)
+                msg1 = utils.makeEtc(Objects.requireNonNull(intent.getStringExtra("msg")), 200)
                         .replace(" ", "\u00A0");
                 time1 = new SimpleDateFormat("HH:\nmm", Locale.KOREA).format(new Date());
                 show_stop = intent.getBooleanExtra("stop", true);
@@ -123,15 +123,25 @@ public class NotificationService extends Service {
 
     private void createNotification() {
 
-
         mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         mNotificationChannel = new NotificationChannel("default","default", NotificationManager.IMPORTANCE_DEFAULT);
         mNotificationManager.createNotificationChannel(mNotificationChannel);
-        mBuilder = new NotificationCompat.Builder(nContext,"default")
+//        mBuilder = new NotificationCompat.Builder(nContext,"default")
+//                .setSmallIcon(R.drawable.chat_talk)
+//                .setOnlyAlertOnce(true)
+//                .setAutoCancel(false)
+//                .setCustomBigContentView(mRemoteViews)
+//                .setOngoing(true);
+
+        mBuilder = new NotificationCompat.Builder(this, "default")
                 .setSmallIcon(R.drawable.chat_talk)
-                .setContent(mRemoteViews)
+//                .setBadgeIconType(NotificationCompat.BADGE_ICON_LARGE)
+//                .setColor(getApplicationContext().getColor(R.color.barLine1))
+//                .setContent(mRemoteViews)
                 .setOnlyAlertOnce(true)
                 .setAutoCancel(false)
+                .setCustomBigContentView(mRemoteViews)
+//                .setStyle(new NotificationCompat.BigTextStyle())
                 .setOngoing(true);
 
         Intent mIntent = new Intent(nContext, ActivityMain.class);
