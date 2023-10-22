@@ -182,7 +182,7 @@ public class NotificationListener extends NotificationListenerService {
             case TOSS:
 
                 for (String s: tossIgnores) {
-                    if (sbnText.contains(s))
+                    if (sbnWho.contains(s) || sbnText.contains(s))
                         return;
                 }
                 head = "[" + sbnPackageNick + "]";

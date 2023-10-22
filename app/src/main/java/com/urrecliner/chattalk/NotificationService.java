@@ -136,7 +136,6 @@ public class NotificationService extends Service {
 
     private void createNotification() {
 
-        Log.w("chck1","mNotification Manaager");
         if (null == mNotificationManager) {
             CharSequence name = "Chat_Talk";
             String description = "Chat Talk Desc";
@@ -145,10 +144,10 @@ public class NotificationService extends Service {
             mChannel.setDescription(description);
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
-            mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE); // NotificationManager.class);
+//            mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE); // NotificationManager.class);
+            mNotificationManager = mContext.getSystemService(NotificationManager.class);
             mNotificationManager.createNotificationChannel(mChannel);
         }
-        Log.w("chck1","mNotification Builder");
 
         if (null == mBuilder) {
             mBuilder = new NotificationCompat.Builder(this, "chatChannel")
@@ -161,7 +160,6 @@ public class NotificationService extends Service {
                     .setCustomBigContentView(mRemoteViews)
                     .setStyle(new NotificationCompat.BigTextStyle())
                     .setOngoing(true);
-
 
         }
         Intent mIntent = new Intent(mContext, ActivityMain.class);

@@ -45,7 +45,7 @@ class OptionTables {
         if (kkTxtIgnores == null || smsWhoIgnores == null || systemIgnores == null) {
             sounds.beepOnce(Vars.soundType.ERR.ordinal());
             Toast.makeText(mContext, "\nsome tables is null\n", Toast.LENGTH_LONG).show();
-            sounds.beepOnce(Vars.soundType.ERR.ordinal());
+//            sounds.beepOnce(Vars.soundType.ERR.ordinal());
         }
         readReplacesFile();
         readPackageTable();
