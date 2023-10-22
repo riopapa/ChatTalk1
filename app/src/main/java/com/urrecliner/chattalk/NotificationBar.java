@@ -28,7 +28,6 @@ public class NotificationBar {
             intent.putExtra("who", who);
             intent.putExtra("msg", iMsg);
             intent.putExtra("stop", show_icon && !sounds.isSilent());
-//            mContext.startForegroundService(intent);
             try {
                 if (isMyServiceRunning(NotificationService.class))
                     mContext.startService(intent);
