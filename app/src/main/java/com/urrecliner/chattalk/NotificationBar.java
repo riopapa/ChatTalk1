@@ -8,6 +8,7 @@ import static com.urrecliner.chattalk.Vars.mContext;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -19,31 +20,52 @@ public class NotificationBar {
 
     public void update(String who, String msg, boolean show_icon) {
 
-        if (mContext != null) {
-            final String iMsg = (msg.length() > 400) ?msg.substring(0,400) : msg;
-            NotificationService notificationService  = new NotificationService();
-
-            Intent intent = new Intent(mContext, notificationService.getClass());
-            intent.putExtra("operation", SHOW_MESSAGE);
-            intent.putExtra("who", who);
-            intent.putExtra("msg", iMsg);
-            intent.putExtra("stop", show_icon && !sounds.isSilent());
-            try {
-                if (isMyServiceRunning(NotificationService.class))
-                    mContext.startService(intent);
-                else
-                    mContext.startForegroundService(intent);
-            } catch (Exception e) {
-                Log.e("NotificationBar","intent Error \n"+e);
-            }
-            if (IsScreen.On(mContext)) {
-                new Handler(Looper.getMainLooper()).post(()
-                        -> Toast.makeText(mContext, who + " > " + iMsg, Toast.LENGTH_SHORT).show());
-            }
+        final String iMsg = (msg.length() > 400) ?msg.substring(0,400) : msg;
+        Intent intent = new Intent(mContext, NotificationService.class);
+        intent.putExtra("operation", SHOW_MESSAGE);
+        intent.putExtra("who", who);
+        intent.putExtra("msg", iMsg);
+        intent.putExtra("stop", show_icon && !sounds.isSilent());
+        try {
+            if (isMyServiceRunning(NotificationService.class))
+                mContext.startService(intent);
+            else
+                mContext.startForegroundService(intent);
+        } catch (Exception e) {
+            Log.e("NotificationBar","intent Error \n"+e);
         }
 
     }
 
+
+//
+//    public void update(String who, String msg, boolean show_icon) {
+//
+//        if (mContext != null) {
+//            final String iMsg = (msg.length() > 400) ?msg.substring(0,400) : msg;
+//            NotificationService notificationService  = new NotificationService();
+//
+//            Intent intent = new Intent(mContext, notificationService.getClass());
+//            intent.putExtra("operation", SHOW_MESSAGE);
+//            intent.putExtra("who", who);
+//            intent.putExtra("msg", iMsg);
+//            intent.putExtra("stop", show_icon && !sounds.isSilent());
+//            try {
+//                if (isMyServiceRunning(NotificationService.class))
+//                    mContext.startService(intent);
+//                else
+//                    mContext.startForegroundService(intent);
+//            } catch (Exception e) {
+//                Log.e("NotificationBar","intent Error \n"+e);
+//            }
+//            if (IsScreen.On(mContext)) {
+//                new Handler(Looper.getMainLooper()).post(()
+//                        -> Toast.makeText(mContext, who + " > " + iMsg, Toast.LENGTH_SHORT).show());
+//            }
+//        }
+//
+//    }
+//
     static void hideStop() {
         if (mContext != null) {
             Intent intent = new Intent(mContext, NotificationService.class);

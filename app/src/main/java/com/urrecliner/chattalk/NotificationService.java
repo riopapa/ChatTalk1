@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.RemoteViews;
 
 import androidx.core.app.NotificationCompat;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -30,51 +31,38 @@ public class NotificationService extends Service {
 
     NotificationCompat.Builder mBuilder = null;
     NotificationManager mNotificationManager;
+    NotificationChannel mNotificationChannel = null;
+
     String pkgName;
     private RemoteViews mRemoteViews;
     private static final int STOP_SAY1 = 10011;
     static String who1 = null, msg1 = "", time1 = "00:99";
     static String who2 = "Talk", msg2 = "", time2 = "00:99";
     static boolean show_stop = false;
-    Context nContext;
+    static Context nContext;
 //
     public NotificationService() {}
 
-//    public NotificationService(Context nContext) {
-//        this.nContext = nContext;
-//    }
+    public NotificationService(Context context) {this.nContext = context;}
 
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mContext = this;
-        pkgName = mContext.getPackageName();
-        mRemoteViews = new RemoteViews(pkgName, R.layout.notification_bar);
-        if (utils == null)
-            utils = new Utils();
-        msgGet();
-        createNotification();
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                createNotification();
-                updateRemoteViews();
-//            }
-//        }).start();
-
+        nContext = this;
+        pkgName = nContext.getPackageName();
+        mRemoteViews = new RemoteViews(nContext.getPackageName(), R.layout.notification_bar);
     }
 
     @Override
-    public IBinder onBind(Intent intent) {
-        return null;
-    }
+    public IBinder onBind(Intent intent) {return null;}
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        if (mRemoteViews == null)
-            mRemoteViews = new RemoteViews(pkgName, R.layout.notification_bar);
+        createNotification();
+        if (utils == null)
+            utils = new Utils();
 
         int operation = -1;
         try {
@@ -84,7 +72,6 @@ public class NotificationService extends Service {
         }
         if (who1 == null)
             msgGet();
-        createNotification();
 
         switch (operation) {
 
@@ -121,55 +108,40 @@ public class NotificationService extends Service {
                 break;
         }
 
-//        if (operation != -1)
-            updateRemoteViews();
+        if (operation != -1)
+                updateRemoteViews();
         return START_STICKY;
     }
 
     private void launchNHStock() {
-        Intent appIntent = mContext.getPackageManager().getLaunchIntentForPackage(
+        Intent appIntent = nContext.getPackageManager().getLaunchIntentForPackage(
                 "com.wooriwm.txsmart");
         appIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP |
                 Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-        mContext.startActivity(appIntent);
+        nContext.startActivity(appIntent);
     }
 
     private void createNotification() {
 
-        if (null == mNotificationManager) {
-            CharSequence name = "Chat_Talk";
-            String description = "Chat Talk Desc";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel mChannel = new NotificationChannel("ChatTalkId", name, importance);
-            mChannel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-//            mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE); // NotificationManager.class);
-            mNotificationManager = mContext.getSystemService(NotificationManager.class);
-            mNotificationManager.createNotificationChannel(mChannel);
-        }
 
-        if (null == mBuilder) {
-            mBuilder = new NotificationCompat.Builder(this, "chatChannel")
-                    .setSmallIcon(R.drawable.chat_talk)
-                    .setBadgeIconType(NotificationCompat.BADGE_ICON_LARGE)
-                    .setColor(getApplicationContext().getColor(R.color.barLine1))
-                    .setContent(mRemoteViews)
-                    .setOnlyAlertOnce(true)
-                    .setAutoCancel(false)
-                    .setCustomBigContentView(mRemoteViews)
-                    .setStyle(new NotificationCompat.BigTextStyle())
-                    .setOngoing(true);
+        mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        mNotificationChannel = new NotificationChannel("default","default", NotificationManager.IMPORTANCE_DEFAULT);
+        mNotificationManager.createNotificationChannel(mNotificationChannel);
+        mBuilder = new NotificationCompat.Builder(nContext,"default")
+                .setSmallIcon(R.drawable.chat_talk)
+                .setContent(mRemoteViews)
+                .setOnlyAlertOnce(true)
+                .setAutoCancel(false)
+                .setOngoing(true);
 
-        }
-        Intent mIntent = new Intent(mContext, ActivityMain.class);
+        Intent mIntent = new Intent(nContext, ActivityMain.class);
         mRemoteViews.setOnClickPendingIntent(R.id.ll_customNotification,
-            PendingIntent.getActivity(mContext, 0, mIntent,
+            PendingIntent.getActivity(nContext, 0, mIntent,
                 PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));
 
         Intent sIntent = new Intent(this, NotificationService.class);
         sIntent.putExtra("operation", STOP_SAY1);
-        PendingIntent stopSay1Pi = PendingIntent.getService(mContext, STOP_SAY1, sIntent,
+        PendingIntent stopSay1Pi = PendingIntent.getService(nContext, STOP_SAY1, sIntent,
             PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(stopSay1Pi);
         mRemoteViews.setOnClickPendingIntent(R.id.stop_now1, stopSay1Pi);
@@ -177,7 +149,7 @@ public class NotificationService extends Service {
 
     private void updateRemoteViews() {
 
-//        String timeA = time1.substring(0,3)+"\n"+time1.substring(3);
+        mBuilder.setSmallIcon(R.drawable.chat_talk);
         mRemoteViews.setTextViewText(R.id.msg_time1, time1);
         mRemoteViews.setTextViewText(R.id.msg_who1, who1);
         mRemoteViews.setTextViewText(R.id.msg_text1, msg1);
@@ -191,7 +163,7 @@ public class NotificationService extends Service {
     public static void msgGet() {
 
         if (sharePref == null) {
-            sharePref = mContext.getSharedPreferences("sayText", MODE_PRIVATE);
+            sharePref = nContext.getSharedPreferences("sayText", MODE_PRIVATE);
             sharedEditor = sharePref.edit();
         }
         who1 = sharePref.getString("who1", "New Loaded 1");
@@ -209,6 +181,10 @@ public class NotificationService extends Service {
         sharedEditor.putString("time1", time1);
         sharedEditor.putString("time2", time2);
         sharedEditor.apply();
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
 }
