@@ -68,4 +68,5 @@ public class NotificationBar {
         }
         return false;
     }
+
 }
