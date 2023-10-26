@@ -9,14 +9,17 @@
 
     <color name="barLine0">#81375BCF</color>
     <color name="barLine1">#E1201C4A</color>
-    <color name="barLine2">#41201C6A</color>
+    <color name="barLine1a">#E1534CAA</color>
+    <color name="colorLine1">#FFFFFF</color>
+
+    <color name="barLine2">#E1201C4A</color>
+    <color name="barLine2a">#E1403C7A</color>
+    <color name="colorLine2">#FFFFFF</color>
 
     <color name="snackBarBack">#FCEFC1</color>
     <color name="snackBarTitle">#FF354DE3</color>
     <color name="snackBarText">#FF770B09</color>
 
-    <color name="colorLine1">#FFFFFF</color>
-    <color name="colorLine2">#FFFFFF</color>
     <color name="headLine">#DCC645</color>
     <color name="lightLine">#F7E489</color>
     <color name="textFore">#222233</color>

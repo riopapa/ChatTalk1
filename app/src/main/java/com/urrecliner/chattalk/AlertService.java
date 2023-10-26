@@ -79,7 +79,8 @@ public class AlertService extends Service {
                         .replace(" ", "\u00A0");
                 msg1 = utils.makeEtc(Objects.requireNonNull(intent.getStringExtra("msg")), 300)
                         .replace(" ", "\u00A0");
-                time1 = new SimpleDateFormat("HH:\nmm", Locale.KOREA).format(new Date());
+                time1 = new SimpleDateFormat("HH:mm", Locale.KOREA).format(new Date())
+                        +" "+who1;
                 show_stop = intent.getBooleanExtra("stop", true);
                 break;
 
@@ -144,10 +145,10 @@ public class AlertService extends Service {
 
 //        String timeA = time1.substring(0,3)+"\n"+time1.substring(3);
         mRemoteViews.setTextViewText(R.id.msg_time1, time1);
-        mRemoteViews.setTextViewText(R.id.msg_who1, who1);
+//        mRemoteViews.setTextViewText(R.id.msg_who1, who1);
         mRemoteViews.setTextViewText(R.id.msg_text1, msg1);
         mRemoteViews.setTextViewText(R.id.msg_time2, time2);
-        mRemoteViews.setTextViewText(R.id.msg_who2, who2);
+//        mRemoteViews.setTextViewText(R.id.msg_who2, who2);
         mRemoteViews.setTextViewText(R.id.msg_text2, msg2);
         mRemoteViews.setViewVisibility(R.id.stop_now1, (show_stop)? View.VISIBLE : View.GONE);
         mNotificationManager.notify(100,mBuilder.build());

@@ -19,7 +19,7 @@ public class StockName {
                         new StringBuffer(sName).insert(1, ".") + " " +
                         str.substring(p2);
             } else {
-                sName = str.substring(p1, p1+10).replaceAll(shorten, "").trim();
+                sName = (str.substring(p1, p1+10).replaceAll(shorten, "")+"   ").trim();
                 str = str.substring(0, p1) + " " +
                         new StringBuffer(sName).insert(1, ".") + " " +
                         str.substring(p1+10);

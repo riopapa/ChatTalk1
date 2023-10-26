@@ -35,8 +35,8 @@ public class NotificationService extends Service {
     String pkgName;
     private RemoteViews mRemoteViews;
     private static final int STOP_SAY1 = 10011;
-    static String who1 = null, msg1 = "", time1 = "00:99";
-    static String who2 = "Talk", msg2 = "", time2 = "00:99";
+    static String msg1 = "", head1 = "00:99";
+    static String msg2 = "", head2 = "00:99";
     static boolean show_stop = false;
 //
     public NotificationService() {}
@@ -71,21 +71,21 @@ public class NotificationService extends Service {
         if (operation == -1) {
             return START_STICKY;
         }
-        if (who1 == null)
+        if (msg1 == "")
             msgGet();
         switch (operation) {
 
             case SHOW_MESSAGE:
-                who2 = who1;
                 msg2 = msg1;
-                time2 = time1;
+                head2 = head1;
 
-                who1 = Objects.requireNonNull(intent.getStringExtra("who"))
-                        .replace(" ", "\u00A0");
-                msg1 = utils.makeEtc(Objects.requireNonNull(intent.getStringExtra("msg")), 200)
-                        .replace(" ", "\u00A0");
-                time1 = new SimpleDateFormat("HH:\nmm", Locale.KOREA).format(new Date());
+                msg1 = utils.makeEtc(Objects.requireNonNull(intent.getStringExtra("msg")), 120)
+                        .replace(" ", "\u2008"); // Punctuation Space
+                head1 = new SimpleDateFormat("HH:mm", Locale.KOREA).format(new Date())
+                        + "\u00A0" + Objects.requireNonNull(intent.getStringExtra("who"))
+                        .replace(" ", "\u2008");
                 show_stop = intent.getBooleanExtra("stop", true);
+
                 break;
 
             case LOAD_NH_STOCK:
@@ -116,7 +116,7 @@ public class NotificationService extends Service {
                 "com.wooriwm.txsmart");
         appIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP |
                 Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-        mContext.startActivity(appIntent);
+        mContext.startForegroundService(appIntent);
     }
 
     private void createNotification() {
@@ -126,13 +126,14 @@ public class NotificationService extends Service {
         mNotificationManager.createNotificationChannel(mNotificationChannel);
 
         mBuilder = new NotificationCompat.Builder(this, "default")
-                .setSmallIcon(R.drawable.chat_talk)
-//                .setBadgeIconType(NotificationCompat.BADGE_ICON_LARGE)
+//                .setSmallIcon(R.drawable.chat_talk)
+//                .setBadgeIconType(NotificationCompat.BADGE_ICON_NONE)
 //                .setColor(getApplicationContext().getColor(R.color.barLine1))
 //                .setContent(mRemoteViews)
                 .setOnlyAlertOnce(true)
                 .setAutoCancel(false)
                 .setCustomBigContentView(mRemoteViews)
+                .setLargeIcon(null)
 //                .setStyle(new NotificationCompat.BigTextStyle())
                 .setOngoing(true);
 
@@ -152,11 +153,11 @@ public class NotificationService extends Service {
     private void updateRemoteViews() {
 
         mBuilder.setSmallIcon(R.drawable.chat_talk);
-        mRemoteViews.setTextViewText(R.id.msg_time1, time1);
-        mRemoteViews.setTextViewText(R.id.msg_who1, who1);
+        mRemoteViews.setTextViewText(R.id.msg_time1, head1);
+//        mRemoteViews.setTextViewText(R.id.msg_who1, who1);
         mRemoteViews.setTextViewText(R.id.msg_text1, msg1);
-        mRemoteViews.setTextViewText(R.id.msg_time2, time2);
-        mRemoteViews.setTextViewText(R.id.msg_who2, who2);
+        mRemoteViews.setTextViewText(R.id.msg_time2, head2);
+//        mRemoteViews.setTextViewText(R.id.msg_who2, who2);
         mRemoteViews.setTextViewText(R.id.msg_text2, msg2);
         mRemoteViews.setViewVisibility(R.id.stop_now1, (show_stop)? View.VISIBLE : View.GONE);
         mNotificationManager.notify(110,mBuilder.build());
@@ -168,20 +169,16 @@ public class NotificationService extends Service {
             sharePref = mContext.getSharedPreferences("sayText", MODE_PRIVATE);
             sharedEditor = sharePref.edit();
         }
-        who1 = sharePref.getString("who1", "New Loaded 1");
-        who2 = sharePref.getString("who2", "New Loaded 2");
         msg1 = sharePref.getString("msg1", "None 1");
         msg2 = sharePref.getString("msg2", "None 2");
-        time1 = sharePref.getString("time1","00:99");
-        time2 = sharePref.getString("time2","00:99");
+        head1 = sharePref.getString("head1","00:59");
+        head2 = sharePref.getString("head2","00:59");
     }
     public static void msgPut() {
-        sharedEditor.putString("who1", who1);
-        sharedEditor.putString("who2", who2);
         sharedEditor.putString("msg1", msg1);
         sharedEditor.putString("msg2", msg2);
-        sharedEditor.putString("time1", time1);
-        sharedEditor.putString("time2", time2);
+        sharedEditor.putString("head1", head1);
+        sharedEditor.putString("head2", head2);
         sharedEditor.apply();
     }
     @Override

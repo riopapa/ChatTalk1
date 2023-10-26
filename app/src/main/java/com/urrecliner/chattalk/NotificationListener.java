@@ -210,7 +210,7 @@ public class NotificationListener extends NotificationListenerService {
                 if (sbnText.contains("연결됨")) {
                     long nowTime = System.currentTimeMillis();
                     if ((nowTime - tesla_time) > 50 * 60 * 1000)    // 30 min.
-                        sounds.beepOnce(Vars.soundType.TESLY.ordinal());
+                        sounds.beepOnce(Vars.soundType.TESRY.ordinal());
                     tesla_time = nowTime;
                     break;
                 }

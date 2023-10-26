@@ -37,7 +37,8 @@ public class NotifyStock {
                     Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT |
                     Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-        PendingIntent pIntent = PendingIntent.getBroadcast(context, 0, nhIntent, PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pIntent = PendingIntent.getBroadcast(context, 0, nhIntent,
+                PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
         stockId++;
         notificationBuilder.setAutoCancel(true)
@@ -48,8 +49,8 @@ public class NotifyStock {
                 .setContentText(textContent)
                 .setStyle(new NotificationCompat.BigTextStyle()
                         .bigText(textContent))
-                .addAction(new NotificationCompat.Action.Builder(
-                        R.drawable.share_app, "NH "+stockName, pIntent).build())
+                .addAction(new NotificationCompat.Action.Builder(R.drawable.share_app,
+                        "NH "+stockName, pIntent).build())
                 .setContentInfo("Info");
 //                .addAction(android.R.drawable.stat_notify_more, "NH "+stockName, pIntent)
 

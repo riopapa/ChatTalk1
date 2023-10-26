@@ -78,7 +78,7 @@ public class AlertStock {
                 if (!isSilentNow()) {
                     sounds.beepOnce(Vars.soundType.ONLY.ordinal());
                 }
-                String shortParse1 = (sParse[1].length() > 50) ? sParse[1].substring(0, 60) : sParse[1];
+                String shortParse1 = (sParse[1].length() > 50) ? sParse[1].substring(0, 50) : sParse[1];
                 notificationBar.update(title, shortParse1, false);
             }
             save(al, mContext);

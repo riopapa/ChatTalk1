@@ -100,8 +100,8 @@ public class Vars {
     static final String lastChar = "힝";
     static int alertPos = -1;
 
-    enum soundType { PRE, POST, ERR, TESLY, ONLY, STOCK}
-    static final int[] beepRawIds = { R.raw.a0_pre_sound, R.raw.a1_post_sound, R.raw.a2_alert,
+    enum soundType { PRE, POST, ERR, TESRY, ONLY, STOCK}
+    static final int[] beepRawIds = { R.raw.a0_pre_sound, R.raw.a1_post_sound, R.raw.a2_err_warling_rake_swing_whoosh,
             R.raw.a3_hello_tesry, R.raw.a4_only, R.raw.a5_stock_check};
 
     public static boolean audioReady = true;

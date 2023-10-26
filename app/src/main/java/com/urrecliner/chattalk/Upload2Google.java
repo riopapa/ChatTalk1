@@ -61,7 +61,7 @@ public class Upload2Google {
                     nowUploading = false;
                     String s = group+", "+who+", "+timeStamp+", "+percent+", "+statement;
                     new Utils().logW("uploadStock()", s+"\n Error "+s+"\n"+error);
-                    sounds.speakAfterBeep("Google Upload Error "+ s);
+                    logUpdate.addQue("sheet stock response", s);
                     sounds.beepOnce(Vars.soundType.ERR.ordinal());
                 }
         ) {

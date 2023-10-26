@@ -62,22 +62,17 @@ public class LogSpann {
                 continue;
             }
 
-            if (StringUtils.isNumeric(String.valueOf(s.charAt(0)))) {  // timestamp + who
-                if (s.length() > 5) {
-                    if (s.substring(0, 5).equals(dayNow)) {
-                        colorFore = colors[colorIdx][0];
-                        colorBack = colors[colorIdx][1];
-                    } else {    // new day
-                        colorIdx = (colorIdx + 1) % 2;
-                        colorFore = colors[colorIdx][0];
-                        colorBack = colors[colorIdx][1];
-                        dayNow = s.substring(0, 5);
-                        font = (fontSwitch) ? font1 : font2;
-                        fontSwitch = !fontSwitch;
-                    }
-                } else {
-                    colorFore = colors[colorIdx][4];
-                    colorBack = colors[colorIdx][0];
+            if (StringUtils.isNumeric(String.valueOf(s.charAt(0))) && s.length() > 5) {  // timestamp + who
+                if (s.substring(0, 5).equals(dayNow)) {
+                    colorFore = colors[colorIdx][0];
+                    colorBack = colors[colorIdx][1];
+                } else {    // new day
+                    colorIdx = (colorIdx + 1) % 2;
+                    colorFore = colors[colorIdx][0];
+                    colorBack = colors[colorIdx][1];
+                    dayNow = s.substring(0, 5);
+                    font = (fontSwitch) ? font1 : font2;
+                    fontSwitch = !fontSwitch;
                 }
             } else {
                 colorFore = colors[colorIdx][2];

@@ -168,7 +168,7 @@ public class ActivityEditOneAlert extends AppCompatActivity {
         }
         new AlertSave((al.matched == -1)? ("Save Group "+eGroup.getText().toString()):
                 ("Save "+eGroup.getText().toString() + " : " + eWho.getText().toString()));
-        makeGroupMemo();
+        mStatement = makeGroupMemo();
         mTalk = new SimpleDateFormat("yy/MM/dd\nHH:mm", Locale.KOREA).format(new Date());
         Upload2Google.uploadGroupInfo(mGroup, mWho, mPercent, mTalk, mStatement);
         alertsAdapter = new AlertsAdapter();
