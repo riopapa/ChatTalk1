@@ -141,7 +141,7 @@ public class NotificationListener extends NotificationListenerService {
 
             case TELEGRAM:
 
-                if (sbnText.contains("곳에서 보냄"))
+                if (sbnGroup.contains("곳에서 보냄") || sbnText.contains("곳에서 보냄"))
                     return;
                 sbnText = utils.text2OneLine(sbnText);
                 if (kvTelegram.isDup(sbnGroup+sbnWho, sbnText))
@@ -185,9 +185,10 @@ public class NotificationListener extends NotificationListenerService {
                     if (sbnWho.contains(s) || sbnText.contains(s))
                         return;
                 }
+                sbnText = utils.strShorten(sbnPackageNick, utils.text2OneLine(sbnText));
                 head = "[" + sbnPackageNick + "]";
                 sbnText = sbnWho+"🖐"+ utils.text2OneLine(sbnText);
-                logUpdate.addQue(head , sbnText);
+                logUpdate.addQue(head, sbnText);
                 notificationBar.update(sbnPackageNick, sbnText, true);
                 sbnText = "토스 로부터 " + new Numbers().deduct(sbnText);
                 sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
@@ -222,7 +223,19 @@ public class NotificationListener extends NotificationListenerService {
                 sounds.speakAfterBeep("테스리로 부터 " + sbnText);
                 break;
 
-            case YYX:     // exclude Group e.g. bank app
+            case YNX: // no who, log Yes, say Yes
+
+                if (IgnoreThis.contains(sbnText, textIgnores))
+                    return;
+                sbnText = sbnGroup + "✓" + utils.text2OneLine(sbnText);
+                logUpdate.addQue("["+sbnPackageNick+"]", sbnText);
+                if (IsWhoNine.in(nineIgnores, sbnPackageNick))
+                    sbnText = new Numbers().deduct(sbnText);
+                sounds.speakAfterBeep(sbnPackageNick + " 로 부터 " + sbnText);
+                break;
+
+
+            case YYX:     // exclude Group e.g. Cj, daum cafe app
 
                 if (IgnoreThis.contains(sbnText, textIgnores))
                     break;
@@ -238,18 +251,6 @@ public class NotificationListener extends NotificationListenerService {
                 sbnText = sbnPackageNick + " 로부터 " + head + sbnText;
                 sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
                 break;
-
-            case YNX: // no who, log Yes, say Yes
-
-                if (IgnoreThis.contains(sbnText, textIgnores))
-                    return;
-                sbnText = sbnGroup + "✓" + utils.text2OneLine(sbnText);
-                logUpdate.addQue("["+sbnPackageNick+"]", sbnText);
-                if (IsWhoNine.in(nineIgnores, sbnPackageNick))
-                    sbnText = new Numbers().deduct(sbnText);
-                sounds.speakAfterBeep(sbnPackageNick + " 로 부터 " + sbnText);
-                break;
-
             case YWX: // treat who as text
 
                 if (IgnoreThis.contains(sbnText, textIgnores))

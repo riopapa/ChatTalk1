@@ -1,17 +1,18 @@
 package com.urrecliner.chattalk.Sub;
 
+import androidx.annotation.NonNull;
+
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class KeyVal {
 
     Map<String, String> maps;
-    boolean exist;
     public KeyVal () {
         maps = new HashMap<>();
     }
     public boolean isDup(String key, String val) {
-        exist = false;
         if (maps == null) {
             maps = new HashMap<>();
             maps.put(key, val);
@@ -24,5 +25,28 @@ public class KeyVal {
         }
         maps.put(key, val);
         return false;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        if (maps.size() > 0) {
+            int i = 0;
+            for (String key : maps.keySet()) {
+                sb.append(i++).append(")").append(key).append(" : ")
+                        .append(maps.get(key)).append("\n");
+            }
+        } else
+            sb.append("\nno data\n");
+        super.toString();
+        return sb.toString();
+    }
+
+    public String convertWithStream(Map<Integer, ?> map) {
+        String mapAsString = map.keySet().stream()
+                .map(key -> key + "=" + map.get(key))
+                .collect(Collectors.joining(", ", "{", "}"));
+        return mapAsString;
     }
 }
