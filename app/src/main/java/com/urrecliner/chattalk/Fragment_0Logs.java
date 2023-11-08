@@ -40,7 +40,7 @@ import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Fragment_1Logs extends Fragment {
+public class Fragment_0Logs extends Fragment {
 
     ViewGroup rootView;
     ScrollView scrollView1;
@@ -66,7 +66,7 @@ public class Fragment_1Logs extends Fragment {
 
     @Override
     public void onResume() {
-        topTabs.getTabAt(1).select();
+        topTabs.getTabAt(0).select();
         ss = new LogSpann().make(logQue, mContext);
         sv = ss;
         etTable.setText(ss);

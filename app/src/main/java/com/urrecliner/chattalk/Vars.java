@@ -18,6 +18,7 @@ import android.text.SpannableString;
 import android.view.View;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.urrecliner.chattalk.Sub.AlertLine;
@@ -93,16 +94,17 @@ public class Vars {
     static boolean isPhoneBusy = false;
 
     static AlertsAdapter alertsAdapter = null;
-    static TabLayout topTabs;
+    static TabLayout topTabs = null;
+    static ViewPager2 viewPager2 = null;
     static ArrayList<AlertLine> alertLines;
 
     static String chatGroup;
     static final String lastChar = "힝";
     static int alertPos = -1;
 
-    enum soundType { PRE, POST, ERR, TESRY, ONLY, STOCK}
-    static final int[] beepRawIds = { R.raw.a0_pre, R.raw.a1_post, R.raw.a2_err_warling_rake,
-            R.raw.a3_hello_tesry, R.raw.a4_bell, R.raw.a5_stock_check};
+    enum soundType { PRE, POST, ERR, TESLA, ONLY, STOCK, INFO}
+    static final int[] beepRawIds = { R.raw.pre, R.raw.post, R.raw.err,
+            R.raw.hi_tesla, R.raw.only, R.raw.stock_check, R.raw.inform};
 
     public static boolean audioReady = true;
     public static class DelItem {

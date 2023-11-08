@@ -94,7 +94,7 @@ class Sounds {
             return;
         if (!isTalking) {
             if (isPhoneBusy) {
-                beepOnce(Vars.soundType.ONLY.ordinal());
+                beepOnce(Vars.soundType.INFO.ordinal());
                 return;
             } else {
                 beepOnce(Vars.soundType.PRE.ordinal());

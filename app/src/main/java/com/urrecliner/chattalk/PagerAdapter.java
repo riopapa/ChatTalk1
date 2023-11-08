@@ -17,9 +17,9 @@ public PagerAdapter(FragmentActivity fm) {
 
         switch (position) {
             case 0:
-                return new Fragment_0Table();
+                return new Fragment_0Logs();
             case 1:
-                return new Fragment_1Logs();
+                return new Fragment_1Table();
             case 2:
                 return new Fragment_2Saved();
             case 3:
@@ -29,7 +29,7 @@ public PagerAdapter(FragmentActivity fm) {
             case 5:
                 return new Fragment_5Chat();
         }
-        return new Fragment_1Logs();
+        return new Fragment_0Logs();
     }
 
     @Override

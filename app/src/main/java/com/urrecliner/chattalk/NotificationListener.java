@@ -144,7 +144,7 @@ public class NotificationListener extends NotificationListenerService {
                 if (sbnGroup.contains("곳에서 보냄") || sbnText.contains("곳에서 보냄"))
                     return;
                 sbnText = utils.text2OneLine(sbnText);
-                if (kvTelegram.isDup(sbnGroup+sbnWho, sbnText))
+                if (kvTelegram.isDup(sbnGroup, sbnText))
                     return;
                 for (int i = 0; i < teleChannels.length; i++) {
                     if (sbnWho.contains(teleChannels[i])) {
@@ -164,11 +164,25 @@ public class NotificationListener extends NotificationListenerService {
                 sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
                 break;
 
+            case TOSS:
+
+                for (String s: tossIgnores) {
+                    if (sbnWho.contains(s) || sbnText.contains(s))
+                        return;
+                }
+                sbnText = utils.strShorten(sbnPackageNick, utils.text2OneLine(sbnWho+"|"+ sbnText));
+                head = "[" + sbnPackageNick + "]";
+                logUpdate.addQue(head, sbnText);
+                notificationBar.update(sbnPackageNick, sbnText, true);
+                sbnText = "토스 로부터 " + new Numbers().deduct(sbnText);
+                sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
+                break;
+
             case SMS:
 
                 if (sbnWho.replaceAll(mContext.getString(R.string.regex_number_only), "").length() < 4 &&
-                    !sbnText.contains("스마트폰 배우고"))
-                        return;
+                        !sbnText.contains("스마트폰 배우고"))
+                    return;
                 if (IgnoreThis.contains(sbnWho, smsWhoIgnores) || IgnoreThis.contains(sbnText, smsTextIgnores))
                     return;
                 sbnText = utils.text2OneLine(sbnText);
@@ -177,21 +191,6 @@ public class NotificationListener extends NotificationListenerService {
                 if (msgSMS == null)
                     msgSMS = new MsgSMS();
                 msgSMS.say(sbnWho, utils.strShorten(sbnWho, sbnText));
-                break;
-
-            case TOSS:
-
-                for (String s: tossIgnores) {
-                    if (sbnWho.contains(s) || sbnText.contains(s))
-                        return;
-                }
-                sbnText = utils.strShorten(sbnPackageNick, utils.text2OneLine(sbnText));
-                head = "[" + sbnPackageNick + "]";
-                sbnText = sbnWho+"🖐"+ utils.text2OneLine(sbnText);
-                logUpdate.addQue(head, sbnText);
-                notificationBar.update(sbnPackageNick, sbnText, true);
-                sbnText = "토스 로부터 " + new Numbers().deduct(sbnText);
-                sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
                 break;
 
             case NAHMOO:
@@ -211,7 +210,7 @@ public class NotificationListener extends NotificationListenerService {
                 if (sbnText.contains("연결됨")) {
                     long nowTime = System.currentTimeMillis();
                     if ((nowTime - tesla_time) > 50 * 60 * 1000)    // 30 min.
-                        sounds.beepOnce(Vars.soundType.TESRY.ordinal());
+                        sounds.beepOnce(Vars.soundType.TESLA.ordinal());
                     tesla_time = nowTime;
                     break;
                 }

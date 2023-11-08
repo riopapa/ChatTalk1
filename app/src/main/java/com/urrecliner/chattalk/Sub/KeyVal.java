@@ -34,7 +34,7 @@ public class KeyVal {
         if (maps.size() > 0) {
             int i = 0;
             for (String key : maps.keySet()) {
-                sb.append(i++).append(")").append(key).append(" : ")
+                sb.append(i++).append(") [").append(key).append("] > ")
                         .append(maps.get(key)).append("\n");
             }
         } else

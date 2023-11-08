@@ -22,7 +22,7 @@ import com.urrecliner.chattalk.Sub.AlertTableIO;
 import com.urrecliner.chattalk.Sub.SnackBar;
 import com.urrecliner.chattalk.Sub.WifiName;
 
-public class Fragment_0Table extends Fragment {
+public class Fragment_1Table extends Fragment {
 
     ViewGroup rootView;
 
@@ -45,7 +45,7 @@ public class Fragment_0Table extends Fragment {
             String s1 = "Wifi : " + WifiName.get(mContext);
             tv_WifiState.setText(s1);
         });
-        topTabs.getTabAt(0).select();
+        topTabs.getTabAt(1).select();
 
         rootView.findViewById(R.id.nine_ignore).setOnClickListener(this::edit_table);
         rootView.findViewById(R.id.text_ignores).setOnClickListener(this::edit_table);

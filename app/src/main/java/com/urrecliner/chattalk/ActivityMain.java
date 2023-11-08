@@ -8,6 +8,7 @@ import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.packageDirectory;
 import static com.urrecliner.chattalk.Vars.topTabs;
+import static com.urrecliner.chattalk.Vars.viewPager2;
 
 import android.Manifest;
 import android.content.Intent;
@@ -86,30 +87,6 @@ public class ActivityMain extends AppCompatActivity {
             vars = new Vars(mContext);
         aBar = getSupportActionBar();
 
-        topTabs = findViewById(R.id.tab_layout);
-        topTabs.addTab(topTabs.newTab().setText("Table"));
-        topTabs.addTab(topTabs.newTab().setText("Logs"));
-        topTabs.addTab(topTabs.newTab().setText("Save"));
-        topTabs.addTab(topTabs.newTab().setText("Stocks"));
-        topTabs.addTab(topTabs.newTab().setText("Alerts"));
-        topTabs.addTab(topTabs.newTab().setText("Chats"));
-        topTabs.setTabGravity(TabLayout.GRAVITY_FILL);
-        ViewPager2 viewPager2 = findViewById(R.id.pager2);
-        FragmentStateAdapter pagerAdapter = new PagerAdapter(this);
-        viewPager2.setAdapter(pagerAdapter);
-        viewPager2.setCurrentItem(1);
-        viewPager2.setPageTransformer(new ZoomOutPageTransformer());
-
-        topTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager2.setCurrentItem(tab.getPosition());
-            }
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {}
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {}
-        });
 
 
         //        new NotificationStart(pContext);
@@ -122,6 +99,7 @@ public class ActivityMain extends AppCompatActivity {
         }
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -163,6 +141,7 @@ public class ActivityMain extends AppCompatActivity {
         if (aBar != null) {
             aBar.setIcon(R.drawable.chat_talk);
         }
+        establishTabs();
 
         WifiMonitor.init(mContext);
 
@@ -183,4 +162,35 @@ public class ActivityMain extends AppCompatActivity {
         return false;
     }
 
+    private void establishTabs() {
+
+        if (topTabs == null) {
+            topTabs = findViewById(R.id.tab_layout);
+            topTabs.removeAllTabs();
+            topTabs.addTab(topTabs.newTab().setText("Logs"));
+            topTabs.addTab(topTabs.newTab().setText("Table"));
+            topTabs.addTab(topTabs.newTab().setText("Save"));
+            topTabs.addTab(topTabs.newTab().setText("Stocks"));
+            topTabs.addTab(topTabs.newTab().setText("Alerts"));
+            topTabs.addTab(topTabs.newTab().setText("Chats"));
+            topTabs.setTabGravity(TabLayout.GRAVITY_FILL);
+        }
+        if (viewPager2 == null) {
+            viewPager2 = findViewById(R.id.pager2);
+            FragmentStateAdapter pagerAdapter = new PagerAdapter(this);
+            viewPager2.setAdapter(pagerAdapter);
+//        viewPager2.setCurrentItem(1);
+            viewPager2.setPageTransformer(new ZoomOutPageTransformer());
+        }
+        topTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager2.setCurrentItem(tab.getPosition());
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {}
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {}
+        });
+    }
 }
