@@ -107,8 +107,8 @@ public class Upload2Google {
                 Map<String, String> para = new HashMap<>();
                 para.put("action", "group");
                 para.put("group", group);     para.put("who", who);
-                para.put("talk", talk);
-                para.put("percent", percent); para.put("statement", statement);
+                para.put("percent", percent); para.put("talk", talk);
+                para.put("statement", statement);
                 return para;
             }
         };

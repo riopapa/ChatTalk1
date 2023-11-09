@@ -20,7 +20,7 @@ import java.util.Locale;
 class MsgSMS {
 
     final static String trade = "체결";
-    final static String jrGroup = "찌라";
+    final static String jrGroup = "허찌";
     final static String nhStock = "NH투자";
     void say(String mWho, String mText) {
 
