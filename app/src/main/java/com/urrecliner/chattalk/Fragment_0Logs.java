@@ -129,7 +129,7 @@ public class Fragment_0Logs extends Fragment {
         mainMenu = menu;
         inflater.inflate(R.menu.menu_1que, menu);
         super.onCreateOptionsMenu(menu, inflater);
-        aBar.setTitle(topTabs.getTabAt(1).getText().toString());
+        aBar.setTitle(topTabs.getTabAt(0).getText().toString());
         aBar.setSubtitle(null);
     }
 

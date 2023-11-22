@@ -4,6 +4,7 @@ import static com.urrecliner.chattalk.Vars.alertLines;
 import static com.urrecliner.chattalk.Vars.alertPos;
 import static com.urrecliner.chattalk.Vars.alertsAdapter;
 import static com.urrecliner.chattalk.Vars.mContext;
+import static com.urrecliner.chattalk.Vars.topTabs;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -173,8 +174,8 @@ public class ActivityEditOneAlert extends AppCompatActivity {
         Upload2Google.uploadGroupInfo(mGroup, mWho, mPercent, mTalk, mStatement);
         alertsAdapter = new AlertsAdapter();
         AlertTable.makeArrays();
-        finish();
         alertsAdapter.notifyItemChanged(alertPos);
+        finish();
     }
 
     String makeGroupMemo() {

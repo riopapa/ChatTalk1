@@ -79,7 +79,7 @@ public class Fragment_1Table extends Fragment {
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.menu_0table, menu);
         super.onCreateOptionsMenu(menu, inflater);
-        aBar.setTitle(topTabs.getTabAt(0).getText().toString());
+        aBar.setTitle(topTabs.getTabAt(1).getText().toString());
         aBar.setSubtitle(null);
 
     }

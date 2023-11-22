@@ -124,6 +124,7 @@ public class ActivityMain extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        Log.w("mm Main","OnResume");
         if (packageDirectory == null)
             packageDirectory = new File(Environment.getExternalStorageDirectory(), "_ChatTalkLog");
 
@@ -179,9 +180,9 @@ public class ActivityMain extends AppCompatActivity {
             viewPager2 = findViewById(R.id.pager2);
             FragmentStateAdapter pagerAdapter = new PagerAdapter(this);
             viewPager2.setAdapter(pagerAdapter);
-//        viewPager2.setCurrentItem(1);
             viewPager2.setPageTransformer(new ZoomOutPageTransformer());
         }
+//        viewPager2.setCurrentItem(0);
         topTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
