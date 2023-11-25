@@ -24,6 +24,7 @@ import static com.urrecliner.chattalk.Vars.tossIgnores;
 
 import android.widget.Toast;
 
+import com.urrecliner.chattalk.Sub.AppsTable;
 import com.urrecliner.chattalk.Sub.SnackBar;
 
 import java.util.ArrayList;
@@ -48,8 +49,9 @@ class OptionTables {
 //            sounds.beepOnce(Vars.soundType.ERR.ordinal());
         }
         readReplacesFile();
-        readPackageTable();
+//        readPackageTable();
         readTelegramTable();
+        new AppsTable().get();
 
     }
 

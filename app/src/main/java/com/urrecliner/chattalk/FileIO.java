@@ -122,7 +122,7 @@ public class FileIO {
         return sb.toString();
     }
 
-    String[] readKR(String filename) {
+    public static String[] readKR(String filename) {
         final int BUFFER_SIZE = 81920;
         String code = "EUC-KR";
         BufferedReader bufferedReader = null;
@@ -150,8 +150,18 @@ public class FileIO {
         return lines.toArray(new String[0]);
     }
 
+    public static String readKRFile(String filename) {
 
-    static void writeKR(File file, String textLine) {
+        String [] lines = readKR(filename);
+        StringBuilder sb = new StringBuilder();
+        for (String s: lines) {
+            sb.append(s);
+        }
+        return sb.toString();
+    }
+
+
+    public static void writeKR(File file, String textLine) {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(file);
             OutputStreamWriter OutputStreamWriter =

@@ -14,7 +14,7 @@ import java.util.List;
 public class TableListFile {
 
 
-    String[] read(String filename) {
+    public String[] read(String filename) {
 
         /* read all lines, remove ; comments, delete if length < 2
          */

@@ -124,7 +124,7 @@ public class ActivityStringReplace extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.menu_edit, menu);
+        getMenuInflater().inflate(R.menu.menu_alert_edit, menu);
         return true;
     }
 

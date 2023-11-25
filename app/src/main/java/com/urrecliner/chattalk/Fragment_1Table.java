@@ -65,8 +65,15 @@ public class Fragment_1Table extends Fragment {
 
     public void edit_table(View v) {
         nowFileName = v.getTag().toString();
-        Intent intent = new Intent(mContext, ActivityEditText.class);
+        Intent intent;
+        if (nowFileName.equals("packageNames")) {
+            intent = new Intent(mContext, ActivityAppList.class);
+        } else {
+            intent = new Intent(mContext, ActivityEditText.class);
+
+        }
         startActivity(intent);
+
     }
 
     public void edit_replace(View v) {

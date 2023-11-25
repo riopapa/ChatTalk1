@@ -328,11 +328,12 @@ public class NotificationListener extends NotificationListenerService {
 
                 if (kvCommon.isDup("none", sbnText))
                     return;
-                sbnText = "새로운 앱이 설치됨,  groupNames:" + sbnGroup + ", who:" + sbnWho +
-                        ", text:" + utils.text2OneLine(sbnText);
-                notificationBar.update("[새 앱]", sbnText, true);
+                sbnText = utils.text2OneLine(sbnText);
+                sounds.speakAfterBeep("새 앱 설치됨 " + sbnText);
+                sbnText = "새로운 앱이 설치됨,  group : " + sbnGroup + ", who : " + sbnWho +
+                        ", text : " + sbnText;
+                notificationBar.update(sbnAppFullName, sbnText, true);
                 logUpdate.addQue("[ " + sbnAppFullName + " ]", sbnText);
-                sounds.speakAfterBeep(sbnText);
                 break;
         }
     }

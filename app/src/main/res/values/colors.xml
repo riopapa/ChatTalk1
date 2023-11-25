@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#778FA8</color>
+    <color name="colorAccent">#E44279</color>
 
     <color name="color_tab_que_background">#EDCCC9</color>
     <color name="color_tab_save_background">#C9EBA1</color>
@@ -25,6 +26,11 @@
     <color name="textFore">#222233</color>
     <color name="alertBack">#ADDCBB</color>
     <color name="alertTalk">#7E1E8F</color>
+
+    <color name="appBack">#CCDFB7</color>
+    <color name="appLine0">#C3C7DC</color>
+    <color name="appLine1">#F4E0DE</color>
+
     <color name="textNormal">#DDDDDD</color>
     <color name="textEdit">#80C2D59A</color>
     <color name="tabSelected">#0D2367</color>

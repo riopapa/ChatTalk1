@@ -54,7 +54,8 @@
 
         <activity android:name=".ActivityEditText"/>
         <activity android:name=".ActivityStringReplace"/>
-        <activity android:name=".ActivityEditOneAlert"/>
+        <activity android:name=".ActivityEditAlert"/>
+        <activity android:name=".ActivityAppList"/>
 
         <service
             android:name=".NotificationListener"

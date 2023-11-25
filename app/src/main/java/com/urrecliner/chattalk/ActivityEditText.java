@@ -97,7 +97,7 @@ public class ActivityEditText extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.menu_edit, menu);
+        getMenuInflater().inflate(R.menu.menu_alert_edit, menu);
         return true;
     }
 
@@ -127,7 +127,7 @@ public class ActivityEditText extends AppCompatActivity {
             String logNow = et.getText().toString();
             StringBuilder sb=new StringBuilder(logNow);
             int pos = et.getSelectionStart();
-            String s = insertClipBoard();
+            String s = getClipBoardText();
             sb.insert(pos, s);
             et.setText(sb.toString());
             et.setSelection(pos + s.length()-2);
@@ -188,7 +188,7 @@ public class ActivityEditText extends AppCompatActivity {
         return str.length();
     }
 
-    String insertClipBoard() {
+    String getClipBoardText() {
         ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         ClipData pData = clipboard.getPrimaryClip();
         ClipData.Item item = pData.getItemAt(0);

@@ -23,6 +23,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.urrecliner.chattalk.Sub.AlertLine;
 import com.urrecliner.chattalk.Sub.AlertTableIO;
+import com.urrecliner.chattalk.Sub.App;
 import com.urrecliner.chattalk.Sub.KeyVal;
 
 import java.io.File;
@@ -98,9 +99,12 @@ public class Vars {
     static ViewPager2 viewPager2 = null;
     static ArrayList<AlertLine> alertLines;
 
+    public static ArrayList<App> apps;
+    public static AppAdapter appAdapter;
+
     static String chatGroup;
     static final String lastChar = "힝";
-    static int alertPos = -1;
+    static int alertPos = -1, appPos = -1;
 
     enum soundType { PRE, POST, ERR, TESLA, ONLY, STOCK, INFO}
     static final int[] beepRawIds = { R.raw.pre, R.raw.post, R.raw.err,

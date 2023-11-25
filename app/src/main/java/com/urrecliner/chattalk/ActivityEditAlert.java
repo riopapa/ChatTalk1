@@ -4,7 +4,6 @@ import static com.urrecliner.chattalk.Vars.alertLines;
 import static com.urrecliner.chattalk.Vars.alertPos;
 import static com.urrecliner.chattalk.Vars.alertsAdapter;
 import static com.urrecliner.chattalk.Vars.mContext;
-import static com.urrecliner.chattalk.Vars.topTabs;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,7 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class ActivityEditOneAlert extends AppCompatActivity {
+public class ActivityEditAlert extends AppCompatActivity {
 
     AlertLine al;
     EditText eGroup, eWho, eKey1, eKey2, eTalk, eMatched, eSkip, eMore, ePrev, eNext;
@@ -72,9 +71,9 @@ public class ActivityEditOneAlert extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.menu_one, menu);
+        getMenuInflater().inflate(R.menu.menu_alert_one, menu);
         new Handler(Looper.getMainLooper()).post(() -> {
-            deleteMenu = this.findViewById(R.id.action_remove);
+            deleteMenu = this.findViewById(R.id.delete_app);
             if (deleteMenu != null) {
                 setLongClick();
             }
@@ -124,7 +123,7 @@ public class ActivityEditOneAlert extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (item.getItemId() == R.id.save_alert) {
+        if (item.getItemId() == R.id.save_app) {
             saveAlert();
 
         } else if (item.getItemId() == R.id.duplicate_alert) {
