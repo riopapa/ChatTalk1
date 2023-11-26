@@ -42,7 +42,7 @@
             android:autofillHints="Enter Text to search" />
 
         <ImageButton
-            android:id="@+id/searchKeyword"
+            android:id="@+id/search"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="4dp"

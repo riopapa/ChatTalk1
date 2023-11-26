@@ -123,7 +123,7 @@ public class ActivityEditAlert extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (item.getItemId() == R.id.save_app) {
+        if (item.getItemId() == R.id.app_save) {
             saveAlert();
 
         } else if (item.getItemId() == R.id.duplicate_alert) {
@@ -171,9 +171,9 @@ public class ActivityEditAlert extends AppCompatActivity {
         mStatement = makeGroupMemo();
         mTalk = new SimpleDateFormat("yy/MM/dd\nHH:mm", Locale.KOREA).format(new Date());
         Upload2Google.uploadGroupInfo(mGroup, mWho, mPercent, mTalk, mStatement);
-        alertsAdapter = new AlertsAdapter();
+//        alertsAdapter = new AlertsAdapter();
         AlertTable.makeArrays();
-        alertsAdapter.notifyItemChanged(alertPos);
+        alertsAdapter.notifyDataSetChanged();
         finish();
     }
 

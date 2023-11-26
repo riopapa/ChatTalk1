@@ -7,14 +7,13 @@ import static com.urrecliner.chattalk.Vars.mContext;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,7 +22,7 @@ import com.urrecliner.chattalk.Sub.AppsTable;
 
 public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
 
-    static int color0, color1;
+    static int colorT, colorF;
 
     @Override
     public int getItemCount() {
@@ -53,8 +52,8 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
             sWho = itemView.findViewById(R.id.app_who);
             sAddWho = itemView.findViewById(R.id.app_addWho);
             sNum = itemView.findViewById(R.id.app_num);
-            color0 = ContextCompat.getColor(mContext,R.color.appLine0);
-            color1 = ContextCompat.getColor(mContext,R.color.appLine1);
+            colorT = ContextCompat.getColor(mContext,R.color.appTrue);
+            colorF = ContextCompat.getColor(mContext,R.color.appFalse);
         }
     }
 
@@ -71,20 +70,20 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
         appPos = holder.getAdapterPosition();
 
         App al = apps.get(appPos);
-        holder.tLine.setBackgroundColor((position % 2 == 1) ? color0 : color1);
 
         holder.tFullName.setText(al.fullName);
         holder.tNickName.setText(al.nickName);
         holder.tNote.setText(al.memo);
 
-        holder.sSay.setText((al.say)? "Say": "Quiet");
-        holder.sLog.setText((al.log)? "Log": "noLog");
-        holder.sGroup.setText((al.grp)? "Grp": "NoGrp");
-        holder.sWho.setText((al.who)? "Who": "NoWho");
-        holder.sAddWho.setText((al.addWho)? "AddWho": "noAdd");
-        holder.sNum.setText((al.num)? "Num": "noNum");
+        holder.sSay.setTextColor((al.say)? colorT:colorF);
+        holder.sLog.setTextColor((al.log)? colorT:colorF);
+        holder.sGroup.setTextColor((al.grp)? colorT:colorF);
+        holder.sWho.setTextColor((al.who)? colorT:colorF);
+        holder.sAddWho.setTextColor((al.addWho)? colorT:colorF);
+        holder.sNum.setTextColor((al.num)? colorT:colorF);
 
         holder.tLine.setOnClickListener(v -> {
+            appPos = holder.getAdapterPosition();
             Intent intent = new Intent(holder.context, ActivityAppEdit.class);
             mActivity.startActivity(intent);
         });

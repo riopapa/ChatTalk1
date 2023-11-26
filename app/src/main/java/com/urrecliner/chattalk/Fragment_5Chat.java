@@ -104,7 +104,7 @@ public class Fragment_5Chat extends Fragment {
             return;
         }
         etChat.setText(selChat);
-        rootView.findViewById(R.id.searchKeyword).setOnClickListener(v -> {
+        rootView.findViewById(R.id.search).setOnClickListener(v -> {
             chatPos = -1;
             EditText etKey1 = rootView.findViewById(R.id.search_key1);
             String key1 = etKey1.getText().toString();          // .replace(" ","\u00A0");

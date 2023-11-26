@@ -5,10 +5,8 @@ import static com.urrecliner.chattalk.Vars.kGroupWhoIgnores;
 import static com.urrecliner.chattalk.Vars.kkTxtIgnores;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.nineIgnores;
-import static com.urrecliner.chattalk.Vars.packageIgnores;
-import static com.urrecliner.chattalk.Vars.pkgFullNames;
-import static com.urrecliner.chattalk.Vars.pkgNickNames;
-import static com.urrecliner.chattalk.Vars.pkgTypes;
+import static com.urrecliner.chattalk.Vars.appIgnores;
+import static com.urrecliner.chattalk.Vars.appFullNames;
 import static com.urrecliner.chattalk.Vars.replGroup;
 import static com.urrecliner.chattalk.Vars.replGroupCnt;
 import static com.urrecliner.chattalk.Vars.replLong;
@@ -41,7 +39,7 @@ class OptionTables {
         smsTextIgnores =  tableListFile.read("smsTextIgnores");
         systemIgnores = tableListFile.read("systemIgnores");
         textIgnores = tableListFile.read("textIgnores");
-        nineIgnores = tableListFile.read("nineIgnores");
+        nineIgnores = tableListFile.read("nineIgnores");    // to Be removed
         tossIgnores = tableListFile.read("tossIgnores");
         if (kkTxtIgnores == null || smsWhoIgnores == null || systemIgnores == null) {
             sounds.beepOnce(Vars.soundType.ERR.ordinal());
@@ -49,43 +47,9 @@ class OptionTables {
 //            sounds.beepOnce(Vars.soundType.ERR.ordinal());
         }
         readReplacesFile();
-//        readPackageTable();
         readTelegramTable();
         new AppsTable().get();
 
-    }
-
-    private void readPackageTable() {
-        /*
-         * full package name       ^ nickName^ type ^ comment
-         * com.kakao.talk          ^   카톡   ^  kk  ^
-         */
-        String [] packages =  tableListFile.read("packageNames");
-        String [] strings;
-
-        /* separate ignoring package vs target package */
-        pkgFullNames = new ArrayList<>();
-        pkgNickNames = new ArrayList<>();
-        pkgTypes = new ArrayList<>();
-        packageIgnores = new ArrayList<>();
-
-        for (String pLine:packages) {
-            strings = pLine.split("\\^");
-            if (strings.length < 3) {
-                new SnackBar().show("Package Table Error ", pLine);
-            } else {
-                String fullName = strings[0].trim();
-                String nickName = strings[1].trim();
-                if (nickName.equals("@")) {
-                    packageIgnores.add(fullName);
-                } else {
-                    String type = strings[2].trim();
-                    pkgFullNames.add(fullName);
-                    pkgNickNames.add(nickName);
-                    pkgTypes.add(type);
-                }
-            }
-        }
     }
 
     private void readTelegramTable() {

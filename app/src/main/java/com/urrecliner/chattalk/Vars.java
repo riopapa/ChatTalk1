@@ -39,10 +39,11 @@ public class Vars {
     public static String toDay = "To";
     public static long timeBegin = 0, timeEnd = 0;
 
-    static ArrayList<String> packageIgnores;
-    static ArrayList<String> pkgFullNames, pkgNickNames, pkgTypes;
+    public static ArrayList<String> appIgnores;
+    public static ArrayList<String> appFullNames;
+    public static ArrayList<Integer> appNameIdx;
     static String sbnGroup, sbnWho, sbnText, sbnAppFullName, sbnPackageType, sbnPackageNick;
-
+    static int sbnAppIdx;
     static TableListFile tableListFile = null;
 
     static String[] kGroupWhoIgnores = null;
@@ -104,7 +105,7 @@ public class Vars {
 
     static String chatGroup;
     static final String lastChar = "힝";
-    static int alertPos = -1, appPos = -1;
+    public static int alertPos = -1, appPos = -1;  // updated or duplicated recycler position
 
     enum soundType { PRE, POST, ERR, TESLA, ONLY, STOCK, INFO}
     static final int[] beepRawIds = { R.raw.pre, R.raw.post, R.raw.err,

@@ -30,7 +30,7 @@ public class Fragment_1Table extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = (ViewGroup) inflater.inflate(
-                R.layout.frag0_table, container, false);
+                R.layout.frag1_table, container, false);
         setHasOptionsMenu(true);
         return rootView;
     }
@@ -47,7 +47,6 @@ public class Fragment_1Table extends Fragment {
         });
         topTabs.getTabAt(1).select();
 
-        rootView.findViewById(R.id.nine_ignore).setOnClickListener(this::edit_table);
         rootView.findViewById(R.id.text_ignores).setOnClickListener(this::edit_table);
         rootView.findViewById(R.id.system_ignores).setOnClickListener(this::edit_table);
 
@@ -66,7 +65,7 @@ public class Fragment_1Table extends Fragment {
     public void edit_table(View v) {
         nowFileName = v.getTag().toString();
         Intent intent;
-        if (nowFileName.equals("packageNames")) {
+        if (nowFileName.equals("appNames")) {
             intent = new Intent(mContext, ActivityAppList.class);
         } else {
             intent = new Intent(mContext, ActivityEditText.class);

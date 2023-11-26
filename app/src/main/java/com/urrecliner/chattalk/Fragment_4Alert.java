@@ -4,12 +4,10 @@ import static com.urrecliner.chattalk.Vars.aBar;
 import static com.urrecliner.chattalk.Vars.alertLines;
 import static com.urrecliner.chattalk.Vars.alertPos;
 import static com.urrecliner.chattalk.Vars.alertsAdapter;
-import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.todayFolder;
 import static com.urrecliner.chattalk.Vars.topTabs;
 
 import android.annotation.SuppressLint;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,6 +18,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.urrecliner.chattalk.Sub.AlertLine;
@@ -49,19 +48,27 @@ public class Fragment_4Alert extends Fragment {
         recyclerView.setAdapter(alertsAdapter);
         if (todayFolder == null)
             new ReadyToday();
-        if (alertPos == -1)
-            alertPos = alertsAdapter.getItemCount() / 2;
-        mActivity.runOnUiThread(() -> {
-            recyclerView.smoothScrollToPosition(2);
-            recyclerView.smoothScrollToPosition(alertPos);
-        });
+
+        if (alertPos > 0) {
+            LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView
+                    .getLayoutManager();
+            layoutManager.scrollToPositionWithOffset(
+                    alertPos, (alertPos > 3) ? alertPos - 3 : alertPos - 2);
+        }
+
+//        if (alertPos == -1)
+//            alertPos = alertsAdapter.getItemCount() / 2;
+//        mActivity.runOnUiThread(() -> {
+//            recyclerView.smoothScrollToPosition(2);
+//            recyclerView.smoothScrollToPosition(alertPos);
+//        });
     }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_4alert, menu);
-        aBar.setTitle(topTabs.getTabAt(5).getText().toString());
+        aBar.setTitle(topTabs.getTabAt(4).getText().toString());
         aBar.setSubtitle(null);
     }
     @SuppressLint("NotifyDataSetChanged")

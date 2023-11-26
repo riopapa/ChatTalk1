@@ -1,11 +1,12 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.Vars.packageIgnores;
-import static com.urrecliner.chattalk.Vars.pkgFullNames;
-import static com.urrecliner.chattalk.Vars.pkgNickNames;
-import static com.urrecliner.chattalk.Vars.pkgTypes;
+import static com.urrecliner.chattalk.Vars.appNameIdx;
+import static com.urrecliner.chattalk.Vars.apps;
+import static com.urrecliner.chattalk.Vars.appIgnores;
+import static com.urrecliner.chattalk.Vars.appFullNames;
 import static com.urrecliner.chattalk.Vars.sbnAppFullName;
 import static com.urrecliner.chattalk.Vars.sbnGroup;
+import static com.urrecliner.chattalk.Vars.sbnAppIdx;
 import static com.urrecliner.chattalk.Vars.sbnPackageNick;
 import static com.urrecliner.chattalk.Vars.sbnPackageType;
 import static com.urrecliner.chattalk.Vars.sbnText;
@@ -25,7 +26,7 @@ public class SbnBundle {
     Utils utils = null;
     public boolean bypassSbn(StatusBarNotification sbn) {
 
-        sbnAppFullName = sbn.getPackageName().toLowerCase();
+        sbnAppFullName = sbn.getPackageName();  // tolowCase
         if (sbnAppFullName.equals(""))
             return true;
         Notification mNotification = sbn.getNotification();
@@ -47,6 +48,7 @@ public class SbnBundle {
             new Utils().logW("sbn WHO Error", "no Who "+sbnAppFullName+" "+sbnText);
             return true;
         }
+
         if (sbnAppFullName.equals("android")) {
             if (sbnText.length() > 10 && !IgnoreThis.contains(sbnText, systemIgnores)
                     && !IgnoreThis.contains(sbnWho, systemIgnores)) {
@@ -66,15 +68,24 @@ public class SbnBundle {
                 sbnPackageNick = "토스";
                 sbnPackageType = "tos";
 
+        } else if (sbnAppFullName.equals("org.telegram.messenger")) {
+            sbnPackageNick = "텔레";
+            sbnPackageType = "tG";
+
+        } else if (sbnAppFullName.equals("com.samsung.android.messaging")) {
+            sbnPackageNick = "문자";
+            sbnPackageType = "sms";
+
         } else {
-            if (packageIgnores == null || packageIgnores.size() == 0)
+            if (appIgnores == null || appIgnores.size() == 0)
                 new OptionTables().readAll();
-            if (Collections.binarySearch(packageIgnores, sbnAppFullName) >= 0)
+            if (Collections.binarySearch(appIgnores, sbnAppFullName) >= 0)
                 return true;
-            int pDx = Collections.binarySearch(pkgFullNames, sbnAppFullName);
-            if (pDx >= 0) {
-                sbnPackageNick = pkgNickNames.get(pDx);
-                sbnPackageType = pkgTypes.get(pDx);
+            sbnAppIdx = Collections.binarySearch(appFullNames, sbnAppFullName);
+            if (sbnAppIdx >= 0) {
+                sbnAppIdx = appNameIdx.get(sbnAppIdx);
+                sbnPackageNick = apps.get(sbnAppIdx).nickName;
+                sbnPackageType = "app";
             } else {
                 sbnPackageNick = "None";
                 sbnPackageType = "None";

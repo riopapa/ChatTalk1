@@ -28,8 +28,11 @@
     <color name="alertTalk">#7E1E8F</color>
 
     <color name="appBack">#CCDFB7</color>
+    <color name="appHint">#05302C</color>
     <color name="appLine0">#C3C7DC</color>
     <color name="appLine1">#F4E0DE</color>
+    <color name="appTrue">#05302C</color>
+    <color name="appFalse">#8F453847</color>
 
     <color name="textNormal">#DDDDDD</color>
     <color name="textEdit">#80C2D59A</color>

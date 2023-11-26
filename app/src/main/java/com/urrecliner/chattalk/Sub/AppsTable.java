@@ -1,7 +1,10 @@
 package com.urrecliner.chattalk.Sub;
 
+import static com.urrecliner.chattalk.Vars.appNameIdx;
 import static com.urrecliner.chattalk.Vars.apps;
 import static com.urrecliner.chattalk.Vars.downloadFolder;
+import static com.urrecliner.chattalk.Vars.appIgnores;
+import static com.urrecliner.chattalk.Vars.appFullNames;
 import static com.urrecliner.chattalk.Vars.tableFolder;
 
 import android.content.Context;
@@ -37,6 +40,7 @@ public class AppsTable {
             }.getType();
             list = gson.fromJson(json, type);
         }
+        makeTable(list);
         return list;
     }
 
@@ -54,6 +58,23 @@ public class AppsTable {
         FileIO.writeKR(new File(tableFolder, "appTable.json"), json);
     }
 
+    public void makeTable(ArrayList<App> list) {
+        appFullNames = new ArrayList<>();
+        appNameIdx = new ArrayList<>();
+        appIgnores = new ArrayList<>();
+
+        for (int i = 0; i < list.size(); i++) {
+            App app = list.get(i);
+            if (app.nickName.equals("@")) {
+                appIgnores.add(app.fullName);
+            } else {
+                appFullNames.add(app.fullName);
+                appNameIdx.add(i);
+            }
+        }
+
+    }
+
     private ArrayList<App> readPackageTable() {
         /*
          * full package name       ^ nickName^ type ^ comment
@@ -61,7 +82,7 @@ public class AppsTable {
          */
         ArrayList<App> list = new ArrayList<>();
 
-        String [] packages =  new TableListFile().read("packageNames");
+        String [] packages =  new TableListFile().read("appNames");
         String [] strings;
 
 
@@ -76,7 +97,7 @@ public class AppsTable {
                 String type = strings[2].trim() + "   ";
                 app.memo = strings[3].trim();
                 app.say = true;
-                app.log = type.contains("yx") ? false:true;
+                app.log = !type.contains("yx");
                 app.grp = true;
                 app.who = true;
                 app.addWho = false;

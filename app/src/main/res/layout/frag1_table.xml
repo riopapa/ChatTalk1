@@ -1,49 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android = "http://schemas.android.com/apk/res/android"
-      android:id = "@+id/fragment_0"
       android:layout_width = "match_parent"
       android:layout_height = "match_parent"
       android:background="@color/color_tab_save_background"
       android:orientation = "vertical">
-
-    <LinearLayout
-        android:layout_width = "match_parent"
-        android:layout_height = "wrap_content"
-        android:layout_marginStart = "8dp"
-        android:layout_marginEnd = "8dp"
-        android:layout_marginTop = "60dp"
-        android:gravity = "center"
-        android:orientation = "horizontal">
-
-        <TextView
-            android:id = "@+id/nine_ignore"
-            android:layout_width = "0dp"
-            android:layout_height = "wrap_content"
-            android:layout_margin = "@dimen/button_margin_size"
-            android:layout_weight = "1"
-            android:background = "@drawable/rounded_button1"
-            android:gravity = "center"
-            android:padding = "@dimen/table_padding_size"
-            android:tag = "nineIgnores"
-            android:text = "숫자 없이 말하기"
-            android:textSize = "@dimen/table_font_size"
-            android:textStyle = "bold" />
-
-        <TextView
-            android:id = "@+id/text_ignores"
-            android:layout_width = "0dp"
-            android:layout_height = "wrap_content"
-            android:layout_margin = "@dimen/button_margin_size"
-            android:layout_weight = "1"
-            android:background = "@drawable/rounded_button1"
-            android:gravity = "center"
-            android:padding = "@dimen/table_padding_size"
-            android:tag = "textIgnores"
-            android:text = "이 글짜 있으면 무시"
-            android:textSize = "@dimen/table_font_size"
-            android:textStyle = "bold" />
-
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width = "match_parent"
@@ -68,18 +28,19 @@
             android:textStyle = "bold" />
 
         <TextView
-            android:id = "@+id/package_names"
+            android:id = "@+id/text_ignores"
             android:layout_width = "0dp"
             android:layout_height = "wrap_content"
             android:layout_margin = "@dimen/button_margin_size"
             android:layout_weight = "1"
-            android:background = "@drawable/rounded_button3"
+            android:background = "@drawable/rounded_button1"
             android:gravity = "center"
             android:padding = "@dimen/table_padding_size"
-            android:tag = "packageNames"
-            android:text = "Package  Names"
+            android:tag = "textIgnores"
+            android:text = "이 글짜 있으면 무시"
             android:textSize = "@dimen/table_font_size"
             android:textStyle = "bold" />
+
     </LinearLayout>
 
 
@@ -218,16 +179,16 @@
             android:textStyle = "bold" />
 
         <TextView
-            android:id = "@+id/for_later"
+            android:id = "@+id/package_names"
             android:layout_width = "0dp"
             android:layout_height = "wrap_content"
             android:layout_margin = "@dimen/button_margin_size"
             android:layout_weight = "1"
-            android:background = "@drawable/rounded_button2"
+            android:background = "@drawable/rounded_button3"
             android:gravity = "center"
             android:padding = "@dimen/table_padding_size"
-            android:tag = "forLater"
-            android:text = "나중에 추가할 테이블"
+            android:tag = "appNames"
+            android:text = "Package  Names"
             android:textSize = "@dimen/table_font_size"
             android:textStyle = "bold" />
     </LinearLayout>

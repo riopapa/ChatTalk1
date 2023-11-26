@@ -38,7 +38,7 @@ public class ActivityEditText extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_table_edit);
-        isPackageNames = nowFileName.equals("packageNames");
+        isPackageNames = nowFileName.equals("appNames");
         ActionBar ab = getSupportActionBar() ;
         assert ab != null;
         ab.setTitle("  "+nowFileName);
@@ -48,7 +48,7 @@ public class ActivityEditText extends AppCompatActivity {
         String[] lines = tableListFile.readRaw(file);
         String text;
 
-        ImageView iv = findViewById(R.id.searchKeyword);
+        ImageView iv = findViewById(R.id.search);
         iv.setOnClickListener(v -> {
             int cnt = 0;
             et = findViewById(R.id.key_que);

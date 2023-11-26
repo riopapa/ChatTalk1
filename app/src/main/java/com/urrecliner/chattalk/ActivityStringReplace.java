@@ -48,7 +48,7 @@ public class ActivityStringReplace extends AppCompatActivity {
         String[] lines = tableListFile.readRaw(file);
         String text;
 
-        ImageView ivSearch = findViewById(R.id.searchKeyword);
+        ImageView ivSearch = findViewById(R.id.search);
         ivSearch.setOnClickListener(v -> {
             int cnt = 0;
             et = findViewById(R.id.key_que);

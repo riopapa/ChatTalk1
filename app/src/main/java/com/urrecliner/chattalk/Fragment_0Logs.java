@@ -54,7 +54,7 @@ public class Fragment_0Logs extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = (ViewGroup) inflater.inflate(
-                R.layout.frag1_que, container, false);
+                R.layout.frag0_que, container, false);
         etTable = rootView.findViewById(R.id.text_que);
         etKeyword = rootView.findViewById(R.id.key_que);
         ivFind = rootView.findViewById(R.id.find_que);

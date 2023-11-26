@@ -3,21 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/reload_all_apps"
+        android:id="@+id/app_reload"
         android:orderInCategory="100"
         android:icon="@drawable/upload_file"
         app:showAsAction="always"
         android:title="@string/todo" />
 
     <item
-        android:id="@+id/save_table"
+        android:id="@+id/save_apps"
         android:orderInCategory="100"
         android:icon="@drawable/save_file"
         app:showAsAction="always"
         android:title="@string/todo" />
 
     <item
-        android:id="@+id/add_one_app"
+        android:id="@+id/app_add"
         android:orderInCategory="100"
         android:icon="@drawable/line_add"
         app:showAsAction="always"

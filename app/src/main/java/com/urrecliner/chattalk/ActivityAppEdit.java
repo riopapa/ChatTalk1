@@ -68,7 +68,7 @@ public class ActivityAppEdit extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (item.getItemId() == R.id.save_app) {
+        if (item.getItemId() == R.id.app_save) {
             saveApp();
         } else if (item.getItemId() == R.id.delete_app) {
             deleteApp();

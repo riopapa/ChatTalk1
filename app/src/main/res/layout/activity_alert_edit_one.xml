@@ -3,9 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ActivityEditAlert">
 
-    <TextView
+
+<TextView
         android:id="@+id/t_group"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
