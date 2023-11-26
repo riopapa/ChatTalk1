@@ -34,6 +34,9 @@
     <color name="appTrue">#05302C</color>
     <color name="appFalse">#8F453847</color>
 
+    <color name="appExist">#022724</color>
+    <color name="appNone">#A61546</color>
+
     <color name="textNormal">#DDDDDD</color>
     <color name="textEdit">#80C2D59A</color>
     <color name="tabSelected">#0D2367</color>

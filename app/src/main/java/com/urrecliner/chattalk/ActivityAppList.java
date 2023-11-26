@@ -7,7 +7,10 @@ import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.todayFolder;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -19,6 +22,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.urrecliner.chattalk.Sub.App;
 import com.urrecliner.chattalk.Sub.AppsTable;
 import com.urrecliner.chattalk.databinding.ActivityAppListBinding;
+
+import java.util.List;
 
 public class ActivityAppList extends AppCompatActivity {
 
@@ -32,6 +37,13 @@ public class ActivityAppList extends AppCompatActivity {
         binding = ActivityAppListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         super.onCreate(savedInstanceState);
+
+//        PackageManager packageManager = getPackageManager();
+//        List<PackageInfo> installedPackages = packageManager.getInstalledPackages(PackageManager.GET_META_DATA);
+//
+//        for (int i = 0; i < installedPackages.size(); i++) {
+//            Log.w("pkg "+i, "name="+installedPackages.get(i));
+//        }
     }
 
     @Override
@@ -98,8 +110,8 @@ public class ActivityAppList extends AppCompatActivity {
             new AppsTable().put(this);
         } else if (item.getItemId() == R.id.app_add) {
             appPos = -1;
-            Intent intent = new Intent(mContext, ActivityAppEdit.class);
-            mContext.startActivity(intent);
+            Intent intent = new Intent(this, ActivityAppEdit.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

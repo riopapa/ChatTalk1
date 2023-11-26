@@ -56,12 +56,10 @@ class MsgKaTalk {
                             loadFunction = new LoadFunction();
                         alertStock.sayNlog(group, sText, aAlertLineIdx[gIdx][gwIdx][i]);
                         int fI = i;
-//                        mActivity.runOnUiThread(() -> {
                             if (alertsAdapter == null)
                                 alertsAdapter = new AlertsAdapter();
                             else
                                 alertsAdapter.notifyItemChanged(aAlertLineIdx[gIdx][gwIdx][fI]);
-//                        });
                         return;
                     }
                 }

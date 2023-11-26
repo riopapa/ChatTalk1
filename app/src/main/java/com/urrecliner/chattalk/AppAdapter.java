@@ -7,10 +7,12 @@ import static com.urrecliner.chattalk.Vars.mContext;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,7 +24,8 @@ import com.urrecliner.chattalk.Sub.AppsTable;
 
 public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
 
-    static int colorT, colorF;
+    static int colorT, colorF, colorExist, colorNone;
+    static Drawable NotInstalled;
 
     @Override
     public int getItemCount() {
@@ -36,15 +39,18 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
 
         Context context;
         View tLine;
-        TextView tFullName, tNickName, tNote, sSay, sLog, sGroup, sWho, sAddWho, sNum;
+        TextView tFullName, tNickName, sSay, sLog, sGroup, sWho, sAddWho, sNum;
+        PackageManager pm;
+        ImageView icon;
 
         ViewHolder(final View itemView) {
             super(itemView);
             context = itemView.getContext();
+            icon = itemView.findViewById(R.id.app_icon);
+
             tLine = itemView.findViewById(R.id.app_layout);
             tFullName = itemView.findViewById(R.id.app_full_name);
             tNickName = itemView.findViewById(R.id.app_nick_name);
-            tNote = itemView.findViewById(R.id.app_note);
 
             sSay = itemView.findViewById(R.id.app_say);
             sLog = itemView.findViewById(R.id.app_log);
@@ -52,8 +58,13 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
             sWho = itemView.findViewById(R.id.app_who);
             sAddWho = itemView.findViewById(R.id.app_addWho);
             sNum = itemView.findViewById(R.id.app_num);
+
             colorT = ContextCompat.getColor(mContext,R.color.appTrue);
             colorF = ContextCompat.getColor(mContext,R.color.appFalse);
+            pm = mContext.getPackageManager();
+            colorExist = ContextCompat.getColor(mContext,R.color.appExist);
+            colorNone = ContextCompat.getColor(mContext,R.color.appNone);
+            NotInstalled = ContextCompat.getDrawable(mContext, R.drawable.delete);
         }
     }
 
@@ -71,9 +82,20 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
 
         App al = apps.get(appPos);
 
-        holder.tFullName.setText(al.fullName);
         holder.tNickName.setText(al.nickName);
-        holder.tNote.setText(al.memo);
+        String merged = (al.memo.length() > 0) ? al.memo + " | "+al.fullName: " "+ al.fullName;
+        holder.tFullName.setText(merged);
+
+        Drawable drawable = getPackageIcon(al.fullName, holder.pm);
+        if (drawable == null ) {
+            holder.icon.setImageDrawable(NotInstalled);
+            holder.tFullName.setTextColor(colorNone);
+            holder.tNickName.setTextColor(colorNone);
+        } else {
+            holder.icon.setImageDrawable(drawable);
+            holder.tFullName.setTextColor(colorExist);
+            holder.tNickName.setTextColor(colorExist);
+        }
 
         holder.sSay.setTextColor((al.say)? colorT:colorF);
         holder.sLog.setTextColor((al.log)? colorT:colorF);
@@ -87,5 +109,12 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
             Intent intent = new Intent(holder.context, ActivityAppEdit.class);
             mActivity.startActivity(intent);
         });
+    }
+    private Drawable getPackageIcon(String packageName, PackageManager packageManager) {
+        try {
+            return packageManager.getApplicationIcon(packageName);
+        } catch (PackageManager.NameNotFoundException e) {
+            return null;
+        }
     }
 }

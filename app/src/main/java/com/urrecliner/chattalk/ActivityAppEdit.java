@@ -33,14 +33,20 @@ public class ActivityAppEdit extends AppCompatActivity {
             assert ab != null;
             ab.setTitle("New App");
             app = new App();
+            app.nickName = "@";
+            app.say = true;
+            app.log = true;
+            app.grp = true;
+            app.who = true;
             app.addWho = false;
-            app.num = false;
-            ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-            ClipData pData = clipboard.getPrimaryClip();
-            ClipData.Item item = pData.getItemAt(0);
-            app.fullName = item.getText().toString();
-        }
-        app = apps.get(appPos);
+            app.num = true;
+
+//            ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+//            ClipData pData = clipboard.getPrimaryClip();
+//            ClipData.Item item = pData.getItemAt(0);
+//            app.fullName = item.getText().toString();
+        } else
+            app = apps.get(appPos);
         binding.eAppFullName.setText(app.fullName);
         binding.eNickName.setText(app.nickName);
         binding.eMemo.setText(app.memo);
@@ -80,7 +86,7 @@ public class ActivityAppEdit extends AppCompatActivity {
         if (appPos != -1) {
             apps.remove(appPos);
             new AppsTable().put(this);
-            appAdapter = new AppAdapter();
+//            appAdapter = new AppAdapter();
             finish();
         }
     }
