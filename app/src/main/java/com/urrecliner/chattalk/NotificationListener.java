@@ -1,13 +1,12 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.Vars.apps;
 import static com.urrecliner.chattalk.Vars.kGroupWhoIgnores;
 import static com.urrecliner.chattalk.Vars.kkTxtIgnores;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.nineIgnores;
+import static com.urrecliner.chattalk.Vars.sbnApp;
 import static com.urrecliner.chattalk.Vars.sbnAppFullName;
 import static com.urrecliner.chattalk.Vars.sbnGroup;
-import static com.urrecliner.chattalk.Vars.sbnAppIdx;
 import static com.urrecliner.chattalk.Vars.sbnPackageNick;
 import static com.urrecliner.chattalk.Vars.sbnPackageType;
 import static com.urrecliner.chattalk.Vars.sbnText;
@@ -25,7 +24,6 @@ import android.os.VibratorManager;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 
-import com.urrecliner.chattalk.Sub.App;
 import com.urrecliner.chattalk.Sub.IgnoreThis;
 import com.urrecliner.chattalk.Sub.IsWhoNine;
 import com.urrecliner.chattalk.Sub.KeyVal;
@@ -83,10 +81,8 @@ public class NotificationListener extends NotificationListenerService {
             loadFunction = new LoadFunction();
         if (utils == null)
             utils = new Utils();
-
         if (sbnBundle == null)
             sbnBundle = new SbnBundle();
-
         if (notificationBar == null)
             notificationBar = new NotificationBar();
 
@@ -95,7 +91,6 @@ public class NotificationListener extends NotificationListenerService {
 
         if (sbnBundle.bypassSbn(sbn))
             return;
-
 
         switch (sbnPackageType) {
 
@@ -221,40 +216,36 @@ public class NotificationListener extends NotificationListenerService {
                     return;
                 sbnText = utils.text2OneLine(sbnText);
 
-                App app = apps.get(sbnAppIdx);
-
-                if (app.nickName.equals("NH나무")) {
+                if (sbnApp.nickName.equals("NH나무")) {
                     new MsgNamoo().say(utils.text2OneLine(sbnText));
                     break;
                 }
 
                 sbnText = utils.strShorten(sbnWho, sbnText);
-                sbnText = utils.strShorten(app.nickName, sbnText);
+                sbnText = utils.strShorten(sbnApp.nickName, sbnText);
 
-                if (app.addWho)
+                if (sbnApp.addWho)
                     sbnText = sbnWho + " " + sbnText;
 
-                if (app.say) {
-                    String say = app.nickName;
-                    if (app.grp)
-                        say = say + " "+ sbnGroup;
-                    if (app.who)
-                        say = say + " " + sbnWho;
+                if (sbnApp.say) {
+                    String say = sbnApp.nickName + " ";
+                    say += (sbnApp.grp) ? sbnGroup+" ": " ";
+                    say += (sbnApp.who) ? sbnWho:" ";
                     say = say + " 로부터 ";
-                    say = say + ((app.num) ? sbnText : new Numbers().deduct(sbnText));
+                    say = say + ((sbnApp.num) ? sbnText : new Numbers().deduct(sbnText));
                     sounds.speakAfterBeep(utils.makeEtc(say, 200));
                 }
 
-                if (app.log) {
-                    head = "[" + app.nickName;
-                    if (app.grp)
-                        head = head + " " + sbnGroup;
-                    if (app.who)
-                        head = head + " " + sbnWho;
+                if (sbnApp.log) {
+                    head = "[" + sbnApp.nickName+" ";
+                    head += (sbnApp.grp) ? sbnGroup+"_": "";
+                    head += (sbnApp.who) ? sbnWho:"";
                     head = head + "]";
                     logUpdate.addQue(head , sbnText);
                 }
-                notificationBar.update(app.nickName + ":"+ sbnWho, sbnText, true);
+                String s = (sbnApp.grp) ? sbnGroup+"_": "";
+                s += (sbnApp.who) ? sbnWho:"";
+                notificationBar.update(sbnApp.nickName + ":"+ s, sbnText, true);
                 break;
 
             default:

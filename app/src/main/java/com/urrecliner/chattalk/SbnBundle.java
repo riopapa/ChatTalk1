@@ -4,6 +4,7 @@ import static com.urrecliner.chattalk.Vars.appNameIdx;
 import static com.urrecliner.chattalk.Vars.apps;
 import static com.urrecliner.chattalk.Vars.appIgnores;
 import static com.urrecliner.chattalk.Vars.appFullNames;
+import static com.urrecliner.chattalk.Vars.sbnApp;
 import static com.urrecliner.chattalk.Vars.sbnAppFullName;
 import static com.urrecliner.chattalk.Vars.sbnGroup;
 import static com.urrecliner.chattalk.Vars.sbnAppIdx;
@@ -16,6 +17,7 @@ import static com.urrecliner.chattalk.Vars.systemIgnores;
 import android.app.Notification;
 import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
+import android.util.Log;
 
 import com.urrecliner.chattalk.Sub.IgnoreThis;
 
@@ -83,12 +85,16 @@ public class SbnBundle {
                 return true;
             sbnAppIdx = Collections.binarySearch(appFullNames, sbnAppFullName);
             if (sbnAppIdx >= 0) {
+                Log.w("sbnAppIdx", sbnAppFullName+" Before "+sbnAppIdx+" "+appFullNames.get(sbnAppIdx));
                 sbnAppIdx = appNameIdx.get(sbnAppIdx);
-                sbnPackageNick = apps.get(sbnAppIdx).nickName;
+                Log.w("sbnAppIdx", sbnAppFullName+" After "+sbnAppIdx+" "+appFullNames.get(sbnAppIdx));
+                sbnApp = apps.get(sbnAppIdx);
+                sbnPackageNick = sbnApp.nickName;
                 sbnPackageType = "app";
             } else {
                 sbnPackageNick = "None";
                 sbnPackageType = "None";
+                sbnAppIdx = -1;
             }
         }
 

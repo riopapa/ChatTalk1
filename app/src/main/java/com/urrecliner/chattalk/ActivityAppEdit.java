@@ -1,11 +1,14 @@
 package com.urrecliner.chattalk;
 
+import static android.content.ClipDescription.MIMETYPE_TEXT_PLAIN;
 import static com.urrecliner.chattalk.Vars.appAdapter;
 import static com.urrecliner.chattalk.Vars.appPos;
 import static com.urrecliner.chattalk.Vars.apps;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,10 +44,12 @@ public class ActivityAppEdit extends AppCompatActivity {
             app.addWho = false;
             app.num = true;
 
-//            ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-//            ClipData pData = clipboard.getPrimaryClip();
-//            ClipData.Item item = pData.getItemAt(0);
-//            app.fullName = item.getText().toString();
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData pData = clipboard.getPrimaryClip();
+            if (pData != null) {
+                ClipData.Item item = pData.getItemAt(0);
+                app.fullName = item.getText().toString();
+            }
         } else
             app = apps.get(appPos);
         binding.eAppFullName.setText(app.fullName);

@@ -22,6 +22,8 @@
     <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
     <uses-permission android:name="com.sec.android.provider.badge.permission.WRITE"/>
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.READ_CLIPBOARD" />
+
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
 
     <queries>

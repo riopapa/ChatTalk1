@@ -39,7 +39,7 @@ class OptionTables {
         smsTextIgnores =  tableListFile.read("smsTextIgnores");
         systemIgnores = tableListFile.read("systemIgnores");
         textIgnores = tableListFile.read("textIgnores");
-        nineIgnores = tableListFile.read("nineIgnores");    // to Be removed
+        nineIgnores = tableListFile.read("nineIgnores");
         tossIgnores = tableListFile.read("tossIgnores");
         if (kkTxtIgnores == null || smsWhoIgnores == null || systemIgnores == null) {
             sounds.beepOnce(Vars.soundType.ERR.ordinal());

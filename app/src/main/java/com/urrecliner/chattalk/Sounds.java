@@ -152,7 +152,8 @@ class Sounds {
         mMediaPlayer.setVolume(1f, 1f);
         mMediaPlayer.start();
         mMediaPlayer.setOnCompletionListener(mp -> {
-            mMediaPlayer.reset();
+            mMediaPlayer.stop();
+//            mMediaPlayer.reset();
             mMediaPlayer.release();
         });
     }

@@ -44,6 +44,9 @@ public class Vars {
     public static ArrayList<Integer> appNameIdx;
     static String sbnGroup, sbnWho, sbnText, sbnAppFullName, sbnPackageType, sbnPackageNick;
     static int sbnAppIdx;
+
+    static App sbnApp;
+
     static TableListFile tableListFile = null;
 
     static String[] kGroupWhoIgnores = null;
