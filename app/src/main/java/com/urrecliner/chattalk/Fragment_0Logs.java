@@ -9,6 +9,7 @@ import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.sharedEditor;
 import static com.urrecliner.chattalk.Vars.tableFolder;
 import static com.urrecliner.chattalk.Vars.topTabs;
+import static com.urrecliner.chattalk.ActivityMain.fragNumber;
 
 import android.os.Bundle;
 import android.os.Environment;
@@ -19,6 +20,7 @@ import android.text.Selection;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.BackgroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -66,7 +68,9 @@ public class Fragment_0Logs extends Fragment {
 
     @Override
     public void onResume() {
-        topTabs.getTabAt(0).select();
+        fragNumber = 0;
+        topTabs.getTabAt(fragNumber).select();
+        Log.w("fragment", "now is "+fragNumber);
         ss = new LogSpann().make(logQue, mContext);
         sv = ss;
         etTable.setText(ss);

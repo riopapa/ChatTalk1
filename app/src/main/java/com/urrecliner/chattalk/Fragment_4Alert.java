@@ -1,5 +1,6 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.ActivityMain.fragNumber;
 import static com.urrecliner.chattalk.Vars.aBar;
 import static com.urrecliner.chattalk.Vars.alertLines;
 import static com.urrecliner.chattalk.Vars.alertPos;
@@ -9,6 +10,7 @@ import static com.urrecliner.chattalk.Vars.topTabs;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,16 +37,19 @@ public class Fragment_4Alert extends Fragment {
         rootView = (ViewGroup) inflater.inflate(
                 R.layout.frag4_alert, container, false);
         setHasOptionsMenu(true);
+        if (alertsAdapter == null)
+            alertsAdapter = new AlertsAdapter();
         return rootView;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        topTabs.getTabAt(4).select();
+        fragNumber = 4;
+        topTabs.getTabAt(fragNumber).select();
+        Log.w("fragment", "now is "+fragNumber);
+
         recyclerView = rootView.findViewById(R.id.recycle_alerts);
-        if (alertsAdapter == null)
-            alertsAdapter = new AlertsAdapter();
         recyclerView.setAdapter(alertsAdapter);
         if (todayFolder == null)
             new ReadyToday();

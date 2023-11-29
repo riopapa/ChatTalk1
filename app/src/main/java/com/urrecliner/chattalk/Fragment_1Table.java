@@ -4,9 +4,11 @@ import static com.urrecliner.chattalk.Vars.aBar;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.nowFileName;
 import static com.urrecliner.chattalk.Vars.topTabs;
+import static com.urrecliner.chattalk.ActivityMain.fragNumber;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -38,6 +40,10 @@ public class Fragment_1Table extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        fragNumber = 1;
+        topTabs.getTabAt(fragNumber).select();
+        Log.w("fragment", "now is "+fragNumber);
+
         TextView tv_WifiState = rootView.findViewById(R.id.tv_wifi_state);
         String s = "Wifi : " + WifiName.get(mContext);
         tv_WifiState.setText(s);
@@ -45,7 +51,6 @@ public class Fragment_1Table extends Fragment {
             String s1 = "Wifi : " + WifiName.get(mContext);
             tv_WifiState.setText(s1);
         });
-        topTabs.getTabAt(1).select();
 
         rootView.findViewById(R.id.nine_ignores).setOnClickListener(this::edit_table);
         rootView.findViewById(R.id.text_ignores).setOnClickListener(this::edit_table);
@@ -61,6 +66,8 @@ public class Fragment_1Table extends Fragment {
 
         rootView.findViewById(R.id.string_replace).setOnClickListener(this::edit_replace);
         rootView.findViewById(R.id.toss_ignore).setOnClickListener(this::edit_table);
+
+        rootView.invalidate();
     }
 
     public void edit_table(View v) {

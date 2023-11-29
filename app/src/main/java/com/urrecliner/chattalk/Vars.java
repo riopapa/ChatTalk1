@@ -42,7 +42,7 @@ public class Vars {
     public static ArrayList<String> appIgnores;
     public static ArrayList<String> appFullNames;
     public static ArrayList<Integer> appNameIdx;
-    static String sbnGroup, sbnWho, sbnText, sbnAppFullName, sbnPackageType, sbnPackageNick;
+    static String sbnGroup, sbnWho, sbnText, sbnAppName, sbnAppType, sbnAppNick;
     static int sbnAppIdx;
 
     static App sbnApp;

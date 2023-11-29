@@ -18,16 +18,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
+import android.text.Layout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 import com.urrecliner.chattalk.Sub.AlertTableIO;
@@ -40,6 +41,7 @@ import java.util.Set;
 public class ActivityMain extends AppCompatActivity {
 
 
+    public static int fragNumber = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +88,6 @@ public class ActivityMain extends AppCompatActivity {
         if (vars == null)
             vars = new Vars(mContext);
         aBar = getSupportActionBar();
-
 
 
         //        new NotificationStart(pContext);
@@ -149,6 +150,12 @@ public class ActivityMain extends AppCompatActivity {
         Intent updateIntent = new Intent(mContext, NotificationService.class);
         mContext.startForegroundService(updateIntent);
         NotificationBar.hideStop();
+
+//        View view = findViewById(R.id.main_layout);
+//        view.invalidate();
+        viewPager2.setCurrentItem(fragNumber);
+        viewPager2.invalidate();
+
         super.onResume();
 
     }
@@ -186,12 +193,17 @@ public class ActivityMain extends AppCompatActivity {
         topTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                viewPager2.setCurrentItem(tab.getPosition());
+                fragNumber = tab.getPosition();
+                viewPager2.setCurrentItem(fragNumber);
             }
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {}
             @Override
             public void onTabReselected(TabLayout.Tab tab) {}
         });
+
+        viewPager2.setCurrentItem(fragNumber);
+        Log.w("fragment", "main is "+fragNumber);
+
     }
 }

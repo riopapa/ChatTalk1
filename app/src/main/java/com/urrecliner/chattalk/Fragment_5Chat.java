@@ -1,5 +1,6 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.ActivityMain.fragNumber;
 import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.aBar;
 import static com.urrecliner.chattalk.Vars.chatGroup;
@@ -18,6 +19,7 @@ import android.text.Selection;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.BackgroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -73,7 +75,10 @@ public class Fragment_5Chat extends Fragment {
         super.onResume();
         if (utils == null)
             utils = new Utils();
-        topTabs.getTabAt(5).select();
+        fragNumber = 5;
+        topTabs.getTabAt(fragNumber).select();
+        Log.w("fragment", "now is "+fragNumber);
+
         etChat.setFocusableInTouchMode(true);
         etChat.setEnabled(true);
         etChat.setFocusable(true);

@@ -1,6 +1,7 @@
 package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.NotificationListener.sounds;
+import static com.urrecliner.chattalk.Vars.apps;
 import static com.urrecliner.chattalk.Vars.kGroupWhoIgnores;
 import static com.urrecliner.chattalk.Vars.kkTxtIgnores;
 import static com.urrecliner.chattalk.Vars.mContext;
@@ -48,7 +49,7 @@ class OptionTables {
         }
         readReplacesFile();
         readTelegramTable();
-        new AppsTable().get();
+        apps = new AppsTable().get();
 
     }
 

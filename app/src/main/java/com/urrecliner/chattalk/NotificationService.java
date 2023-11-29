@@ -71,8 +71,9 @@ public class NotificationService extends Service {
         if (operation == -1) {
             return START_STICKY;
         }
-        if (msg1 == "")
+        if (msg1.equals(""))
             msgGet();
+        Log.w("Operation","operation = "+operation);
         switch (operation) {
 
             case SHOW_MESSAGE:
@@ -139,8 +140,8 @@ public class NotificationService extends Service {
 
         Intent mIntent = new Intent(mContext, ActivityMain.class);
         mRemoteViews.setOnClickPendingIntent(R.id.ll_customNotification,
-            PendingIntent.getActivity(mContext, 0, mIntent,
-                PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));
+        PendingIntent.getActivity(mContext, 0, mIntent,
+            PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));
 
         Intent sIntent = new Intent(this, NotificationService.class);
         sIntent.putExtra("operation", STOP_SAY1);
@@ -181,9 +182,9 @@ public class NotificationService extends Service {
         sharedEditor.putString("head2", head2);
         sharedEditor.apply();
     }
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//    }
 
 }

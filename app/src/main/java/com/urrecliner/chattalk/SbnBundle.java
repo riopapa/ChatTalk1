@@ -5,11 +5,11 @@ import static com.urrecliner.chattalk.Vars.apps;
 import static com.urrecliner.chattalk.Vars.appIgnores;
 import static com.urrecliner.chattalk.Vars.appFullNames;
 import static com.urrecliner.chattalk.Vars.sbnApp;
-import static com.urrecliner.chattalk.Vars.sbnAppFullName;
+import static com.urrecliner.chattalk.Vars.sbnAppName;
 import static com.urrecliner.chattalk.Vars.sbnGroup;
 import static com.urrecliner.chattalk.Vars.sbnAppIdx;
-import static com.urrecliner.chattalk.Vars.sbnPackageNick;
-import static com.urrecliner.chattalk.Vars.sbnPackageType;
+import static com.urrecliner.chattalk.Vars.sbnAppNick;
+import static com.urrecliner.chattalk.Vars.sbnAppType;
 import static com.urrecliner.chattalk.Vars.sbnText;
 import static com.urrecliner.chattalk.Vars.sbnWho;
 import static com.urrecliner.chattalk.Vars.systemIgnores;
@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
 
+import com.urrecliner.chattalk.Sub.AppsTable;
 import com.urrecliner.chattalk.Sub.IgnoreThis;
 
 import java.util.Collections;
@@ -28,8 +29,8 @@ public class SbnBundle {
     Utils utils = null;
     public boolean bypassSbn(StatusBarNotification sbn) {
 
-        sbnAppFullName = sbn.getPackageName();  // tolowCase
-        if (sbnAppFullName.equals(""))
+        sbnAppName = sbn.getPackageName();  // tolowCase
+        if (sbnAppName.equals(""))
             return true;
         Notification mNotification = sbn.getNotification();
         Bundle extras = mNotification.extras;
@@ -47,53 +48,59 @@ public class SbnBundle {
             if (sbnWho.equals("null"))
                 sbnWho = "";
         } catch (Exception e) {
-            new Utils().logW("sbn WHO Error", "no Who "+sbnAppFullName+" "+sbnText);
+            new Utils().logW("sbn WHO Error", "no Who "+ sbnAppName +" "+sbnText);
             return true;
         }
 
-        if (sbnAppFullName.equals("android")) {
+        if (sbnAppName.equals("android")) {
             if (sbnText.length() > 10 && !IgnoreThis.contains(sbnText, systemIgnores)
                     && !IgnoreThis.contains(sbnWho, systemIgnores)) {
                 if (utils == null)
                     utils = new Utils();
                 sbnText = utils.text2OneLine(sbnText);
-                new MsgAndroid().say(sbnAppFullName, sbnWho, sbnText);
+                new MsgAndroid().say(sbnAppName, sbnWho, sbnText);
             }
             return true;
         }
 
-        if (sbnAppFullName.equals("com.kakao.talk")) {
-            sbnPackageNick = "카톡";
-            sbnPackageType = "kk";
+        if (sbnAppName.equals("com.kakao.talk")) {
+            sbnAppNick = "카톡";
+            sbnAppType = "kk";
 
-        } else if (sbnAppFullName.equals("viva.republica.toss")) {
-                sbnPackageNick = "토스";
-                sbnPackageType = "tos";
+        } else if (sbnAppName.equals("viva.republica.toss")) {
+                sbnAppNick = "토스";
+                sbnAppType = "tos";
 
-        } else if (sbnAppFullName.equals("org.telegram.messenger")) {
-            sbnPackageNick = "텔레";
-            sbnPackageType = "tG";
+        } else if (sbnAppName.equals("org.telegram.messenger")) {
+            sbnAppNick = "텔레";
+            sbnAppType = "tG";
 
-        } else if (sbnAppFullName.equals("com.samsung.android.messaging")) {
-            sbnPackageNick = "문자";
-            sbnPackageType = "sms";
+        } else if (sbnAppName.equals("com.samsung.android.messaging")) {
+            sbnAppNick = "문자";
+            sbnAppType = "sms";
 
         } else {
+            if (apps == null) {
+                apps = new AppsTable().get();
+                Log.w("reloading", "apps is null new size="+apps.size());
+            }
             if (appIgnores == null || appIgnores.size() == 0)
-                new OptionTables().readAll();
-            if (Collections.binarySearch(appIgnores, sbnAppFullName) >= 0)
+                apps = new AppsTable().get();
+            if (Collections.binarySearch(appIgnores, sbnAppName) >= 0)
                 return true;
-            sbnAppIdx = Collections.binarySearch(appFullNames, sbnAppFullName);
+            sbnAppIdx = Collections.binarySearch(appFullNames, sbnAppName);
+//            Log.w("sa0 a idx="+sbnAppIdx, "searched");
             if (sbnAppIdx >= 0) {
-                Log.w("sbnAppIdx", sbnAppFullName+" Before "+sbnAppIdx+" "+appFullNames.get(sbnAppIdx));
                 sbnAppIdx = appNameIdx.get(sbnAppIdx);
-                Log.w("sbnAppIdx", sbnAppFullName+" After "+sbnAppIdx+" "+appFullNames.get(sbnAppIdx));
+//                Log.w("saa ", sbnAppName);
                 sbnApp = apps.get(sbnAppIdx);
-                sbnPackageNick = sbnApp.nickName;
-                sbnPackageType = "app";
+                sbnAppNick = sbnApp.nickName;
+                sbnAppType = "app";
+//                Log.w("saNick"+ sbnAppNick, sbnAppName
+//                        +" After "+sbnAppIdx+" "+sbnApp.fullName);
             } else {
-                sbnPackageNick = "None";
-                sbnPackageType = "None";
+                sbnAppNick = "None";
+                sbnAppType = "None";
                 sbnAppIdx = -1;
             }
         }

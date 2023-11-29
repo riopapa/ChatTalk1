@@ -1,5 +1,6 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.ActivityMain.fragNumber;
 import static com.urrecliner.chattalk.Vars.aBar;
 import static com.urrecliner.chattalk.Vars.logSave;
 import static com.urrecliner.chattalk.Vars.mContext;
@@ -14,6 +15,7 @@ import android.text.Selection;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.BackgroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -55,7 +57,10 @@ public class Fragment_2Saved extends Fragment {
 
     @Override
     public void onResume() {
-        topTabs.getTabAt(2).select();
+        fragNumber = 2;
+        topTabs.getTabAt(fragNumber).select();
+        Log.w("fragment", "now is "+fragNumber);
+
         logSave = logSave.replace("    ","");
         ss = new LogSpann().make(logSave, mContext);
         sv = ss;
@@ -111,6 +116,7 @@ public class Fragment_2Saved extends Fragment {
             ScrollView scrollView1 = rootView.findViewById(R.id.scroll_2_log);
             scrollView1.smoothScrollBy(0, 40000);
         });
+        rootView.invalidate();
         super.onResume();
 
     }
