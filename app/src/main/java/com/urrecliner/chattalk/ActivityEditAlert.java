@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.urrecliner.chattalk.Sub.AlertLine;
+import com.urrecliner.chattalk.model.AlertLine;
 import com.urrecliner.chattalk.Sub.AlertTableIO;
 
 import java.text.SimpleDateFormat;

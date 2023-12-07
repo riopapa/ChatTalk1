@@ -77,7 +77,6 @@ public class Fragment_5Chat extends Fragment {
             utils = new Utils();
         fragNumber = 5;
         topTabs.getTabAt(fragNumber).select();
-        Log.w("fragment", "now is "+fragNumber);
 
         etChat.setFocusableInTouchMode(true);
         etChat.setEnabled(true);

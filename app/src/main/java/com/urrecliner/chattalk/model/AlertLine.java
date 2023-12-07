@@ -1,4 +1,4 @@
-package com.urrecliner.chattalk.Sub;
+package com.urrecliner.chattalk.model;
 
 public class AlertLine {
     public String group, who, key1, key2, talk, skip, more, prev, next;

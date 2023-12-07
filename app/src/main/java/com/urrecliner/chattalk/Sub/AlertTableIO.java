@@ -12,6 +12,7 @@ import android.os.Environment;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.urrecliner.chattalk.FileIO;
+import com.urrecliner.chattalk.model.AlertLine;
 
 import java.io.File;
 import java.lang.reflect.Type;

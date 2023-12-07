@@ -59,7 +59,8 @@ public class Fragment_2Saved extends Fragment {
     public void onResume() {
         fragNumber = 2;
         topTabs.getTabAt(fragNumber).select();
-        Log.w("fragment", "now is "+fragNumber);
+        aBar.setTitle(topTabs.getTabAt(fragNumber).getText().toString());
+        aBar.setSubtitle(null);
 
         logSave = logSave.replace("    ","");
         ss = new LogSpann().make(logSave, mContext);

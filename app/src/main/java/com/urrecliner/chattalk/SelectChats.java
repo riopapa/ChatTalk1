@@ -22,7 +22,7 @@ import android.text.style.BackgroundColorSpan;
 import android.text.style.UnderlineSpan;
 import android.widget.Toast;
 
-import com.urrecliner.chattalk.Sub.AlertLine;
+import com.urrecliner.chattalk.model.AlertLine;
 import com.urrecliner.chattalk.Sub.StockName;
 
 import java.io.File;
@@ -184,7 +184,7 @@ public class SelectChats {
                 p2 = body.indexOf(keyword2[k], p1+1);
                 if (p2 >= 0) {      // both matched
                     body = utils.strShorten(chatGroup, body);
-                    String [] sNames = new StockName().parse(prev[k], next[k], body);
+                    String [] sNames = new StockName().get(prev[k], next[k], body);
                     String keys = "<"+keyword1[k]+"~"+keyword2[k]+">";
                     String str = sNames[0]+" "+ time+", "+who+" , "+ sNames[1] + " " + keys;
                     SpannableString s = new SpannableString(str+"\n\n");
@@ -201,7 +201,7 @@ public class SelectChats {
                         s.setSpan(new BackgroundColorSpan(mContext.getResources().getColor(R.color.keyMatchedWord, null)), p2, p2 + next[k].length(), SPAN_EXCLUSIVE_EXCLUSIVE);
                     }
                     if(upload) {
-                        String [] strs = new StockName().parse(prev[k], next[k], body);
+                        String [] strs = new StockName().get(prev[k], next[k], body);
                         FileIO.uploadStock(chatGroup, who, "chats", strs[0],
                                 strs[1], keys, time);
                     }

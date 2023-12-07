@@ -18,7 +18,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 
-import com.urrecliner.chattalk.Sub.AlertLine;
+import com.urrecliner.chattalk.model.AlertLine;
 import com.urrecliner.chattalk.Sub.AlertToast;
 import com.urrecliner.chattalk.Sub.PhoneVibrate;
 import com.urrecliner.chattalk.Sub.StockName;
@@ -44,12 +44,12 @@ public class AlertStock {
         if (stockName == null)
             stockName = new StockName();
         String sText = utils.strShorten(iGroup, iText);
-        String []sParse = stockName.parse(al.prev, al.next, sText);
+        String []sParse = stockName.get(al.prev, al.next, sText);
         // sParse[0] : stockName, sParse[1] : replaced text
         String keyStr = key12+sTalk;
         Thread thisThread = new Thread(() -> {
             if (sTalk.length() > 0) {
-//                String cho = new Hangul().getCho(stock_Name);
+//                String cho = new ZHangul_UnUsed().getCho(stock_Name);
 //                if (cho.length() > 4)
 //                    cho = cho.substring(0,4);
 //                String[] joins = new String[]{who, group, who, stock_Name, sTalk, cho, stock_Name, sText};

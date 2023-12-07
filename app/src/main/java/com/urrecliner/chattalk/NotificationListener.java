@@ -191,7 +191,12 @@ public class NotificationListener extends NotificationListenerService {
                 if (sbnWho.equals("") && kvCommon.isDup(sbnGroup, sbnText))
                     return;
                 sbnText = utils.text2OneLine(sbnText);
-
+                if (sbnApp.ignores != null) {
+                    for (int i = 0; i < sbnApp.ignores.length; i++) {
+                        if (sbnText.contains(sbnApp.ignores[i]))
+                            return;
+                    }
+                }
                 if (sbnApp.nickName.equals("NH나무")) {
                     new MsgNamoo().say(utils.text2OneLine(sbnText));
                     break;

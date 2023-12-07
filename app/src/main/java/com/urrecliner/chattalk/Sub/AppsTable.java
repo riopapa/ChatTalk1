@@ -9,12 +9,12 @@ import static com.urrecliner.chattalk.Vars.tableFolder;
 
 import android.content.Context;
 import android.os.Environment;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.urrecliner.chattalk.FileIO;
 import com.urrecliner.chattalk.TableListFile;
+import com.urrecliner.chattalk.model.App;
 
 import java.io.File;
 import java.lang.reflect.Type;

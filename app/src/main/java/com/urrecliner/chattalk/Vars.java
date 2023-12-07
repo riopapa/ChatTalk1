@@ -21,9 +21,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
-import com.urrecliner.chattalk.Sub.AlertLine;
+import com.urrecliner.chattalk.model.AlertLine;
 import com.urrecliner.chattalk.Sub.AlertTableIO;
-import com.urrecliner.chattalk.Sub.App;
+import com.urrecliner.chattalk.model.App;
 import com.urrecliner.chattalk.Sub.KeyVal;
 
 import java.io.File;

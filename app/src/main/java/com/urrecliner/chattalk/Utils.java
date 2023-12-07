@@ -113,10 +113,13 @@ class Utils {
 
     String replaceKKHH(String text) {
         return text.replace("ㅇㅋ", " 오케이 ")
+                .replace("ㅋㅋ", " 크 ")
                 .replace("ㅋ", " 크 ")
                 .replace("^^", " 크 ")
                 .replace("ㅊㅋ", " 축하 ")
+                .replace("ㅠㅠ", " 흑 ")
                 .replace("ㅠ", " 흑 ")
+                .replace("ㅎㅎ", " 하 ")
                 .replace("ㅎ", " 하 ");
     }
 

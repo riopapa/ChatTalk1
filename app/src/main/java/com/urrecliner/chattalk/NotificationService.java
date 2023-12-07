@@ -73,7 +73,6 @@ public class NotificationService extends Service {
         }
         if (msg1.equals(""))
             msgGet();
-        Log.w("Operation","operation = "+operation);
         switch (operation) {
 
             case SHOW_MESSAGE:
@@ -105,7 +104,7 @@ public class NotificationService extends Service {
                 break;
 
             default:
-                Log.e("Notivication SVC","Case Error "+operation);
+                Log.e("NotifiSVC","Case Error "+operation);
                 break;
         }
         updateRemoteViews();
@@ -113,6 +112,7 @@ public class NotificationService extends Service {
     }
 
     private void launchNHStock() {
+        Log.w("xLaunch", "Launching nsStock");
         Intent appIntent = mContext.getPackageManager().getLaunchIntentForPackage(
                 "com.wooriwm.txsmart");
         appIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP |
@@ -127,10 +127,10 @@ public class NotificationService extends Service {
         mNotificationManager.createNotificationChannel(mNotificationChannel);
 
         mBuilder = new NotificationCompat.Builder(this, "default")
-//                .setSmallIcon(R.drawable.chat_talk)
 //                .setBadgeIconType(NotificationCompat.BADGE_ICON_NONE)
 //                .setColor(getApplicationContext().getColor(R.color.barLine1))
 //                .setContent(mRemoteViews)
+                .setSmallIcon(R.drawable.stock1_icon)
                 .setOnlyAlertOnce(true)
                 .setAutoCancel(false)
                 .setCustomBigContentView(mRemoteViews)
@@ -155,10 +155,8 @@ public class NotificationService extends Service {
 
         mBuilder.setSmallIcon(R.drawable.chat_talk);
         mRemoteViews.setTextViewText(R.id.msg_time1, head1);
-//        mRemoteViews.setTextViewText(R.id.msg_who1, who1);
         mRemoteViews.setTextViewText(R.id.msg_text1, msg1);
         mRemoteViews.setTextViewText(R.id.msg_time2, head2);
-//        mRemoteViews.setTextViewText(R.id.msg_who2, who2);
         mRemoteViews.setTextViewText(R.id.msg_text2, msg2);
         mRemoteViews.setViewVisibility(R.id.stop_now1, (show_stop)? View.VISIBLE : View.GONE);
         mNotificationManager.notify(110,mBuilder.build());
@@ -182,9 +180,5 @@ public class NotificationService extends Service {
         sharedEditor.putString("head2", head2);
         sharedEditor.apply();
     }
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//    }
 
 }

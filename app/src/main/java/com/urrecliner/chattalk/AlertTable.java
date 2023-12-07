@@ -20,7 +20,7 @@ import static com.urrecliner.chattalk.Vars.mContext;
 
 import android.content.SharedPreferences;
 
-import com.urrecliner.chattalk.Sub.AlertLine;
+import com.urrecliner.chattalk.model.AlertLine;
 
 import java.util.ArrayList;
 import java.util.Comparator;

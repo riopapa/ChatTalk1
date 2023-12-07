@@ -42,7 +42,8 @@ public class Fragment_1Table extends Fragment {
         super.onResume();
         fragNumber = 1;
         topTabs.getTabAt(fragNumber).select();
-        Log.w("fragment", "now is "+fragNumber);
+        aBar.setTitle(topTabs.getTabAt(fragNumber).getText().toString());
+        aBar.setSubtitle(null);
 
         TextView tv_WifiState = rootView.findViewById(R.id.tv_wifi_state);
         String s = "Wifi : " + WifiName.get(mContext);

@@ -19,7 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.urrecliner.chattalk.Sub.App;
+import com.urrecliner.chattalk.model.App;
 import com.urrecliner.chattalk.Sub.AppsTable;
 
 public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {

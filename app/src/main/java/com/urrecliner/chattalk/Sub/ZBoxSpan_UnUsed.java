@@ -4,13 +4,13 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.text.style.LineBackgroundSpan;
 
-public class BoxSpan implements LineBackgroundSpan {
+public class ZBoxSpan_UnUsed implements LineBackgroundSpan {
 
     int color;
     Paint p;
     int start, end;
 
-    public BoxSpan(int boxColor, int underlineStart, int underlineEnd) {
+    public ZBoxSpan_UnUsed(int boxColor, int underlineStart, int underlineEnd) {
         super();
         color = boxColor;
         this.start = underlineStart;

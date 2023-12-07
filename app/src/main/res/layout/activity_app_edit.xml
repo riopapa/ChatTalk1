@@ -193,6 +193,18 @@
             android:layout_height="wrap_content"
             />
     </LinearLayout>
-
+    <EditText
+        android:id="@+id/ignores"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:cursorVisible="true"
+        android:focusable="false"
+        android:textColor="#000"
+        android:inputType="text|textMultiLine"
+        android:hint="ignores"
+        android:text="Ignore these"
+        android:textSize="15sp" />
 
 </LinearLayout>

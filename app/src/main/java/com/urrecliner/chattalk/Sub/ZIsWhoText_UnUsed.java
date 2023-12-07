@@ -1,17 +1,15 @@
 package com.urrecliner.chattalk.Sub;
 
-import android.util.Log;
-
-import com.urrecliner.chattalk.Vars;
+import com.urrecliner.chattalk.model.ZWhoText_UnUsed;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class IsWhoText {
+public class ZIsWhoText_UnUsed {
 
-    public static boolean repeated(final ArrayList<WhoText> whoSaysWhat, String mWho, String mText) {
+    public static boolean repeated(final ArrayList<ZWhoText_UnUsed> whoSaysWhat, String mWho, String mText) {
         if (whoSaysWhat.isEmpty()) {
-            whoSaysWhat.add(new WhoText(mWho, mText));
+            whoSaysWhat.add(new ZWhoText_UnUsed(mWho, mText));
             return false;
         }
         int whoSaySize = whoSaysWhat.size();
@@ -20,11 +18,10 @@ public class IsWhoText {
             if (compared == 0) {
                 if (whoSaysWhat.get(i).text.equals(mText))
                     return true;
-                whoSaysWhat.set(i, new WhoText(mWho, mText));
+                whoSaysWhat.set(i, new ZWhoText_UnUsed(mWho, mText));
             } else if (compared > 0) {
-                whoSaysWhat.add(new WhoText(mWho, mText));
-                Collections.sort(whoSaysWhat,
-                        (o1, o2) -> o1.who.compareTo(o2.who));
+                whoSaysWhat.add(new ZWhoText_UnUsed(mWho, mText));
+                whoSaysWhat.sort((o1, o2) -> o1.who.compareTo(o2.who));
                 return false;
             }
         }

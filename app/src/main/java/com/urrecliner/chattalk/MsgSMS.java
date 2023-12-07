@@ -9,7 +9,6 @@ import static com.urrecliner.chattalk.Vars.lastChar;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.nineIgnores;
 
-import com.urrecliner.chattalk.Sub.Dot;
 import com.urrecliner.chattalk.Sub.IsWhoNine;
 import com.urrecliner.chattalk.Sub.Numbers;
 
@@ -44,7 +43,7 @@ class MsgSMS {
                 utils = new Utils();
             mText = utils.strShorten(mWho, mText);
             logUpdate.addQue(head, mText);
-            mText = utils.makeEtc(mText, 100);
+            mText = utils.makeEtc(mText, 150);
             notificationBar.update("sms "+mWho, mText, true);
             if (IsWhoNine.in(nineIgnores, mWho))
                 mText = new Numbers().deduct(mText);
@@ -72,7 +71,7 @@ class MsgSMS {
                     notificationBar.update(samPam +":"+stockName, sayMsg, true);
                     logUpdate.addStock("sms>"+nhStock, sayMsg);
                     FileIO.uploadStock(sGroup, mWho, samPam, stockName,
-                            mText.replace(stockName, new Dot().add(stockName)), samPam,
+                            mText.replace(stockName, new StringBuffer(stockName).insert(1, ".").toString()), samPam,
                             new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date()));
                     sayMsg = stockName + samPam;
                     sounds.speakAfterBeep(new Numbers().deduct(sayMsg));

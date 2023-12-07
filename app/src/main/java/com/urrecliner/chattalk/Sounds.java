@@ -148,13 +148,14 @@ class Sounds {
 
     void beepOnce(int soundNbr) {
 
-        final MediaPlayer mMediaPlayer = MediaPlayer.create(mContext, beepRawIds[soundNbr]);
-        mMediaPlayer.setVolume(1f, 1f);
-        mMediaPlayer.start();
-        mMediaPlayer.setOnCompletionListener(mp -> {
-            mMediaPlayer.stop();
-//            mMediaPlayer.release();
-            mMediaPlayer.reset();
+        final MediaPlayer mPlayer = MediaPlayer.create(mContext, beepRawIds[soundNbr]);
+        mPlayer.setVolume(1f, 1f);
+        mPlayer.start();
+        mPlayer.setOnCompletionListener(mp -> {
+            if (mPlayer.isPlaying())
+                mPlayer.stop();
+            mPlayer.reset();
+            mPlayer.release();
         });
     }
 

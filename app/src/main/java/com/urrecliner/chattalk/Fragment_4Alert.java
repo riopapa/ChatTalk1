@@ -10,7 +10,6 @@ import static com.urrecliner.chattalk.Vars.topTabs;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,7 +22,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.urrecliner.chattalk.Sub.AlertLine;
+import com.urrecliner.chattalk.model.AlertLine;
 import com.urrecliner.chattalk.Sub.AlertTableIO;
 
 public class Fragment_4Alert extends Fragment {
@@ -47,7 +46,8 @@ public class Fragment_4Alert extends Fragment {
         super.onResume();
         fragNumber = 4;
         topTabs.getTabAt(fragNumber).select();
-        Log.w("fragment", "now is "+fragNumber);
+        aBar.setTitle(topTabs.getTabAt(fragNumber).getText().toString());
+        aBar.setSubtitle(null);
 
         recyclerView = rootView.findViewById(R.id.recycle_alerts);
         recyclerView.setAdapter(alertsAdapter);

@@ -1,6 +1,5 @@
 package com.urrecliner.chattalk;
 
-import static android.content.ClipDescription.MIMETYPE_TEXT_PLAIN;
 import static com.urrecliner.chattalk.Vars.appAdapter;
 import static com.urrecliner.chattalk.Vars.appPos;
 import static com.urrecliner.chattalk.Vars.apps;
@@ -8,7 +7,6 @@ import static com.urrecliner.chattalk.Vars.apps;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,7 +14,7 @@ import android.view.MenuItem;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.urrecliner.chattalk.Sub.App;
+import com.urrecliner.chattalk.model.App;
 import com.urrecliner.chattalk.Sub.AppsTable;
 import com.urrecliner.chattalk.databinding.ActivityAppEditBinding;
 
@@ -43,6 +41,7 @@ public class ActivityAppEdit extends AppCompatActivity {
             app.who = true;
             app.addWho = false;
             app.num = true;
+            app.ignores = new String[0];
 
             ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData pData = clipboard.getPrimaryClip();
@@ -67,6 +66,17 @@ public class ActivityAppEdit extends AppCompatActivity {
         binding.whoSwitch.setOnClickListener(v -> app.who = !app.who);
         binding.addWhoSwitch.setOnClickListener(v -> app.addWho = !app.addWho);
         binding.numSwitch.setOnClickListener(v -> app.num = !app.num);
+        if (app.ignores != null) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < app.ignores.length; i++)
+                sb.append(app.ignores[i]).append("\n");
+            binding.ignores.setText(sb.toString());
+        }
+        binding.ignores.setFocusable(true);
+        binding.ignores.setEnabled(true);
+        binding.ignores.setClickable(true);
+        binding.ignores.setFocusableInTouchMode(true);
+
     }
 
     @Override
@@ -108,6 +118,10 @@ public class ActivityAppEdit extends AppCompatActivity {
         app.who = binding.whoSwitch.isChecked();
         app.addWho = binding.addWhoSwitch.isChecked();
         app.num = binding.numSwitch.isChecked();
+        String [] s = binding.ignores.getText().toString().split("\n");
+        for (int i = 0; i < s.length; i++)
+            s[i] = s[i].trim();
+        app.ignores = s;
         if (appPos == -1)
             apps.add(app);
         else

@@ -68,7 +68,8 @@ public class Fragment_3Stock extends Fragment {
     public void onResume() {
         fragNumber = 3;
         topTabs.getTabAt(fragNumber).select();
-        Log.w("fragment", "now is "+fragNumber);
+        aBar.setTitle(topTabs.getTabAt(fragNumber).getText().toString());
+        aBar.setSubtitle(null);
 
         logStock = logStock.replace("    ","");
         ss = new LogSpann().make(logStock, mContext);

@@ -1,10 +1,12 @@
 package com.urrecliner.chattalk.Sub;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 public class StockName {
 
     // returns stockname, and dot added iText
     final String shorten = "[\\d,%:|#+()/]";
-    public String[] parse(String prev, String next, String iText) {
+    public String[] get(String prev, String next, String iText) {
         String str = iText;
         int p1 = iText.indexOf(prev);
         if (p1 >= 0) {
@@ -18,10 +20,31 @@ public class StockName {
                 str = str.substring(0, p1) + " " +
                         new StringBuffer(sName).insert(1, ".") + " " +
                         str.substring(p2);
-            } else {
-                sName = (str.substring(p1, p1+10).replaceAll(shorten, "")+"   ").trim();
-                str = str.substring(0, p1) + " " +
-                        new StringBuffer(sName).insert(1, ".") + " " +
+            } else {    // if second keyword not found then just before blank found
+
+                p1 = p1 + 1;
+                while (true) {  // skip white
+                    char ch = str.charAt(p1);
+                    if (ch >= 0xAC00 && ch <= 0xD7A3)
+                        break;
+                    if (ch >= 'A' && ch <= 'Z')
+                        break;
+                    p1++;
+                }
+                p2 = p2 + 1;
+                while (true) {  // until valid chars
+                    char ch = str.charAt(p2);
+                    if ((ch >= 0xAC00 && ch <= 0xD7A3) ||(ch >= 'A' && ch <= 'Z')) {
+                        p2++;
+                        continue;
+                    }
+                    break;
+                }
+
+                sName = str.substring(p1,p2);
+                if (sName.length()> 1)
+                    sName = new StringBuffer(sName).insert(1, ".").toString();
+                str = str.substring(0, p1) + " " + sName + " " +
                         str.substring(p1+10);
             }
             return new String[]{sName, str};

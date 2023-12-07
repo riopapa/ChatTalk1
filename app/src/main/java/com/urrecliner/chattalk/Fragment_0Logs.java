@@ -70,7 +70,9 @@ public class Fragment_0Logs extends Fragment {
     public void onResume() {
         fragNumber = 0;
         topTabs.getTabAt(fragNumber).select();
-        Log.w("fragment", "now is "+fragNumber);
+        aBar.setTitle(topTabs.getTabAt(fragNumber).getText().toString());
+        aBar.setSubtitle(null);
+
         ss = new LogSpann().make(logQue, mContext);
         sv = ss;
         etTable.setText(ss);

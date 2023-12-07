@@ -1,6 +1,6 @@
 package com.urrecliner.chattalk.Sub;
 
-public class Hangul {
+public class ZHangul_UnUsed {
 
     // ㄱ             ㄲ            ㄴ               ㄷ            ㄸ             ㄹ
     // ㅁ             ㅂ            ㅃ               ㅅ            ㅆ             ㅇ
