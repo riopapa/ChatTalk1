@@ -18,11 +18,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
-import android.text.Layout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,7 +29,7 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.google.android.material.tabs.TabLayout;
-import com.urrecliner.chattalk.Sub.AlertTableIO;
+import com.urrecliner.chattalk.alerts.AlertTableIO;
 import com.urrecliner.chattalk.Sub.Permission;
 import com.urrecliner.chattalk.Sub.SnackBar;
 
@@ -203,7 +201,6 @@ public class ActivityMain extends AppCompatActivity {
         });
 
         viewPager2.setCurrentItem(fragNumber);
-        Log.w("fragment", "main is "+fragNumber);
 
     }
 }

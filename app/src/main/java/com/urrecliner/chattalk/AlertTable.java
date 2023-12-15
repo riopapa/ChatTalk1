@@ -34,40 +34,6 @@ class AlertTable {
 //   group^  who        ^  keyword1 ^ keyword2 ^ talk ^ count ^ skip     ^ more ^ prev ^ next
 //    고선 ^ 고선생       ^    매수    ^   목표가  ^      ^  101  ^          ^ 중지
 
-    static void setArrays() {
-
-//        Log.w("alertTable","read "+msg);
-//        String[] lines = tableListFile.read("kTalkAlerts");
-//
-//        alertLines = new ArrayList<>();
-//
-//        for (String line : lines) {
-//            String[] strings = (line+" ").split("\\^");
-//            if (strings.length < 10) {
-//                String s = "Caret for Alert missing, "+line;
-//                if (utils == null)
-//                    utils = new Utils();
-//                new SnackBar().show("kTalkAlerts", s);
-//                utils.logW("Alert Table "," Error "+line);
-//                sounds.beepOnce(Vars.soundType.ERR.ordinal());
-//                sounds.speakAfterBeep(s);
-//            }
-//            String tGroup = strings[0].trim();
-//            String tWho = strings[1].trim();
-//            String tKey1 = strings[2].trim();
-//            String tKey2 = strings[3].trim();    // leave spaces between two ^^
-//            String tTalk = strings[4].trim();
-//            int matched = Integer.parseInt(strings[5].trim());
-//            String tSkip = strings[6].trim();
-//            String tMore = strings[7];
-//            String prev = strings[8].trim(); if (prev.equals("")) prev = tKey1;
-//            String next = strings[9].trim(); if (next.equals("")) next = tKey2;
-//            alertLines.add(new AlertLine(tGroup, tWho, tKey1, tKey2, tTalk, matched, tSkip, tMore, prev, next));
-//        }
-        updateMatched();
-        makeArrays();
-    }
-
     static ArrayList<String> gSkip1 = new ArrayList<>(), gSkip2 = new ArrayList<>(),
             gSkip3 = new ArrayList<>(), gSkip4 = new ArrayList<>();
 //            gSkip5 = new ArrayList<>(), gSkip6 = new ArrayList<>();

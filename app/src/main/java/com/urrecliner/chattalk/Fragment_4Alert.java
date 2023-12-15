@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.urrecliner.chattalk.model.AlertLine;
-import com.urrecliner.chattalk.Sub.AlertTableIO;
+import com.urrecliner.chattalk.alerts.AlertTableIO;
 
 public class Fragment_4Alert extends Fragment {
 

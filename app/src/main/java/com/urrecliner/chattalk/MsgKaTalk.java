@@ -66,12 +66,11 @@ class MsgKaTalk {
 
             } else {    // normal group
                 String head = "[카톡 " + group + "." + who + "]";
-                String sText = new Numbers().deduct(fText);
-                sText = utils.strShorten(group, sText);
+                String sText = utils.strShorten(group, fText);
                 logUpdate.addQue(head, sText);
-                sText = utils.makeEtc(sText, 180);
+                sText = utils.makeEtc(sText, 160);
                 notificationBar.update(group+":"+ who, sText, true);
-                sText = "단톡방 " + group + " 에서 " + who + " 님이 " + sText;
+                sText = "단톡방 " + group + " 에서 " + who + " 님이 " + new Numbers().deduct(sText);
                 sounds.speakAfterBeep(utils.replaceKKHH(sText));
             }
         });

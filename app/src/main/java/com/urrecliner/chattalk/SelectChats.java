@@ -23,7 +23,7 @@ import android.text.style.UnderlineSpan;
 import android.widget.Toast;
 
 import com.urrecliner.chattalk.model.AlertLine;
-import com.urrecliner.chattalk.Sub.StockName;
+import com.urrecliner.chattalk.alerts.StockName;
 
 import java.io.File;
 import java.util.ArrayList;

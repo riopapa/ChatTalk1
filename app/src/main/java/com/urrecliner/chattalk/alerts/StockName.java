@@ -1,4 +1,4 @@
-package com.urrecliner.chattalk.Sub;
+package com.urrecliner.chattalk.alerts;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
@@ -31,7 +31,7 @@ public class StockName {
                         break;
                     p1++;
                 }
-                p2 = p2 + 1;
+                p2 = p1 + 2;
                 while (true) {  // until valid chars
                     char ch = str.charAt(p2);
                     if ((ch >= 0xAC00 && ch <= 0xD7A3) ||(ch >= 'A' && ch <= 'Z')) {
@@ -42,7 +42,7 @@ public class StockName {
                 }
 
                 sName = str.substring(p1,p2);
-                if (sName.length()> 1)
+                if (sName.length()> 2)
                     sName = new StringBuffer(sName).insert(1, ".").toString();
                 str = str.substring(0, p1) + " " + sName + " " +
                         str.substring(p1+10);

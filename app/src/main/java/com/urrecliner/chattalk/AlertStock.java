@@ -19,9 +19,9 @@ import android.content.SharedPreferences;
 import android.media.AudioManager;
 
 import com.urrecliner.chattalk.model.AlertLine;
-import com.urrecliner.chattalk.Sub.AlertToast;
+import com.urrecliner.chattalk.alerts.AlertToast;
 import com.urrecliner.chattalk.Sub.PhoneVibrate;
-import com.urrecliner.chattalk.Sub.StockName;
+import com.urrecliner.chattalk.alerts.StockName;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

@@ -29,14 +29,13 @@ import com.urrecliner.chattalk.Sub.IsWhoNine;
 import com.urrecliner.chattalk.Sub.KeyVal;
 import com.urrecliner.chattalk.Sub.Numbers;
 import com.urrecliner.chattalk.Sub.PhoneVibrate;
-import com.urrecliner.chattalk.Sub.StockName;
+import com.urrecliner.chattalk.alerts.StockName;
 
 public class NotificationListener extends NotificationListenerService {
     final String SMS = "sms";
     final String KATALK = "kk";
     final String TOSS = "tos";
 
-    final String TESLA = "ts";             // tesla only
     final String TELEGRAM = "tG";
     final String APP = "app";   // general application
     long tesla_time = 0;
@@ -65,6 +64,7 @@ public class NotificationListener extends NotificationListenerService {
     public static Sounds sounds;
     public static LogUpdate logUpdate;
     public static AlertStock alertStock;
+    String head = "";
 
     @Override
     public void onCreate() {
@@ -131,21 +131,30 @@ public class NotificationListener extends NotificationListenerService {
 
                 if (sbnGroup.contains("곳에서 보냄") || sbnText.contains("곳에서 보냄"))
                     return;
+                if (sbnText.length() < 30)
+                    return;
                 sbnText = utils.text2OneLine(sbnText);
-                if (kvTelegram.isDup(sbnGroup, sbnText))
+                if (kvTelegram.isDup(sbnWho, sbnText))
                     return;
                 for (int i = 0; i < teleChannels.length; i++) {
                     if (sbnWho.contains(teleChannels[i])) {
                         sbnGroup = teleGroups[i];
-                        if (sbnWho.contains(":"))   // 부자 인 겅우 group : who 로 구성됨
+                        if (kvTelegram.isDup(sbnGroup, sbnText))
+                            return;
+
+                        if (sbnWho.contains(":"))   // group : who 로 구성됨
                             sbnWho = sbnWho.substring(sbnWho.indexOf(":")+2).trim();
+                        if (kvTelegram.isDup(sbnWho, sbnText))
+                            return;
+                        if (sbnText.contains("종목") || sbnText.contains("매수"))
+                            utils.logW("tel "+sbnGroup, "_"+sbnWho+"_ : "+sbnText);
                         if (msgKaTalk == null)
                             msgKaTalk = new MsgKaTalk();
-                        msgKaTalk.say(sbnGroup, sbnWho, sbnGroup+sbnText);
+                        msgKaTalk.say(sbnGroup, sbnWho, sbnGroup+"!"+sbnText);
                         return;
                     }
                 }
-                String head = "[텔레 "+ sbnGroup + "|" + sbnWho + "]";
+                head = "[텔레 "+ sbnGroup + "|" + sbnWho + "]";
                 logUpdate.addQue(head, sbnText);
                 notificationBar.update(sbnGroup + "|" + sbnWho, sbnText, true);
                 sbnText = head + " 로 부터. " + sbnText;
@@ -270,6 +279,6 @@ public class NotificationListener extends NotificationListenerService {
         sounds.speakAfterBeep("테스리로 부터 " + sbnText);
     }
 
-    @Override
-    public void onNotificationRemoved(StatusBarNotification sbn) { }
+//    @Override
+//    public void onNotificationRemoved(StatusBarNotification sbn) { }
 }

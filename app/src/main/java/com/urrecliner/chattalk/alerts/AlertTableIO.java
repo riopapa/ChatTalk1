@@ -1,4 +1,4 @@
-package com.urrecliner.chattalk.Sub;
+package com.urrecliner.chattalk.alerts;
 
 import static android.content.Context.MODE_PRIVATE;
 

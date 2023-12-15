@@ -18,7 +18,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.urrecliner.chattalk.model.AlertLine;
-import com.urrecliner.chattalk.Sub.AlertTableIO;
+import com.urrecliner.chattalk.alerts.AlertTableIO;
 
 public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder> {
 
