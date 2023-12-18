@@ -67,7 +67,7 @@ class Sounds {
                         beepOnce(Vars.soundType.POST.ordinal());
                         audioManager.abandonAudioFocusRequest(mFocusGain);
                     }
-                }, 300);
+                }, 200);
             }
 
             @Override
@@ -116,7 +116,7 @@ class Sounds {
                         new Utils().logE("Sound", "TTS Error:" + e);
                     }
                 }
-            }, 150);
+            }, 100);
         }
     }
     public void speakBuyStock(String text) {

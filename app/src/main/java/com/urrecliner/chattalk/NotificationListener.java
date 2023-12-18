@@ -133,9 +133,9 @@ public class NotificationListener extends NotificationListenerService {
                     return;
                 if (sbnText.length() < 30)
                     return;
-                sbnText = utils.text2OneLine(sbnText);
                 if (kvTelegram.isDup(sbnWho, sbnText))
                     return;
+                sbnText = utils.text2OneLine(sbnText);
                 for (int i = 0; i < teleChannels.length; i++) {
                     if (sbnWho.contains(teleChannels[i])) {
                         sbnGroup = teleGroups[i];

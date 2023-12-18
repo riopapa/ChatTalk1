@@ -39,7 +39,7 @@ import java.util.Set;
 public class ActivityMain extends AppCompatActivity {
 
 
-    public static int fragNumber = 0;
+    public static int fragNumber = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -149,13 +149,8 @@ public class ActivityMain extends AppCompatActivity {
         mContext.startForegroundService(updateIntent);
         NotificationBar.hideStop();
 
-//        View view = findViewById(R.id.main_layout);
-//        view.invalidate();
-        viewPager2.setCurrentItem(fragNumber);
-        viewPager2.invalidate();
 
         super.onResume();
-
     }
 
     private boolean isNotificationAllowed(String packageName) {
@@ -201,6 +196,7 @@ public class ActivityMain extends AppCompatActivity {
         });
 
         viewPager2.setCurrentItem(fragNumber);
+        viewPager2.invalidate();
 
     }
 }
