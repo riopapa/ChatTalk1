@@ -44,7 +44,7 @@ public class WifiMonitor {
 
             private void showWifiName() {
                 String wiFi = new WifiName().get(context);
-                if (!wiFi.equals(wifiName)) {
+                if (wiFi != null && !wiFi.equals(wifiName)) {
                     wifiName = wiFi;
                     new ToastText().show(wifiName + "에 연결됨");
                 }

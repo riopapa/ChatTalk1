@@ -34,11 +34,6 @@ class Sounds {
         audioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
         mFocusGain = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
                 .build();
-        readyTTS();
-    }
-
-    private void readyTTS() {
-
         mTTS = null;
         mTTS = new TextToSpeech(mContext, status -> {
             if (status == TextToSpeech.SUCCESS) {
@@ -116,7 +111,7 @@ class Sounds {
                         new Utils().logE("Sound", "TTS Error:" + e);
                     }
                 }
-            }, 100);
+            }, 200);
         }
     }
     public void speakBuyStock(String text) {

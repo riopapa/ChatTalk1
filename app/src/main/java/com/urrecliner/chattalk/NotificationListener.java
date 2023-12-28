@@ -2,6 +2,7 @@ package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.Vars.kGroupWhoIgnores;
 import static com.urrecliner.chattalk.Vars.kkTxtIgnores;
+import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.nineIgnores;
 import static com.urrecliner.chattalk.Vars.sbnApp;
@@ -131,9 +132,9 @@ public class NotificationListener extends NotificationListenerService {
 
                 if (sbnGroup.contains("곳에서 보냄") || sbnText.contains("곳에서 보냄"))
                     return;
-                if (sbnText.length() < 30)
+                if (sbnText.length() < 45)
                     return;
-                if (kvTelegram.isDup(sbnWho, sbnText))
+                if (kvTelegram.isDup(sbnGroup, sbnText))
                     return;
                 sbnText = utils.text2OneLine(sbnText);
                 for (int i = 0; i < teleChannels.length; i++) {
@@ -141,7 +142,6 @@ public class NotificationListener extends NotificationListenerService {
                         sbnGroup = teleGroups[i];
                         if (kvTelegram.isDup(sbnGroup, sbnText))
                             return;
-
                         if (sbnWho.contains(":"))   // group : who 로 구성됨
                             sbnWho = sbnWho.substring(sbnWho.indexOf(":")+2).trim();
                         if (kvTelegram.isDup(sbnWho, sbnText))
@@ -195,9 +195,9 @@ public class NotificationListener extends NotificationListenerService {
                 if (IgnoreThis.contains(sbnText, textIgnores))
                     break;
 
-                if (sbnGroup.equals("") && kvCommon.isDup(sbnWho, sbnText))
+                if (sbnApp.who && kvCommon.isDup(sbnWho, sbnText))
                     return;
-                if (sbnWho.equals("") && kvCommon.isDup(sbnGroup, sbnText))
+                if (sbnApp.grp && kvCommon.isDup(sbnGroup, sbnText))
                     return;
                 sbnText = utils.text2OneLine(sbnText);
                 if (sbnApp.ignores != null) {
@@ -216,8 +216,7 @@ public class NotificationListener extends NotificationListenerService {
                     break;
                 }
 
-                sbnText = utils.strShorten(sbnWho, sbnText);
-                sbnText = utils.strShorten(sbnApp.nickName, sbnText);
+                sbnText = utils.strShorten(sbnApp.nickName, utils.strShorten(sbnWho, sbnText));
 
                 if (sbnApp.addWho)
                     sbnText = "("+sbnWho + ")" + sbnText;

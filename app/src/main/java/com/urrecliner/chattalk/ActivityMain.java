@@ -29,9 +29,9 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.google.android.material.tabs.TabLayout;
-import com.urrecliner.chattalk.alerts.AlertTableIO;
 import com.urrecliner.chattalk.Sub.Permission;
 import com.urrecliner.chattalk.Sub.SnackBar;
+import com.urrecliner.chattalk.alerts.AlertTableIO;
 
 import java.io.File;
 import java.util.Set;
@@ -44,6 +44,10 @@ public class ActivityMain extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mContext = this;
+        mActivity = this;
+
         try {
             PackageInfo info = getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), PackageManager.GET_PERMISSIONS);
             Permission.ask(this, this, info);
@@ -79,9 +83,6 @@ public class ActivityMain extends AppCompatActivity {
             Intent intent = new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
             startActivity(intent);
         }
-
-        mContext = this;
-        mActivity = this;
 
         if (vars == null)
             vars = new Vars(mContext);
@@ -143,12 +144,11 @@ public class ActivityMain extends AppCompatActivity {
         }
         establishTabs();
 
-        WifiMonitor.init(mContext);
+        WifiMonitor.init(this);
 
-        Intent updateIntent = new Intent(mContext, NotificationService.class);
-        mContext.startForegroundService(updateIntent);
+        Intent updateIntent = new Intent(this, NotificationService.class);
+        this.startForegroundService(updateIntent);
         NotificationBar.hideStop();
-
 
         super.onResume();
     }
@@ -165,7 +165,7 @@ public class ActivityMain extends AppCompatActivity {
 
     private void establishTabs() {
 
-        if (topTabs == null) {
+//        if (topTabs == null) {
             topTabs = findViewById(R.id.tab_layout);
             topTabs.removeAllTabs();
             topTabs.addTab(topTabs.newTab().setText("Logs"));
@@ -175,13 +175,13 @@ public class ActivityMain extends AppCompatActivity {
             topTabs.addTab(topTabs.newTab().setText("Alerts"));
             topTabs.addTab(topTabs.newTab().setText("Chats"));
             topTabs.setTabGravity(TabLayout.GRAVITY_FILL);
-        }
-        if (viewPager2 == null) {
+//        }
+//        if (viewPager2 == null) {
             viewPager2 = findViewById(R.id.pager2);
             FragmentStateAdapter pagerAdapter = new PagerAdapter(this);
             viewPager2.setAdapter(pagerAdapter);
             viewPager2.setPageTransformer(new ZoomOutPageTransformer());
-        }
+//        }
 //        viewPager2.setCurrentItem(0);
         topTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -194,9 +194,19 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {}
         });
-
-        viewPager2.setCurrentItem(fragNumber);
-        viewPager2.invalidate();
-
+        if (fragNumber == -1) {
+            Log.e("frag","fragNumber after onResume is -1");
+            fragNumber = 0;
+        }
+        if(topTabs != null) {
+            fragNumber = topTabs.getSelectedTabPosition();
+            Log.w("topTabs", "found "+fragNumber);
+            viewPager2.setCurrentItem(fragNumber);
+            viewPager2.invalidate();
+            topTabs.getTabAt(fragNumber).select();
+            aBar.setTitle(topTabs.getTabAt(fragNumber).getText().toString());
+            aBar.setSubtitle(null);
+        }
+        findViewById(R.id.main_layout).invalidate();
     }
 }

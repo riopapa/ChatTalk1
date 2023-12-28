@@ -15,6 +15,7 @@ import static com.urrecliner.chattalk.Vars.aGroups;
 import static com.urrecliner.chattalk.Vars.aGroupsPass;
 import static com.urrecliner.chattalk.Vars.alertWhoIndex;
 import static com.urrecliner.chattalk.Vars.alertsAdapter;
+import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.nineIgnores;
 import static com.urrecliner.chattalk.Vars.timeBegin;
 import static com.urrecliner.chattalk.Vars.timeEnd;
@@ -47,19 +48,23 @@ class MsgKaTalk {
                 int gwIdx = alertWhoIndex.get(gIdx, who, fText);
                 if (gwIdx == -1)
                     return;
-                String sText = utils.removeSpecialChars(text);
                 for (int i = 0; i < aGroupWhoKey1[gIdx][gwIdx].length; i++) {
-                    if ((sText.contains(aGroupWhoKey1[gIdx][gwIdx][i])) &&
-                            (sText.contains(aGroupWhoKey2[gIdx][gwIdx][i])) &&
-                            (!sText.contains(aGroupWhoSkip[gIdx][gwIdx][i]))) {
+                    if ((text.contains(aGroupWhoKey1[gIdx][gwIdx][i])) &&
+                            (text.contains(aGroupWhoKey2[gIdx][gwIdx][i])) &&
+                            (!text.contains(aGroupWhoSkip[gIdx][gwIdx][i]))) {
                         if (loadFunction == null)
                             loadFunction = new LoadFunction();
-                        alertStock.sayNlog(group, sText, aAlertLineIdx[gIdx][gwIdx][i]);
+                        alertStock.sayNlog(group, text, aAlertLineIdx[gIdx][gwIdx][i]);
                         int fI = i;
-                            if (alertsAdapter == null)
-                                alertsAdapter = new AlertsAdapter();
-                            else
-                                alertsAdapter.notifyItemChanged(aAlertLineIdx[gIdx][gwIdx][fI]);
+                        if (alertsAdapter == null)
+                            alertsAdapter = new AlertsAdapter();
+                        else {
+                            if (mActivity != null) {
+                                mActivity.runOnUiThread(() ->
+                                        alertsAdapter.notifyItemChanged(aAlertLineIdx[gIdx][gwIdx][fI])
+                                );
+                            }
+                        }
                         return;
                     }
                 }

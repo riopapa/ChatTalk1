@@ -85,14 +85,14 @@ class Utils {
         }
     }
 
-    String removeSpecialChars(String text) {
+    public String removeSpecialChars(String text) {
         return text.replace("──", "").replace("==", "-")
                 .replace("=", "ￚ").replace("--", "-")
         .replaceAll("[^\\da-zA-Z:|#().@,%/~ㄱ-ㅎ가-힣\\s\\-+]", "")
         ;
     }
 
-    String strShorten(String groupOrWho, String text) {
+    public String strShorten(String groupOrWho, String text) {
         for (int i = 0; i < replGroupCnt; i++) {
             int compared = groupOrWho.compareTo(replGroup[i]);
             if (compared == 0) {

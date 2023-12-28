@@ -52,10 +52,10 @@
     <color name="log_head_b0">#CCE7F2DB</color>
     <color name="log_line_f0">#0C1F8A</color>
     <color name="log_line_b0">#C6C4CA</color>
-    <color name="log_line_x0">#BF9B6C</color>
+    <color name="log_line_x0">#D1CC9C</color>
 
     <color name="log_head_f1">#FF0A09AE</color>
-    <color name="log_head_b1">#AAE7E1F9</color>
+    <color name="log_head_b1">#C4B997</color>
     <color name="log_line_f1">#042C29</color>
     <color name="log_line_b1">#AAD9D5E3</color>
     <color name="log_line_x1">#B1A268</color>

@@ -1,11 +1,12 @@
 package com.urrecliner.chattalk.alerts;
 
+import static com.urrecliner.chattalk.NotificationListener.utils;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 public class StockName {
 
     // returns stockname, and dot added iText
-    final String shorten = "[\\d,%:|#+()/]";
+    final String shorten = "[\\d,%:|#+\\[\\]()/]";
     public String[] get(String prev, String next, String iText) {
         String str = iText;
         int p1 = iText.indexOf(prev);
@@ -40,11 +41,11 @@ public class StockName {
                     }
                     break;
                 }
-
                 sName = str.substring(p1,p2);
+                String sNameDot = sName;
                 if (sName.length()> 2)
-                    sName = new StringBuffer(sName).insert(1, ".").toString();
-                str = str.substring(0, p1) + " " + sName + " " +
+                    sNameDot = new StringBuffer(sName).insert(1, ".").toString();
+                str = str.substring(0, p1) + " " + sNameDot + " " +
                         str.substring(p1+10);
             }
             return new String[]{sName, str};

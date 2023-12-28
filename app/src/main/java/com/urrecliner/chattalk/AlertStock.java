@@ -33,6 +33,7 @@ public class AlertStock {
         String key12, sTalk, who;
         if (utils == null)
             utils = new Utils();
+
         AlertLine al = alertLines.get(aIdx);
         al.matched++;
         alertLines.set(aIdx, al);
@@ -43,8 +44,11 @@ public class AlertStock {
         key12 = " {" + k1 + "." + k2 + "}";
         if (stockName == null)
             stockName = new StockName();
-        String sText = utils.strShorten(iGroup, iText);
-        String []sParse = stockName.get(al.prev, al.next, sText);
+        String [] sParse = stockName.get(al.prev, al.next, iText);
+
+        sParse[1] = utils.removeSpecialChars(sParse[1]);
+        sParse[1] = utils.strShorten(iGroup, sParse[1]);
+
         // sParse[0] : stockName, sParse[1] : replaced text
         String keyStr = key12+sTalk;
         Thread thisThread = new Thread(() -> {
@@ -52,7 +56,7 @@ public class AlertStock {
 //                String cho = new ZHangul_UnUsed().getCho(stock_Name);
 //                if (cho.length() > 4)
 //                    cho = cho.substring(0,4);
-//                String[] joins = new String[]{who, group, who, stock_Name, sTalk, cho, stock_Name, sText};
+//                String[] joins = new String[]{who, group, who, stock_Name, sTalk, cho, stock_Name, iText};
                 copyToClipBoard(sParse[0]);
                 if (isSilentNow()) {
                     if (phoneVibrate == null)
@@ -64,7 +68,7 @@ public class AlertStock {
                     sounds.beepOnce(Vars.soundType.STOCK.ordinal());
                 }
                 logUpdate.addStock(sParse[0] + " ["+iGroup+":"+who+"]", sParse[1]+key12);
-                String shortParse1 = (sParse[1].length() > 50) ? sParse[1].substring(0, 60) : sParse[1];
+                String shortParse1 = (sParse[1].length() > 50) ? sParse[1].substring(0, 50) : sParse[1];
                 String[] joins = new String[]{iGroup, who, sParse[0], sTalk, sParse[0]};
                 sounds.speakBuyStock(String.join(" , ", joins));
                 String title = sParse[0]+" / "+who;

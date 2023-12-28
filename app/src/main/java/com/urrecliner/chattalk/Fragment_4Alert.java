@@ -92,12 +92,10 @@ public class Fragment_4Alert extends Fragment {
             for (int i = 0; i < alertLines.size(); i++) {
                 AlertLine al = alertLines.get(i);
                 if (al.matched != -1) {
-                    if (al.matched > 100)
+                    if (al.talk.length() > 0)
                         al.matched = 1000;
-                    else if (al.talk.length() > 0)
-                        al.matched = 500;
-                    else if (al.matched > 0)
-                        al.matched = 100;
+                    else
+                        al.matched = (al.matched+99) / 100  * 100;
                 }
                 alertLines.set(i, al);
             }
