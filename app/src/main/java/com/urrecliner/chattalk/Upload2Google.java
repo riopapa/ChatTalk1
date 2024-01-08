@@ -54,14 +54,14 @@ public class Upload2Google {
                     nowUploading = false;
 //                    Log.w("stock add response",response);
                     if (!response.startsWith("ok"))
-                        logUpdate.addQue("sheet stock response", response);
+                        logUpdate.addLog("sheet stock response", response);
                     uploadStock();
                 },
                 error -> {
                     nowUploading = false;
                     String s = group+", "+who+", "+timeStamp+", "+percent+", "+statement;
                     new Utils().logW("uploadStock()", s+"\n Error "+s+"\n"+error);
-                    logUpdate.addQue("sheet stock response", s);
+                    logUpdate.addLog("sheet stock response", s);
                     sounds.beepOnce(Vars.soundType.ERR.ordinal());
                 }
         ) {
@@ -92,12 +92,12 @@ public class Upload2Google {
                     nowUploading = false;
                     Log.w("sheet response",response);
                     if (!response.startsWith("ok group"))
-                        logUpdate.addQue("sheet group response", response);
+                        logUpdate.addLog("sheet group response", response);
                     uploadStock();
                 },
                 error -> {
                     String ss = "코멘트 올리기 에러남 "+error.networkResponse.statusCode;
-                    logUpdate.addQue("sheet", ss);
+                    logUpdate.addLog("sheet", ss);
                     sounds.speakAfterBeep(ss);
                     nowUploading = false;
                 }

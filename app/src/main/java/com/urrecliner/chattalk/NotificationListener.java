@@ -2,7 +2,6 @@ package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.Vars.kGroupWhoIgnores;
 import static com.urrecliner.chattalk.Vars.kkTxtIgnores;
-import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.nineIgnores;
 import static com.urrecliner.chattalk.Vars.sbnApp;
@@ -108,9 +107,9 @@ public class NotificationListener extends NotificationListenerService {
                     if (kvKakao.isDup(sbnGroup, sbnText))
                         return;
                     sbnText = utils.strShorten(sbnWho, sbnText);
-                    String head = "{카톡!"+ sbnWho + "} ";
                     notificationBar.update("카톡!"+sbnWho, sbnText, true);
-                    logUpdate.addQue( head, sbnText);
+                    head = "{카톡!"+ sbnWho + "} ";
+                    logUpdate.addLog( head, sbnText);
                     if (IsWhoNine.in(nineIgnores, sbnWho))
                         sbnText = new Numbers().deduct(sbnText);
                     sounds.speakAfterBeep(" 카톡왔음 " + sbnWho + " 님이 " + utils.replaceKKHH(utils.makeEtc(sbnText, 150)));
@@ -137,6 +136,12 @@ public class NotificationListener extends NotificationListenerService {
                 if (kvTelegram.isDup(sbnGroup, sbnText))
                     return;
                 sbnText = utils.text2OneLine(sbnText);
+                final String [] ignoreTelegram = { "항셍", "계약수량", "진입신호"};
+                for (String s: ignoreTelegram) {
+                    if (sbnText.contains(s))
+                        return;
+                }
+
                 for (int i = 0; i < teleChannels.length; i++) {
                     if (sbnWho.contains(teleChannels[i])) {
                         sbnGroup = teleGroups[i];
@@ -155,7 +160,7 @@ public class NotificationListener extends NotificationListenerService {
                     }
                 }
                 head = "[텔레 "+ sbnGroup + "|" + sbnWho + "]";
-                logUpdate.addQue(head, sbnText);
+                logUpdate.addLog(head, sbnText);
                 notificationBar.update(sbnGroup + "|" + sbnWho, sbnText, true);
                 sbnText = head + " 로 부터. " + sbnText;
                 sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
@@ -169,7 +174,7 @@ public class NotificationListener extends NotificationListenerService {
                 }
                 sbnText = utils.strShorten(sbnAppNick, utils.text2OneLine(sbnWho+"|"+ sbnText));
                 head = "[" + sbnAppNick + "]";
-                logUpdate.addQue(head, sbnText);
+                logUpdate.addLog(head, sbnText);
                 notificationBar.update(sbnAppNick, sbnText, true);
                 sbnText = "토스 로부터 " + new Numbers().deduct(sbnText);
                 sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
@@ -235,7 +240,7 @@ public class NotificationListener extends NotificationListenerService {
                     head += (sbnApp.grp) ? sbnGroup+"_": "";
                     head += (sbnApp.who) ? sbnWho:"";
                     head = head + "]";
-                    logUpdate.addQue(head , sbnText);
+                    logUpdate.addLog(head , sbnText);
                 }
                 String s = (sbnApp.grp) ? sbnGroup+"_": "";
                 s += (sbnApp.who) ? sbnWho:"";
@@ -251,14 +256,12 @@ public class NotificationListener extends NotificationListenerService {
                 sbnText = "새로운 앱이 설치됨,  group : " + sbnGroup + ", who : " + sbnWho +
                         ", text : " + sbnText;
                 notificationBar.update(sbnAppName, sbnText, true);
-                logUpdate.addQue("[ " + sbnAppName + " ]", sbnText);
+                logUpdate.addLog("[ " + sbnAppName + " ]", sbnText);
                 break;
         }
     }
 
     private void sayTesla() {
-        if (kvCommon.isDup("tesla", sbnText))
-            return;
         final String [] ignoreTesla = { "연결 중", "연결 해제됨", "핸드폰을 키로"};
         for (String s: ignoreTesla) {
             if (sbnText.contains(s))
@@ -266,18 +269,15 @@ public class NotificationListener extends NotificationListenerService {
         }
         if (sbnText.contains("연결됨")) {
             long nowTime = System.currentTimeMillis();
-            if ((nowTime - tesla_time) > 50 * 60 * 1000)    // 30 min.
-                sounds.beepOnce(Vars.soundType.TESLA.ordinal());
+            if ((nowTime - tesla_time) > 50 * 60 * 1000)    // 50 min.
+                sounds.beepOnce(Vars.soundType.HELLO_TESLA.ordinal());
             tesla_time = nowTime;
             return;
         }
-        if (kvCommon.isDup(sbnWho, sbnText))
+        if (kvCommon.isDup("테스리", sbnText))
             return;
-        logUpdate.addQue("[ 테스리 ]", sbnText);
+        logUpdate.addLog("[ 테스리 ]", sbnText);
         notificationBar.update(sbnAppNick, sbnText, true);
         sounds.speakAfterBeep("테스리로 부터 " + sbnText);
     }
-
-//    @Override
-//    public void onNotificationRemoved(StatusBarNotification sbn) { }
 }

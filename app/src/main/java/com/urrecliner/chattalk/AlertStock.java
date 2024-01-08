@@ -2,6 +2,7 @@ package com.urrecliner.chattalk;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
+import static com.urrecliner.chattalk.NotificationListener.kvTelegram;
 import static com.urrecliner.chattalk.NotificationListener.logUpdate;
 import static com.urrecliner.chattalk.NotificationListener.notificationBar;
 import static com.urrecliner.chattalk.NotificationListener.phoneVibrate;
@@ -11,6 +12,8 @@ import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.alertLines;
 import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
+import static com.urrecliner.chattalk.Vars.sbnText;
+import static com.urrecliner.chattalk.Vars.sbnWho;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -31,6 +34,9 @@ public class AlertStock {
     void sayNlog(String iGroup, String iText, int aIdx) {
 
         String key12, sTalk, who;
+
+        if (kvTelegram.isDup(sbnWho, sbnText))
+            return;
         if (utils == null)
             utils = new Utils();
 
@@ -57,23 +63,18 @@ public class AlertStock {
 //                if (cho.length() > 4)
 //                    cho = cho.substring(0,4);
 //                String[] joins = new String[]{who, group, who, stock_Name, sTalk, cho, stock_Name, iText};
-                copyToClipBoard(sParse[0]);
-                if (isSilentNow()) {
-                    if (phoneVibrate == null)
-                        phoneVibrate = new PhoneVibrate();
-                    phoneVibrate.vib();
-                } else {
-                    if (sounds == null)
-                        sounds = new Sounds();
-                    sounds.beepOnce(Vars.soundType.STOCK.ordinal());
-                }
-                logUpdate.addStock(sParse[0] + " ["+iGroup+":"+who+"]", sParse[1]+key12);
                 String shortParse1 = (sParse[1].length() > 50) ? sParse[1].substring(0, 50) : sParse[1];
                 String[] joins = new String[]{iGroup, who, sParse[0], sTalk, sParse[0]};
                 sounds.speakBuyStock(String.join(" , ", joins));
                 String title = sParse[0]+" / "+who;
                 notificationBar.update(title, shortParse1, true);
-
+                logUpdate.addStock(sParse[0] + " ["+iGroup+":"+who+"]", sParse[1]+key12);
+                copyToClipBoard(sParse[0]);
+                if (isSilentNow()) {
+                    if (phoneVibrate == null)
+                        phoneVibrate = new PhoneVibrate();
+                    phoneVibrate.vib();
+                }
                 new AlertToast().show(mContext, mActivity, title);
                 new NotifyStock().send(mContext, title, sParse[0], shortParse1);
             } else {

@@ -16,11 +16,9 @@ import static com.urrecliner.chattalk.Vars.aGroupsPass;
 import static com.urrecliner.chattalk.Vars.alertWhoIndex;
 import static com.urrecliner.chattalk.Vars.alertsAdapter;
 import static com.urrecliner.chattalk.Vars.mActivity;
-import static com.urrecliner.chattalk.Vars.nineIgnores;
 import static com.urrecliner.chattalk.Vars.timeBegin;
 import static com.urrecliner.chattalk.Vars.timeEnd;
 
-import com.urrecliner.chattalk.Sub.IsWhoNine;
 import com.urrecliner.chattalk.Sub.Numbers;
 
 import java.util.Collections;
@@ -72,7 +70,7 @@ class MsgKaTalk {
             } else {    // normal group
                 String head = "[카톡 " + group + "." + who + "]";
                 String sText = utils.strShorten(group, fText);
-                logUpdate.addQue(head, sText);
+                logUpdate.addLog(head, sText);
                 sText = utils.makeEtc(sText, 160);
                 notificationBar.update(group+":"+ who, sText, true);
                 sText = "단톡방 " + group + " 에서 " + who + " 님이 " + new Numbers().deduct(sText);

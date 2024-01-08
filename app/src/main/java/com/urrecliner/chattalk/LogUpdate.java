@@ -32,12 +32,14 @@ public class LogUpdate {
     }
 
     final SimpleDateFormat TIME_INFO = new SimpleDateFormat("MM-dd HH:mm ", Locale.KOREA);
-    void addQue(String header, String text) {
+    void addLog(String header, String text) {
+        if (text.length() < 10)
+            return;
         new ReadyToday();
         logQue += "\n" + TIME_INFO.format(new Date()) + header + "\n" + text+"\n";
         if (logQue.length() > 32000) {
             Thread logThread = new Thread(() -> {
-                logQue = squeezeQue(logQue, "logQue");
+                logQue = squeezeLog(logQue, "logQue");
                 sharedEditor.putString("logQue", logQue);
                 sharedEditor.apply();
             });
@@ -53,7 +55,7 @@ public class LogUpdate {
         logStock += "\n" + TIME_INFO.format(new Date()) + header + "\n" + text+"\n";
         if (logStock.length() > 12000) {
             Thread stockThread = new Thread(() -> {
-                logStock = squeezeQue(logStock, "logStock");
+                logStock = squeezeLog(logStock, "logStock");
                 sharedEditor.putString("logStock", logStock);
                 sharedEditor.apply();
             });
@@ -67,7 +69,7 @@ public class LogUpdate {
     /*
         Remove upper lines, then 3/4 is without \n
      */
-    private String squeezeQue(String logStr, String queName) {
+    private String squeezeLog(String logStr, String queName) {
         logStr = logStr.replace("    ","")
                         .replace("\n\n","\n");
         String [] sLog = logStr.split("\n");

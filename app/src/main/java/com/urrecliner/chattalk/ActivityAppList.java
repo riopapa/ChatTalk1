@@ -1,12 +1,10 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.ActivityMain.fragNumber;
 import static com.urrecliner.chattalk.Vars.aBar;
 import static com.urrecliner.chattalk.Vars.appAdapter;
 import static com.urrecliner.chattalk.Vars.appPos;
 import static com.urrecliner.chattalk.Vars.apps;
 import static com.urrecliner.chattalk.Vars.todayFolder;
-import static com.urrecliner.chattalk.Vars.topTabs;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,10 +17,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.urrecliner.chattalk.Sub.ToastText;
-import com.urrecliner.chattalk.model.App;
 import com.urrecliner.chattalk.Sub.AppsTable;
 import com.urrecliner.chattalk.databinding.ActivityAppListBinding;
+import com.urrecliner.chattalk.model.App;
 
 public class ActivityAppList extends AppCompatActivity {
 
@@ -66,26 +63,20 @@ public class ActivityAppList extends AppCompatActivity {
         binding.searchNext.setOnClickListener(v -> {
             key = binding.searchKey.getText().toString();
             if (key.length() > 1) {
-                searchApps(appPos+1);
+                searchApps(appPos+2);
             }
         });
 
-        if (appPos > 0) {
-            LinearLayoutManager layoutManager = (LinearLayoutManager) appRecyclerView
-                    .getLayoutManager();
-            layoutManager.scrollToPositionWithOffset(
-                    appPos, (appPos > 1) ? appPos - 1 : appPos);
-
-        }
     }
     void searchApps(int startPos) {
         appPos = -1;
-        App app = null;
+        String result = "";
         for (int i = startPos; i < apps.size(); i++) {
-            app = apps.get(i);
+            App app = apps.get(i);
             if (app.nickName.contains(key) || app.fullName.contains(key) ||
                 app.memo.contains(key)) {
                 appPos = i;
+                result = app.nickName+" "+app.fullName + " " +app.memo;
                 break;
             }
         }
@@ -94,8 +85,7 @@ public class ActivityAppList extends AppCompatActivity {
                     .getLayoutManager();
             layoutManager.scrollToPositionWithOffset(
                     appPos, (appPos> 1) ? appPos-1:appPos);
-            Toast.makeText(this, key+" found " + app.nickName + "\n" +
-                    app.fullName, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, key+" found "+result, Toast.LENGTH_SHORT).show();
         }
     }
 

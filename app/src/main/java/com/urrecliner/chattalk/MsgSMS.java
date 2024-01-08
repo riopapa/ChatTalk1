@@ -26,8 +26,6 @@ class MsgSMS {
         mWho = mWho.replaceAll("[\\u200C-\\u206F]", "");
         mText = mText.replace(mContext.getString(R.string.web_sent), "").replaceAll("[\\u200C-\\u206F]", "");
         if (mWho.contains(nhStock)) {
-            // |[NH투자]|매수 전량체결|KMH    |10주|9,870원|주문 0001026052
-            //   0       1    2      3       4    5
             if (mText.contains(trade))
                 sayTrade(mWho, mText);
             else {
@@ -42,7 +40,7 @@ class MsgSMS {
             if (utils == null)
                 utils = new Utils();
             mText = utils.strShorten(mWho, mText);
-            logUpdate.addQue(head, mText);
+            logUpdate.addLog(head, mText);
             mText = utils.makeEtc(mText, 150);
             notificationBar.update("sms "+mWho, mText, true);
             if (IsWhoNine.in(nineIgnores, mWho))
@@ -57,15 +55,17 @@ class MsgSMS {
             mText = mText.substring(0, pos);
             try {
                 String[] words = mText.split("\\|");
+                // |[NH투자]|매수 전량체결|KMH    |10주|9,870원|주문 0001026052
+                //   0       1          2       3    4       5
                 if (words.length < 5) {
                     logUpdate.addStock("SMS NH 증권 에러 " + words.length, mText);
                     sounds.speakAfterBeep(mText);
                 } else {
-                    String stockName = words[3].trim();  // 종목명
-                    boolean buySell = words[2].contains("매수");
+                    String stockName = words[2].trim();  // 종목명
+                    boolean buySell = words[1].contains("매수");
                     String samPam = (buySell) ?  " 샀음": " 팔림";
-                    String amount = words[4];
-                    String uPrice = words[5];
+                    String amount = words[3];
+                    String uPrice = words[4];
                     String sGroup = lastChar + trade;
                     String sayMsg = stockName + " " + amount + " " + uPrice + samPam;
                     notificationBar.update(samPam +":"+stockName, sayMsg, true);
@@ -88,7 +88,7 @@ class MsgSMS {
         String head = "[sms."+ mWho + "] ";
         mText = utils.strShorten("sms", mText);
         notificationBar.update(head, mText, true);
-        logUpdate.addQue(head, mText);
+        logUpdate.addLog(head, mText);
         if (utils == null)
             utils = new Utils();
         if (IsWhoNine.in(nineIgnores, mWho))

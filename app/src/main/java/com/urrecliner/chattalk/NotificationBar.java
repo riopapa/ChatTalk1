@@ -3,18 +3,13 @@ package com.urrecliner.chattalk;
 import static com.urrecliner.chattalk.NotificationListener.sounds;
 import static com.urrecliner.chattalk.Vars.HIDE_STOP;
 import static com.urrecliner.chattalk.Vars.SHOW_MESSAGE;
+import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
 
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
-import android.widget.Toast;
-
-import com.urrecliner.chattalk.Sub.IsScreen;
 
 public class NotificationBar {
 
@@ -26,15 +21,20 @@ public class NotificationBar {
         intent.putExtra("who", who);
         intent.putExtra("msg", iMsg);
         intent.putExtra("stop", show_icon && !sounds.isSilent());
-        try {
-            if (isMyServiceRunning(NotificationService.class))
-                mContext.startService(intent);
-            else
-                mContext.startForegroundService(intent);
-        } catch (Exception e) {
-            Log.e("NotificationBar","intent Error \n"+e);
+        if (mContext == null) {
+            mContext = mActivity.getApplicationContext();
         }
-
+        try {
+//            if (isMyServiceRunning(NotificationService.class))
+                mContext.startService(intent);
+//            else
+        } catch (Exception e) {
+            try {
+                mContext.startForegroundService(intent);
+            } catch (Exception ex) {
+                Log.e("NotificationBar","svc Error \n"+ex);
+            }
+        }
     }
 
     static void hideStop() {
@@ -52,7 +52,7 @@ public class NotificationBar {
         }
     }
 
-    static boolean isMyServiceRunning(Class<?> serviceClass) {
+    boolean isMyServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
             if (serviceClass.getName().equals(service.service.getClassName())) {

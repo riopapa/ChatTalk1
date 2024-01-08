@@ -61,8 +61,11 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
     }
 
     String svGroup = "sv", svWho = "sv";
-    int textColor;
-//    int colorWho = 0xFFA0A0A0;
+    int textColor = 0xFF000000;
+    final int textBlack = 0xff000000;
+    final int textGray = 0x88000000;
+    final int textRed = 0xff662222;
+
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
 
@@ -82,7 +85,7 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
         holder.tPrev.setText(al.prev);
         holder.tNext.setText(al.next);
         if (al.matched == -1) {
-            textColor = (al.more.length() > 1)? 0x60000000: 0xFF000000;
+            textColor = (al.more.length() > 1)? textGray : textBlack;
             holder.tCount.setVisibility(View.GONE);
             holder.tTalk.setText(al.talk);
             holder.tTalk.setTextColor(ContextCompat.getColor(mContext, R.color.textFore));
@@ -92,12 +95,13 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
             holder.tMore.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 3f));
             holder.tLine.setBackground(ContextCompat.getDrawable(mContext, R.drawable.border_header));
         } else {
+            textColor = (al.more.length() > 1)? textRed: textBlack;
             holder.tGroup.setText("");
             holder.tWho.setSingleLine(true);
             holder.tWho.setEllipsize(TextUtils.TruncateAt.MARQUEE);
             holder.tWho.setSelected(true);
             holder.tCount.setVisibility(View.VISIBLE);
-            holder.tCount.setText("" + matched);
+            holder.tCount.setText(String.valueOf(matched));
             holder.tSkip.setText(al.skip);
             holder.tSkip.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 0.5f));
             holder.tTalk.setText(al.talk);

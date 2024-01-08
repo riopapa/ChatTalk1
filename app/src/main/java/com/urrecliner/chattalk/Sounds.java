@@ -1,6 +1,7 @@
 package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.NotificationListener.notificationBar;
+import static com.urrecliner.chattalk.NotificationListener.sounds;
 import static com.urrecliner.chattalk.Vars.audioReady;
 import static com.urrecliner.chattalk.Vars.beepRawIds;
 import static com.urrecliner.chattalk.Vars.isPhoneBusy;
@@ -120,6 +121,8 @@ class Sounds {
             audioReady = true;
             return;
         }
+        if (sounds == null)
+            sounds = new Sounds();
         beepOnce(Vars.soundType.STOCK.ordinal());
 
         if (isActive()) {

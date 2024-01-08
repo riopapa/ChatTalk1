@@ -1,5 +1,6 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.ActivityMain.fragNumber;
 import static com.urrecliner.chattalk.Vars.appAdapter;
 import static com.urrecliner.chattalk.Vars.appPos;
 import static com.urrecliner.chattalk.Vars.apps;
@@ -14,9 +15,9 @@ import android.view.MenuItem;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.urrecliner.chattalk.model.App;
 import com.urrecliner.chattalk.Sub.AppsTable;
 import com.urrecliner.chattalk.databinding.ActivityAppEditBinding;
+import com.urrecliner.chattalk.model.App;
 
 public class ActivityAppEdit extends AppCompatActivity {
 
@@ -94,14 +95,14 @@ public class ActivityAppEdit extends AppCompatActivity {
         } else if (item.getItemId() == R.id.delete_app) {
             deleteApp();
         }
-        return false;
+        return super.onOptionsItemSelected(item);
     }
 
     private void deleteApp() {
         if (appPos != -1) {
             apps.remove(appPos);
             new AppsTable().put(this);
-//            appAdapter = new AppAdapter();
+            appAdapter = new AppAdapter();
             finish();
         }
     }
@@ -126,10 +127,12 @@ public class ActivityAppEdit extends AppCompatActivity {
             apps.add(app);
         else
             apps.set(appPos, app);
-        new AppsTable().put(this);
+        AppsTable appsTable = new AppsTable();
+        appsTable.makeTable(apps);
+        appsTable.put(this);
         appAdapter = new AppAdapter();
+        fragNumber = 3;
         finish();
     }
-
 
 }

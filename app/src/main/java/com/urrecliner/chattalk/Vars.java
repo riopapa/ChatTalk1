@@ -110,7 +110,7 @@ public class Vars {
     static final String lastChar = "힝";
     public static int alertPos = -1, appPos = -1;  // updated or duplicated recycler position
 
-    enum soundType { PRE, POST, ERR, TESLA, ONLY, STOCK, INFO}
+    enum soundType { PRE, POST, ERR, HELLO_TESLA, ONLY, STOCK, INFO}
     static final int[] beepRawIds = { R.raw.pre, R.raw.post, R.raw.err,
             R.raw.hi_tesla, R.raw.only, R.raw.stock_check, R.raw.inform};
 

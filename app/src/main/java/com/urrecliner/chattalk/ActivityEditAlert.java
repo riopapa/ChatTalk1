@@ -1,5 +1,6 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.ActivityMain.fragNumber;
 import static com.urrecliner.chattalk.Vars.alertLines;
 import static com.urrecliner.chattalk.Vars.alertPos;
 import static com.urrecliner.chattalk.Vars.alertsAdapter;
@@ -129,7 +130,7 @@ public class ActivityEditAlert extends AppCompatActivity {
         } else if (item.getItemId() == R.id.duplicate_alert) {
             duplicateAlert();
         }
-        return false;
+        return super.onOptionsItemSelected(item);
     }
 
     private void duplicateAlert() {
@@ -174,6 +175,7 @@ public class ActivityEditAlert extends AppCompatActivity {
 //        alertsAdapter = new AlertsAdapter();
         AlertTable.makeArrays();
         alertsAdapter.notifyDataSetChanged();
+        fragNumber = 4;
         finish();
     }
 

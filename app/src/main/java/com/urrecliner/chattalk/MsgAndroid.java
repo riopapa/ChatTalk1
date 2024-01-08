@@ -7,7 +7,7 @@ class MsgAndroid {
 
     void say(String appFullName, String who, String text) {
         text = " Android [" + who + "] " + text;
-        logUpdate.addQue(appFullName, text);
+        logUpdate.addLog(appFullName, text);
         sounds.speakAfterBeep(text);
     }
 }
