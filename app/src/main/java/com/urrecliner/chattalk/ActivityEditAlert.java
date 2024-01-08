@@ -174,7 +174,7 @@ public class ActivityEditAlert extends AppCompatActivity {
         Upload2Google.uploadGroupInfo(mGroup, mWho, mPercent, mTalk, mStatement);
 //        alertsAdapter = new AlertsAdapter();
         AlertTable.makeArrays();
-        alertsAdapter.notifyDataSetChanged();
+//        alertsAdapter.notifyDataSetChanged();
         fragNumber = 4;
         finish();
     }
