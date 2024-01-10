@@ -38,7 +38,7 @@ public class KeyVal {
                         .append(maps.get(key)).append("\n");
             }
         } else
-            sb.append("\nno data\n");
+            sb.append("no data\n");
         super.toString();
         return sb.toString();
     }

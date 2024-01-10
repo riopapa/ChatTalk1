@@ -34,7 +34,7 @@ public class ReadyToday {
         c.set(Calendar.HOUR_OF_DAY, 8);
         c.set(Calendar.MINUTE, 30);
         timeBegin =c.getTimeInMillis();
-        c.set(Calendar.HOUR_OF_DAY, 16);
+        c.set(Calendar.HOUR_OF_DAY, 15);
         timeEnd = c.getTimeInMillis();
 
         todayFolder = new File(packageDirectory, toDay);

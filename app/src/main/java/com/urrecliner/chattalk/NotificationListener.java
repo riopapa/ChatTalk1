@@ -135,13 +135,12 @@ public class NotificationListener extends NotificationListenerService {
                     return;
                 if (kvTelegram.isDup(sbnGroup, sbnText))
                     return;
-                sbnText = utils.text2OneLine(sbnText);
                 final String [] ignoreTelegram = { "항셍", "계약수량", "진입신호"};
                 for (String s: ignoreTelegram) {
                     if (sbnText.contains(s))
                         return;
                 }
-
+                sbnText = utils.text2OneLine(sbnText);
                 for (int i = 0; i < teleChannels.length; i++) {
                     if (sbnWho.contains(teleChannels[i])) {
                         sbnGroup = teleGroups[i];

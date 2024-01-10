@@ -99,15 +99,14 @@ public class Fragment_4Alert extends Fragment {
                 }
                 alertLines.set(i, al);
             }
-            AlertTable.sort();
             new AlertSave("Clear Matches");
             alertsAdapter.notifyDataSetChanged();
         } else if (item.getItemId() == R.id.copy2log) {
-            AlertTable.sort();
             new AlertSave("Copy");
             alertsAdapter.notifyDataSetChanged();
         }
-        return super.onOptionsItemSelected(item);
+        super.onOptionsItemSelected(item);
+        return false;
     }
 
 }

@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
 
 public class ActivityEditText extends AppCompatActivity {
 
-    boolean isPackageNames;
     int pos = -1;
     EditText et;
     String key, fullText;
@@ -38,7 +37,6 @@ public class ActivityEditText extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_table_edit);
-        isPackageNames = nowFileName.equals("appNames");
         ActionBar ab = getSupportActionBar() ;
         assert ab != null;
         ab.setTitle("  "+nowFileName);
@@ -118,8 +116,7 @@ public class ActivityEditText extends AppCompatActivity {
         if (item.getItemId() == R.id.save_table) {
             TextView tv = findViewById(R.id.table_text);
             String s = tv.getText().toString();             // .replace("\u00A0"," ");
-            FileIO.writeFile(tableFolder, nowFileName,
-                    (isPackageNames) ? sortPackage(s) : sortText(s),".txt");
+            FileIO.writeFile(tableFolder, nowFileName, sortText(s),".txt");
             new OptionTables().readAll();
             finish();
         } else if (item.getItemId() == R.id.line_copy_add) {
@@ -192,7 +189,7 @@ public class ActivityEditText extends AppCompatActivity {
         ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         ClipData pData = clipboard.getPrimaryClip();
         ClipData.Item item = pData.getItemAt(0);
-        return "\n"+item.getText().toString() + ((isPackageNames)? " ^ @ ^ yyn ^":"") + "\n";
+        return "\n"+item.getText().toString() +  "\n";
     }
 
 }

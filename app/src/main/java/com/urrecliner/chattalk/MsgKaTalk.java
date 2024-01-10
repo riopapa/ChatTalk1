@@ -21,35 +21,44 @@ import static com.urrecliner.chattalk.Vars.timeEnd;
 
 import com.urrecliner.chattalk.Sub.Numbers;
 
+import org.checkerframework.checker.units.qual.A;
+
+import java.util.ArrayList;
 import java.util.Collections;
 
 class MsgKaTalk {
+    class talkQue {
+        String grp, who, text;
+    }
+    ArrayList<talkQue> talkQues = null;
+
     void say(String group, String who, String text) {
-        final String fText = text.trim();
+
+        if (talkQues == null) {
+            talkQues = new ArrayList<>();
+        }
 
         Thread thisThread = new Thread(() -> {
-            if (utils == null)
-                utils = new Utils();
             int gIdx = Collections.binarySearch(aGroups, group);
             if (gIdx >= 0) {    // within Alert Group
-                if (aGroupsPass.get(gIdx) || fText.length() < 8 || fText.contains("http"))
+                if (aGroupsPass.get(gIdx) || text.length() < 8 || text.contains("http"))
                     return;
-                if (aGroupSaid[gIdx].equals(fText))
+                if (aGroupSaid[gIdx].equals(text))
                     return;
-                aGroupSaid[gIdx] = fText;
+                aGroupSaid[gIdx] = text;
                 if (timeBegin == 0)
                     new ReadyToday();
                 long nowTime = System.currentTimeMillis();
                 if (nowTime < timeBegin || nowTime > timeEnd) {
                     return;
                 }
-                int gwIdx = alertWhoIndex.get(gIdx, who, fText);
+                int gwIdx = alertWhoIndex.get(gIdx, who, text);
                 if (gwIdx == -1)
                     return;
                 for (int i = 0; i < aGroupWhoKey1[gIdx][gwIdx].length; i++) {
                     if ((text.contains(aGroupWhoKey1[gIdx][gwIdx][i])) &&
-                            (text.contains(aGroupWhoKey2[gIdx][gwIdx][i])) &&
-                            (!text.contains(aGroupWhoSkip[gIdx][gwIdx][i]))) {
+                        (text.contains(aGroupWhoKey2[gIdx][gwIdx][i])) &&
+                        (!text.contains(aGroupWhoSkip[gIdx][gwIdx][i]))) {
                         if (loadFunction == null)
                             loadFunction = new LoadFunction();
                         alertStock.sayNlog(group, text, aAlertLineIdx[gIdx][gwIdx][i]);
@@ -68,8 +77,10 @@ class MsgKaTalk {
                 }
 
             } else {    // normal group
+                if (utils == null)
+                    utils = new Utils();
                 String head = "[카톡 " + group + "." + who + "]";
-                String sText = utils.strShorten(group, fText);
+                String sText = utils.strShorten(group, text);
                 logUpdate.addLog(head, sText);
                 sText = utils.makeEtc(sText, 160);
                 notificationBar.update(group+":"+ who, sText, true);
