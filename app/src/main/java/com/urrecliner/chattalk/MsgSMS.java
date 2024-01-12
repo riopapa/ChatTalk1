@@ -33,7 +33,7 @@ class MsgSMS {
             }
         } else if (mWho.startsWith(jrGroup)) {
                 if (msgKaTalk == null)
-                    msgKaTalk = new MsgKaTalk();
+                    msgKaTalk = new MsgKaTalk("SMS");
                 msgKaTalk.say(jrGroup, mWho, mText);
         } else {
             String head = "[SMS "+mWho + "]";

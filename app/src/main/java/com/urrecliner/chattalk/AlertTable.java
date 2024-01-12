@@ -36,16 +36,15 @@ class AlertTable {
 
     static ArrayList<String> gSkip1 = new ArrayList<>(), gSkip2 = new ArrayList<>(),
             gSkip3 = new ArrayList<>(), gSkip4 = new ArrayList<>();
-//            gSkip5 = new ArrayList<>(), gSkip6 = new ArrayList<>();
     static List<String> key1 = new ArrayList<>();
     static List<String> key2 = new ArrayList<>();
     static List<String> skip = new ArrayList<>();
-    static List<String> prev = new ArrayList<>();
-    static List<String> next = new ArrayList<>();
+    static List<String> prvKey = new ArrayList<>();
+    static List<String> nxtKey = new ArrayList<>();
     static int gIdx, gwIdx, svIdx;
-    static SharedPreferences sharePref;
+
     static void updateMatched() {
-        sharePref = mContext.getSharedPreferences("alertLine", MODE_PRIVATE);
+        SharedPreferences sharePref = mContext.getSharedPreferences("alertLine", MODE_PRIVATE);
         for (int i = 0; i < alertLines.size(); i++) {
             AlertLine al = alertLines.get(i);
             if (al.matched >= 0) {
@@ -61,7 +60,7 @@ class AlertTable {
 
     static void makeArrays() {
 
-        String svGroup = "", svWho = "";
+        String svGroup = "x", svWho = "x";
         int alertSize = alertLines.size();
         aGroups = new ArrayList<>();
         aGroupsPass = new ArrayList<>();
@@ -70,12 +69,10 @@ class AlertTable {
                 aGroups.add(al.group);
                 aGroupsPass.add(al.more.length() > 0);
                 String key;
-                key = al.key1; if (key.equals("")) key = "업씀"; gSkip1.add(key);
-                key = al.key2; if (key.equals("")) key = "업씀"; gSkip2.add(key);
-                key = al.talk; if (key.equals("")) key = "업씀"; gSkip3.add(key);
-                key = al.skip; if (key.equals("")) key = "업씀"; gSkip4.add(key);
-//                key = al.prev; if (key.equals("")) key = "업씀"; gSkip5.add(key);
-//                key = al.next; if (key.equals("")) key = "업씀"; gSkip6.add(key);
+                key = al.key1; if (key.equals("")) key = "NotFnd"; gSkip1.add(key);
+                key = al.key2; if (key.equals("")) key = "NotFnd"; gSkip2.add(key);
+                key = al.talk; if (key.equals("")) key = "NotFnd"; gSkip3.add(key);
+                key = al.skip; if (key.equals("")) key = "NotFnd"; gSkip4.add(key);
                 svGroup = al.group;
             }
         }
@@ -84,8 +81,6 @@ class AlertTable {
         aGSkip2 = gSkip2.toArray(new String[groupCnt]);
         aGSkip3 = gSkip3.toArray(new String[groupCnt]);
         aGSkip4 = gSkip4.toArray(new String[groupCnt]);
-//        aGSkip5 = gSkip5.toArray(new String[groupCnt]);
-//        aGSkip6 = gSkip6.toArray(new String[groupCnt]);
         aGroupWhos = new String[groupCnt][];
         aGroupWhoKey1 = new String[groupCnt][][];
         aGroupWhoKey2 = new String[groupCnt][][];
@@ -158,8 +153,8 @@ class AlertTable {
         aGroupWhoKey1[gIdx][gwIdx] = key1.toArray(new String[sz]);
         aGroupWhoKey2[gIdx][gwIdx] = key2.toArray(new String[sz]);
         aGroupWhoSkip[gIdx][gwIdx] = skip.toArray(new String[sz]);
-        aGroupWhoPrev[gIdx][gwIdx] = skip.toArray(new String[sz]);
-        aGroupWhoNext[gIdx][gwIdx] = skip.toArray(new String[sz]);
+        aGroupWhoPrev[gIdx][gwIdx] = prvKey.toArray(new String[sz]);
+        aGroupWhoNext[gIdx][gwIdx] = nxtKey.toArray(new String[sz]);
         aAlertLineIdx[gIdx][gwIdx] = new int [sz];
         for (int j = 0; j < sz; j++)
             aAlertLineIdx[gIdx][gwIdx][j] = svIdx+j;
@@ -169,8 +164,8 @@ class AlertTable {
         key1 = new ArrayList<>();
         key2 = new ArrayList<>();
         skip = new ArrayList<>();
-        prev = new ArrayList<>();
-        next = new ArrayList<>();
+        prvKey = new ArrayList<>();
+        nxtKey = new ArrayList<>();
     }
     static void sort() {
         // group asc, who asc, matched desc

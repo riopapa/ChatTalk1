@@ -26,13 +26,13 @@ public class NotificationBar {
         }
         try {
 //            if (isMyServiceRunning(NotificationService.class))
-                mContext.startService(intent);
+            mContext.startForegroundService(intent);
 //            else
         } catch (Exception e) {
             try {
-                mContext.startForegroundService(intent);
+                mContext.startService(intent);
             } catch (Exception ex) {
-                Log.e("NotificationBar","svc Error \n"+ex);
+                Log.e("Notifi Bar","svc E r r o r \n"+ex);
             }
         }
     }

@@ -64,7 +64,7 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
     int textColor = 0xFF000000;
     final int textBlack = 0xff000000;
     final int textGray = 0x88000000;
-    final int textRed = 0xff662222;
+    final int textRed = 0xff771111;
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
@@ -95,7 +95,7 @@ public class AlertsAdapter extends RecyclerView.Adapter<AlertsAdapter.ViewHolder
             holder.tMore.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, 3f));
             holder.tLine.setBackground(ContextCompat.getDrawable(mContext, R.drawable.border_header));
         } else {
-            textColor = (al.more.length() > 1)? textRed: textBlack;
+            textColor = (al.talk.length() > 1)? textRed: textBlack;
             holder.tGroup.setText("");
             holder.tWho.setSingleLine(true);
             holder.tWho.setEllipsize(TextUtils.TruncateAt.MARQUEE);

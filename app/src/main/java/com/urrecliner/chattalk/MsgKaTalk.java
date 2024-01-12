@@ -16,32 +16,31 @@ import static com.urrecliner.chattalk.Vars.aGroupsPass;
 import static com.urrecliner.chattalk.Vars.alertWhoIndex;
 import static com.urrecliner.chattalk.Vars.alertsAdapter;
 import static com.urrecliner.chattalk.Vars.mActivity;
+import static com.urrecliner.chattalk.Vars.sbnGroup;
+import static com.urrecliner.chattalk.Vars.sbnText;
+import static com.urrecliner.chattalk.Vars.sbnWho;
 import static com.urrecliner.chattalk.Vars.timeBegin;
 import static com.urrecliner.chattalk.Vars.timeEnd;
 
-import com.urrecliner.chattalk.Sub.Numbers;
+import android.util.Log;
 
-import org.checkerframework.checker.units.qual.A;
+import com.urrecliner.chattalk.Sub.Numbers;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 class MsgKaTalk {
-    class talkQue {
-        String grp, who, text;
+
+    public MsgKaTalk(String str) {
+        Log.w("MsgKaTalk", "created "+str);
     }
-    ArrayList<talkQue> talkQues = null;
 
     void say(String group, String who, String text) {
 
-        if (talkQues == null) {
-            talkQues = new ArrayList<>();
-        }
-
-        Thread thisThread = new Thread(() -> {
+//        Thread thisThread = new Thread(() -> {
             int gIdx = Collections.binarySearch(aGroups, group);
             if (gIdx >= 0) {    // within Alert Group
-                if (aGroupsPass.get(gIdx) || text.length() < 8 || text.contains("http"))
+                if (aGroupsPass.get(gIdx) || text.length() < 8)
                     return;
                 if (aGroupSaid[gIdx].equals(text))
                     return;
@@ -55,25 +54,34 @@ class MsgKaTalk {
                 int gwIdx = alertWhoIndex.get(gIdx, who, text);
                 if (gwIdx == -1)
                     return;
+                if (group.startsWith("텔"))
+                    utils.logW("Grp " + sbnGroup, "_" + sbnWho + "_ : " + sbnText);
+
                 for (int i = 0; i < aGroupWhoKey1[gIdx][gwIdx].length; i++) {
-                    if ((text.contains(aGroupWhoKey1[gIdx][gwIdx][i])) &&
-                        (text.contains(aGroupWhoKey2[gIdx][gwIdx][i])) &&
-                        (!text.contains(aGroupWhoSkip[gIdx][gwIdx][i]))) {
-                        if (loadFunction == null)
-                            loadFunction = new LoadFunction();
-                        alertStock.sayNlog(group, text, aAlertLineIdx[gIdx][gwIdx][i]);
-                        int fI = i;
-                        if (alertsAdapter == null)
-                            alertsAdapter = new AlertsAdapter();
-                        else {
-                            if (mActivity != null) {
-                                mActivity.runOnUiThread(() ->
-                                        alertsAdapter.notifyItemChanged(aAlertLineIdx[gIdx][gwIdx][fI])
-                                );
-                            }
+                    if (!text.contains(aGroupWhoKey1[gIdx][gwIdx][i]))
+                        continue;
+                    Log.w("Grp " + sbnGroup + "_" + sbnWho, aGroupWhoKey1[gIdx][gwIdx][i]+ " match");
+
+                    if (!text.contains(aGroupWhoKey2[gIdx][gwIdx][i]))
+                        continue;
+                    Log.w("Grp " + sbnGroup + "_" + sbnWho, aGroupWhoKey2[gIdx][gwIdx][i]+ " match");
+                    if (text.contains(aGroupWhoSkip[gIdx][gwIdx][i]))
+                            continue;
+                    Log.w("Grp " + sbnGroup + "_" + sbnWho, aGroupWhoSkip[gIdx][gwIdx][i]+ " no skip");
+                    if (loadFunction == null)
+                        loadFunction = new LoadFunction();
+                    alertStock.sayNlog(group, text, aAlertLineIdx[gIdx][gwIdx][i]);
+                    int fI = i;
+                    if (alertsAdapter == null)
+                        alertsAdapter = new AlertsAdapter();
+                    else {
+                        if (mActivity != null) {
+                            mActivity.runOnUiThread(() ->
+                                    alertsAdapter.notifyItemChanged(aAlertLineIdx[gIdx][gwIdx][fI])
+                            );
                         }
-                        return;
                     }
+                    return;
                 }
 
             } else {    // normal group
@@ -87,7 +95,7 @@ class MsgKaTalk {
                 sText = "단톡방 " + group + " 에서 " + who + " 님이 " + new Numbers().deduct(sText);
                 sounds.speakAfterBeep(utils.replaceKKHH(sText));
             }
-        });
-        thisThread.start();
+//        });
+//        thisThread.start();
     }
 }

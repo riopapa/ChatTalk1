@@ -153,9 +153,7 @@ public class ActivityEditAlert extends AppCompatActivity {
         String mTalk = eTalk.getText().toString();
         String skip = eSkip.getText().toString();
         String prev = ePrev.getText().toString();
-//        if (prev.equals("")) prev = key1;
         String next = eNext.getText().toString();
-//        if (next.equals("")) next = key2;
         al = new AlertLine(group, who, key1, key2, mTalk, matchInt, skip, more,
                 prev, next);
         alertLines.set(alertPos, al);

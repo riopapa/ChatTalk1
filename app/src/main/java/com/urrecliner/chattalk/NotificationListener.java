@@ -122,7 +122,7 @@ public class NotificationListener extends NotificationListenerService {
                     if (kvKakao.isDup(sbnGroup, sbnText))
                         return;
                     if (msgKaTalk == null)
-                        msgKaTalk = new MsgKaTalk();
+                        msgKaTalk = new MsgKaTalk("a katalk");
                     msgKaTalk.say(sbnGroup, sbnWho, sbnText);
                 }
                 break;
@@ -131,7 +131,7 @@ public class NotificationListener extends NotificationListenerService {
 
                 if (sbnGroup.contains("곳에서 보냄") || sbnText.contains("곳에서 보냄"))
                     return;
-                if (sbnText.length() < 45)
+                if (sbnText.length() < 40)
                     return;
                 if (kvTelegram.isDup(sbnGroup, sbnText))
                     return;
@@ -150,11 +150,12 @@ public class NotificationListener extends NotificationListenerService {
                             sbnWho = sbnWho.substring(sbnWho.indexOf(":")+2).trim();
                         if (kvTelegram.isDup(sbnWho, sbnText))
                             return;
-                        if (sbnText.contains("종목") || sbnText.contains("매수"))
-                            utils.logW("tel "+sbnGroup, "_"+sbnWho+"_ : "+sbnText);
                         if (msgKaTalk == null)
-                            msgKaTalk = new MsgKaTalk();
-                        msgKaTalk.say(sbnGroup, sbnWho, sbnGroup+"!"+sbnText);
+                            msgKaTalk = new MsgKaTalk("telegram");
+                        if (sbnText.contains("종목")) {
+                            utils.logW("tel " + sbnGroup, "_" + sbnWho + "_ : " + sbnText);
+                            msgKaTalk.say(sbnGroup, sbnWho, sbnGroup + "!" + sbnText);
+                        }
                         return;
                     }
                 }
