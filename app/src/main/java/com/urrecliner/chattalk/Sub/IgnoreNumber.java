@@ -1,6 +1,6 @@
 package com.urrecliner.chattalk.Sub;
 
-public class IsWhoNine {
+public class IgnoreNumber {
 
     public static boolean in(String[] nineWho, String mWho) {
 

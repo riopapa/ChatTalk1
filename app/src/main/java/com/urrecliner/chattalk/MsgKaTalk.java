@@ -32,7 +32,7 @@ import java.util.Collections;
 class MsgKaTalk {
 
     public MsgKaTalk(String str) {
-        Log.w("MsgKaTalk", "created "+str);
+        Log.e("MsgKaTalk", "created "+str);
     }
 
     void say(String group, String who, String text) {
@@ -75,11 +75,11 @@ class MsgKaTalk {
                     if (alertsAdapter == null)
                         alertsAdapter = new AlertsAdapter();
                     else {
-                        if (mActivity != null) {
-                            mActivity.runOnUiThread(() ->
-                                    alertsAdapter.notifyItemChanged(aAlertLineIdx[gIdx][gwIdx][fI])
-                            );
-                        }
+//                        if (mActivity != null) {
+//                            mActivity.runOnUiThread(() ->
+                                    alertsAdapter.notifyItemChanged(aAlertLineIdx[gIdx][gwIdx][fI]);
+//                            );
+//                        }
                     }
                     return;
                 }

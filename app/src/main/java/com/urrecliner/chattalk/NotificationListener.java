@@ -25,7 +25,7 @@ import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 
 import com.urrecliner.chattalk.Sub.IgnoreThis;
-import com.urrecliner.chattalk.Sub.IsWhoNine;
+import com.urrecliner.chattalk.Sub.IgnoreNumber;
 import com.urrecliner.chattalk.Sub.KeyVal;
 import com.urrecliner.chattalk.Sub.Numbers;
 import com.urrecliner.chattalk.Sub.PhoneVibrate;
@@ -110,7 +110,7 @@ public class NotificationListener extends NotificationListenerService {
                     notificationBar.update("카톡!"+sbnWho, sbnText, true);
                     head = "{카톡!"+ sbnWho + "} ";
                     logUpdate.addLog( head, sbnText);
-                    if (IsWhoNine.in(ktNoNumbers, sbnWho))
+                    if (IgnoreNumber.in(ktNoNumbers, sbnWho))
                         sbnText = new Numbers().deduct(sbnText);
                     sounds.speakAfterBeep(" 카톡 왔음 " + sbnWho + " 님이 " + utils.replaceKKHH(utils.makeEtc(sbnText, 150)));
                 } else {    // with group name
@@ -199,9 +199,8 @@ public class NotificationListener extends NotificationListenerService {
 
                 if (IgnoreThis.contains(sbnText, appTxtIgnores))
                     break;
-
                 if (kvCommon.isDup(sbnApp.nickName, sbnText))
-                    return;
+                    break;
                 sbnText = utils.text2OneLine(sbnText);
                 if (sbnApp.ignores != null) {
                     for (int i = 0; i < sbnApp.ignores.length; i++) {
@@ -234,11 +233,11 @@ public class NotificationListener extends NotificationListenerService {
                 }
 
                 if (sbnApp.log) {
-                    head = "[" + sbnApp.nickName+" ";
-                    head += (sbnApp.grp) ? sbnGroup+"_": "";
+                    head = "[" + sbnApp.nickName;
+                    head += (sbnApp.grp) ? "."+sbnGroup+"_": "";
                     head += (sbnApp.who) ? sbnWho:"";
                     head = head + "]";
-                    logUpdate.addLog(head , sbnText);
+                    logUpdate.addLog(head, sbnText);
                 }
                 String s = (sbnApp.grp) ? sbnGroup+"_": "";
                 s += (sbnApp.who) ? sbnWho:"";

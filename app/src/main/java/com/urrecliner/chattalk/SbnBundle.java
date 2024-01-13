@@ -29,7 +29,7 @@ public class SbnBundle {
     Utils utils = null;
     public boolean bypassSbn(StatusBarNotification sbn) {
 
-        sbnAppName = sbn.getPackageName();  // tolowCase
+        sbnAppName = sbn.getPackageName();  // to LowCase
         if (sbnAppName.equals(""))
             return true;
         Notification mNotification = sbn.getNotification();
@@ -53,7 +53,7 @@ public class SbnBundle {
         }
 
         if (sbnAppName.equals("android")) {
-            if (sbnText.length() > 10 && !IgnoreThis.contains(sbnText, sysIgnores)
+            if (sbnText.length() > 8 && !IgnoreThis.contains(sbnText, sysIgnores)
                     && !IgnoreThis.contains(sbnWho, sysIgnores)) {
                 if (utils == null)
                     utils = new Utils();
@@ -63,46 +63,46 @@ public class SbnBundle {
             return true;
         }
 
-        if (sbnAppName.equals("com.kakao.talk")) {
-            sbnAppNick = "카톡";
-            sbnAppType = "kk";
+        switch (sbnAppName) {
+            case "com.kakao.talk":
+                sbnAppNick = "카톡";
+                sbnAppType = "kk";
 
-        } else if (sbnAppName.equals("viva.republica.toss")) {
+                break;
+            case "viva.republica.toss":
                 sbnAppNick = "토스";
                 sbnAppType = "tos";
 
-        } else if (sbnAppName.equals("org.telegram.messenger")) {
-            sbnAppNick = "텔레";
-            sbnAppType = "tG";
+                break;
+            case "org.telegram.messenger":
+                sbnAppNick = "텔레";
+                sbnAppType = "tG";
 
-        } else if (sbnAppName.equals("com.samsung.android.messaging")) {
-            sbnAppNick = "문자";
-            sbnAppType = "sms";
+                break;
+            case "com.samsung.android.messaging":
+                sbnAppNick = "문자";
+                sbnAppType = "sms";
 
-        } else {
-            if (apps == null) {
-                apps = new AppsTable().get();
-                Log.w("reloading", "apps is null new size="+apps.size());
-            }
-            if (appIgnores == null || appIgnores.size() == 0)
-                apps = new AppsTable().get();
-            if (Collections.binarySearch(appIgnores, sbnAppName) >= 0)
-                return true;
-            sbnAppIdx = Collections.binarySearch(appFullNames, sbnAppName);
-//            Log.w("sa0 a idx="+sbnAppIdx, "searched");
-            if (sbnAppIdx >= 0) {
-                sbnAppIdx = appNameIdx.get(sbnAppIdx);
-//                Log.w("saa ", sbnAppName);
-                sbnApp = apps.get(sbnAppIdx);
-                sbnAppNick = sbnApp.nickName;
-                sbnAppType = "app";
-//                Log.w("saNick"+ sbnAppNick, sbnAppName
-//                        +" After "+sbnAppIdx+" "+sbnApp.fullName);
-            } else {
-                sbnAppNick = "None";
-                sbnAppType = "None";
-                sbnAppIdx = -1;
-            }
+                break;
+            default:
+                if (apps == null || appIgnores == null) {
+                    apps = new AppsTable().get();
+                    Log.e("reloading", "apps is null new size=" + apps.size());
+                }
+                if (Collections.binarySearch(appIgnores, sbnAppName) >= 0)
+                    return true;
+                sbnAppIdx = Collections.binarySearch(appFullNames, sbnAppName);
+                if (sbnAppIdx >= 0) {
+                    sbnAppIdx = appNameIdx.get(sbnAppIdx);
+                    sbnApp = apps.get(sbnAppIdx);
+                    sbnAppNick = sbnApp.nickName;
+                    sbnAppType = "app";
+                } else {
+                    sbnAppNick = "None";
+                    sbnAppType = "None";
+                    sbnAppIdx = -1;
+                }
+                break;
         }
 
         // get eGroup //

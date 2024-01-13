@@ -13,14 +13,14 @@ import android.util.Log;
 
 public class NotificationBar {
 
-    public void update(String who, String msg, boolean show_icon) {
+    public void update(String who, String msg, boolean stop_icon) {
 
         final String iMsg = (msg.length() > 400) ?msg.substring(0,400) : msg;
         Intent intent = new Intent(mContext, NotificationService.class);
         intent.putExtra("operation", SHOW_MESSAGE);
         intent.putExtra("who", who);
         intent.putExtra("msg", iMsg);
-        intent.putExtra("stop", show_icon && !sounds.isSilent());
+        intent.putExtra("stop", stop_icon && !sounds.isSilent());
         if (mContext == null) {
             if (mActivity != null)
                 mContext = mActivity.getApplicationContext();
