@@ -200,9 +200,7 @@ public class NotificationListener extends NotificationListenerService {
                 if (IgnoreThis.contains(sbnText, appTxtIgnores))
                     break;
 
-                if (sbnApp.who && kvCommon.isDup(sbnWho, sbnText))
-                    return;
-                if (sbnApp.grp && kvCommon.isDup(sbnGroup, sbnText))
+                if (kvCommon.isDup(sbnApp.nickName, sbnText))
                     return;
                 sbnText = utils.text2OneLine(sbnText);
                 if (sbnApp.ignores != null) {
