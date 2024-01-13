@@ -14,7 +14,7 @@
         android:orientation = "horizontal">
 
         <TextView
-            android:id = "@+id/in_the_future"
+            android:id = "@+id/sms_who_ignores"
             android:layout_width = "0dp"
             android:layout_height = "wrap_content"
             android:layout_margin = "@dimen/button_margin_size"
@@ -22,13 +22,51 @@
             android:background = "@drawable/rounded_button3"
             android:gravity = "center"
             android:padding = "@dimen/table_padding_size"
-            android:tag = "systemIgnores"
-            android:text = "앞으로 추가될 것"
+            android:tag = "smsWhoIg"
+            android:text = "SMS에서 무시할 사람"
             android:textSize = "@dimen/table_font_size"
             android:textStyle = "bold" />
 
         <TextView
-            android:id = "@+id/nine_ignores"
+            android:id = "@+id/sms_text_ignores"
+            android:layout_width = "0dp"
+            android:layout_height = "wrap_content"
+            android:layout_margin = "@dimen/button_margin_size"
+            android:layout_weight = "1"
+            android:background = "@drawable/rounded_button3"
+            android:gravity = "center"
+            android:padding = "@dimen/table_padding_size"
+            android:tag = "smsTxtIg"
+            android:text = "SMS에 이 글짜면 제외"
+            android:textSize = "@dimen/table_font_size"
+            android:textStyle = "bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:layout_marginStart = "8dp"
+        android:layout_marginEnd = "8dp"
+        android:gravity = "center"
+        android:orientation = "horizontal">
+
+        <TextView
+            android:id = "@+id/sms_with_no_number"
+            android:layout_width = "0dp"
+            android:layout_height = "wrap_content"
+            android:layout_margin = "@dimen/button_margin_size"
+            android:layout_weight = "1"
+            android:background = "@drawable/rounded_button3"
+            android:gravity = "center"
+            android:padding = "@dimen/table_padding_size"
+            android:tag = "smsNoNum"
+            android:text = "SMS 숫자 무시"
+            android:textSize = "@dimen/table_font_size"
+            android:textStyle = "bold" />
+
+        <TextView
+            android:id = "@+id/for_future1"
             android:layout_width = "0dp"
             android:layout_height = "wrap_content"
             android:layout_margin = "@dimen/button_margin_size"
@@ -36,8 +74,8 @@
             android:background = "@drawable/rounded_button1"
             android:gravity = "center"
             android:padding = "@dimen/table_padding_size"
-            android:tag = "nineIgnores"
-            android:text = "숫자는 무시 "
+            android:tag = "xxxx"
+            android:text = "향후에 추가"
             android:textSize = "@dimen/table_font_size"
             android:textStyle = "bold" />
 
@@ -57,16 +95,16 @@
             android:layout_height = "wrap_content"
             android:layout_margin = "@dimen/button_margin_size"
             android:layout_weight = "1"
-            android:background = "@drawable/rounded_button3"
+            android:background = "@drawable/rounded_button1"
             android:gravity = "center"
             android:padding = "@dimen/table_padding_size"
-            android:tag = "systemIgnores"
+            android:tag = "sysIg"
             android:text = "무시할 시스템 메시지"
             android:textSize = "@dimen/table_font_size"
             android:textStyle = "bold" />
 
         <TextView
-            android:id = "@+id/text_ignores"
+            android:id = "@+id/app_text_ignores"
             android:layout_width = "0dp"
             android:layout_height = "wrap_content"
             android:layout_margin = "@dimen/button_margin_size"
@@ -74,51 +112,13 @@
             android:background = "@drawable/rounded_button1"
             android:gravity = "center"
             android:padding = "@dimen/table_padding_size"
-            android:tag = "textIgnores"
-            android:text = "이 글짜 있으면 무시"
+            android:tag = "appTxtIg"
+            android:text = "App 글짜 무시"
             android:textSize = "@dimen/table_font_size"
             android:textStyle = "bold" />
 
     </LinearLayout>
 
-
-    <LinearLayout
-        android:layout_width = "match_parent"
-        android:layout_height = "wrap_content"
-        android:layout_marginStart = "8dp"
-        android:layout_marginEnd = "8dp"
-        android:gravity = "center"
-        android:orientation = "horizontal">
-
-        <TextView
-            android:id = "@+id/sms_who_ignores"
-            android:layout_width = "0dp"
-            android:layout_height = "wrap_content"
-            android:layout_margin = "@dimen/button_margin_size"
-            android:layout_weight = "1"
-            android:background = "@drawable/rounded_button1"
-            android:gravity = "center"
-            android:padding = "@dimen/table_padding_size"
-            android:tag = "smsWhoIgnores"
-            android:text = "SMS에서 무시할 사람"
-            android:textSize = "@dimen/table_font_size"
-            android:textStyle = "bold" />
-
-        <TextView
-            android:id = "@+id/sms_text_ignores"
-            android:layout_width = "0dp"
-            android:layout_height = "wrap_content"
-            android:layout_margin = "@dimen/button_margin_size"
-            android:layout_weight = "1"
-            android:background = "@drawable/rounded_button1"
-            android:gravity = "center"
-            android:padding = "@dimen/table_padding_size"
-            android:tag = "smsTextIgnores"
-            android:text = "SMS에 이 글짜면 제외"
-            android:textSize = "@dimen/table_font_size"
-            android:textStyle = "bold" />
-
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width = "match_parent"
@@ -137,7 +137,7 @@
             android:background = "@drawable/rounded_button3"
             android:gravity = "center"
             android:padding = "@dimen/table_padding_size"
-            android:tag = "kGroupWhoIgnores"
+            android:tag = "ktGrpWhoIg"
             android:text = "카톡 제외 그룹사람"
             android:textSize = "@dimen/table_font_size"
             android:textStyle = "bold" />
@@ -151,10 +151,48 @@
             android:background = "@drawable/rounded_button3"
             android:gravity = "center"
             android:padding = "@dimen/table_padding_size"
-            android:tag = "kkTxtIgnores"
+            android:tag = "ktTxtIg"
             android:text = "카톡 무시 글짜"
             android:textSize = "@dimen/table_font_size"
             android:textStyle = "bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:layout_marginStart = "8dp"
+        android:layout_marginEnd = "8dp"
+        android:gravity = "center"
+        android:orientation = "horizontal">
+
+        <TextView
+            android:id = "@+id/kt_no_number"
+            android:layout_width = "0dp"
+            android:layout_height = "wrap_content"
+            android:layout_margin = "@dimen/button_margin_size"
+            android:layout_weight = "1"
+            android:background = "@drawable/rounded_button3"
+            android:gravity = "center"
+            android:padding = "@dimen/table_padding_size"
+            android:tag = "ktNoNum"
+            android:text = "카톡 숫자 무시"
+            android:textSize = "@dimen/table_font_size"
+            android:textStyle = "bold" />
+
+        <TextView
+            android:id = "@+id/next_function"
+            android:layout_width = "0dp"
+            android:layout_height = "wrap_content"
+            android:layout_margin = "@dimen/button_margin_size"
+            android:layout_weight = "1"
+            android:background = "@drawable/rounded_button1"
+            android:gravity = "center"
+            android:padding = "@dimen/table_padding_size"
+            android:tag = "xxxxxx"
+            android:text = "다음에 추가"
+            android:textSize = "@dimen/table_font_size"
+            android:textStyle = "bold" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -174,7 +212,7 @@
             android:background = "@drawable/rounded_button2"
             android:gravity = "center"
             android:padding = "@dimen/table_padding_size"
-            android:tag = "strReplaces"
+            android:tag = "strRepl"
             android:text = "글짜를 짧게 대체"
             android:textSize = "@dimen/table_font_size"
             android:textStyle = "bold" />
@@ -188,7 +226,7 @@
             android:background = "@drawable/rounded_button2"
             android:gravity = "center"
             android:padding = "@dimen/table_padding_size"
-            android:tag = "teleGroup"
+            android:tag = "teleGrp"
             android:text = "텔레그램 그룹"
             android:textSize = "@dimen/table_font_size"
             android:textStyle = "bold" />
@@ -211,8 +249,8 @@
             android:background = "@drawable/rounded_button2"
             android:gravity = "center"
             android:padding = "@dimen/table_padding_size"
-            android:tag = "tossIgnores"
-            android:text = "토스에서 무시할 꺼"
+            android:tag = "tossTxtIg"
+            android:text = "토스 글짜 무시"
             android:textSize = "@dimen/table_font_size"
             android:textStyle = "bold" />
 

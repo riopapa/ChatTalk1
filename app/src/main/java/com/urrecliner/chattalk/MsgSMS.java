@@ -7,7 +7,7 @@ import static com.urrecliner.chattalk.NotificationListener.sounds;
 import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.lastChar;
 import static com.urrecliner.chattalk.Vars.mContext;
-import static com.urrecliner.chattalk.Vars.nineIgnores;
+import static com.urrecliner.chattalk.Vars.smsNoNumbers;
 
 import com.urrecliner.chattalk.Sub.IsWhoNine;
 import com.urrecliner.chattalk.Sub.Numbers;
@@ -43,7 +43,7 @@ class MsgSMS {
             logUpdate.addLog(head, mText);
             mText = utils.makeEtc(mText, 150);
             notificationBar.update("sms "+mWho, mText, true);
-            if (IsWhoNine.in(nineIgnores, mWho))
+            if (IsWhoNine.in(smsNoNumbers, mWho))
                 mText = new Numbers().deduct(mText);
             sounds.speakAfterBeep(head+" 으로부터 "+ mText);
         }
@@ -91,7 +91,7 @@ class MsgSMS {
         logUpdate.addLog(head, mText);
         if (utils == null)
             utils = new Utils();
-        if (IsWhoNine.in(nineIgnores, mWho))
+        if (IsWhoNine.in(smsNoNumbers, mWho))
             mText = new Numbers().deduct(mText);
         sounds.speakAfterBeep(head + utils.makeEtc(mText, 120));
     }

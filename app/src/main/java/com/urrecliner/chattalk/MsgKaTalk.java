@@ -60,11 +60,11 @@ class MsgKaTalk {
                 for (int i = 0; i < aGroupWhoKey1[gIdx][gwIdx].length; i++) {
                     if (!text.contains(aGroupWhoKey1[gIdx][gwIdx][i]))
                         continue;
-                    Log.w("Grp " + sbnGroup + "_" + sbnWho, aGroupWhoKey1[gIdx][gwIdx][i]+ " match");
+                    Log.w("Grp " + sbnGroup + "_" + sbnWho, aGroupWhoKey1[gIdx][gwIdx][i]+ " k1 match");
 
                     if (!text.contains(aGroupWhoKey2[gIdx][gwIdx][i]))
                         continue;
-                    Log.w("Grp " + sbnGroup + "_" + sbnWho, aGroupWhoKey2[gIdx][gwIdx][i]+ " match");
+                    Log.w("Grp " + sbnGroup + "_" + sbnWho, aGroupWhoKey2[gIdx][gwIdx][i]+ " k2 match");
                     if (text.contains(aGroupWhoSkip[gIdx][gwIdx][i]))
                             continue;
                     Log.w("Grp " + sbnGroup + "_" + sbnWho, aGroupWhoSkip[gIdx][gwIdx][i]+ " no skip");

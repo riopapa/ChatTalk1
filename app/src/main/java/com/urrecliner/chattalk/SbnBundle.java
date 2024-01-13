@@ -12,7 +12,7 @@ import static com.urrecliner.chattalk.Vars.sbnAppNick;
 import static com.urrecliner.chattalk.Vars.sbnAppType;
 import static com.urrecliner.chattalk.Vars.sbnText;
 import static com.urrecliner.chattalk.Vars.sbnWho;
-import static com.urrecliner.chattalk.Vars.systemIgnores;
+import static com.urrecliner.chattalk.Vars.sysIgnores;
 
 import android.app.Notification;
 import android.os.Bundle;
@@ -53,8 +53,8 @@ public class SbnBundle {
         }
 
         if (sbnAppName.equals("android")) {
-            if (sbnText.length() > 10 && !IgnoreThis.contains(sbnText, systemIgnores)
-                    && !IgnoreThis.contains(sbnWho, systemIgnores)) {
+            if (sbnText.length() > 10 && !IgnoreThis.contains(sbnText, sysIgnores)
+                    && !IgnoreThis.contains(sbnWho, sysIgnores)) {
                 if (utils == null)
                     utils = new Utils();
                 sbnText = utils.text2OneLine(sbnText);

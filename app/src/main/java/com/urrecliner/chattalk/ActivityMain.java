@@ -113,8 +113,6 @@ public class ActivityMain extends AppCompatActivity {
         if (item.getItemId() == R.id.reload_all_tables) {
             new OptionTables().readAll();
             new AlertTableIO().get();
-            AlertTable.updateMatched();
-            AlertTable.makeArrays();
 
 //            AlertTable.readFile("Main");
             new SnackBar().show("All Table","Reloaded");

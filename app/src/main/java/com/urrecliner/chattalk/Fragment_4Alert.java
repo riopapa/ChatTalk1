@@ -82,11 +82,7 @@ public class Fragment_4Alert extends Fragment {
 
         if (item.getItemId() == R.id.reload_all_tables) {
             new OptionTables().readAll();
-//            AlertTable.readFile("alertTab");
             new AlertTableIO().get();
-            AlertTable.updateMatched();
-            AlertTable.makeArrays();
-            AlertTable.sort();
             alertsAdapter.notifyDataSetChanged();
         } else if (item.getItemId() == R.id.clear_matched_number) {
             for (int i = 0; i < alertLines.size(); i++) {

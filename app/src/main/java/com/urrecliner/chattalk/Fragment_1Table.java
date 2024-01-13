@@ -52,8 +52,8 @@ public class Fragment_1Table extends Fragment {
             tv_WifiState.setText(s1);
         });
 
-        rootView.findViewById(R.id.nine_ignores).setOnClickListener(this::edit_table);
-        rootView.findViewById(R.id.text_ignores).setOnClickListener(this::edit_table);
+        rootView.findViewById(R.id.sms_with_no_number).setOnClickListener(this::edit_table);
+        rootView.findViewById(R.id.app_text_ignores).setOnClickListener(this::edit_table);
         rootView.findViewById(R.id.system_ignores).setOnClickListener(this::edit_table);
 
         rootView.findViewById(R.id.sms_who_ignores).setOnClickListener(this::edit_table);
@@ -62,6 +62,7 @@ public class Fragment_1Table extends Fragment {
 
         rootView.findViewById(R.id.k_group_who_ignores).setOnClickListener(this::edit_table);
         rootView.findViewById(R.id.k_text_ignores).setOnClickListener(this::edit_table);
+        rootView.findViewById(R.id.kt_no_number).setOnClickListener(this::edit_table);
         rootView.findViewById(R.id.group_telegrams).setOnClickListener(this::edit_table);
 
         rootView.findViewById(R.id.string_replace).setOnClickListener(this::edit_replace);
@@ -104,8 +105,6 @@ public class Fragment_1Table extends Fragment {
             new OptionTables().readAll();
 //            AlertTable.readFile("read All");
             new AlertTableIO().get();
-            AlertTable.updateMatched();
-            AlertTable.makeArrays();
             new SnackBar().show("All Table", "Reloaded");
         }
         return super.onOptionsItemSelected(item);

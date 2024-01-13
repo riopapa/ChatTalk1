@@ -6,6 +6,8 @@ import static com.urrecliner.chattalk.Vars.alertPos;
 import static com.urrecliner.chattalk.Vars.alertsAdapter;
 import static com.urrecliner.chattalk.Vars.mContext;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -22,8 +24,10 @@ import com.urrecliner.chattalk.model.AlertLine;
 import com.urrecliner.chattalk.alerts.AlertTableIO;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 
 public class ActivityEditAlert extends AppCompatActivity {
 
@@ -117,9 +121,37 @@ public class ActivityEditAlert extends AppCompatActivity {
         }
         Upload2Google.uploadGroupInfo(mGroup, mWho, mPercent, "", mStatement);
         new AlertSave("Delete "+info);
-        new AlertTableIO().remove(alertLines, mContext);
+        remove(alertLines, mContext);
         finish();
     }
+
+    void remove(ArrayList<AlertLine> alertLines, Context context) {
+
+        SharedPreferences sharePref = context.getSharedPreferences("alertLine", MODE_PRIVATE);
+        SharedPreferences.Editor sharedEditor = sharePref.edit();
+        Map<String, ?> map = sharePref.getAll();
+        for(Map.Entry<String,?> entry : map.entrySet()){
+            String [] grpWho = entry.getKey().split("~~");
+            if (grpWho[0].equals("matched")) {
+                int idx = -1;
+                for (int i = 0; i < alertLines.size(); i++) {
+                    AlertLine al = alertLines.get(i);
+                    if (al.group.equals(grpWho[1]) && al.who.equals(grpWho[2]) &&
+                            al.key1.equals(grpWho[3]) && al.key2.equals(grpWho[4])) {
+                        idx = i;
+                        break;
+                    }
+                }
+                if (idx == -1) {
+//                    Log.w("sharedPref","removing ... " +entry.getKey());
+                    sharedEditor.remove(entry.getKey());
+                }
+            }
+        }
+        sharedEditor.apply();
+    }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

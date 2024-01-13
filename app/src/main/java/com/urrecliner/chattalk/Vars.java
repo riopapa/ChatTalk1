@@ -50,7 +50,6 @@ public class Vars {
     static TableListFile tableListFile = null;
 
     static String[] kGroupWhoIgnores = null;
-    static String[] kkTxtIgnores = null;
 
     static String[] aGroupSaid = null;
     static int [][][] aAlertLineIdx;
@@ -61,12 +60,15 @@ public class Vars {
     static String[][] aGroupWhos;     // [2] 이진홍, 김선수
     static String[][][] aGroupWhoKey1, aGroupWhoKey2, aGroupWhoSkip, aGroupWhoPrev, aGroupWhoNext;
 
+    static String[] smsNoNumbers = null;
+    static String[] ktNoNumbers = null;
+
     static String[] smsWhoIgnores = null;
-    static String[] smsTextIgnores = null;
-    static String[] systemIgnores = null;
-    static String[] textIgnores = null;
-    static String[] nineIgnores = null;
-    static String[] tossIgnores = null;
+    static String[] smsTxtIgnores = null;
+    static String[] sysIgnores = null;
+    static String[] appTxtIgnores = null;
+    static String[] tossTxtIgnores = null;
+    static String[] ktTxtIgnores = null;
 
     static String[] teleGroups = null;
     static String[] teleChannels = null;
@@ -98,10 +100,10 @@ public class Vars {
 
     static boolean isPhoneBusy = false;
 
-    static AlertsAdapter alertsAdapter = null;
-    static TabLayout topTabs = null;
-    static ViewPager2 viewPager2 = null;
-    static ArrayList<AlertLine> alertLines;
+    public static AlertsAdapter alertsAdapter = null;
+    public static TabLayout topTabs = null;
+    public static ViewPager2 viewPager2 = null;
+    public static ArrayList<AlertLine> alertLines;
 
     public static ArrayList<App> apps;
     public static AppAdapter appAdapter;
@@ -139,9 +141,7 @@ public class Vars {
         new OptionTables().readAll();
         FileIO.readyPackageFolder();
         sheetQues = new ArrayList<>();
-        alertLines = new AlertTableIO().get();
-        AlertTable.updateMatched();
-        AlertTable.makeArrays();
+        new AlertTableIO().get();
 
         kvKakao = new KeyVal();
         kvTelegram = new KeyVal();

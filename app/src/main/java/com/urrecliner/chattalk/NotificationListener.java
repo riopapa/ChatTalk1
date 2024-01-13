@@ -1,9 +1,9 @@
 package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.Vars.kGroupWhoIgnores;
-import static com.urrecliner.chattalk.Vars.kkTxtIgnores;
+import static com.urrecliner.chattalk.Vars.ktNoNumbers;
+import static com.urrecliner.chattalk.Vars.ktTxtIgnores;
 import static com.urrecliner.chattalk.Vars.mContext;
-import static com.urrecliner.chattalk.Vars.nineIgnores;
 import static com.urrecliner.chattalk.Vars.sbnApp;
 import static com.urrecliner.chattalk.Vars.sbnAppName;
 import static com.urrecliner.chattalk.Vars.sbnGroup;
@@ -11,12 +11,12 @@ import static com.urrecliner.chattalk.Vars.sbnAppNick;
 import static com.urrecliner.chattalk.Vars.sbnAppType;
 import static com.urrecliner.chattalk.Vars.sbnText;
 import static com.urrecliner.chattalk.Vars.sbnWho;
-import static com.urrecliner.chattalk.Vars.smsTextIgnores;
+import static com.urrecliner.chattalk.Vars.smsTxtIgnores;
 import static com.urrecliner.chattalk.Vars.smsWhoIgnores;
 import static com.urrecliner.chattalk.Vars.teleChannels;
 import static com.urrecliner.chattalk.Vars.teleGroups;
-import static com.urrecliner.chattalk.Vars.textIgnores;
-import static com.urrecliner.chattalk.Vars.tossIgnores;
+import static com.urrecliner.chattalk.Vars.appTxtIgnores;
+import static com.urrecliner.chattalk.Vars.tossTxtIgnores;
 
 import android.os.VibrationEffect;
 import android.os.Vibrator;
@@ -96,7 +96,7 @@ public class NotificationListener extends NotificationListenerService {
 
             case KATALK:
 
-                if (IgnoreThis.contains(sbnText, kkTxtIgnores))
+                if (IgnoreThis.contains(sbnText, ktTxtIgnores))
                     return;
                 if (sbnGroup.equals("")) {  // no groupNames
                     if (sbnWho.equals(""))  // nothing
@@ -110,9 +110,9 @@ public class NotificationListener extends NotificationListenerService {
                     notificationBar.update("카톡!"+sbnWho, sbnText, true);
                     head = "{카톡!"+ sbnWho + "} ";
                     logUpdate.addLog( head, sbnText);
-                    if (IsWhoNine.in(nineIgnores, sbnWho))
+                    if (IsWhoNine.in(ktNoNumbers, sbnWho))
                         sbnText = new Numbers().deduct(sbnText);
-                    sounds.speakAfterBeep(" 카톡왔음 " + sbnWho + " 님이 " + utils.replaceKKHH(utils.makeEtc(sbnText, 150)));
+                    sounds.speakAfterBeep(" 카톡 왔음 " + sbnWho + " 님이 " + utils.replaceKKHH(utils.makeEtc(sbnText, 150)));
                 } else {    // with group name
                     if (IgnoreThis.contains(sbnGroup, kGroupWhoIgnores))
                         return;
@@ -131,7 +131,7 @@ public class NotificationListener extends NotificationListenerService {
 
                 if (sbnGroup.contains("곳에서 보냄") || sbnText.contains("곳에서 보냄"))
                     return;
-                if (sbnText.length() < 40)
+                if (sbnText.length() < 30)
                     return;
                 if (kvTelegram.isDup(sbnGroup, sbnText))
                     return;
@@ -168,7 +168,7 @@ public class NotificationListener extends NotificationListenerService {
 
             case TOSS:
 
-                for (String s: tossIgnores) {
+                for (String s: tossTxtIgnores) {
                     if (sbnWho.contains(s) || sbnText.contains(s))
                         return;
                 }
@@ -185,7 +185,7 @@ public class NotificationListener extends NotificationListenerService {
                 if (sbnWho.replaceAll(mContext.getString(R.string.regex_number_only), "").length() < 4 &&
                         !sbnText.contains("스마트폰 배우고"))
                     return;
-                if (IgnoreThis.contains(sbnWho, smsWhoIgnores) || IgnoreThis.contains(sbnText, smsTextIgnores))
+                if (IgnoreThis.contains(sbnWho, smsWhoIgnores) || IgnoreThis.contains(sbnText, smsTxtIgnores))
                     return;
                 sbnText = utils.text2OneLine(sbnText);
                 if (kvSMS.isDup(sbnWho, sbnText))
@@ -197,7 +197,7 @@ public class NotificationListener extends NotificationListenerService {
 
             case APP:
 
-                if (IgnoreThis.contains(sbnText, textIgnores))
+                if (IgnoreThis.contains(sbnText, appTxtIgnores))
                     break;
 
                 if (sbnApp.who && kvCommon.isDup(sbnWho, sbnText))

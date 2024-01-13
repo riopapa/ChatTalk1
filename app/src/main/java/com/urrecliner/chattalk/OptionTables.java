@@ -3,23 +3,22 @@ package com.urrecliner.chattalk;
 import static com.urrecliner.chattalk.NotificationListener.sounds;
 import static com.urrecliner.chattalk.Vars.apps;
 import static com.urrecliner.chattalk.Vars.kGroupWhoIgnores;
-import static com.urrecliner.chattalk.Vars.kkTxtIgnores;
+import static com.urrecliner.chattalk.Vars.ktNoNumbers;
+import static com.urrecliner.chattalk.Vars.ktTxtIgnores;
 import static com.urrecliner.chattalk.Vars.mContext;
-import static com.urrecliner.chattalk.Vars.nineIgnores;
-import static com.urrecliner.chattalk.Vars.appIgnores;
-import static com.urrecliner.chattalk.Vars.appFullNames;
 import static com.urrecliner.chattalk.Vars.replGroup;
 import static com.urrecliner.chattalk.Vars.replGroupCnt;
 import static com.urrecliner.chattalk.Vars.replLong;
 import static com.urrecliner.chattalk.Vars.replShort;
-import static com.urrecliner.chattalk.Vars.smsTextIgnores;
+import static com.urrecliner.chattalk.Vars.smsNoNumbers;
+import static com.urrecliner.chattalk.Vars.smsTxtIgnores;
 import static com.urrecliner.chattalk.Vars.smsWhoIgnores;
-import static com.urrecliner.chattalk.Vars.systemIgnores;
+import static com.urrecliner.chattalk.Vars.sysIgnores;
 import static com.urrecliner.chattalk.Vars.tableListFile;
 import static com.urrecliner.chattalk.Vars.teleChannels;
 import static com.urrecliner.chattalk.Vars.teleGroups;
-import static com.urrecliner.chattalk.Vars.textIgnores;
-import static com.urrecliner.chattalk.Vars.tossIgnores;
+import static com.urrecliner.chattalk.Vars.appTxtIgnores;
+import static com.urrecliner.chattalk.Vars.tossTxtIgnores;
 
 import android.widget.Toast;
 
@@ -34,15 +33,18 @@ class OptionTables {
 
         if (tableListFile == null)
             tableListFile = new TableListFile();
-        kGroupWhoIgnores = tableListFile.read("kGroupWhoIgnores");
-        kkTxtIgnores = tableListFile.read("kkTxtIgnores");
-        smsWhoIgnores =  tableListFile.read("smsWhoIgnores");
-        smsTextIgnores =  tableListFile.read("smsTextIgnores");
-        systemIgnores = tableListFile.read("systemIgnores");
-        textIgnores = tableListFile.read("textIgnores");
-        nineIgnores = tableListFile.read("nineIgnores");
-        tossIgnores = tableListFile.read("tossIgnores");
-        if (kkTxtIgnores == null || smsWhoIgnores == null || systemIgnores == null) {
+        kGroupWhoIgnores = tableListFile.read("ktGrpWhoIg");
+        ktTxtIgnores = tableListFile.read("ktTxtIg");
+        ktNoNumbers = tableListFile.read("ktNoNum");
+
+        smsWhoIgnores =  tableListFile.read("smsWhoIg");
+        smsTxtIgnores =  tableListFile.read("smsTxtIg");
+        smsNoNumbers = tableListFile.read("smsNoNum");
+
+        sysIgnores = tableListFile.read("sysIg");
+        appTxtIgnores = tableListFile.read("appTxtIg");
+        tossTxtIgnores = tableListFile.read("tossTxtIg");
+        if (ktTxtIgnores == null || smsWhoIgnores == null || sysIgnores == null) {
             sounds.beepOnce(Vars.soundType.ERR.ordinal());
             Toast.makeText(mContext, "\nsome tables is null\n", Toast.LENGTH_LONG).show();
 //            sounds.beepOnce(Vars.soundType.ERR.ordinal());
@@ -58,7 +60,7 @@ class OptionTables {
          * group ^ channel name
          * 부자   ^ 부자 프로젝트
          */
-        String [] lists =  tableListFile.read("teleGroup");
+        String [] lists =  tableListFile.read("teleGrp");
 
         teleGroups = new String[lists.length];
         teleChannels = new String[lists.length];
@@ -93,7 +95,7 @@ class OptionTables {
             }
         }
         ArrayList<StrLong2Short> strLong2Shorts = new ArrayList<>();
-        String[] lines = tableListFile.read("strReplaces");
+        String[] lines = tableListFile.read("strRepl");
         String svGroup = "";
         ArrayList<String> gLong = new ArrayList<>();
         ArrayList<String> gShort = new ArrayList<>();

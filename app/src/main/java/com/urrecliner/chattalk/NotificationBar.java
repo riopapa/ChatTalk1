@@ -22,10 +22,14 @@ public class NotificationBar {
         intent.putExtra("msg", iMsg);
         intent.putExtra("stop", show_icon && !sounds.isSilent());
         if (mContext == null) {
-            mContext = mActivity.getApplicationContext();
+            if (mActivity != null)
+                mContext = mActivity.getApplicationContext();
+            else
+                Log.e("Noti Bar", "// Context, Activity null //");
         }
         try {
 //            if (isMyServiceRunning(NotificationService.class))
+            mContext.stopService(intent);
             mContext.startForegroundService(intent);
 //            else
         } catch (Exception e) {
