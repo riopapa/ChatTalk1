@@ -13,7 +13,8 @@ import android.util.Log;
 
 public class NotificationBar {
 
-    public void update(String who, String msg, boolean stop_icon) {
+
+    public static void update(String who, String msg, boolean stop_icon) {
 
         final String iMsg = (msg.length() > 400) ?msg.substring(0,400) : msg;
         Intent intent = new Intent(mContext, NotificationService.class);
@@ -30,18 +31,18 @@ public class NotificationBar {
         try {
 //            if (isMyServiceRunning(NotificationService.class))
             mContext.stopService(intent);
-            mContext.startForegroundService(intent);
+            mContext.startService(intent);
 //            else
         } catch (Exception e) {
             try {
-                mContext.startService(intent);
+                mContext.startForegroundService(intent);
             } catch (Exception ex) {
                 Log.e("Notifi Bar","svc E r r o r \n"+ex);
             }
         }
     }
 
-    static void hideStop() {
+    public static void hideStop() {
         if (mContext != null) {
             Intent intent = new Intent(mContext, NotificationService.class);
             intent.putExtra("operation", HIDE_STOP);
@@ -55,6 +56,7 @@ public class NotificationBar {
             }
         }
     }
+
 
     boolean isMyServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);

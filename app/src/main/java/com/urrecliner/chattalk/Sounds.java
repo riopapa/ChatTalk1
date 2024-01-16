@@ -1,6 +1,6 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.NotificationListener.notificationBar;
+import static com.urrecliner.chattalk.NotificationListener.notificationService;
 import static com.urrecliner.chattalk.NotificationListener.sounds;
 import static com.urrecliner.chattalk.Vars.audioReady;
 import static com.urrecliner.chattalk.Vars.beepRawIds;
@@ -22,7 +22,7 @@ import java.util.TimerTask;
 
 class Sounds {
     public static boolean isTalking = false;
-    static TextToSpeech mTTS;
+    static TextToSpeech mTTS = null;
     static String TTSId = "";
     AudioManager audioManager = null;
     // 한글, 영문, 숫자만 OK
@@ -56,14 +56,14 @@ class Sounds {
             public void onDone(String utteranceId) {
                 if (mTTS.isSpeaking())
                     return;
-                notificationBar.hideStop();
+                NotificationBar.hideStop();
                 isTalking = false;
                 new Timer().schedule(new TimerTask() {
                     public void run () {
                         beepOnce(Vars.soundType.POST.ordinal());
                         audioManager.abandonAudioFocusRequest(mFocusGain);
                     }
-                }, 200);
+                }, 300);
             }
 
             @Override
@@ -96,6 +96,8 @@ class Sounds {
                 beepOnce(Vars.soundType.PRE.ordinal());
             }
         }
+        if (mTTS == null)
+            init();
 
         if (isActive()) {
             isTalking = true;
@@ -112,7 +114,7 @@ class Sounds {
                         new Utils().logE("Sound", "TTS Error:" + e);
                     }
                 }
-            }, 200);
+            }, 300);
         }
     }
     public void speakBuyStock(String text) {

@@ -1,6 +1,7 @@
 package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.NotificationListener.loadFunction;
+import static com.urrecliner.chattalk.NotificationListener.notificationService;
 import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.NotificationListener.vars;
 import static com.urrecliner.chattalk.Vars.aBar;
@@ -40,6 +41,8 @@ public class ActivityMain extends AppCompatActivity {
 
 
     public static int fragNumber = -1;
+    static Intent mBackgroundServiceIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,11 +91,10 @@ public class ActivityMain extends AppCompatActivity {
             vars = new Vars(mContext);
         aBar = getSupportActionBar();
 
+        notificationService  = new NotificationService();
 
         //        new NotificationStart(pContext);
-        NotificationService notificationService  = new NotificationService();
         if (!BootReceiver.isServiceRunning(mContext, notificationService.getClass())) {
-            Intent mBackgroundServiceIntent;
             mBackgroundServiceIntent = new Intent(mContext, notificationService.getClass());
 //            pContext.startForegroundService(mBackgroundServiceIntent);
             mContext.startService(mBackgroundServiceIntent);

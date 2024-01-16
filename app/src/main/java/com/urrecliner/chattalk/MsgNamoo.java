@@ -2,6 +2,7 @@ package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.NotificationListener.logUpdate;
 import static com.urrecliner.chattalk.NotificationListener.notificationBar;
+import static com.urrecliner.chattalk.NotificationListener.notificationService;
 import static com.urrecliner.chattalk.NotificationListener.sounds;
 
 import com.urrecliner.chattalk.Sub.Numbers;
@@ -40,7 +41,7 @@ class MsgNamoo {
                 sText = String.join(" ", joins);
                 sounds.speakAfterBeep(sText);
             }
-            notificationBar.update(words[3]+"."+words[1], sText, true);
+            NotificationBar.update(words[3]+"."+words[1], sText, true);
             logUpdate.addStock(naMoo +"."+stkName, sText);
             String timeStamp = new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date());
             FileIO.uploadStock("힝체결", naMoo, words[1], stkName, words[5]+" "+words[2], words[4], timeStamp);

@@ -53,6 +53,7 @@ public class NotificationListener extends NotificationListenerService {
     static MsgSMS msgSMS = null;
     static SbnBundle sbnBundle = null;
     static NotificationBar notificationBar = null;
+    static NotificationService notificationService = null;
     static StockName stockName = null;
     public static PhoneVibrate phoneVibrate = null;
     public static VibratorManager vibManager = null;
@@ -83,8 +84,12 @@ public class NotificationListener extends NotificationListenerService {
             utils = new Utils();
         if (sbnBundle == null)
             sbnBundle = new SbnBundle();
+
         if (notificationBar == null)
-            notificationBar = new NotificationBar();
+            notificationBar  = new NotificationBar();
+
+        if (notificationService == null)
+            notificationService  = new NotificationService();
 
         if (kvCommon == null)
             kvCommon = new KeyVal();
@@ -107,7 +112,7 @@ public class NotificationListener extends NotificationListenerService {
                     if (kvKakao.isDup(sbnGroup, sbnText))
                         return;
                     sbnText = utils.strShorten(sbnWho, sbnText);
-                    notificationBar.update("카톡!"+sbnWho, sbnText, true);
+                    NotificationBar.update("카톡!"+sbnWho, sbnText, true);
                     head = "{카톡!"+ sbnWho + "} ";
                     logUpdate.addLog( head, sbnText);
                     if (IgnoreNumber.in(ktNoNumbers, sbnWho))
@@ -122,7 +127,7 @@ public class NotificationListener extends NotificationListenerService {
                     if (kvKakao.isDup(sbnGroup, sbnText))
                         return;
                     if (msgKaTalk == null)
-                        msgKaTalk = new MsgKaTalk("a katalk");
+                        msgKaTalk = new MsgKaTalk("by katk");
                     msgKaTalk.say(sbnGroup, sbnWho, sbnText);
                 }
                 break;
@@ -151,7 +156,7 @@ public class NotificationListener extends NotificationListenerService {
                         if (kvTelegram.isDup(sbnWho, sbnText))
                             return;
                         if (msgKaTalk == null)
-                            msgKaTalk = new MsgKaTalk("telegram");
+                            msgKaTalk = new MsgKaTalk("by tele");
                         if (sbnText.contains("종목")) {
                             utils.logW("tel " + sbnGroup, "_" + sbnWho + "_ : " + sbnText);
                             msgKaTalk.say(sbnGroup, sbnWho, sbnGroup + "!" + sbnText);
@@ -161,7 +166,7 @@ public class NotificationListener extends NotificationListenerService {
                 }
                 head = "[텔레 "+ sbnGroup + "|" + sbnWho + "]";
                 logUpdate.addLog(head, sbnText);
-                notificationBar.update(sbnGroup + "|" + sbnWho, sbnText, true);
+                NotificationBar.update(sbnGroup + "|" + sbnWho, sbnText, true);
                 sbnText = head + " 로 부터. " + sbnText;
                 sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
                 break;
@@ -175,7 +180,7 @@ public class NotificationListener extends NotificationListenerService {
                 sbnText = utils.strShorten(sbnAppNick, utils.text2OneLine(sbnWho+"|"+ sbnText));
                 head = "[" + sbnAppNick + "]";
                 logUpdate.addLog(head, sbnText);
-                notificationBar.update(sbnAppNick, sbnText, true);
+                NotificationBar.update(sbnAppNick, sbnText, true);
                 sbnText = "토스 로부터 " + new Numbers().deduct(sbnText);
                 sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
                 break;
@@ -241,7 +246,7 @@ public class NotificationListener extends NotificationListenerService {
                 }
                 String s = (sbnApp.grp) ? sbnGroup+"_": "";
                 s += (sbnApp.who) ? sbnWho:"";
-                notificationBar.update(sbnApp.nickName + ":"+ s, sbnText, true);
+                NotificationBar.update(sbnApp.nickName + ":"+ s, sbnText, true);
                 break;
 
             default:
@@ -252,7 +257,7 @@ public class NotificationListener extends NotificationListenerService {
                 sounds.speakAfterBeep("새 앱 설치됨 " + sbnText);
                 sbnText = "새로운 앱이 설치됨,  group : " + sbnGroup + ", who : " + sbnWho +
                         ", text : " + sbnText;
-                notificationBar.update(sbnAppName, sbnText, true);
+                NotificationBar.update(sbnAppName, sbnText, true);
                 logUpdate.addLog("[ " + sbnAppName + " ]", sbnText);
                 break;
         }
@@ -274,7 +279,7 @@ public class NotificationListener extends NotificationListenerService {
         if (kvCommon.isDup("테스리", sbnText))
             return;
         logUpdate.addLog("[ 테스리 ]", sbnText);
-        notificationBar.update(sbnAppNick, sbnText, true);
+        NotificationBar.update(sbnAppNick, sbnText, true);
         sounds.speakAfterBeep("테스리로 부터 " + sbnText);
     }
 }

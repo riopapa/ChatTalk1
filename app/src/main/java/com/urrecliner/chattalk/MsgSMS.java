@@ -3,6 +3,7 @@ package com.urrecliner.chattalk;
 import static com.urrecliner.chattalk.NotificationListener.logUpdate;
 import static com.urrecliner.chattalk.NotificationListener.msgKaTalk;
 import static com.urrecliner.chattalk.NotificationListener.notificationBar;
+import static com.urrecliner.chattalk.NotificationListener.notificationService;
 import static com.urrecliner.chattalk.NotificationListener.sounds;
 import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.lastChar;
@@ -33,7 +34,7 @@ class MsgSMS {
             }
         } else if (mWho.startsWith(jrGroup)) {
                 if (msgKaTalk == null)
-                    msgKaTalk = new MsgKaTalk("SMS");
+                    msgKaTalk = new MsgKaTalk("by SMS");
                 msgKaTalk.say(jrGroup, mWho, mText);
         } else {
             String head = "[SMS "+mWho + "]";
@@ -42,7 +43,7 @@ class MsgSMS {
             mText = utils.strShorten(mWho, mText);
             logUpdate.addLog(head, mText);
             mText = utils.makeEtc(mText, 150);
-            notificationBar.update("sms "+mWho, mText, true);
+            NotificationBar.update("sms "+mWho, mText, true);
             if (IgnoreNumber.in(smsNoNumbers, mWho))
                 mText = new Numbers().deduct(mText);
             sounds.speakAfterBeep(head+" 으로 부터 "+ mText);
@@ -68,7 +69,7 @@ class MsgSMS {
                     String uPrice = words[4];
                     String sGroup = lastChar + trade;
                     String sayMsg = stockName + " " + amount + " " + uPrice + samPam;
-                    notificationBar.update(samPam +":"+stockName, sayMsg, true);
+                    NotificationBar.update(samPam +":"+stockName, sayMsg, true);
                     logUpdate.addStock("sms>"+nhStock, sayMsg);
                     FileIO.uploadStock(sGroup, mWho, samPam, stockName,
                             mText.replace(stockName, new StringBuffer(stockName).insert(1, ".").toString()), samPam,
@@ -87,7 +88,7 @@ class MsgSMS {
     private void sayNormal(String mWho, String mText) {
         String head = "[sms."+ mWho + "] ";
         mText = utils.strShorten("sms", mText);
-        notificationBar.update(head, mText, true);
+        NotificationBar.update(head, mText, true);
         logUpdate.addLog(head, mText);
         if (utils == null)
             utils = new Utils();

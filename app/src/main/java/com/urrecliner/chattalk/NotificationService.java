@@ -5,6 +5,7 @@ import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.HIDE_STOP;
 import static com.urrecliner.chattalk.Vars.LOAD_NH_STOCK;
 import static com.urrecliner.chattalk.Vars.SHOW_MESSAGE;
+import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.sharePref;
 import static com.urrecliner.chattalk.Vars.sharedEditor;
@@ -39,10 +40,9 @@ public class NotificationService extends Service {
     static String msg2 = "", head2 = "00:99";
     static boolean show_stop = false;
 //
-    public NotificationService() {}
-
-//    public NotificationService(Context context) {}
-
+    public NotificationService() {
+        Log.e("noti Svc", "loaded new ");
+    }
 
     @Override
     public void onCreate() {
@@ -180,5 +180,13 @@ public class NotificationService extends Service {
         sharedEditor.putString("head2", head2);
         sharedEditor.apply();
     }
+
+
+
+
+
+
+
+
 
 }

@@ -4,6 +4,7 @@ import static com.urrecliner.chattalk.NotificationListener.alertStock;
 import static com.urrecliner.chattalk.NotificationListener.loadFunction;
 import static com.urrecliner.chattalk.NotificationListener.logUpdate;
 import static com.urrecliner.chattalk.NotificationListener.notificationBar;
+import static com.urrecliner.chattalk.NotificationListener.notificationService;
 import static com.urrecliner.chattalk.NotificationListener.sounds;
 import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.aAlertLineIdx;
@@ -32,7 +33,7 @@ import java.util.Collections;
 class MsgKaTalk {
 
     public MsgKaTalk(String str) {
-        Log.e("MsgKaTalk", "created "+str);
+        Log.e("MsgKaTalk", "new "+str);
     }
 
     void say(String group, String who, String text) {
@@ -60,11 +61,11 @@ class MsgKaTalk {
                 for (int i = 0; i < aGroupWhoKey1[gIdx][gwIdx].length; i++) {
                     if (!text.contains(aGroupWhoKey1[gIdx][gwIdx][i]))
                         continue;
-                    Log.w("Grp " + sbnGroup + "_" + sbnWho, aGroupWhoKey1[gIdx][gwIdx][i]+ " k1 match");
+                    Log.w("Grp " + sbnGroup + "_" + sbnWho, " k1 check "+ aGroupWhoKey1[gIdx][gwIdx][i]);
 
                     if (!text.contains(aGroupWhoKey2[gIdx][gwIdx][i]))
                         continue;
-                    Log.w("Grp " + sbnGroup + "_" + sbnWho, aGroupWhoKey2[gIdx][gwIdx][i]+ " k2 match");
+                    Log.w("Grp " + sbnGroup + "_" + sbnWho, " k2 check "+ aGroupWhoKey2[gIdx][gwIdx][i]);
                     if (text.contains(aGroupWhoSkip[gIdx][gwIdx][i]))
                             continue;
                     Log.w("Grp " + sbnGroup + "_" + sbnWho, aGroupWhoSkip[gIdx][gwIdx][i]+ " no skip");
@@ -91,7 +92,7 @@ class MsgKaTalk {
                 String sText = utils.strShorten(group, text);
                 logUpdate.addLog(head, sText);
                 sText = utils.makeEtc(sText, 160);
-                notificationBar.update(group+":"+ who, sText, true);
+                NotificationBar.update(group+":"+ who, sText, true);
                 sText = "단톡방 " + group + " 에서 " + who + " 님이 " + new Numbers().deduct(sText);
                 sounds.speakAfterBeep(utils.replaceKKHH(sText));
             }

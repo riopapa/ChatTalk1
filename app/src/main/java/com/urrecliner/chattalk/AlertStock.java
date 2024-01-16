@@ -5,6 +5,7 @@ import static android.content.Context.MODE_PRIVATE;
 import static com.urrecliner.chattalk.NotificationListener.kvTelegram;
 import static com.urrecliner.chattalk.NotificationListener.logUpdate;
 import static com.urrecliner.chattalk.NotificationListener.notificationBar;
+import static com.urrecliner.chattalk.NotificationListener.notificationService;
 import static com.urrecliner.chattalk.NotificationListener.phoneVibrate;
 import static com.urrecliner.chattalk.NotificationListener.sounds;
 import static com.urrecliner.chattalk.NotificationListener.stockName;
@@ -67,7 +68,7 @@ public class AlertStock {
                 String[] joins = new String[]{iGroup, who, sParse[0], sTalk, sParse[0]};
                 sounds.speakBuyStock(String.join(" , ", joins));
                 String title = sParse[0]+" / "+who;
-                notificationBar.update(title, shortParse1, true);
+                NotificationBar.update(title, shortParse1, true);
                 logUpdate.addStock(sParse[0] + " ["+iGroup+":"+who+"]", sParse[1]+key12);
                 copyToClipBoard(sParse[0]);
                 if (isSilentNow()) {
@@ -84,7 +85,7 @@ public class AlertStock {
                     sounds.beepOnce(Vars.soundType.ONLY.ordinal());
                 }
                 String shortParse1 = (sParse[1].length() > 50) ? sParse[1].substring(0, 50) : sParse[1];
-                notificationBar.update(title, shortParse1, false);
+                NotificationBar.update(title, shortParse1, false);
             }
             save(al, mContext);
             String timeStamp = new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date());
