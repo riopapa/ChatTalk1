@@ -12,7 +12,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:layout_width="0dp"
-        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintHorizontal_weight="4"
         android:layout_height="wrap_content"
         android:text="@string/todo"
         android:textSize="@dimen/alert_font_size"
@@ -28,7 +28,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:layout_width="0dp"
-        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintHorizontal_weight="4"
         android:layout_height="wrap_content"
         android:text="@string/todo"
         android:textSize="@dimen/alert_font_size"
@@ -44,7 +44,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:layout_width="0dp"
-        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintHorizontal_weight="4"
         android:layout_height="wrap_content"
         android:text="@string/todo"
         android:textSize="@dimen/alert_font_size"
@@ -60,7 +60,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:layout_width="0dp"
-        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintHorizontal_weight="4"
         android:layout_height="wrap_content"
         android:text="@string/talk"
         android:textSize="@dimen/alert_font_size"
@@ -80,7 +80,7 @@
         android:gravity="center"
         android:text="@string/todo"
         android:textSize="@dimen/alert_font_size"
-        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintHorizontal_weight="4"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/e_prev"
         app:layout_constraintTop_toBottomOf="@id/l_matched"
@@ -175,8 +175,8 @@
         android:layout_width="0dp"
         app:layout_constraintHorizontal_weight="4"
         android:layout_height="wrap_content"
-        app:boxStrokeColor="#66FF66"
-        app:hintTextColor="#66FF66"
+        app:boxStrokeColor="#229944"
+        app:hintTextColor="#229944"
         style="@style/AppTheme"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/l_more"
@@ -194,14 +194,13 @@
         />
     </com.google.android.material.textfield.TextInputLayout>
 
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/l_more"
         android:layout_width="0dp"
         app:layout_constraintHorizontal_weight="4"
         android:layout_height="wrap_content"
-        app:boxStrokeColor="#66FF66"
-        app:hintTextColor="#66FF66"
+        app:boxStrokeColor="#229944"
+        app:hintTextColor="#229944"
         style="@style/AppTheme"
         app:layout_constraintLeft_toRightOf="@id/l_matched"
         app:layout_constraintRight_toRightOf="parent"
@@ -212,11 +211,12 @@
             android:id="@+id/e_more"
             android:layout_width = "match_parent"
             android:layout_height = "wrap_content"
-            android:hint="More"
-            android:inputType="numberSigned"
+            android:hint="조용히?"
+            android:inputType="text"
             android:text="@string/todo"
             android:textSize="@dimen/alert_font_size"
             />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <EditText

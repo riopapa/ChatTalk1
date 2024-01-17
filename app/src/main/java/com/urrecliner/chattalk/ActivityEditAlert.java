@@ -21,7 +21,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.urrecliner.chattalk.model.AlertLine;
-import com.urrecliner.chattalk.alerts.AlertTableIO;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,7 +32,7 @@ public class ActivityEditAlert extends AppCompatActivity {
 
     AlertLine al;
     EditText eGroup, eWho, eKey1, eKey2, eTalk, eMatched, eSkip, eMore, ePrev, eNext;
-    TextView tGroup, tWho, tKey1, tPrev;
+    TextView tGroup, tWho, tTalk, tKey1, tPrev;
     String mGroup, mWho, mPercent, mStatement;
     View deleteMenu;
     boolean newGroup = false;
@@ -41,7 +40,7 @@ public class ActivityEditAlert extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_alert_edit_one);
+        setContentView(R.layout.activity_alert_edit);
 //        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         newGroup = false;
         al = alertLines.get(alertPos);
@@ -57,18 +56,21 @@ public class ActivityEditAlert extends AppCompatActivity {
         eNext = findViewById(R.id.e_next); eNext.setText(al.next);
         tGroup = findViewById(R.id.t_group); tWho = findViewById(R.id.t_who);
         tKey1 = findViewById(R.id.t_key1);
+        tTalk = findViewById(R.id.t_talk);
         tPrev = findViewById(R.id.t_prev);
         if (al.matched == -1) { // group line
-            tGroup.setText("Group"); tWho.setText("Info");
+            tGroup.setText("Group"); tWho.setText("Grp Info");
             tKey1.setText("Skip 1,2");
+            eKey1.setHint("Skip 1"); eKey2.setHint("Skip 2");
             eTalk.setHint("Skip 3"); eSkip.setHint("Skip 4");
-            eMatched.setHint("-1"); eMore.setHint("More");
-
+            tTalk.setText("SKip3, 4");
             tPrev.setText("의미 없음");
         } else {
             tGroup.setText("Group Name"); tWho.setText("Who");
             tKey1.setText("Key 1,2");
-            eMatched.setHint("Matched Hint"); eMore.setHint("More Hint");
+            eKey1.setHint("Key 1"); eKey2.setHint("Key 2");
+            tTalk.setText("Talk,SKip");
+            eTalk.setHint("Talk"); eSkip.setHint("Skip");
             tPrev.setText("Prev/Next");
         }
     }

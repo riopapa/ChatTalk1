@@ -38,7 +38,7 @@ public class NotificationListener extends NotificationListenerService {
 
     final String TELEGRAM = "tG";
     final String APP = "app";   // general application
-    long tesla_time = 0;
+    static long tesla_time = 0;
 
     public static Utils utils = null;
 

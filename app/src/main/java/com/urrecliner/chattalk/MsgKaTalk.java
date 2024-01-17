@@ -8,6 +8,9 @@ import static com.urrecliner.chattalk.NotificationListener.notificationService;
 import static com.urrecliner.chattalk.NotificationListener.sounds;
 import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.aAlertLineIdx;
+import static com.urrecliner.chattalk.Vars.aGSkip1;
+import static com.urrecliner.chattalk.Vars.aGSkip2;
+import static com.urrecliner.chattalk.Vars.aGSkip3;
 import static com.urrecliner.chattalk.Vars.aGroupSaid;
 import static com.urrecliner.chattalk.Vars.aGroupWhoKey1;
 import static com.urrecliner.chattalk.Vars.aGroupWhoKey2;
@@ -39,46 +42,50 @@ class MsgKaTalk {
     void say(String group, String who, String text) {
 
 //        Thread thisThread = new Thread(() -> {
-            int gIdx = Collections.binarySearch(aGroups, group);
-            if (gIdx >= 0) {    // within Alert Group
-                if (aGroupsPass.get(gIdx) || text.length() < 8)
-                    return;
-                if (aGroupSaid[gIdx].equals(text))
-                    return;
-                aGroupSaid[gIdx] = text;
+            int grpIdx = Collections.binarySearch(aGroups, group);
+            if (grpIdx >= 0) {    // within Alert Group
                 if (timeBegin == 0)
                     new ReadyToday();
                 long nowTime = System.currentTimeMillis();
                 if (nowTime < timeBegin || nowTime > timeEnd) {
                     return;
                 }
-                int gwIdx = alertWhoIndex.get(gIdx, who, text);
-                if (gwIdx == -1)
+                if (aGroupsPass.get(grpIdx) || text.length() < 8)
                     return;
-                if (group.startsWith("텔"))
-                    utils.logW("Grp " + sbnGroup, "_" + sbnWho + "_ : " + sbnText);
+                if (aGroupSaid[grpIdx].equals(text))
+                    return;
+                aGroupSaid[grpIdx] = text;
+                if (text.contains(aGSkip1[grpIdx]) || text.contains(aGSkip2[grpIdx]) ||
+                        text.contains(aGSkip3[grpIdx]))
+                    return;
+                int gWhoIdx = alertWhoIndex.get(grpIdx, who, text);
+                if (gWhoIdx == -1)
+                    return;
+//                if (group.startsWith("텔"))
+//                    utils.logW("Grp " + sbnGroup, "_" + sbnWho + "_ : " + sbnText);
 
-                for (int i = 0; i < aGroupWhoKey1[gIdx][gwIdx].length; i++) {
-                    if (!text.contains(aGroupWhoKey1[gIdx][gwIdx][i]))
-                        continue;
-                    Log.w("Grp " + sbnGroup + "_" + sbnWho, " k1 check "+ aGroupWhoKey1[gIdx][gwIdx][i]);
 
-                    if (!text.contains(aGroupWhoKey2[gIdx][gwIdx][i]))
+                for (int i = 0; i < aGroupWhoKey1[grpIdx][gWhoIdx].length; i++) {
+                    if (!text.contains(aGroupWhoKey1[grpIdx][gWhoIdx][i]))
                         continue;
-                    Log.w("Grp " + sbnGroup + "_" + sbnWho, " k2 check "+ aGroupWhoKey2[gIdx][gwIdx][i]);
-                    if (text.contains(aGroupWhoSkip[gIdx][gwIdx][i]))
+//                    Log.w("Grp " + sbnGroup + "_" + sbnWho, " k1 check "+ aGroupWhoKey1[grpIdx][gWhoIdx][i]);
+
+                    if (!text.contains(aGroupWhoKey2[grpIdx][gWhoIdx][i]))
+                        continue;
+//                    Log.w("Grp " + sbnGroup + "_" + sbnWho, " k2 check "+ aGroupWhoKey2[grpIdx][gWhoIdx][i]);
+                    if (text.contains(aGroupWhoSkip[grpIdx][gWhoIdx][i]))
                             continue;
-                    Log.w("Grp " + sbnGroup + "_" + sbnWho, aGroupWhoSkip[gIdx][gwIdx][i]+ " no skip");
+//                    Log.w("Grp " + sbnGroup + "_" + sbnWho, aGroupWhoSkip[grpIdx][gWhoIdx][i]+ " no skip");
                     if (loadFunction == null)
                         loadFunction = new LoadFunction();
-                    alertStock.sayNlog(group, text, aAlertLineIdx[gIdx][gwIdx][i]);
+                    alertStock.sayNlog(group, text, aAlertLineIdx[grpIdx][gWhoIdx][i]);
                     int fI = i;
                     if (alertsAdapter == null)
                         alertsAdapter = new AlertsAdapter();
                     else {
 //                        if (mActivity != null) {
 //                            mActivity.runOnUiThread(() ->
-                                    alertsAdapter.notifyItemChanged(aAlertLineIdx[gIdx][gwIdx][fI]);
+                                    alertsAdapter.notifyItemChanged(aAlertLineIdx[grpIdx][gWhoIdx][fI]);
 //                            );
 //                        }
                     }

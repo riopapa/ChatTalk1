@@ -36,8 +36,6 @@ public class AlertStock {
 
         String key12, sTalk, who;
 
-        if (kvTelegram.isDup(sbnWho, sbnText))
-            return;
         if (utils == null)
             utils = new Utils();
 
