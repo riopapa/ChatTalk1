@@ -3,9 +3,10 @@
     <color name="colorPrimary">#778FA8</color>
     <color name="colorAccent">#E44279</color>
 
-    <color name="color_tab_que_background">#EDCCC9</color>
-    <color name="color_tab_save_background">#C9EBA1</color>
+    <color name="color_tab_log_background">#E4D4D3</color>
+    <color name="color_tab_save_background">#E4ECDA</color>
     <color name="color_tab_stock_background">#C9D6E3</color>
+    <color name="color_tab_table_background">#C9C6D3</color>
     <color name="color_tab_chat_background">#CDCFB0</color>
 
     <color name="barLine0">#81375BCF</color>

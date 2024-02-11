@@ -7,7 +7,6 @@ import static com.urrecliner.chattalk.Vars.appIgnores;
 import static com.urrecliner.chattalk.Vars.appFullNames;
 import static com.urrecliner.chattalk.Vars.tableFolder;
 
-import android.content.Context;
 import android.os.Environment;
 
 import com.google.gson.Gson;
@@ -24,34 +23,33 @@ import java.util.List;
 
 public class AppsTable {
 
-    public ArrayList<App> get() {
+    public void get() {
         if (tableFolder ==  null) {
             downloadFolder = new File(Environment.getExternalStorageDirectory(), "download");
             tableFolder = new File(downloadFolder, "_ChatTalk");
         }
 
-        ArrayList<App> list;
         Gson gson = new Gson();
         String json = FileIO.readKRFile(new File(tableFolder ,"appTable.json").toString());
         if (json.isEmpty()) {
-            list = readPackageTable();
+            apps = readPackageTable();
 
         } else {
             Type type = new TypeToken<List<App>>() {
             }.getType();
-            list = gson.fromJson(json, type);
+            apps = gson.fromJson(json, type);
         }
-        makeTable(list);
-        return list;
+        makeTable();
     }
 
-    public void put(Context context) {
+    public void put() {
         if (tableFolder ==  null) {
             downloadFolder = new File(Environment.getExternalStorageDirectory(), "download");
             tableFolder = new File(downloadFolder, "_ChatTalk");
         }
 
         apps.sort(Comparator.comparing(obj -> (obj.fullName)));
+        makeTable();
 
         Gson gson = new Gson();
         String json = gson.toJson(apps);
@@ -59,13 +57,13 @@ public class AppsTable {
         FileIO.writeKR(new File(tableFolder, "appTable.json"), json);
     }
 
-    public void makeTable(ArrayList<App> list) {
+    public void makeTable() {
         appFullNames = new ArrayList<>();
         appNameIdx = new ArrayList<>();
         appIgnores = new ArrayList<>();
 
-        for (int i = 0; i < list.size(); i++) {
-            App app = list.get(i);
+        for (int i = 0; i < apps.size(); i++) {
+            App app = apps.get(i);
             if (app.nickName.equals("@")) {
                 appIgnores.add(app.fullName);
             } else {

@@ -6,6 +6,6 @@ xmlns:android="http://schemas.android.com/apk/res/android">
 
 <corners android:radius="4dp" />
 <gradient android:angle="135"
-    android:startColor="#75C1B498"
-    android:endColor="#759CDC44"  />
+    android:startColor="#A5C1B498"
+    android:endColor="#C59CDC44"  />
 </shape>

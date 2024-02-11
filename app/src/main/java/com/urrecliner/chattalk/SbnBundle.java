@@ -86,7 +86,7 @@ public class SbnBundle {
                 break;
             default:
                 if (apps == null || appIgnores == null) {
-                    apps = new AppsTable().get();
+                    new AppsTable().get();
                     Log.e("reloading", "apps is null new size=" + apps.size());
                 }
                 if (Collections.binarySearch(appIgnores, sbnAppName) >= 0)

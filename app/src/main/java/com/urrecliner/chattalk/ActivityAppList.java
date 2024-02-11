@@ -23,7 +23,7 @@ import com.urrecliner.chattalk.model.App;
 
 public class ActivityAppList extends AppCompatActivity {
 
-    RecyclerView appRecyclerView;
+    public static RecyclerView appRecyclerView;
     ActivityAppListBinding binding;
     String key;
     @Override
@@ -99,11 +99,13 @@ public class ActivityAppList extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
+        AppsTable appsTable = new AppsTable();
         if (item.getItemId() == R.id.app_reload) {
-            apps = new AppsTable().get();
+            appsTable.get();
             appAdapter = new AppAdapter();
+            appRecyclerView.setAdapter(appAdapter);
         } else if (item.getItemId() == R.id.app_save) {
-            new AppsTable().put(this);
+            appsTable.put();
         } else if (item.getItemId() == R.id.app_add) {
             appPos = -1;
             Intent intent = new Intent(this, ActivityAppEdit.class);

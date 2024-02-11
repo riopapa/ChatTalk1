@@ -57,6 +57,7 @@ public class Fragment_4Alert extends Fragment {
         if (alertPos > 0) {
             LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView
                     .getLayoutManager();
+            assert layoutManager != null;
             layoutManager.scrollToPositionWithOffset(
                     alertPos, (alertPos > 3) ? alertPos - 3 : alertPos - 2);
         }
@@ -76,7 +77,7 @@ public class Fragment_4Alert extends Fragment {
         aBar.setTitle(topTabs.getTabAt(4).getText().toString());
         aBar.setSubtitle(null);
     }
-    @SuppressLint("NotifyDataSetChanged")
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 

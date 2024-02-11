@@ -2,200 +2,230 @@
 <LinearLayout xmlns:android = "http://schemas.android.com/apk/res/android"
       android:layout_width = "match_parent"
       android:layout_height = "match_parent"
-      android:background="@color/color_tab_save_background"
+      android:background="@color/color_tab_table_background"
       android:orientation = "vertical">
 
     <LinearLayout
         android:layout_width = "match_parent"
         android:layout_height = "wrap_content"
-        android:layout_marginStart = "8dp"
-        android:layout_marginEnd = "8dp"
+        android:layout_margin = "4dp"
+        android:background="@drawable/box_rounded"
         android:gravity = "center"
-        android:orientation = "horizontal">
+        android:orientation = "vertical">
 
         <TextView
-            android:id = "@+id/sms_who_ignores"
-            android:layout_width = "0dp"
+            android:layout_width = "match_parent"
             android:layout_height = "wrap_content"
-            android:layout_margin = "@dimen/button_margin_size"
-            android:layout_weight = "1"
-            android:background = "@drawable/rounded_button3"
+            android:layout_margin = "0dp"
             android:gravity = "center"
-            android:padding = "@dimen/table_padding_size"
-            android:tag = "smsWhoIg"
-            android:text = "SMS에서 무시할 사람"
+            android:text = "SMS"
             android:textSize = "@dimen/table_font_size"
             android:textStyle = "bold" />
 
-        <TextView
-            android:id = "@+id/sms_text_ignores"
-            android:layout_width = "0dp"
+        <LinearLayout
+            android:layout_width = "match_parent"
             android:layout_height = "wrap_content"
-            android:layout_margin = "@dimen/button_margin_size"
-            android:layout_weight = "1"
-            android:background = "@drawable/rounded_button3"
             android:gravity = "center"
-            android:padding = "@dimen/table_padding_size"
-            android:tag = "smsTxtIg"
-            android:text = "SMS에 이 글짜면 제외"
-            android:textSize = "@dimen/table_font_size"
-            android:textStyle = "bold" />
+            android:orientation = "horizontal">
+
+            <TextView
+                android:id = "@+id/sms_who_ignores"
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_margin = "@dimen/button_margin_size"
+                android:layout_weight = "1"
+                android:background = "@drawable/rounded_button3"
+                android:gravity = "center"
+                android:padding = "@dimen/table_padding_size"
+                android:tag = "smsWhoIg"
+                android:text = "무시할 이름"
+                android:textSize = "@dimen/table_font_size"
+                android:textStyle = "bold" />
+
+            <TextView
+                android:id = "@+id/sms_text_ignores"
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_margin = "@dimen/button_margin_size"
+                android:layout_weight = "1"
+                android:background = "@drawable/rounded_button3"
+                android:gravity = "center"
+                android:padding = "@dimen/table_padding_size"
+                android:tag = "smsTxtIg"
+                android:text = "무시 글짜"
+                android:textSize = "@dimen/table_font_size"
+                android:textStyle = "bold" />
+
+            <TextView
+                android:id = "@+id/sms_with_no_number"
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_margin = "@dimen/button_margin_size"
+                android:layout_weight = "1"
+                android:background = "@drawable/rounded_button3"
+                android:gravity = "center"
+                android:padding = "@dimen/table_padding_size"
+                android:tag = "smsNoNum"
+                android:text = "숫자 무시"
+                android:textSize = "@dimen/table_font_size"
+                android:textStyle = "bold" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width = "match_parent"
         android:layout_height = "wrap_content"
-        android:layout_marginStart = "8dp"
-        android:layout_marginEnd = "8dp"
+        android:layout_margin = "4dp"
+        android:background="@drawable/box_rounded"
         android:gravity = "center"
-        android:orientation = "horizontal">
-
+        android:orientation = "vertical">
         <TextView
-            android:id = "@+id/sms_with_no_number"
-            android:layout_width = "0dp"
+            android:layout_width = "match_parent"
             android:layout_height = "wrap_content"
-            android:layout_margin = "@dimen/button_margin_size"
-            android:layout_weight = "1"
-            android:background = "@drawable/rounded_button3"
+            android:layout_margin = "0dp"
             android:gravity = "center"
-            android:padding = "@dimen/table_padding_size"
-            android:tag = "smsNoNum"
-            android:text = "SMS 숫자 무시"
+            android:text = "System"
             android:textSize = "@dimen/table_font_size"
             android:textStyle = "bold" />
 
-        <TextView
-            android:id = "@+id/for_future1"
-            android:layout_width = "0dp"
+        <LinearLayout
+            android:layout_width = "match_parent"
             android:layout_height = "wrap_content"
-            android:layout_margin = "@dimen/button_margin_size"
-            android:layout_weight = "1"
-            android:background = "@drawable/rounded_button1"
+            android:layout_marginStart = "8dp"
+            android:layout_marginEnd = "8dp"
             android:gravity = "center"
-            android:padding = "@dimen/table_padding_size"
-            android:tag = "xxxx"
-            android:text = "향후에 추가"
-            android:textSize = "@dimen/table_font_size"
-            android:textStyle = "bold" />
+            android:orientation = "horizontal">
 
+            <TextView
+                android:id = "@+id/system_ignores"
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_margin = "@dimen/button_margin_size"
+                android:layout_weight = "1"
+                android:background = "@drawable/rounded_button2"
+                android:gravity = "center"
+                android:padding = "@dimen/table_padding_size"
+                android:tag = "sysIg"
+                android:text = "무시 Apps"
+                android:textSize = "@dimen/table_font_size"
+                android:textStyle = "bold" />
+
+            <TextView
+                android:id = "@+id/app_text_ignores"
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_margin = "@dimen/button_margin_size"
+                android:layout_weight = "1"
+                android:background = "@drawable/rounded_button2"
+                android:gravity = "center"
+                android:padding = "@dimen/table_padding_size"
+                android:tag = "appTxtIg"
+                android:text = "글짜 무시"
+                android:textSize = "@dimen/table_font_size"
+                android:textStyle = "bold" />
+
+            <TextView
+                android:id = "@+id/app_names"
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_margin = "@dimen/button_margin_size"
+                android:layout_weight = "1"
+                android:background = "@drawable/rounded_button2"
+                android:gravity = "center"
+                android:padding = "@dimen/table_padding_size"
+                android:tag = "appNames"
+                android:text = "App Names"
+                android:textSize = "@dimen/table_font_size"
+                android:textStyle = "bold" />
+
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width = "match_parent"
         android:layout_height = "wrap_content"
-        android:layout_marginStart = "8dp"
-        android:layout_marginEnd = "8dp"
+        android:layout_margin = "4dp"
+        android:background="@drawable/box_rounded"
         android:gravity = "center"
-        android:orientation = "horizontal">
-
+        android:orientation = "vertical">
         <TextView
-            android:id = "@+id/system_ignores"
-            android:layout_width = "0dp"
+            android:layout_width = "match_parent"
             android:layout_height = "wrap_content"
-            android:layout_margin = "@dimen/button_margin_size"
-            android:layout_weight = "1"
-            android:background = "@drawable/rounded_button1"
             android:gravity = "center"
-            android:padding = "@dimen/table_padding_size"
-            android:tag = "sysIg"
-            android:text = "무시할 시스템 메시지"
+            android:text = "KakaoTalk"
             android:textSize = "@dimen/table_font_size"
             android:textStyle = "bold" />
 
-        <TextView
-            android:id = "@+id/app_text_ignores"
-            android:layout_width = "0dp"
+            <LinearLayout
+            android:layout_width = "match_parent"
             android:layout_height = "wrap_content"
-            android:layout_margin = "@dimen/button_margin_size"
-            android:layout_weight = "1"
-            android:background = "@drawable/rounded_button1"
+            android:layout_marginStart = "8dp"
+            android:layout_marginEnd = "8dp"
             android:gravity = "center"
-            android:padding = "@dimen/table_padding_size"
-            android:tag = "appTxtIg"
-            android:text = "App 글짜 무시"
-            android:textSize = "@dimen/table_font_size"
-            android:textStyle = "bold" />
+            android:orientation = "horizontal">
 
-    </LinearLayout>
+            <TextView
+                android:id = "@+id/k_group_who_ignores"
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_margin = "@dimen/button_margin_size"
+                android:layout_weight = "1"
+                android:background = "@drawable/rounded_button3"
+                android:gravity = "center"
+                android:padding = "@dimen/table_padding_size"
+                android:tag = "ktGrpWhoIg"
+                android:text = "제외 그룹사람"
+                android:textSize = "@dimen/table_font_size"
+                android:textStyle = "bold" />
 
-
-    <LinearLayout
-        android:layout_width = "match_parent"
-        android:layout_height = "wrap_content"
-        android:layout_marginStart = "8dp"
-        android:layout_marginEnd = "8dp"
-        android:gravity = "center"
-        android:orientation = "horizontal">
-
-        <TextView
-            android:id = "@+id/k_group_who_ignores"
-            android:layout_width = "0dp"
-            android:layout_height = "wrap_content"
-            android:layout_margin = "@dimen/button_margin_size"
-            android:layout_weight = "1"
-            android:background = "@drawable/rounded_button3"
-            android:gravity = "center"
-            android:padding = "@dimen/table_padding_size"
-            android:tag = "ktGrpWhoIg"
-            android:text = "카톡 제외 그룹사람"
-            android:textSize = "@dimen/table_font_size"
-            android:textStyle = "bold" />
-
-        <TextView
-            android:id = "@+id/k_text_ignores"
-            android:layout_width = "0dp"
-            android:layout_height = "wrap_content"
-            android:layout_margin = "@dimen/button_margin_size"
-            android:layout_weight = "1"
-            android:background = "@drawable/rounded_button3"
-            android:gravity = "center"
-            android:padding = "@dimen/table_padding_size"
-            android:tag = "ktTxtIg"
-            android:text = "카톡 무시 글짜"
-            android:textSize = "@dimen/table_font_size"
-            android:textStyle = "bold" />
+            <TextView
+                android:id = "@+id/k_text_ignores"
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_margin = "@dimen/button_margin_size"
+                android:layout_weight = "1"
+                android:background = "@drawable/rounded_button3"
+                android:gravity = "center"
+                android:padding = "@dimen/table_padding_size"
+                android:tag = "ktTxtIg"
+                android:text = "무시 글짜"
+                android:textSize = "@dimen/table_font_size"
+                android:textStyle = "bold" />
+            <TextView
+                android:id = "@+id/kt_no_number"
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_margin = "@dimen/button_margin_size"
+                android:layout_weight = "1"
+                android:background = "@drawable/rounded_button3"
+                android:gravity = "center"
+                android:padding = "@dimen/table_padding_size"
+                android:tag = "ktNoNum"
+                android:text = "숫자 무시"
+                android:textSize = "@dimen/table_font_size"
+                android:textStyle = "bold" />
+            </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width = "match_parent"
         android:layout_height = "wrap_content"
-        android:layout_marginStart = "8dp"
-        android:layout_marginEnd = "8dp"
+        android:layout_margin = "4dp"
+        android:background="@drawable/box_rounded"
         android:gravity = "center"
-        android:orientation = "horizontal">
-
+        android:orientation = "vertical">
         <TextView
-            android:id = "@+id/kt_no_number"
-            android:layout_width = "0dp"
+            android:layout_width = "match_parent"
             android:layout_height = "wrap_content"
-            android:layout_margin = "@dimen/button_margin_size"
-            android:layout_weight = "1"
-            android:background = "@drawable/rounded_button3"
+            android:layout_margin = "0dp"
             android:gravity = "center"
-            android:padding = "@dimen/table_padding_size"
-            android:tag = "ktNoNum"
-            android:text = "카톡 숫자 무시"
+            android:text = "기타 설정"
             android:textSize = "@dimen/table_font_size"
             android:textStyle = "bold" />
 
-        <TextView
-            android:id = "@+id/next_function"
-            android:layout_width = "0dp"
-            android:layout_height = "wrap_content"
-            android:layout_margin = "@dimen/button_margin_size"
-            android:layout_weight = "1"
-            android:background = "@drawable/rounded_button1"
-            android:gravity = "center"
-            android:padding = "@dimen/table_padding_size"
-            android:tag = "xxxxxx"
-            android:text = "다음에 추가"
-            android:textSize = "@dimen/table_font_size"
-            android:textStyle = "bold" />
-
-    </LinearLayout>
-
-    <LinearLayout
+        <LinearLayout
         android:layout_width = "match_parent"
         android:layout_height = "wrap_content"
         android:layout_marginStart = "8dp"
@@ -213,7 +243,7 @@
             android:gravity = "center"
             android:padding = "@dimen/table_padding_size"
             android:tag = "strRepl"
-            android:text = "글짜를 짧게 대체"
+            android:text = "글짜를 짧게"
             android:textSize = "@dimen/table_font_size"
             android:textStyle = "bold" />
 
@@ -230,45 +260,22 @@
             android:text = "텔레그램 그룹"
             android:textSize = "@dimen/table_font_size"
             android:textStyle = "bold" />
+
+            <TextView
+                android:id = "@+id/toss_ignore"
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_margin = "@dimen/button_margin_size"
+                android:layout_weight = "1"
+                android:background = "@drawable/rounded_button2"
+                android:gravity = "center"
+                android:padding = "@dimen/table_padding_size"
+                android:tag = "tossTxtIg"
+                android:text = "토스 글짜 무시"
+                android:textSize = "@dimen/table_font_size"
+                android:textStyle = "bold" />
+        </LinearLayout>
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width = "match_parent"
-        android:layout_height = "wrap_content"
-        android:layout_marginStart = "8dp"
-        android:layout_marginEnd = "8dp"
-        android:gravity = "center"
-        android:orientation = "horizontal">
-
-        <TextView
-            android:id = "@+id/toss_ignore"
-            android:layout_width = "0dp"
-            android:layout_height = "wrap_content"
-            android:layout_margin = "@dimen/button_margin_size"
-            android:layout_weight = "1"
-            android:background = "@drawable/rounded_button2"
-            android:gravity = "center"
-            android:padding = "@dimen/table_padding_size"
-            android:tag = "tossTxtIg"
-            android:text = "토스 글짜 무시"
-            android:textSize = "@dimen/table_font_size"
-            android:textStyle = "bold" />
-
-        <TextView
-            android:id = "@+id/package_names"
-            android:layout_width = "0dp"
-            android:layout_height = "wrap_content"
-            android:layout_margin = "@dimen/button_margin_size"
-            android:layout_weight = "1"
-            android:background = "@drawable/rounded_button3"
-            android:gravity = "center"
-            android:padding = "@dimen/table_padding_size"
-            android:tag = "appNames"
-            android:text = "Package  Names"
-            android:textSize = "@dimen/table_font_size"
-            android:textStyle = "bold" />
-    </LinearLayout>
-
     <TextView
         android:id = "@+id/tv_wifi_state"
         android:layout_width = "wrap_content"

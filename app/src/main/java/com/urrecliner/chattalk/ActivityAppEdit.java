@@ -1,5 +1,6 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.ActivityAppList.appRecyclerView;
 import static com.urrecliner.chattalk.ActivityMain.fragNumber;
 import static com.urrecliner.chattalk.Vars.appAdapter;
 import static com.urrecliner.chattalk.Vars.appPos;
@@ -101,8 +102,9 @@ public class ActivityAppEdit extends AppCompatActivity {
     private void deleteApp() {
         if (appPos != -1) {
             apps.remove(appPos);
-            new AppsTable().put(this);
+            new AppsTable().put();
             appAdapter = new AppAdapter();
+            appRecyclerView.setAdapter(appAdapter);
             finish();
         }
     }
@@ -128,9 +130,10 @@ public class ActivityAppEdit extends AppCompatActivity {
         else
             apps.set(appPos, app);
         AppsTable appsTable = new AppsTable();
-        appsTable.makeTable(apps);
-        appsTable.put(this);
+        appsTable.put();
+        appsTable.makeTable();
         appAdapter = new AppAdapter();
+        appRecyclerView.setAdapter(appAdapter);
         fragNumber = 3;
         finish();
     }

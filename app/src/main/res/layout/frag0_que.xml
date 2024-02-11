@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:id="@+id/fragment_table"
     android:orientation="vertical"
-  android:background="@color/color_tab_que_background"
+  android:background="@color/color_tab_log_background"
     >
 
     <LinearLayout

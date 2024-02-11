@@ -30,7 +30,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         if (apps == null || apps.size() == 0) {
-            apps = new AppsTable().get();
+            new AppsTable().get();
         }
         return apps.size();
     }

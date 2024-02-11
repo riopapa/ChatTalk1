@@ -84,6 +84,8 @@ public class NotificationListener extends NotificationListenerService {
             utils = new Utils();
         if (sbnBundle == null)
             sbnBundle = new SbnBundle();
+        if (sbnBundle.bypassSbn(sbn))
+            return;
 
         if (notificationBar == null)
             notificationBar  = new NotificationBar();
@@ -93,9 +95,6 @@ public class NotificationListener extends NotificationListenerService {
 
         if (kvCommon == null)
             kvCommon = new KeyVal();
-
-        if (sbnBundle.bypassSbn(sbn))
-            return;
 
         switch (sbnAppType) {
 
@@ -272,7 +271,7 @@ public class NotificationListener extends NotificationListenerService {
         if (sbnText.contains("연결됨")) {
             long nowTime = System.currentTimeMillis();
             if ((nowTime - tesla_time) > 50 * 60 * 1000)    // 50 min.
-                sounds.beepOnce(Vars.soundType.HELLO_TESLA.ordinal());
+                sounds.beepOnce(Vars.soundType.HI_TESLA.ordinal());
             tesla_time = nowTime;
             return;
         }

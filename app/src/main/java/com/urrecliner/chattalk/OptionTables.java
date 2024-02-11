@@ -51,7 +51,7 @@ class OptionTables {
         }
         readReplacesFile();
         readTelegramTable();
-        apps = new AppsTable().get();
+        new AppsTable().get();
 
     }
 

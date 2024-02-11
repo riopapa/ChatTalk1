@@ -68,7 +68,6 @@ public class Fragment_0Logs extends Fragment {
 
     @Override
     public void onResume() {
-        fragNumber = 0;
         topTabs.getTabAt(fragNumber).select();
         aBar.setTitle(topTabs.getTabAt(fragNumber).getText().toString());
         aBar.setSubtitle(null);

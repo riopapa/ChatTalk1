@@ -91,7 +91,8 @@ public class ActivityMain extends AppCompatActivity {
             vars = new Vars(mContext);
         aBar = getSupportActionBar();
 
-        notificationService  = new NotificationService();
+        if (notificationService == null)
+            notificationService  = new NotificationService();
 
         //        new NotificationStart(pContext);
         if (!BootReceiver.isServiceRunning(mContext, notificationService.getClass())) {
@@ -99,7 +100,6 @@ public class ActivityMain extends AppCompatActivity {
 //            pContext.startForegroundService(mBackgroundServiceIntent);
             mContext.startService(mBackgroundServiceIntent);
         }
-
     }
 
 
@@ -165,7 +165,7 @@ public class ActivityMain extends AppCompatActivity {
 
     private void establishTabs() {
 
-//        if (topTabs == null) {
+        if (topTabs == null) {
             topTabs = findViewById(R.id.tab_layout);
             topTabs.removeAllTabs();
             topTabs.addTab(topTabs.newTab().setText("Logs"));
@@ -175,13 +175,13 @@ public class ActivityMain extends AppCompatActivity {
             topTabs.addTab(topTabs.newTab().setText("Alerts"));
             topTabs.addTab(topTabs.newTab().setText("Chats"));
             topTabs.setTabGravity(TabLayout.GRAVITY_FILL);
-//        }
-//        if (viewPager2 == null) {
+        }
+        if (viewPager2 == null) {
             viewPager2 = findViewById(R.id.pager2);
             FragmentStateAdapter pagerAdapter = new PagerAdapter(this);
             viewPager2.setAdapter(pagerAdapter);
             viewPager2.setPageTransformer(new ZoomOutPageTransformer());
-//        }
+        }
 //        viewPager2.setCurrentItem(0);
         topTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -195,12 +195,10 @@ public class ActivityMain extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {}
         });
         if (fragNumber == -1) {
-            Log.e("frag","fragNumber after onResume is -1");
-            fragNumber = 0;
+            fragNumber = 0; // initiated
         }
         if(topTabs != null) {
             fragNumber = topTabs.getSelectedTabPosition();
-            Log.w("topTabs", "found "+fragNumber);
             viewPager2.setCurrentItem(fragNumber);
             viewPager2.invalidate();
             topTabs.getTabAt(fragNumber).select();

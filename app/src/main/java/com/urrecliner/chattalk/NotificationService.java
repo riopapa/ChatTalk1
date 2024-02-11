@@ -14,7 +14,9 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
@@ -69,10 +71,17 @@ public class NotificationService extends Service {
             Log.e("operation"+operation,e.toString());
         }
         if (operation == -1) {
-            return START_STICKY;
+//            PackageManager packageManager = getPackageManager();
+//            intent = packageManager.getLaunchIntentForPackage(getPackageName());
+//            ComponentName componentName = intent.getComponent();
+//            Intent mainIntent = Intent.makeRestartActivityTask(componentName);
+//            startActivity(mainIntent);
+//            System.exit(0);
+            return START_NOT_STICKY;
         }
         if (msg1.equals(""))
             msgGet();
+
         switch (operation) {
 
             case SHOW_MESSAGE:
