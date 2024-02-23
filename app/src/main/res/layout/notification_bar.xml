@@ -10,6 +10,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/line_upper"
         android:background="@color/barLine1"
         android:layout_margin="1dp"
         android:layout_width="match_parent"

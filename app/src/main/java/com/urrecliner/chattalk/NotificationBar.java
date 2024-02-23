@@ -13,6 +13,9 @@ import android.util.Log;
 
 public class NotificationBar {
 
+    public NotificationBar() {
+        Log.e("noti bar", "loaded new ");
+    }
 
     public static void update(String who, String msg, boolean stop_icon) {
 

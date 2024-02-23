@@ -1,8 +1,6 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.NotificationListener.notificationService;
 import static com.urrecliner.chattalk.NotificationListener.sounds;
-import static com.urrecliner.chattalk.Vars.audioReady;
 import static com.urrecliner.chattalk.Vars.beepRawIds;
 import static com.urrecliner.chattalk.Vars.isPhoneBusy;
 import static com.urrecliner.chattalk.Vars.mContext;
@@ -25,9 +23,7 @@ class Sounds {
     static TextToSpeech mTTS = null;
     static String TTSId = "";
     AudioManager audioManager = null;
-    // 한글, 영문, 숫자만 OK
-//                    final String match = "[^\uAC00-\uD7A3xfe0-9a-zA-Z.,\\-\\s]";
-    final String match = "[^\uAC00-\uD7A3\u3131-\u314E\\da-zA-Z.,\\-]";     // 가~힣 ㄱ~ㅎ
+
     void init() {
 
         stopTTS();
@@ -96,31 +92,31 @@ class Sounds {
                 beepOnce(Vars.soundType.PRE.ordinal());
             }
         }
-        if (mTTS == null)
+
+        long delay = 150;
+        if (mTTS == null) {
             init();
+            delay = 30;
+        }
 
         if (isActive()) {
             isTalking = true;
             audioManager.requestAudioFocus(mFocusGain);
             new Timer().schedule(new TimerTask() {
                 public void run() {
-                    String speakText = text.replaceAll(match, " ");
-                    int idx = speakText.indexOf("http");
-                    if (idx > 0)
-                        speakText = speakText.substring(0, idx) + " 링크 있음";
                     try {
-                        mTTS.speak(speakText, TextToSpeech.QUEUE_ADD, null, TTSId);
+                        mTTS.speak(onlySpeakable(text), TextToSpeech.QUEUE_ADD, null, TTSId);
                     } catch (Exception e) {
                         new Utils().logE("Sound", "TTS Error:" + e);
                     }
                 }
-            }, 300);
+            }, delay);
         }
     }
+
     public void speakBuyStock(String text) {
 
         if (isSilent()) {
-            audioReady = true;
             return;
         }
         if (sounds == null)
@@ -131,19 +127,24 @@ class Sounds {
             audioManager.requestAudioFocus(mFocusGain);
             new Timer().schedule(new TimerTask() {
                 public void run() {
-                    String speakText = text.replaceAll(match, " ");
-                    int idx = speakText.indexOf("http");
-                    if (idx > 0)
-                        speakText = speakText.substring(0, idx) + " 링크 있음";
                     try {
                         isTalking = true;
-                        mTTS.speak(speakText, TextToSpeech.QUEUE_ADD, null, TTSId);
+                        mTTS.speak(onlySpeakable(text), TextToSpeech.QUEUE_ADD, null, TTSId);
                     } catch (Exception e) {
                         new Utils().logE("Sound", "TTS Error:" + e);
                     }
                 }
-            }, 150);
+            }, 100);
         }
+    }
+
+    String onlySpeakable(String text) {
+        // 한글, 영문, 숫자만 OK
+        int idx = text.indexOf("http");
+        if (idx > 0)
+            text = text.substring(0, idx) + " 링크 있음";
+        final String match = "[^\uAC00-\uD7A3\u3131-\u314E\\da-zA-Z.,\\-]";     // 가~힣 ㄱ~ㅎ
+        return text.replaceAll(match, " ");
     }
 
     void beepOnce(int soundNbr) {

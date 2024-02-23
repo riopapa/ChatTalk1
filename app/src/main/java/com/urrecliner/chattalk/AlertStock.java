@@ -21,6 +21,8 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.urrecliner.chattalk.model.AlertLine;
 import com.urrecliner.chattalk.alerts.AlertToast;
@@ -38,6 +40,8 @@ public class AlertStock {
 
         if (utils == null)
             utils = new Utils();
+        if (sounds == null)
+            sounds = new Sounds();
 
         AlertLine al = alertLines.get(aIdx);
         al.matched++;
@@ -54,42 +58,36 @@ public class AlertStock {
         sParse[1] = utils.removeSpecialChars(sParse[1]);
         sParse[1] = utils.strShorten(iGroup, sParse[1]);
 
-        // sParse[0] : stockName, sParse[1] : replaced text
         String keyStr = key12+sTalk;
-        Thread thisThread = new Thread(() -> {
-            if (sTalk.length() > 0) {
-//                String cho = new ZHangul_UnUsed().getCho(stock_Name);
-//                if (cho.length() > 4)
-//                    cho = cho.substring(0,4);
-//                String[] joins = new String[]{who, group, who, stock_Name, sTalk, cho, stock_Name, iText};
-                String shortParse1 = (sParse[1].length() > 50) ? sParse[1].substring(0, 50) : sParse[1];
-                String[] joins = new String[]{iGroup, who, sParse[0], sTalk, sParse[0]};
-                sounds.speakBuyStock(String.join(" , ", joins));
-                String title = sParse[0]+" / "+who;
-                NotificationBar.update(title, shortParse1, true);
-                logUpdate.addStock(sParse[0] + " ["+iGroup+":"+who+"]", sParse[1]+key12);
-                copyToClipBoard(sParse[0]);
-                if (isSilentNow()) {
-                    if (phoneVibrate == null)
-                        phoneVibrate = new PhoneVibrate();
-                    phoneVibrate.vib();
-                }
-                new AlertToast().show(mContext, mActivity, title);
-                new NotifyStock().send(mContext, title, sParse[0], shortParse1);
-            } else {
-                String title = sParse[0]+" | "+iGroup+". "+who;
-                logUpdate.addStock(title, sParse[1] + key12);
-                if (!isSilentNow()) {
-                    sounds.beepOnce(Vars.soundType.ONLY.ordinal());
-                }
-                String shortParse1 = (sParse[1].length() > 50) ? sParse[1].substring(0, 50) : sParse[1];
-                NotificationBar.update(title, shortParse1, false);
+        if (sTalk.length() > 0) {
+            String[] joins = new String[]{iGroup, who, sParse[0], sTalk, sParse[0]};
+            sounds.speakBuyStock(String.join(" , ", joins));
+            String shortParse1 = (sParse[1].length() > 50) ? sParse[1].substring(0, 50) : sParse[1];
+            Log.w(iGroup, shortParse1);
+            String title = sParse[0]+" / "+who;
+            NotificationBar.update(title, shortParse1, true);
+            logUpdate.addStock(sParse[0] + " ["+iGroup+":"+who+"]", sParse[1]+key12);
+            copyToClipBoard(sParse[0]);
+            if (isSilentNow()) {
+                if (phoneVibrate == null)
+                    phoneVibrate = new PhoneVibrate();
+                phoneVibrate.vib();
             }
-            save(al, mContext);
-            String timeStamp = new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date());
-            FileIO.uploadStock(iGroup, who, percent, sParse[0], sParse[1], keyStr, timeStamp);
-        });
-        thisThread.start();
+            new AlertToast().show(mContext, mActivity, title);
+            new NotifyStock().send(mContext, title, sParse[0], shortParse1);
+        } else {
+            String title = sParse[0]+" | "+iGroup+". "+who;
+            logUpdate.addStock(title, sParse[1] + key12);
+            if (!isSilentNow()) {
+                sounds.beepOnce(Vars.soundType.ONLY.ordinal());
+            }
+            String shortParse1 = (sParse[1].length() > 50) ? sParse[1].substring(0, 50) : sParse[1];
+            NotificationBar.update(title, shortParse1, false);
+        }
+        save(al, mContext);
+        String timeStamp = new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date());
+        FileIO.uploadStock(iGroup, who, percent, sParse[0], sParse[1], keyStr, timeStamp);
+
     }
 
     private void save(AlertLine al, Context context) {

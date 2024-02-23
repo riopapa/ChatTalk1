@@ -12,7 +12,7 @@
     <item
         android:id="@+id/save_apps"
         android:orderInCategory="100"
-        android:icon="@drawable/save_file"
+        android:icon="@drawable/save_diskette"
         app:showAsAction="always"
         android:title="@string/todo" />
 

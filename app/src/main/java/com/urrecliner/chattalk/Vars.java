@@ -90,7 +90,6 @@ public class Vars {
 
     static final int SHOW_MESSAGE = 1234;
     static final int HIDE_STOP = 5678;
-    static final int LOAD_NH_STOCK = 4321;
     static String logQue = "", logSave = "", logStock = "";
     static ActionBar aBar = null;
     static AudioFocusRequest mFocusGain = null;
@@ -116,7 +115,6 @@ public class Vars {
     static final int[] beepRawIds = { R.raw.pre, R.raw.post, R.raw.err,
             R.raw.hi_tesla, R.raw.only, R.raw.stock_check, R.raw.inform};
 
-    public static boolean audioReady = true;
     public static class DelItem {
         String logNow;
         int ps, pf;

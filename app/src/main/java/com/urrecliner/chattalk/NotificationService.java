@@ -3,9 +3,7 @@ package com.urrecliner.chattalk;
 import static com.urrecliner.chattalk.NotificationListener.sounds;
 import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.HIDE_STOP;
-import static com.urrecliner.chattalk.Vars.LOAD_NH_STOCK;
 import static com.urrecliner.chattalk.Vars.SHOW_MESSAGE;
-import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.sharePref;
 import static com.urrecliner.chattalk.Vars.sharedEditor;
@@ -14,10 +12,10 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -38,6 +36,7 @@ public class NotificationService extends Service {
     String pkgName;
     private RemoteViews mRemoteViews;
     private static final int STOP_SAY1 = 10011;
+    private static final int RELOAD_APP = 2022;
     static String msg1 = "", head1 = "00:99";
     static String msg2 = "", head2 = "00:99";
     static boolean show_stop = false;
@@ -71,12 +70,6 @@ public class NotificationService extends Service {
             Log.e("operation"+operation,e.toString());
         }
         if (operation == -1) {
-//            PackageManager packageManager = getPackageManager();
-//            intent = packageManager.getLaunchIntentForPackage(getPackageName());
-//            ComponentName componentName = intent.getComponent();
-//            Intent mainIntent = Intent.makeRestartActivityTask(componentName);
-//            startActivity(mainIntent);
-//            System.exit(0);
             return START_NOT_STICKY;
         }
         if (msg1.equals(""))
@@ -97,9 +90,9 @@ public class NotificationService extends Service {
 
                 break;
 
-            case LOAD_NH_STOCK:
+            case RELOAD_APP:
 
-                launchNHStock();
+                reload_App();
                 break;
 
             case STOP_SAY1:
@@ -120,13 +113,12 @@ public class NotificationService extends Service {
         return START_STICKY;
     }
 
-    private void launchNHStock() {
-        Log.w("xLaunch", "Launching nsStock");
-        Intent appIntent = mContext.getPackageManager().getLaunchIntentForPackage(
-                "com.wooriwm.txsmart");
-        appIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP |
-                Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-        mContext.startForegroundService(appIntent);
+    private void reload_App() {
+        Log.w("reload","App reloading");
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            Intent intent = new Intent(mContext, ActivityMain.class);
+            startActivity(intent);
+        }, 100);
     }
 
     private void createNotification() {
@@ -146,6 +138,13 @@ public class NotificationService extends Service {
                 .setLargeIcon(null)
 //                .setStyle(new NotificationCompat.BigTextStyle())
                 .setOngoing(true);
+
+
+        Intent reloadI = new Intent(this, NotificationService.class);
+        reloadI.putExtra("operation", RELOAD_APP);
+        PendingIntent oneP = PendingIntent.getService(mContext, RELOAD_APP, reloadI, PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(oneP);
+        mRemoteViews.setOnClickPendingIntent(R.id.line_upper, oneP);
 
         Intent mIntent = new Intent(mContext, ActivityMain.class);
         mRemoteViews.setOnClickPendingIntent(R.id.ll_customNotification,

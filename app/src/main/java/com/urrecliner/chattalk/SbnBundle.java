@@ -1,5 +1,6 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.appNameIdx;
 import static com.urrecliner.chattalk.Vars.apps;
 import static com.urrecliner.chattalk.Vars.appIgnores;
@@ -26,7 +27,10 @@ import java.util.Collections;
 
 public class SbnBundle {
 
-    Utils utils = null;
+    public SbnBundle() {
+        Log.w("sbnBundle","new SbnBundle");
+    }
+
     public boolean bypassSbn(StatusBarNotification sbn) {
 
         sbnAppName = sbn.getPackageName();  // to LowCase
@@ -67,23 +71,23 @@ public class SbnBundle {
             case "com.kakao.talk":
                 sbnAppNick = "카톡";
                 sbnAppType = "kk";
-
                 break;
+
             case "viva.republica.toss":
                 sbnAppNick = "토스";
                 sbnAppType = "tos";
-
                 break;
+
             case "org.telegram.messenger":
                 sbnAppNick = "텔레";
                 sbnAppType = "tG";
-
                 break;
+
             case "com.samsung.android.messaging":
                 sbnAppNick = "문자";
                 sbnAppType = "sms";
-
                 break;
+
             default:
                 if (apps == null || appIgnores == null) {
                     new AppsTable().get();

@@ -43,20 +43,20 @@ public class NotificationListener extends NotificationListenerService {
     public static Utils utils = null;
 
     public static KeyVal kvCommon = null;
-    static KeyVal kvKakao = null;
-    static KeyVal kvSMS = null;
-    static KeyVal kvTelegram = null;
-    static KeyVal kvStock = null;
-    static Vars vars = null;
-    static LoadFunction loadFunction = null;
-    static MsgKaTalk msgKaTalk = null;
-    static MsgSMS msgSMS = null;
-    static SbnBundle sbnBundle = null;
-    static NotificationBar notificationBar = null;
-    static NotificationService notificationService = null;
-    static StockName stockName = null;
-    public static PhoneVibrate phoneVibrate = null;
-    public static VibratorManager vibManager = null;
+    public static KeyVal kvKakao = null;
+    public static KeyVal kvSMS = null;
+    public static KeyVal kvTelegram = null;
+    public static KeyVal kvStock = null;
+    public static Vars vars;
+    public static LoadFunction loadFunction = null;
+    public static MsgKaTalk msgKaTalk = null;
+    public static MsgSMS msgSMS = null;
+    public static SbnBundle sbnBundle;
+    public static NotificationBar notificationBar;
+    public static NotificationService notificationService;
+    public static StockName stockName;
+    public static PhoneVibrate phoneVibrate;
+    public static VibratorManager vibManager;
     public static Vibrator vibrator = null;
     public static VibrationEffect vibEffect = null;
 //    public static final long[] vibPattern = {0, 20, 200, 300, 300, 400, 400, 500, 550, 10, 20, 200, 300, 300};
@@ -126,7 +126,7 @@ public class NotificationListener extends NotificationListenerService {
                     if (kvKakao.isDup(sbnGroup, sbnText))
                         return;
                     if (msgKaTalk == null)
-                        msgKaTalk = new MsgKaTalk("by katk");
+                        msgKaTalk = new MsgKaTalk("by kat");
                     msgKaTalk.say(sbnGroup, sbnWho, sbnText);
                 }
                 break;
@@ -213,6 +213,7 @@ public class NotificationListener extends NotificationListenerService {
                     }
                 }
                 if (sbnApp.nickName.equals("NH나무")) {
+                    utils.logW(sbnApp.nickName,sbnText);
                     new MsgNamoo().say(utils.text2OneLine(sbnText));
                     break;
                 }
