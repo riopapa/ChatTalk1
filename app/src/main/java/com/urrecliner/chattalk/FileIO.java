@@ -1,11 +1,9 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.packageDirectory;
 import static com.urrecliner.chattalk.Vars.toDay;
 import static com.urrecliner.chattalk.Vars.todayFolder;
 
-import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 

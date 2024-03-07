@@ -2,10 +2,7 @@ package com.urrecliner.chattalk;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
-import static com.urrecliner.chattalk.NotificationListener.kvTelegram;
 import static com.urrecliner.chattalk.NotificationListener.logUpdate;
-import static com.urrecliner.chattalk.NotificationListener.notificationBar;
-import static com.urrecliner.chattalk.NotificationListener.notificationService;
 import static com.urrecliner.chattalk.NotificationListener.phoneVibrate;
 import static com.urrecliner.chattalk.NotificationListener.sounds;
 import static com.urrecliner.chattalk.NotificationListener.stockName;
@@ -13,8 +10,6 @@ import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.alertLines;
 import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
-import static com.urrecliner.chattalk.Vars.sbnText;
-import static com.urrecliner.chattalk.Vars.sbnWho;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -22,12 +17,11 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.urrecliner.chattalk.model.AlertLine;
-import com.urrecliner.chattalk.alerts.AlertToast;
 import com.urrecliner.chattalk.Sub.PhoneVibrate;
+import com.urrecliner.chattalk.alerts.AlertToast;
 import com.urrecliner.chattalk.alerts.StockName;
+import com.urrecliner.chattalk.model.AlertLine;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -54,18 +48,28 @@ public class AlertStock {
         if (stockName == null)
             stockName = new StockName();
         String [] sParse = stockName.get(al.prev, al.next, iText);
-
-        sParse[1] = utils.removeSpecialChars(sParse[1]);
-        sParse[1] = utils.strShorten(iGroup, sParse[1]);
+        sParse[1] = utils.strShorten(iGroup, utils.removeSpecialChars(sParse[1]));
 
         String keyStr = key12+sTalk;
-        if (sTalk.length() > 0) {
-            String[] joins = new String[]{iGroup, who, sParse[0], sTalk, sParse[0]};
+        if (!sTalk.isEmpty()) {
+            String [] joins;
+            String won = "";
+            if (iGroup.equals("텔단타") || iGroup.equals("텔데봇")) {
+                // 매수가 가 있으면 금액 말하기
+                String [] ss = sParse[1].split("매수가");
+                if (ss.length > 0) {
+                    int p = ss[1].indexOf("원");
+                    won = (p > 0) ? ss[1].substring(2,p) :ss[1].substring(0,7);
+                }
+                joins = new String[]{iGroup, who, sParse[0], sTalk, won};
+            } else {
+                joins = new String[]{iGroup, who, sParse[0], sTalk, sParse[0]};
+            }
             sounds.speakBuyStock(String.join(" , ", joins));
-            String shortParse1 = (sParse[1].length() > 50) ? sParse[1].substring(0, 50) : sParse[1];
-            Log.w(iGroup, shortParse1);
-            String title = sParse[0]+" / "+who;
-            NotificationBar.update(title, shortParse1, true);
+            String netStr = won + " " + ((sParse[1].length() > 50) ? sParse[1].substring(0, 50) : sParse[1]);
+            Log.w(iGroup, netStr);
+            String title = sParse[0]+" / " + who;
+            NotificationBar.update(title, netStr, true);
             logUpdate.addStock(sParse[0] + " ["+iGroup+":"+who+"]", sParse[1]+key12);
             copyToClipBoard(sParse[0]);
             if (isSilentNow()) {
@@ -74,7 +78,7 @@ public class AlertStock {
                 phoneVibrate.vib();
             }
             new AlertToast().show(mContext, mActivity, title);
-            new NotifyStock().send(mContext, title, sParse[0], shortParse1);
+            new NotifyStock().send(mContext, title, sParse[0], netStr);
         } else {
             String title = sParse[0]+" | "+iGroup+". "+who;
             logUpdate.addStock(title, sParse[1] + key12);

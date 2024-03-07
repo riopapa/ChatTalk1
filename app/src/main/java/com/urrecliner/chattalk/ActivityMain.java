@@ -87,12 +87,10 @@ public class ActivityMain extends AppCompatActivity {
             startActivity(intent);
         }
 
-        if (vars == null)
-            vars = new Vars(mContext);
+        vars = new Vars(mContext);
         aBar = getSupportActionBar();
 
-        if (notificationService == null)
-            notificationService  = new NotificationService();
+        notificationService  = new NotificationService();
 
         //        new NotificationStart(pContext);
         if (!BootReceiver.isServiceRunning(mContext, notificationService.getClass())) {
@@ -101,7 +99,6 @@ public class ActivityMain extends AppCompatActivity {
             mContext.startService(mBackgroundServiceIntent);
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -124,7 +121,7 @@ public class ActivityMain extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        Log.w("mm Main","OnResume");
+        Log.w("mm Main","OnResume "+fragNumber);
         if (packageDirectory == null)
             packageDirectory = new File(Environment.getExternalStorageDirectory(), "_ChatTalkLog");
 
@@ -188,6 +185,9 @@ public class ActivityMain extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 fragNumber = tab.getPosition();
                 viewPager2.setCurrentItem(fragNumber);
+                topTabs.getTabAt(fragNumber).select();
+                aBar.setTitle(topTabs.getTabAt(fragNumber).getText().toString());
+                aBar.setSubtitle(null);
             }
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {}
@@ -204,6 +204,8 @@ public class ActivityMain extends AppCompatActivity {
             topTabs.getTabAt(fragNumber).select();
             aBar.setTitle(topTabs.getTabAt(fragNumber).getText().toString());
             aBar.setSubtitle(null);
+        } else {
+            establishTabs();
         }
         findViewById(R.id.main_layout).invalidate();
     }

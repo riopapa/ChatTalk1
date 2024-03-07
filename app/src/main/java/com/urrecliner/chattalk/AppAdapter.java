@@ -29,7 +29,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        if (apps == null || apps.size() == 0) {
+        if (apps == null || apps.isEmpty()) {
             new AppsTable().get();
         }
         return apps.size();
@@ -83,7 +83,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
         App al = apps.get(appPos);
 
         holder.tNickName.setText(al.nickName);
-        String merged = (al.memo.length() > 0) ? al.memo + " | "+al.fullName: " "+ al.fullName;
+        String merged = (!al.memo.isEmpty()) ? al.memo + " | "+al.fullName: " "+ al.fullName;
         holder.tFullName.setText(merged);
 
         Drawable drawable = getPackageIcon(al.fullName, holder.pm);

@@ -51,9 +51,7 @@ class MsgKaTalk {
             if (nowTime < timeBegin || nowTime > timeEnd) {
                 return;
             }
-            if (aGroupsPass.get(grpIdx) || text.length() < 8)
-                return;
-            if (aGroupSaid[grpIdx].equals(text))
+            if (text.length() < 14 || aGroupsPass.get(grpIdx) || aGroupSaid[grpIdx].equals(text))
                 return;
             aGroupSaid[grpIdx] = text;
             if (text.contains(aGSkip1[grpIdx]) || text.contains(aGSkip2[grpIdx]) ||
@@ -66,7 +64,6 @@ class MsgKaTalk {
             for (int i = 0; i < aGroupWhoKey1[grpIdx][gWhoIdx].length; i++) {
                 if (!text.contains(aGroupWhoKey1[grpIdx][gWhoIdx][i]))
                     continue;
-
                 if (!text.contains(aGroupWhoKey2[grpIdx][gWhoIdx][i]))
                     continue;
                 if (text.contains(aGroupWhoSkip[grpIdx][gWhoIdx][i]))
@@ -74,11 +71,10 @@ class MsgKaTalk {
                 if (loadFunction == null)
                     loadFunction = new LoadFunction();
                 alertStock.sayNlog(group, text, aAlertLineIdx[grpIdx][gWhoIdx][i]);
-                int fI = i;
                 if (alertsAdapter == null)
                     alertsAdapter = new AlertsAdapter();
                 else {
-                    alertsAdapter.notifyItemChanged(aAlertLineIdx[grpIdx][gWhoIdx][fI]);
+                    alertsAdapter.notifyItemChanged(aAlertLineIdx[grpIdx][gWhoIdx][i]);
                 }
                 return;
             }

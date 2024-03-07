@@ -31,7 +31,7 @@ public class KeyVal {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if (maps.size() > 0) {
+        if (!maps.isEmpty()) {
             int i = 0;
             for (String key : maps.keySet()) {
                 sb.append(i++).append(") [").append(key).append("] > ")
@@ -39,14 +39,7 @@ public class KeyVal {
             }
         } else
             sb.append("no data\n");
-        super.toString();
         return sb.toString();
     }
 
-    public String convertWithStream(Map<Integer, ?> map) {
-        String mapAsString = map.keySet().stream()
-                .map(key -> key + "=" + map.get(key))
-                .collect(Collectors.joining(", ", "{", "}"));
-        return mapAsString;
-    }
 }

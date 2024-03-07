@@ -69,7 +69,7 @@ public class LogUpdate {
     /*
         Remove upper lines, then 3/4 is without \n
      */
-    private String squeezeLog(String logStr, String queName) {
+    String squeezeLog(String logStr, String queName) {
         logStr = logStr.replace("    ","")
                         .replace("\n\n","\n");
         String [] sLog = logStr.split("\n");
@@ -89,22 +89,22 @@ public class LogUpdate {
         sb = new StringBuilder();
         for (; row < sLen * 3/4; row++) {   // without blank line
             String s = sLog[row].trim();
-            if (s.length() > 0) {
+            if (!s.isEmpty()) {
                 if (s.length() > 50)
-                    s = s.substring(0, 50) + " ▶";
+                    s = s.substring(0, 50) + "...";
                 sb.append(s).append("\n");
             }
         }
+        sb.append("- sqz -\n");
+
         for (; row < sLen; row++) { // with blank line
             String s = sLog[row].trim();
-            if (s.length() > 0) {
+            if (!s.isEmpty()) {
                 if (StringUtils.isNumeric("" + s.charAt(0)))
                     sb.append("\n");
                 sb.append("\n").append(s);
             }
         }
-        sb.append("\n\n").append(TIME_INFO.format(new Date()))
-                .append(" **/").append("\n---- squeezed  -----\n\n");
         return  sb.toString();
     }
 

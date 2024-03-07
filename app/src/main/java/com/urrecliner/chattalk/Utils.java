@@ -108,7 +108,7 @@ class Utils {
     }
 
     String makeEtc (String s, int len) {
-        return (s.length() < len)? s : s.substring(0, len) + " ˚ 등등";
+        return (s.length() < len)? s : s.substring(0, len) + " 등등";
     }
 
     String replaceKKHH(String text) {

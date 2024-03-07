@@ -17,6 +17,13 @@
         android:title="@string/todo" />
 
     <item
+        android:id="@+id/delete_many"
+        android:orderInCategory="100"
+        android:icon="@drawable/line_remove_many"
+        app:showAsAction="always"
+        android:title="@string/todo" />
+
+    <item
         android:id="@+id/delete_1_line"
         android:orderInCategory="100"
         android:icon="@drawable/line_remove1"

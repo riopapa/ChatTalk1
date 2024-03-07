@@ -1,7 +1,5 @@
 package com.urrecliner.chattalk;
 
-import static com.urrecliner.chattalk.NotificationListener.notificationBar;
-import static com.urrecliner.chattalk.NotificationListener.notificationService;
 import static com.urrecliner.chattalk.NotificationListener.vars;
 
 import android.app.ActivityManager;

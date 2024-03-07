@@ -8,6 +8,7 @@
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="android:actionButtonStyle">@style/MyActionButtonStyle</item>
     </style>
 
     <style name="tab" parent="@android:style/TextAppearance.Widget.TabWidget">
@@ -20,6 +21,11 @@
         <item name="android:scrollbarStyle">insideOverlay</item>
         <item name="android:scrollbars">vertical</item>
         <item name="android:fadeScrollbars">false</item>
+    </style>
+
+    <style name="MyActionButtonStyle" parent="AppTheme">
+        <item name="android:minWidth">6dp</item>
+        <item name="android:padding">2dp</item>
     </style>
 
 <!--    <item name="android:scrollbarThumbVertical">@drawable/up_down</item>-->

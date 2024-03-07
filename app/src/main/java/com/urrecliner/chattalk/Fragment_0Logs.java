@@ -1,5 +1,6 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.NotificationListener.logUpdate;
 import static com.urrecliner.chattalk.Vars.aBar;
 import static com.urrecliner.chattalk.Vars.downloadFolder;
 import static com.urrecliner.chattalk.Vars.logQue;
@@ -20,7 +21,6 @@ import android.text.Selection;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.BackgroundColorSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -132,7 +132,7 @@ public class Fragment_0Logs extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         mainMenu = menu;
-        inflater.inflate(R.menu.menu_1que, menu);
+        inflater.inflate(R.menu.menu_1log, menu);
         super.onCreateOptionsMenu(menu, inflater);
         aBar.setTitle(topTabs.getTabAt(0).getText().toString());
         aBar.setSubtitle(null);
@@ -147,6 +147,17 @@ public class Fragment_0Logs extends Fragment {
 
         } else if (item.getItemId() == R.id.action_reload) {
             reload_loqQue();
+
+        } else if (item.getItemId() == R.id.delete_many) {
+            int currPos = etTable.getSelectionStart();
+            int logLen = logQue.length();
+            logQue = logUpdate.squeezeLog(logQue,"logQue");
+            if (currPos > 0)
+                currPos += logQue.length() - logLen;
+            ss = new LogSpann().make(logQue, mContext);
+            etTable.setText(ss);
+            Selection.setSelection(ss, currPos, currPos + 1);
+            etTable.requestFocus();
 
         } else if (item.getItemId() == R.id.delete_1_line) {
             showNextQue(new LogSpann().delOneLine(etTable.getText().toString(),

@@ -182,7 +182,7 @@ public class ActivityEditAlert extends AppCompatActivity {
         String key1 = eKey1.getText().toString().trim();
         String key2 = eKey2.getText().toString().trim();
         String matchStr = eMatched.getText().toString();
-        int matchInt = matchStr.equals("") ? 0: Integer.parseInt(matchStr);
+        int matchInt = matchStr.isEmpty() ? 0: Integer.parseInt(matchStr);
         String more = eMore.getText().toString();
         String mTalk = eTalk.getText().toString();
         String skip = eSkip.getText().toString();

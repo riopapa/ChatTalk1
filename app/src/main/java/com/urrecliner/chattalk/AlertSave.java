@@ -9,11 +9,8 @@ import static com.urrecliner.chattalk.Vars.todayFolder;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
-import com.urrecliner.chattalk.model.AlertLine;
-import com.urrecliner.chattalk.Sub.ByteLength;
 import com.urrecliner.chattalk.Sub.SnackBar;
-
-import org.apache.commons.lang3.StringUtils;
+import com.urrecliner.chattalk.model.AlertLine;
 
 public class AlertSave {
     public AlertSave(String msg) {

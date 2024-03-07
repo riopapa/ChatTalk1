@@ -1,5 +1,6 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.ActivityMain.fragNumber;
 import static com.urrecliner.chattalk.NotificationListener.sounds;
 import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.HIDE_STOP;
@@ -42,7 +43,7 @@ public class NotificationService extends Service {
     static boolean show_stop = false;
 //
     public NotificationService() {
-        Log.e("noti Svc", "loaded new ");
+        Log.e("noti Svc", "new");
     }
 
     @Override
@@ -116,7 +117,9 @@ public class NotificationService extends Service {
     private void reload_App() {
         Log.w("reload","App reloading");
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            fragNumber = -1;
             Intent intent = new Intent(mContext, ActivityMain.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }, 100);
     }
