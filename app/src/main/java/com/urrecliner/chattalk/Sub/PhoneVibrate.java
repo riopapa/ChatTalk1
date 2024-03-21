@@ -1,16 +1,14 @@
 package com.urrecliner.chattalk.Sub;
 
-import static com.urrecliner.chattalk.NotificationListener.vibPattern;
 import static com.urrecliner.chattalk.NotificationListener.vibEffect;
+import static com.urrecliner.chattalk.NotificationListener.vibManager;
+import static com.urrecliner.chattalk.NotificationListener.vibPattern;
 import static com.urrecliner.chattalk.NotificationListener.vibrator;
 import static com.urrecliner.chattalk.Vars.mContext;
-import static com.urrecliner.chattalk.NotificationListener.vibManager;
 
 import android.content.Context;
 import android.os.VibrationEffect;
 import android.os.VibratorManager;
-
-import com.urrecliner.chattalk.NotificationListener;
 
 public class PhoneVibrate {
 

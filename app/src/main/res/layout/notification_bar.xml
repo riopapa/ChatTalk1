@@ -11,7 +11,7 @@
 
     <LinearLayout
         android:id="@+id/line_upper"
-        android:background="@color/barLine1"
+        android:background="@color/upper_line"
         android:layout_margin="1dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,7 +29,8 @@
             android:textSize="13sp"
             android:layout_marginStart="8dp"
             android:text="@string/_09_99"
-            android:textColor="@color/colorLine1"
+            android:textColor="@color/textLine1"
+            android:layout_margin="3sp"
             android:layout_gravity="center"
             android:background="@color/barLine1a"
             android:gravity="left"
@@ -40,6 +41,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="center"
+            android:layout_margin="3sp"
             android:layout_marginEnd="8dp"
             android:src="@drawable/stop_talking" />
     </LinearLayout>
@@ -55,13 +57,15 @@
             android:layout_height="match_parent"
             android:textSize="13sp"
             android:text=""
-            android:textColor="@color/colorLine1"
+            android:layout_margin="3sp"
+            android:textColor="@color/textLine1"
             android:layout_gravity="center"
             />
      </LinearLayout>
     </LinearLayout>
     <LinearLayout
-        android:background="@color/barLine2"
+        android:id="@+id/line_lower"
+        android:background="@color/lower_line"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="1dp"
@@ -78,22 +82,11 @@
                 android:layout_height="match_parent"
                 android:textSize="13sp"
                 android:text="@string/_09_99"
-                android:textColor="@color/colorLine1"
+                android:textColor="@color/textLine1"
+                android:layout_margin="3sp"
                 android:layout_gravity="center"
-                android:background="@color/barLine2a"
-                android:gravity="left"
+                android:background="@color/line2Back"
                 />
-<!--            <TextView-->
-<!--                android:id="@+id/msg_who2"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_weight="19"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:layout_margin="8dp"-->
-<!--                android:text="@string/app_name"-->
-<!--                android:textSize="13sp"-->
-<!--                android:textColor="@color/colorLine1"-->
-<!--                />-->
         </LinearLayout>
         <LinearLayout
             android:id="@+id/msg_line2"
@@ -108,7 +101,8 @@
                 android:layout_height="match_parent"
                 android:textSize="13sp"
                 android:text=""
-                android:textColor="@color/colorLine2"
+                android:layout_margin="3sp"
+                android:textColor="@color/textLine2"
                 android:layout_gravity="center"
                 />
 

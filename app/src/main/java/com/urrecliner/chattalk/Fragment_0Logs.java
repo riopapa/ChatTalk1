@@ -39,8 +39,6 @@ import com.urrecliner.chattalk.Sub.LogSpann;
 import com.urrecliner.chattalk.Sub.SnackBar;
 
 import java.io.File;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Fragment_0Logs extends Fragment {
 
@@ -132,7 +130,7 @@ public class Fragment_0Logs extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         mainMenu = menu;
-        inflater.inflate(R.menu.menu_1log, menu);
+        inflater.inflate(R.menu.menu_0log, menu);
         super.onCreateOptionsMenu(menu, inflater);
         aBar.setTitle(topTabs.getTabAt(0).getText().toString());
         aBar.setSubtitle(null);
@@ -144,9 +142,6 @@ public class Fragment_0Logs extends Fragment {
         if (item.getItemId() == R.id.delete_one_set) {
             showNextQue(new LogSpann().delOneSet(etTable.getText().toString(),
                     etTable.getSelectionStart(), mContext));
-
-        } else if (item.getItemId() == R.id.action_reload) {
-            reload_loqQue();
 
         } else if (item.getItemId() == R.id.delete_many) {
             int currPos = etTable.getSelectionStart();
@@ -196,15 +191,15 @@ public class Fragment_0Logs extends Fragment {
         sharedEditor.apply();
         etTable.setText(delItem.ss);
         scrollView1.post(() -> {
-            new Timer().schedule(new TimerTask() {
-                public void run() {
+//            new Timer().schedule(new TimerTask() {
+//                public void run() {
                     mActivity.runOnUiThread(() -> {
                         Editable etText = etTable.getText();
                         Selection.setSelection(etText, delItem.ps, delItem.pf);
                         etTable.requestFocus();
                     });
-                }
-            }, 50);
+//                }
+//            }, 50);
         });
     }
 

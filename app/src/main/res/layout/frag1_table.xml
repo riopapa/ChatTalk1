@@ -167,7 +167,7 @@
             android:orientation = "horizontal">
 
             <TextView
-                android:id = "@+id/k_group_who_ignores"
+                android:id = "@+id/k_group_ignores"
                 android:layout_width = "0dp"
                 android:layout_height = "wrap_content"
                 android:layout_margin = "@dimen/button_margin_size"
@@ -175,8 +175,22 @@
                 android:background = "@drawable/rounded_button3"
                 android:gravity = "center"
                 android:padding = "@dimen/table_padding_size"
-                android:tag = "ktGrpWhoIg"
-                android:text = "제외 그룹사람"
+                android:tag = "ktGrpIg"
+                android:text = "제외 그룹"
+                android:textSize = "@dimen/table_font_size"
+                android:textStyle = "bold" />
+
+            <TextView
+                android:id = "@+id/k_who_ignores"
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_margin = "@dimen/button_margin_size"
+                android:layout_weight = "1"
+                android:background = "@drawable/rounded_button3"
+                android:gravity = "center"
+                android:padding = "@dimen/table_padding_size"
+                android:tag = "ktWhoIg"
+                android:text = "제외 사람"
                 android:textSize = "@dimen/table_font_size"
                 android:textStyle = "bold" />
 

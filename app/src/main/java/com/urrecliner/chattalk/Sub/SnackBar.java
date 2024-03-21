@@ -1,5 +1,6 @@
 package com.urrecliner.chattalk.Sub;
 
+import static com.google.android.material.snackbar.Snackbar.*;
 import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mLayoutView;
 
@@ -13,9 +14,11 @@ import com.urrecliner.chattalk.R;
 
 public class SnackBar {
     public void show(String title, String text) {
-        if (mLayoutView == null)
+
+        if (mLayoutView == null) {
             mLayoutView = mActivity.findViewById(R.id.main_layout);
-        Snackbar snackbar = Snackbar.make(mLayoutView, "", Snackbar.LENGTH_SHORT);
+        }
+        Snackbar snackbar = make(mLayoutView, "", LENGTH_SHORT);
         View sView = mActivity.getLayoutInflater().inflate(R.layout.snack_message, null);
 
         TextView tv1 = sView.findViewById(R.id.text_header);
@@ -25,7 +28,7 @@ public class SnackBar {
         tv2.setText(text);
 
         // now change the layout of the ToastText
-        Snackbar.SnackbarLayout snackBarLayout = (Snackbar.SnackbarLayout) snackbar.getView();
+        SnackbarLayout snackBarLayout = (SnackbarLayout) snackbar.getView();
         snackBarLayout.setBackgroundColor(0x0033FFFF);  // transparent background
         FrameLayout.LayoutParams params =(FrameLayout.LayoutParams)snackBarLayout.getLayoutParams();
         params.gravity = Gravity.CENTER_VERTICAL;

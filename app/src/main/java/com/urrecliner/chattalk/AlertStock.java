@@ -18,6 +18,7 @@ import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.util.Log;
 
+import com.urrecliner.chattalk.Sub.Copy2Clipboard;
 import com.urrecliner.chattalk.Sub.PhoneVibrate;
 import com.urrecliner.chattalk.alerts.AlertToast;
 import com.urrecliner.chattalk.alerts.StockName;
@@ -71,7 +72,7 @@ public class AlertStock {
             String title = sParse[0]+" / " + who;
             NotificationBar.update(title, netStr, true);
             logUpdate.addStock(sParse[0] + " ["+iGroup+":"+who+"]", sParse[1]+key12);
-            copyToClipBoard(sParse[0]);
+            new Copy2Clipboard(sParse[0]);
             if (isSilentNow()) {
                 if (phoneVibrate == null)
                     phoneVibrate = new PhoneVibrate();
@@ -109,10 +110,5 @@ public class AlertStock {
                 mAudioManager.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE);
     }
 
-    void copyToClipBoard(String s) {
-        ClipboardManager clipboard = (ClipboardManager) mContext.getSystemService(CLIPBOARD_SERVICE);
-        ClipData clip = ClipData.newPlainText("stock", s);
-        clipboard.setPrimaryClip(clip);
-    }
 
 }

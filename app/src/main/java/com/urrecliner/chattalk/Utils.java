@@ -88,7 +88,8 @@ class Utils {
     public String removeSpecialChars(String text) {
         return text.replace("──", "").replace("==", "-")
                 .replace("=", "ￚ").replace("--", "-")
-        .replaceAll("[^\\da-zA-Z:|#().@,%/~ㄱ-ㅎ가-힣\\s\\-+]", "")
+        .replaceAll("[^\\da-zA-Z:|#().@,%/~가-힣\\s\\-+]", "")
+//                .replaceAll("[^\\da-zA-Z:|#().@,%/~ㄱ-ㅎ가-힣\\s\\-+]", "")
         ;
     }
 
@@ -113,14 +114,10 @@ class Utils {
 
     String replaceKKHH(String text) {
         return text.replace("ㅇㅋ", " 오케이 ")
-                .replace("ㅋㅋ", " 크 ")
-                .replace("ㅋ", " 크 ")
-                .replace("^^", " 크 ")
                 .replace("ㅊㅋ", " 축하 ")
                 .replace("ㅠㅠ", " 흑 ")
                 .replace("ㅠ", " 흑 ")
-                .replace("ㅎㅎ", " 하 ")
-                .replace("ㅎ", " 하 ");
+                ;
     }
 
     String text2OneLine(String mText) {

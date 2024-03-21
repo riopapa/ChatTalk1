@@ -1,19 +1,20 @@
 package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.NotificationListener.logUpdate;
-import static com.urrecliner.chattalk.NotificationListener.msgKaTalk;
-import static com.urrecliner.chattalk.NotificationListener.notificationBar;
-import static com.urrecliner.chattalk.NotificationListener.notificationService;
+import static com.urrecliner.chattalk.NotificationListener.msgKeyword;
 import static com.urrecliner.chattalk.NotificationListener.sounds;
 import static com.urrecliner.chattalk.NotificationListener.utils;
+import static com.urrecliner.chattalk.Vars.aGroups;
 import static com.urrecliner.chattalk.Vars.lastChar;
 import static com.urrecliner.chattalk.Vars.mContext;
+import static com.urrecliner.chattalk.Vars.sbnGroup;
 import static com.urrecliner.chattalk.Vars.smsNoNumbers;
 
 import com.urrecliner.chattalk.Sub.IgnoreNumber;
 import com.urrecliner.chattalk.Sub.Numbers;
 
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 
@@ -33,9 +34,11 @@ class MsgSMS {
                 sayNormal(mWho, mText);
             }
         } else if (mWho.startsWith(jrGroup)) {
-                if (msgKaTalk == null)
-                    msgKaTalk = new MsgKaTalk("by SMS");
-                msgKaTalk.say(jrGroup, mWho, mText);
+            if (msgKeyword == null)
+                msgKeyword = new MsgKeyword("by SMS");
+            int grpIdx = Collections.binarySearch(aGroups, sbnGroup);
+            if (grpIdx >= 0)
+                msgKeyword.say(jrGroup, mWho, mText, grpIdx);
         } else {
             String head = "[SMS "+mWho + "]";
             if (utils == null)

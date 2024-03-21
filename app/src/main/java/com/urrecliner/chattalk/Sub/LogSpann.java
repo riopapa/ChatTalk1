@@ -2,7 +2,6 @@ package com.urrecliner.chattalk.Sub;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.BackgroundColorSpan;
@@ -10,7 +9,6 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.text.style.TypefaceSpan;
 import android.text.style.UnderlineSpan;
-import android.util.Log;
 
 import androidx.core.content.res.ResourcesCompat;
 
@@ -107,8 +105,6 @@ public class LogSpann {
             logNow = logNow.substring(1);
         if (logNow.charAt(0) == '\n')
             logNow = logNow.substring(1);
-        if (pf == -1)
-            pf = logNow.length() - 1;
         SpannableString ss = make(logNow, context);
         logNow = ss.toString();
         if (ps >= logNow.length())
@@ -136,10 +132,7 @@ public class LogSpann {
         logNow = ss.toString();
         ps = logNow.lastIndexOf("\n", ps - 1) + 1;
         pf = logNow.indexOf("\n", ps) - 1;
-//        if (pf < logNow.length())
-//            pf = logNow.length() - 1;
-//        if (ps >= pf)
-//            pf = ps + 1;
+
         ss.setSpan(new StyleSpan(Typeface.ITALIC), ps, pf, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ss.setSpan(new UnderlineSpan(), ps, pf,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return new Vars.DelItem(logNow, ps, pf, ss);

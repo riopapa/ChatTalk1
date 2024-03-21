@@ -1,6 +1,7 @@
 package com.urrecliner.chattalk.Sub;
 
 
+import android.util.Log;
 import java.io.UnsupportedEncodingException;
 
 public class ByteLength {
@@ -9,7 +10,7 @@ public class ByteLength {
         try {
             return str.getBytes("euc-kr").length;
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            Log.e("ByteLength","Encoding Error \n" + e);
         }
         return str.length();
     }

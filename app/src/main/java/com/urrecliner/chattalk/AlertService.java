@@ -120,7 +120,7 @@ public class AlertService extends Service {
             mBuilder = new NotificationCompat.Builder(this, "default")
                     .setSmallIcon(R.drawable.stock1_icon)
                     .setBadgeIconType(NotificationCompat.BADGE_ICON_LARGE)
-                    .setColor(getApplicationContext().getColor(R.color.barLine1))
+                    .setColor(getApplicationContext().getColor(R.color.upper_line))
                     .setContent(mRemoteViews)
                     .setOnlyAlertOnce(true)
                     .setAutoCancel(false)
@@ -128,10 +128,14 @@ public class AlertService extends Service {
                     .setStyle(new NotificationCompat.BigTextStyle())
                     .setOngoing(true);
         }
+
         Intent mIntent = new Intent(mContext, ActivityMain.class);
-        mRemoteViews.setOnClickPendingIntent(R.id.ll_customNotification,
-            PendingIntent.getActivity(mContext, 0, mIntent,
-                PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));
+        mRemoteViews.setOnClickPendingIntent(R.id.line_upper,
+                PendingIntent.getActivity(mContext, 0, mIntent,
+                        PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));
+        mRemoteViews.setOnClickPendingIntent(R.id.line_lower,
+                PendingIntent.getActivity(mContext, 0, mIntent,
+                        PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));
 
         Intent sIntent = new Intent(this, AlertService.class);
         sIntent.putExtra("operation", STOP_SAY1);
@@ -143,15 +147,12 @@ public class AlertService extends Service {
 
     private void updateRemoteViews() {
 
-//        String timeA = time1.substring(0,3)+"\n"+time1.substring(3);
         mRemoteViews.setTextViewText(R.id.msg_time1, time1);
-//        mRemoteViews.setTextViewText(R.id.msg_who1, who1);
         mRemoteViews.setTextViewText(R.id.msg_text1, msg1);
         mRemoteViews.setTextViewText(R.id.msg_time2, time2);
-//        mRemoteViews.setTextViewText(R.id.msg_who2, who2);
         mRemoteViews.setTextViewText(R.id.msg_text2, msg2);
         mRemoteViews.setViewVisibility(R.id.stop_now1, (show_stop)? View.VISIBLE : View.GONE);
         mNotificationManager.notify(100,mBuilder.build());
         msgPut();
     }
-    }
+}

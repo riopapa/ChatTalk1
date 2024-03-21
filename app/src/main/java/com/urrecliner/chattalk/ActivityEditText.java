@@ -20,10 +20,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.io.File;
-import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -99,17 +96,6 @@ public class ActivityEditText extends AppCompatActivity {
         return true;
     }
 
-    private static String strPad(String s, int strLen) {
-        String blank = StringUtils.repeat(" ", 60);
-        s = s.trim();
-        int byteLen = getByteLength(s);
-        if (byteLen >= strLen)
-            return s;
-        int padL = (strLen - byteLen) / 2;
-        int padR = strLen - byteLen - padL;
-        return blank.substring(0, padL) + s + blank.substring(0, padR);
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -133,6 +119,8 @@ public class ActivityEditText extends AppCompatActivity {
             String logNow = et.getText().toString();
             int lineF = et.getSelectionStart();
             int lineS = logNow.lastIndexOf("\n", lineF-1);
+            if (lineS < 0)
+                lineS = 0;
             StringBuilder sb = new StringBuilder(logNow);
             sb.replace(lineS, lineF,"");
             et.setText(sb.toString());
@@ -141,24 +129,38 @@ public class ActivityEditText extends AppCompatActivity {
         return false;
     }
 
-
-    static int getByteLength(String str) {
-        try {
-            return str.getBytes("euc-kr").length;
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return str.length();
-    }
-
     String getClipBoardText() {
         ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         ClipData pData = clipboard.getPrimaryClip();
+        if (pData == null)
+            return "\n";
         ClipData.Item item = pData.getItemAt(0);
         return "\n"+item.getText().toString() +  "\n";
     }
 
 }
+
+//
+//    private static String strPad(String s, int strLen) {
+//        String blank = StringUtils.repeat(" ", 60);
+//        s = s.trim();
+//        int byteLen = getByteLength(s);
+//        if (byteLen >= strLen)
+//            return s;
+//        int padL = (strLen - byteLen) / 2;
+//        int padR = strLen - byteLen - padL;
+//        return blank.substring(0, padL) + s + blank.substring(0, padR);
+//    }
+
+//
+//    static int getByteLength(String str) {
+//        try {
+//            return str.getBytes("euc-kr").length;
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+//        return str.length();
+//    }
 
 //
 //    String sortPackage(String txt) {

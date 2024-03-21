@@ -1,10 +1,11 @@
 package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.NotificationListener.sounds;
-import static com.urrecliner.chattalk.Vars.apps;
-import static com.urrecliner.chattalk.Vars.kGroupWhoIgnores;
+import static com.urrecliner.chattalk.Vars.ktGroupIgnores;
+import static com.urrecliner.chattalk.Vars.ktWhoIgnores;
 import static com.urrecliner.chattalk.Vars.ktNoNumbers;
 import static com.urrecliner.chattalk.Vars.ktTxtIgnores;
+import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.replGroup;
 import static com.urrecliner.chattalk.Vars.replGroupCnt;
@@ -33,7 +34,8 @@ class OptionTables {
 
         if (tableListFile == null)
             tableListFile = new TableListFile();
-        kGroupWhoIgnores = tableListFile.read("ktGrpWhoIg");
+        ktGroupIgnores = tableListFile.read("ktGrpIg");
+        ktWhoIgnores = tableListFile.read("ktWhoIg");
         ktTxtIgnores = tableListFile.read("ktTxtIg");
         ktNoNumbers = tableListFile.read("ktNoNum");
 

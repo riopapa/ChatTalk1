@@ -4,7 +4,9 @@ import static com.urrecliner.chattalk.ActivityMain.fragNumber;
 import static com.urrecliner.chattalk.NotificationListener.sounds;
 import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.HIDE_STOP;
+import static com.urrecliner.chattalk.Vars.RELOAD_APP;
 import static com.urrecliner.chattalk.Vars.SHOW_MESSAGE;
+import static com.urrecliner.chattalk.Vars.STOP_SAY1;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.sharePref;
 import static com.urrecliner.chattalk.Vars.sharedEditor;
@@ -36,15 +38,11 @@ public class NotificationService extends Service {
 
     String pkgName;
     private RemoteViews mRemoteViews;
-    private static final int STOP_SAY1 = 10011;
-    private static final int RELOAD_APP = 2022;
     static String msg1 = "", head1 = "00:99";
     static String msg2 = "", head2 = "00:99";
     static boolean show_stop = false;
-//
-    public NotificationService() {
-        Log.e("noti Svc", "new");
-    }
+
+    public NotificationService() {}
 
     @Override
     public void onCreate() {
@@ -118,6 +116,7 @@ public class NotificationService extends Service {
         Log.w("reload","App reloading");
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             fragNumber = -1;
+            mRemoteViews = null;
             Intent intent = new Intent(mContext, ActivityMain.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
@@ -130,10 +129,13 @@ public class NotificationService extends Service {
         mNotificationChannel = new NotificationChannel("default","default", NotificationManager.IMPORTANCE_DEFAULT);
         mNotificationManager.createNotificationChannel(mNotificationChannel);
 
+        if (mRemoteViews == null)
+            mRemoteViews = new RemoteViews(mContext.getPackageName(), R.layout.notification_bar);
+
         mBuilder = new NotificationCompat.Builder(this, "default")
 //                .setBadgeIconType(NotificationCompat.BADGE_ICON_NONE)
 //                .setColor(getApplicationContext().getColor(R.color.barLine1))
-//                .setContent(mRemoteViews)
+                .setContent(mRemoteViews)
                 .setSmallIcon(R.drawable.stock1_icon)
                 .setOnlyAlertOnce(true)
                 .setAutoCancel(false)
@@ -142,17 +144,21 @@ public class NotificationService extends Service {
 //                .setStyle(new NotificationCompat.BigTextStyle())
                 .setOngoing(true);
 
+        Intent mIntent = new Intent(mContext, ActivityMain.class);
+        mIntent.putExtra("operation", RELOAD_APP);
+        PendingIntent mainP = PendingIntent.getService(mContext, RELOAD_APP, mIntent,
+                PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(mainP);
+        mRemoteViews.setOnClickPendingIntent(R.id.line_lower,
+                PendingIntent.getActivity(mContext, 0, mIntent,
+                        PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));
 
         Intent reloadI = new Intent(this, NotificationService.class);
         reloadI.putExtra("operation", RELOAD_APP);
-        PendingIntent oneP = PendingIntent.getService(mContext, RELOAD_APP, reloadI, PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent oneP = PendingIntent.getService(mContext, RELOAD_APP, reloadI,
+                PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(oneP);
         mRemoteViews.setOnClickPendingIntent(R.id.line_upper, oneP);
-
-        Intent mIntent = new Intent(mContext, ActivityMain.class);
-        mRemoteViews.setOnClickPendingIntent(R.id.ll_customNotification,
-        PendingIntent.getActivity(mContext, 0, mIntent,
-            PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));
 
         Intent sIntent = new Intent(this, NotificationService.class);
         sIntent.putExtra("operation", STOP_SAY1);
@@ -160,6 +166,8 @@ public class NotificationService extends Service {
             PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(stopSay1Pi);
         mRemoteViews.setOnClickPendingIntent(R.id.stop_now1, stopSay1Pi);
+
+
     }
 
     private void updateRemoteViews() {
@@ -170,9 +178,10 @@ public class NotificationService extends Service {
         mRemoteViews.setTextViewText(R.id.msg_time2, head2);
         mRemoteViews.setTextViewText(R.id.msg_text2, msg2);
         mRemoteViews.setViewVisibility(R.id.stop_now1, (show_stop)? View.VISIBLE : View.GONE);
-        mNotificationManager.notify(110,mBuilder.build());
+        mNotificationManager.notify(100,mBuilder.build());
         msgPut();
     }
+
     public static void msgGet() {
 
         if (sharePref == null) {
@@ -191,13 +200,5 @@ public class NotificationService extends Service {
         sharedEditor.putString("head2", head2);
         sharedEditor.apply();
     }
-
-
-
-
-
-
-
-
 
 }

@@ -71,8 +71,6 @@ public class AppsTable {
                 appNameIdx.add(i);
             }
         }
-//        Log.w("make Table "+appIgnores.size(), appFullNames.size()+""+appNameIdx.size());
-
     }
 
     private ArrayList<App> readPackageTable() {

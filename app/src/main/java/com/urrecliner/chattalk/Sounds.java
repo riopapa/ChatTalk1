@@ -93,6 +93,10 @@ class Sounds {
             }
         }
 
+        delayedSay(text);
+    }
+
+    private void delayedSay(String text) {
         long delay = 150;
         if (mTTS == null) {
             init();
@@ -114,15 +118,20 @@ class Sounds {
         }
     }
 
+    public void speakKakao(String text) {
+
+        if (!isActive())
+            return;
+        if (!isTalking)
+            beepOnce(Vars.soundType.KAKAO.ordinal());
+        delayedSay(text);
+    }
+
     public void speakBuyStock(String text) {
 
-        if (isSilent()) {
+        if (!isActive())
             return;
-        }
-        if (sounds == null)
-            sounds = new Sounds();
         beepOnce(Vars.soundType.STOCK.ordinal());
-
         if (isActive()) {
             audioManager.requestAudioFocus(mFocusGain);
             new Timer().schedule(new TimerTask() {
@@ -134,7 +143,7 @@ class Sounds {
                         new Utils().logE("Sound", "TTS Error:" + e);
                     }
                 }
-            }, 100);
+            }, 50);
         }
     }
 

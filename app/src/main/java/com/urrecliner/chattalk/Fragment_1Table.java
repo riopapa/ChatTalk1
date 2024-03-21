@@ -60,7 +60,8 @@ public class Fragment_1Table extends Fragment {
         rootView.findViewById(R.id.sms_text_ignores).setOnClickListener(this::edit_table);
         rootView.findViewById(R.id.app_names).setOnClickListener(this::edit_table);
 
-        rootView.findViewById(R.id.k_group_who_ignores).setOnClickListener(this::edit_table);
+        rootView.findViewById(R.id.k_group_ignores).setOnClickListener(this::edit_table);
+        rootView.findViewById(R.id.k_who_ignores).setOnClickListener(this::edit_table);
         rootView.findViewById(R.id.k_text_ignores).setOnClickListener(this::edit_table);
         rootView.findViewById(R.id.kt_no_number).setOnClickListener(this::edit_table);
         rootView.findViewById(R.id.group_telegrams).setOnClickListener(this::edit_table);
@@ -92,7 +93,7 @@ public class Fragment_1Table extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_0table, menu);
+        inflater.inflate(R.menu.menu_1table, menu);
         super.onCreateOptionsMenu(menu, inflater);
         aBar.setTitle(topTabs.getTabAt(1).getText().toString());
         aBar.setSubtitle(null);

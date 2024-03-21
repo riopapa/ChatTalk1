@@ -49,7 +49,8 @@ public class Vars {
 
     static TableListFile tableListFile = null;
 
-    static String[] kGroupWhoIgnores = null;
+    static String[] ktGroupIgnores = null;
+    static String[] ktWhoIgnores = null;
 
     static String[] aGroupSaid = null;
     static int [][][] aAlertLineIdx;
@@ -90,6 +91,9 @@ public class Vars {
 
     static final int SHOW_MESSAGE = 1234;
     static final int HIDE_STOP = 5678;
+    static final int STOP_SAY1 = 10011;
+    static final int RELOAD_APP = 2022;
+
     static String logQue = "", logSave = "", logStock = "";
     static ActionBar aBar = null;
     static AudioFocusRequest mFocusGain = null;
@@ -111,9 +115,9 @@ public class Vars {
     static final String lastChar = "힝";
     public static int alertPos = -1, appPos = -1;  // updated or duplicated recycler position
 
-    enum soundType { PRE, POST, ERR, HI_TESLA, ONLY, STOCK, INFO}
+    enum soundType { PRE, POST, ERR, HI_TESLA, ONLY, STOCK, INFO, KAKAO}
     static final int[] beepRawIds = { R.raw.pre, R.raw.post, R.raw.err,
-            R.raw.hi_tesla, R.raw.only, R.raw.stock_check, R.raw.inform};
+            R.raw.hi_tesla, R.raw.only, R.raw.stock_check, R.raw.inform, R.raw.kakao_talk};
 
     public static class DelItem {
         String logNow;
