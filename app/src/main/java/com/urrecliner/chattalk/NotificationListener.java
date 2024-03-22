@@ -243,7 +243,7 @@ public class NotificationListener extends NotificationListenerService {
                 }
                 if (sbnApp.inform.length > 0) {
                     for (int i = 0; i < sbnApp.inform.length; i++) {
-                        if (sbnText.contains(sbnApp.inform[i])) {
+                        if ((sbnWho+sbnText).contains(sbnApp.inform[i])) {
                             sbnText = sbnApp.talk[i];
                             break;
                         }
