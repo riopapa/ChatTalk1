@@ -192,18 +192,36 @@
             android:layout_height="wrap_content"
             />
     </LinearLayout>
-    <EditText
-        android:id="@+id/ignores"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:cursorVisible="true"
-        android:focusable="false"
-        android:textColor="#000"
-        android:inputType="text|textMultiLine"
-        android:hint="ignores"
-        android:text=""
-        android:textSize="15sp" />
-
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/ignores"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:cursorVisible="true"
+            android:focusable="false"
+            android:textColor="#000"
+            android:inputType="text|textMultiLine"
+            android:autofillHints="ignores"
+            android:text=""
+            android:textSize="15sp" />
+        <EditText
+            android:id="@+id/info_talk"
+            android:layout_width="0dp"
+            android:layout_weight="5"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="#90ccbbcc"
+            android:cursorVisible="true"
+            android:focusable="false"
+            android:textColor="#000"
+            android:inputType="text|textMultiLine"
+            android:autofillHints="inform ; talk"
+            android:text=""
+            android:textSize="15sp" />
+    </LinearLayout>
 </LinearLayout>

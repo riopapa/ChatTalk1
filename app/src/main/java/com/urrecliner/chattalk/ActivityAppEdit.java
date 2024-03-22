@@ -5,6 +5,7 @@ import static com.urrecliner.chattalk.ActivityMain.fragNumber;
 import static com.urrecliner.chattalk.Vars.appAdapter;
 import static com.urrecliner.chattalk.Vars.appPos;
 import static com.urrecliner.chattalk.Vars.apps;
+import static com.urrecliner.chattalk.Vars.mContext;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -12,6 +13,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +21,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.urrecliner.chattalk.Sub.AppsTable;
 import com.urrecliner.chattalk.databinding.ActivityAppEditBinding;
 import com.urrecliner.chattalk.model.App;
+
+import java.util.ArrayList;
 
 public class ActivityAppEdit extends AppCompatActivity {
 
@@ -44,6 +48,7 @@ public class ActivityAppEdit extends AppCompatActivity {
             app.addWho = false;
             app.num = true;
             app.ignores = new String[0];
+            app.inform = new String[0];
 
             ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData pData = clipboard.getPrimaryClip();
@@ -68,6 +73,7 @@ public class ActivityAppEdit extends AppCompatActivity {
         binding.whoSwitch.setOnClickListener(v -> app.who = !app.who);
         binding.addWhoSwitch.setOnClickListener(v -> app.addWho = !app.addWho);
         binding.numSwitch.setOnClickListener(v -> app.num = !app.num);
+
         if (app.ignores != null) {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < app.ignores.length; i++)
@@ -79,6 +85,16 @@ public class ActivityAppEdit extends AppCompatActivity {
         binding.ignores.setClickable(true);
         binding.ignores.setFocusableInTouchMode(true);
 
+        if (app.inform != null) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < app.inform.length; i++)
+                sb.append(app.inform[i]).append(" ; ").append(app.talk[i]).append("\n");
+            binding.infoTalk.setText(sb.toString());
+        }
+        binding.infoTalk.setFocusable(true);
+        binding.infoTalk.setEnabled(true);
+        binding.infoTalk.setClickable(true);
+        binding.infoTalk.setFocusableInTouchMode(true);
     }
 
     @Override
@@ -121,10 +137,27 @@ public class ActivityAppEdit extends AppCompatActivity {
         app.who = binding.whoSwitch.isChecked();
         app.addWho = binding.addWhoSwitch.isChecked();
         app.num = binding.numSwitch.isChecked();
-        String [] s = binding.ignores.getText().toString().split("\n");
-        for (int i = 0; i < s.length; i++)
-            s[i] = s[i].trim();
-        app.ignores = s;
+        String [] igStr = binding.ignores.getText().toString().split("\n");
+        for (int i = 0; i < igStr.length; i++)
+            igStr[i] = igStr[i].trim();
+        app.ignores = igStr;
+        String [] infoTalkStr = binding.infoTalk.getText().toString().split("\n");
+        ArrayList<String> infStr = new ArrayList<>();
+        ArrayList<String> talkStr = new ArrayList<>();
+        for (int i = 0; i < infoTalkStr.length; i++) {
+            if (!infoTalkStr[i].isEmpty()) {
+                String[] t = infoTalkStr[i].split(";");
+                if (t.length == 2) {
+                    infStr.add(t[0].trim());
+                    talkStr.add(t[1].trim());
+                } else {
+                    Toast.makeText(mContext, "inform data error line=" + i + " data=>" + infoTalkStr[i],
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+        app.inform = infStr.toArray(new String[0]);
+        app.talk = talkStr.toArray(new String[0]);
         if (appPos == -1)
             apps.add(app);
         else
