@@ -18,7 +18,6 @@ import static com.urrecliner.chattalk.Vars.sysIgnores;
 import static com.urrecliner.chattalk.Vars.tableListFile;
 import static com.urrecliner.chattalk.Vars.teleChannels;
 import static com.urrecliner.chattalk.Vars.teleGroups;
-import static com.urrecliner.chattalk.Vars.appTxtIgnores;
 import static com.urrecliner.chattalk.Vars.tossTxtIgnores;
 
 import android.widget.Toast;
@@ -44,7 +43,7 @@ class OptionTables {
         smsNoNumbers = tableListFile.read("smsNoNum");
 
         sysIgnores = tableListFile.read("sysIg");
-        appTxtIgnores = tableListFile.read("appTxtIg");
+//        appTxtIgnores = tableListFile.read("appTxtIg");
         tossTxtIgnores = tableListFile.read("tossTxtIg");
         if (ktTxtIgnores == null || smsWhoIgnores == null || sysIgnores == null) {
             sounds.beepOnce(Vars.soundType.ERR.ordinal());

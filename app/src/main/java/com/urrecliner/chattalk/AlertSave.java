@@ -25,7 +25,7 @@ public class AlertSave {
         sharedEditor.putString("alertLine", json);
         json = json.replace("},{","},\n\n{")
                 .replace("\"next\":","\n\"next\":");
-        FileIO.writeFile( tableFolder,"alertTable.json",json,"");
+        FileIO.writeFile( tableFolder,"alertTable.json",json);
         AlertTable.makeArrays();
         for (int i = 0; i < alertLines.size(); i++) {
             AlertLine al = alertLines.get(i);

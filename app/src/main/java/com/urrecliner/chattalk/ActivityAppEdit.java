@@ -23,6 +23,10 @@ import com.urrecliner.chattalk.databinding.ActivityAppEditBinding;
 import com.urrecliner.chattalk.model.App;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
 
 public class ActivityAppEdit extends AppCompatActivity {
 
@@ -47,7 +51,6 @@ public class ActivityAppEdit extends AppCompatActivity {
             app.who = true;
             app.addWho = false;
             app.num = true;
-            app.ignores = new String[0];
             app.inform = new String[0];
 
             ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
@@ -74,12 +77,15 @@ public class ActivityAppEdit extends AppCompatActivity {
         binding.addWhoSwitch.setOnClickListener(v -> app.addWho = !app.addWho);
         binding.numSwitch.setOnClickListener(v -> app.num = !app.num);
 
-        if (app.ignores != null) {
+        if (app.igStr != null) {
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < app.ignores.length; i++)
-                sb.append(app.ignores[i]).append(" ; ");
+            for (String key : app.igStr) {
+                if (!key.isEmpty())
+                    sb.append(key).append(" ; ");
+            }
             binding.ignores.setText(sb.toString());
         }
+
         binding.ignores.setFocusable(true);
         binding.ignores.setEnabled(true);
         binding.ignores.setClickable(true);
@@ -137,10 +143,19 @@ public class ActivityAppEdit extends AppCompatActivity {
         app.who = binding.whoSwitch.isChecked();
         app.addWho = binding.addWhoSwitch.isChecked();
         app.num = binding.numSwitch.isChecked();
-        String [] igStr = binding.ignores.getText().toString().split(";");
-        for (int i = 0; i < igStr.length; i++)
-            igStr[i] = igStr[i].trim();
-        app.ignores = igStr;
+        String ignoreStr = binding.ignores.getText().toString();
+        String [] ss = ignoreStr.split(";");
+        for (int i = 0; i < ss.length; i++)
+            ss[i] = ss[i].trim();
+//        Arrays.sort(ss);
+        List<String> igList = new ArrayList<>();
+        for (String s : ss) {
+            if (s.isEmpty())
+                continue;
+            igList.add(s);
+        }
+        app.igStr = igList.toArray(new String[0]);
+
         String [] infoTalkStr = binding.infoTalk.getText().toString().split("\n");
         ArrayList<String> infStr = new ArrayList<>();
         ArrayList<String> talkStr = new ArrayList<>();

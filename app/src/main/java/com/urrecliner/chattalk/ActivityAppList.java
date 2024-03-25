@@ -84,7 +84,7 @@ public class ActivityAppList extends AppCompatActivity {
             LinearLayoutManager layoutManager = (LinearLayoutManager) appRecyclerView
                     .getLayoutManager();
             layoutManager.scrollToPositionWithOffset(
-                    appPos, (appPos> 1) ? appPos-1:appPos);
+                    appPos, (appPos > 2) ? appPos-2:appPos);
             Toast.makeText(this, key+" found "+result, Toast.LENGTH_SHORT).show();
         }
     }

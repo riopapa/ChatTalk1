@@ -23,8 +23,7 @@ public class TableListFile {
             lines = Files.readAllLines(Paths.get(
                     String.valueOf(new File(tableFolder, filename + ".txt"))));
         } catch (IOException e) {
-            new SnackBar().show("ArrayTable.read", "File " + filename+ " Not Found");
-            e.printStackTrace();
+            new SnackBar().show("ArrayTable.read", "File " + filename+ " Not Found\n"+e);
         }
 
         for (int lnNbr = 0; lnNbr < lines.size(); ) {   // lines.size() is varying
@@ -48,8 +47,7 @@ public class TableListFile {
             lines = Files.readAllLines(Paths.get(
                     String.valueOf(fullName)));
         } catch (IOException e) {
-            new SnackBar().show("readRawLines", "File " + fullName+ " Not Found");
-            e.printStackTrace();
+            new SnackBar().show("readRawLines", "File " + fullName+ " Not Found"+e);
         }
         return lines.toArray(new String[0]);
     }

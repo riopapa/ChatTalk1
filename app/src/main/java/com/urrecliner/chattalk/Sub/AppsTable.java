@@ -28,9 +28,8 @@ public class AppsTable {
             downloadFolder = new File(Environment.getExternalStorageDirectory(), "download");
             tableFolder = new File(downloadFolder, "_ChatTalk");
         }
-;
         Gson gson = new Gson();
-        String json = FileIO.readKRFile(new File(tableFolder ,"appTable.json").toString());
+        String json = FileIO.readFile(tableFolder ,"appTable.json");
         if (json.isEmpty()) {
             apps = readPackageTable();
         } else {
@@ -52,7 +51,8 @@ public class AppsTable {
 
         Gson gson = new Gson();
         String json = gson.toJson(apps);
-        FileIO.writeKR(new File(tableFolder, "appTable.json"), json);
+//        FileIO.writeKR(new File(tableFolder, "appTable.json"), json);
+        FileIO.writeFile(tableFolder, "appTable.json", json);
     }
 
     public void makeTable() {
@@ -80,7 +80,6 @@ public class AppsTable {
 
         String [] packages =  new TableListFile().read("appNames");
         String [] strings;
-
 
         for (String pLine:packages) {
             App app = new App();

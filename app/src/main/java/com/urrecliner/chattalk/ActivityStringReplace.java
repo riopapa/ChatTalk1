@@ -134,7 +134,7 @@ public class ActivityStringReplace extends AppCompatActivity {
         if (item.getItemId() == R.id.save_table) {
             TextView tv = findViewById(R.id.table_text);
             String s = tv.getText().toString();             // .replace("\u00A0"," ");
-            FileIO.writeFile(tableFolder, nowFileName, removeHeader(s),".txt");
+            FileIO.writeFile(tableFolder, nowFileName+".txt", removeHeader(s));
             new OptionTables().readAll();
             finish();
         } else if (item.getItemId() == R.id.line_copy_add) {

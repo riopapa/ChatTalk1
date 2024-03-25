@@ -87,9 +87,9 @@ public class FileIO {
         }
     }
 
-    public static void writeFile(File targetFolder, String fileName, String outText, String ext) {
+    public static void writeFile(File targetFolder, String fileName, String outText) {
         try {
-            File targetFile = new File(targetFolder, fileName + ext);
+            File targetFile = new File(targetFolder, fileName);
             FileWriter fileWriter = new FileWriter(targetFile, false);
 
             // Always wrap FileWriter in BufferedWriter.
