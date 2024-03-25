@@ -53,8 +53,6 @@ public class Fragment_1Table extends Fragment {
         });
 
         rootView.findViewById(R.id.sms_with_no_number).setOnClickListener(this::edit_table);
-        rootView.findViewById(R.id.app_text_ignores).setOnClickListener(this::edit_table);
-        rootView.findViewById(R.id.system_ignores).setOnClickListener(this::edit_table);
 
         rootView.findViewById(R.id.sms_who_ignores).setOnClickListener(this::edit_table);
         rootView.findViewById(R.id.sms_text_ignores).setOnClickListener(this::edit_table);
@@ -67,7 +65,6 @@ public class Fragment_1Table extends Fragment {
         rootView.findViewById(R.id.group_telegrams).setOnClickListener(this::edit_table);
 
         rootView.findViewById(R.id.string_replace).setOnClickListener(this::edit_replace);
-        rootView.findViewById(R.id.toss_ignore).setOnClickListener(this::edit_table);
 
         rootView.invalidate();
     }

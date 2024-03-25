@@ -182,7 +182,7 @@ public class NotificationListener extends NotificationListenerService {
                 sbnText = utils.strShorten(sbnWho, utils.strShorten(sbnApp.nickName, sbnText));
 
                 if (sbnApp.addWho)
-                    sbnText = "("+sbnWho + ")" + sbnText;
+                    sbnText = sbnWho + "※" + sbnText;
 
                 if (sbnApp.say) {
                     String say = sbnApp.nickName + " ";
@@ -213,7 +213,7 @@ public class NotificationListener extends NotificationListenerService {
                     return;
                 sbnText = utils.text2OneLine(sbnText);
                 for (int i = 0; i < teleChannels.length; i++) {
-                    if (sbnWho.contains(teleChannels[i])) { // 정확한 이름 다 찾지 않을려고 contains 씀
+                    if (sbnWho.contains(teleChannels[i])) { // 정확한 이름 다 찾지 않으려고 contains 씀
                         sbnGroup = teleGroups[i];
                         if (sbnText.length() < 15)
                             return;

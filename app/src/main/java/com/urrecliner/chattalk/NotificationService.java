@@ -144,13 +144,22 @@ public class NotificationService extends Service {
 //                .setStyle(new NotificationCompat.BigTextStyle())
                 .setOngoing(true);
 
-        Intent mIntent = new Intent(mContext, ActivityMain.class);
-        mIntent.putExtra("operation", RELOAD_APP);
-        PendingIntent mainP = PendingIntent.getService(mContext, RELOAD_APP, mIntent,
+        Intent upIntent = new Intent(mContext, ActivityMain.class);
+        upIntent.putExtra("operation", RELOAD_APP);
+        PendingIntent pendingUp = PendingIntent.getService(mContext, RELOAD_APP, upIntent,
                 PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
-        mBuilder.setContentIntent(mainP);
+        mBuilder.setContentIntent(pendingUp);
         mRemoteViews.setOnClickPendingIntent(R.id.line_lower,
-                PendingIntent.getActivity(mContext, 0, mIntent,
+                PendingIntent.getActivity(mContext, 0, upIntent,
+                        PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));
+
+        Intent lowIntent = new Intent(mContext, ActivityMain.class);
+        lowIntent.putExtra("operation", RELOAD_APP);
+        PendingIntent pendingLow = PendingIntent.getService(mContext, RELOAD_APP, lowIntent,
+                PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(pendingLow);
+        mRemoteViews.setOnClickPendingIntent(R.id.line_lower,
+                PendingIntent.getActivity(mContext, 0, lowIntent,
                         PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));
 
         Intent reloadI = new Intent(this, NotificationService.class);

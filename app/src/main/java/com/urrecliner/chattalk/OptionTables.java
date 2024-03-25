@@ -5,7 +5,6 @@ import static com.urrecliner.chattalk.Vars.ktGroupIgnores;
 import static com.urrecliner.chattalk.Vars.ktWhoIgnores;
 import static com.urrecliner.chattalk.Vars.ktNoNumbers;
 import static com.urrecliner.chattalk.Vars.ktTxtIgnores;
-import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.replGroup;
 import static com.urrecliner.chattalk.Vars.replGroupCnt;
@@ -14,11 +13,9 @@ import static com.urrecliner.chattalk.Vars.replShort;
 import static com.urrecliner.chattalk.Vars.smsNoNumbers;
 import static com.urrecliner.chattalk.Vars.smsTxtIgnores;
 import static com.urrecliner.chattalk.Vars.smsWhoIgnores;
-import static com.urrecliner.chattalk.Vars.sysIgnores;
 import static com.urrecliner.chattalk.Vars.tableListFile;
 import static com.urrecliner.chattalk.Vars.teleChannels;
 import static com.urrecliner.chattalk.Vars.teleGroups;
-import static com.urrecliner.chattalk.Vars.tossTxtIgnores;
 
 import android.widget.Toast;
 
@@ -42,9 +39,7 @@ class OptionTables {
         smsTxtIgnores =  tableListFile.read("smsTxtIg");
         smsNoNumbers = tableListFile.read("smsNoNum");
 
-        sysIgnores = tableListFile.read("sysIg");
-        tossTxtIgnores = tableListFile.read("tossTxtIg");
-        if (ktTxtIgnores == null || smsWhoIgnores == null || sysIgnores == null) {
+        if (ktTxtIgnores == null || smsWhoIgnores == null) {
             sounds.beepOnce(Vars.soundType.ERR.ordinal());
             Toast.makeText(mContext, "\nsome tables is null\n", Toast.LENGTH_LONG).show();
         }
@@ -110,7 +105,7 @@ class OptionTables {
                 continue;
             }
             if (!svGroup.equals(ones[0])) {
-                if (!svGroup.equals(""))
+                if (!svGroup.isEmpty())
                     strLong2Shorts.add(new StrLong2Short(svGroup, gLong, gShort));
                 svGroup = ones[0];
                 gLong = new ArrayList<>();
@@ -120,7 +115,7 @@ class OptionTables {
             gShort.add(ones[1]);
             prvLine = oneLine;
         }
-        if (gLong.size() > 0)
+        if (!gLong.isEmpty())
             strLong2Shorts.add(new StrLong2Short(svGroup, gLong, gShort));
 
         replGroupCnt = strLong2Shorts.size();

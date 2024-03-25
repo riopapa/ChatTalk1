@@ -13,7 +13,6 @@ import static com.urrecliner.chattalk.Vars.sbnAppNick;
 import static com.urrecliner.chattalk.Vars.sbnAppType;
 import static com.urrecliner.chattalk.Vars.sbnText;
 import static com.urrecliner.chattalk.Vars.sbnWho;
-import static com.urrecliner.chattalk.Vars.sysIgnores;
 
 import android.app.Notification;
 import android.os.Bundle;
@@ -34,14 +33,14 @@ public class SbnBundle {
     public boolean bypassSbn(StatusBarNotification sbn) {
 
         sbnAppName = sbn.getPackageName();  // to LowCase
-        if (sbnAppName.equals(""))
+        if (sbnAppName.isEmpty())
             return true;
         Notification mNotification = sbn.getNotification();
         Bundle extras = mNotification.extras;
         // get eText //
         try {
             sbnText = ""+extras.get(Notification.EXTRA_TEXT);
-            if (sbnText.equals("") || sbnText.equals("null"))
+            if (sbnText.isEmpty() || sbnText.equals("null"))
                 return true;
         } catch (Exception e) {
             return true;
@@ -55,29 +54,26 @@ public class SbnBundle {
             new Utils().logW("sbn WHO Error", "no Who "+ sbnAppName +" "+sbnText);
             return true;
         }
-
-        if (sbnAppName.equals("android")) {
-            if (sbnText.length() > 8 && !IgnoreThis.contains(sbnText, sysIgnores)
-                    && !IgnoreThis.contains(sbnWho, sysIgnores)) {
-                if (utils == null)
-                    utils = new Utils();
-                sbnText = utils.text2OneLine(sbnText);
-                new MsgAndroid().say(sbnAppName, sbnWho, sbnText);
-            }
-            return true;
+        if (apps == null || appIgnores == null) {
+            new AppsTable().get();
+            Log.e("reloading", "apps is null new size=" + apps.size());
         }
 
         switch (sbnAppName) {
+
             case "com.kakao.talk":
                 sbnAppNick = "카톡";
                 sbnAppType = "kk";
                 break;
 
-//            case "viva.republica.toss":
-//                sbnAppNick = "토스";
-//                sbnAppType = "tos";
-//                break;
-//
+            case "android":
+                if (Collections.binarySearch(appIgnores, sbnAppName) >= 0)
+                    return true;
+                sbnAppIdx = Collections.binarySearch(appFullNames, sbnAppName);
+                sbnApp = apps.get(sbnAppIdx);
+                sbnAppNick = sbnApp.nickName;
+                sbnAppType = "app";
+                return false;
 
             case "com.samsung.android.messaging":
                 sbnAppNick = "문자";
@@ -85,10 +81,6 @@ public class SbnBundle {
                 break;
 
             default:
-                if (apps == null || appIgnores == null) {
-                    new AppsTable().get();
-                    Log.e("reloading", "apps is null new size=" + apps.size());
-                }
                 if (Collections.binarySearch(appIgnores, sbnAppName) >= 0)
                     return true;
                 sbnAppIdx = Collections.binarySearch(appFullNames, sbnAppName);

@@ -84,75 +84,6 @@
         <TextView
             android:layout_width = "match_parent"
             android:layout_height = "wrap_content"
-            android:layout_margin = "0dp"
-            android:gravity = "center"
-            android:text = "System"
-            android:textSize = "@dimen/table_font_size"
-            android:textStyle = "bold" />
-
-        <LinearLayout
-            android:layout_width = "match_parent"
-            android:layout_height = "wrap_content"
-            android:layout_marginStart = "8dp"
-            android:layout_marginEnd = "8dp"
-            android:gravity = "center"
-            android:orientation = "horizontal">
-
-            <TextView
-                android:id = "@+id/system_ignores"
-                android:layout_width = "0dp"
-                android:layout_height = "wrap_content"
-                android:layout_margin = "@dimen/button_margin_size"
-                android:layout_weight = "1"
-                android:background = "@drawable/rounded_button2"
-                android:gravity = "center"
-                android:padding = "@dimen/table_padding_size"
-                android:tag = "sysIg"
-                android:text = "무시 Apps"
-                android:textSize = "@dimen/table_font_size"
-                android:textStyle = "bold" />
-
-            <TextView
-                android:id = "@+id/app_text_ignores"
-                android:layout_width = "0dp"
-                android:layout_height = "wrap_content"
-                android:layout_margin = "@dimen/button_margin_size"
-                android:layout_weight = "1"
-                android:background = "@drawable/rounded_button2"
-                android:gravity = "center"
-                android:padding = "@dimen/table_padding_size"
-                android:tag = "appTxtIg"
-                android:text = "글짜 무시"
-                android:textSize = "@dimen/table_font_size"
-                android:textStyle = "bold" />
-
-            <TextView
-                android:id = "@+id/app_names"
-                android:layout_width = "0dp"
-                android:layout_height = "wrap_content"
-                android:layout_margin = "@dimen/button_margin_size"
-                android:layout_weight = "1"
-                android:background = "@drawable/rounded_button2"
-                android:gravity = "center"
-                android:padding = "@dimen/table_padding_size"
-                android:tag = "appNames"
-                android:text = "App Names"
-                android:textSize = "@dimen/table_font_size"
-                android:textStyle = "bold" />
-
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width = "match_parent"
-        android:layout_height = "wrap_content"
-        android:layout_margin = "4dp"
-        android:background="@drawable/box_rounded"
-        android:gravity = "center"
-        android:orientation = "vertical">
-        <TextView
-            android:layout_width = "match_parent"
-            android:layout_height = "wrap_content"
             android:gravity = "center"
             android:text = "KakaoTalk"
             android:textSize = "@dimen/table_font_size"
@@ -275,19 +206,21 @@
             android:textSize = "@dimen/table_font_size"
             android:textStyle = "bold" />
 
-            <TextView
-                android:id = "@+id/toss_ignore"
-                android:layout_width = "0dp"
-                android:layout_height = "wrap_content"
-                android:layout_margin = "@dimen/button_margin_size"
-                android:layout_weight = "1"
-                android:background = "@drawable/rounded_button2"
-                android:gravity = "center"
-                android:padding = "@dimen/table_padding_size"
-                android:tag = "tossTxtIg"
-                android:text = "토스 글짜 무시"
-                android:textSize = "@dimen/table_font_size"
-                android:textStyle = "bold" />
+        <TextView
+            android:id = "@+id/app_names"
+            android:layout_width = "0dp"
+            android:layout_height = "wrap_content"
+            android:layout_margin = "@dimen/button_margin_size"
+            android:layout_weight = "1"
+            android:background = "@drawable/rounded_button2"
+            android:gravity = "center"
+            android:padding = "@dimen/table_padding_size"
+            android:tag = "appNames"
+            android:text = "App Names"
+            android:textSize = "@dimen/table_font_size"
+            android:textStyle = "bold" />
+
+
         </LinearLayout>
     </LinearLayout>
     <TextView

@@ -129,13 +129,13 @@ public class AlertService extends Service {
                     .setOngoing(true);
         }
 
-        Intent mIntent = new Intent(mContext, ActivityMain.class);
-        mRemoteViews.setOnClickPendingIntent(R.id.line_upper,
-                PendingIntent.getActivity(mContext, 0, mIntent,
-                        PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));
-        mRemoteViews.setOnClickPendingIntent(R.id.line_lower,
-                PendingIntent.getActivity(mContext, 0, mIntent,
-                        PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));
+//        Intent mIntent = new Intent(mContext, ActivityMain.class);
+//        mRemoteViews.setOnClickPendingIntent(R.id.line_upper,
+//                PendingIntent.getActivity(mContext, 0, mIntent,
+//                        PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));
+//        mRemoteViews.setOnClickPendingIntent(R.id.line_lower,
+//                PendingIntent.getActivity(mContext, 0, mIntent,
+//                        PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));
 
         Intent sIntent = new Intent(this, AlertService.class);
         sIntent.putExtra("operation", STOP_SAY1);

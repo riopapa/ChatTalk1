@@ -66,9 +66,6 @@ public class Vars {
 
     static String[] smsWhoIgnores = null;
     static String[] smsTxtIgnores = null;
-    static String[] sysIgnores = null;
-//    static String[] appTxtIgnores = null;
-    static String[] tossTxtIgnores = null;
     static String[] ktTxtIgnores = null;
 
     static String[] teleGroups = null;
