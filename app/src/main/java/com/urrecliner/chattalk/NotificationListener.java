@@ -40,7 +40,7 @@ import java.util.Collections;
 public class NotificationListener extends NotificationListenerService {
     final String SMS = "sms";
     final String KATALK = "kk";
-    final String TOSS = "tos";
+//    final String TOSS = "tos";
 
     final String TELEGRAM = "tG";
     final String APP = "app";   // general application
@@ -196,22 +196,22 @@ public class NotificationListener extends NotificationListenerService {
                 sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
                 break;
 
-            case TOSS:
-
-                for (String s: tossTxtIgnores) {
-                    if (sbnWho.contains(s) || sbnText.contains(s))
-                        return;
-                }
-                if (kvCommon.isDup(sbnAppType, sbnText))
-                    return;
-
-                sbnText = utils.strShorten(sbnAppNick, utils.text2OneLine(sbnWho+"|"+ sbnText));
-                head = "[" + sbnAppNick + "]";
-                logUpdate.addLog(head, sbnText);
-                NotificationBar.update(sbnAppNick, sbnText, true);
-                sbnText = "토스 로부터 " + new Numbers().deduct(sbnText);
-                sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
-                break;
+//            case TOSS:
+//
+//                for (String s: tossTxtIgnores) {
+//                    if (sbnWho.contains(s) || sbnText.contains(s))
+//                        return;
+//                }
+//                if (kvCommon.isDup(sbnAppType, sbnText))
+//                    return;
+//
+//                sbnText = utils.strShorten(sbnAppNick, utils.text2OneLine(sbnWho+"|"+ sbnText));
+//                head = "[" + sbnAppNick + "]";
+//                logUpdate.addLog(head, sbnText);
+//                NotificationBar.update(sbnAppNick, sbnText, true);
+//                sbnText = "토스 로부터 " + new Numbers().deduct(sbnText);
+//                sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
+//                break;
 
             case SMS:
 
@@ -241,19 +241,25 @@ public class NotificationListener extends NotificationListenerService {
                             return;
                     }
                 }
-                if (sbnApp.inform.length > 0) {
+                if (sbnApp.inform != null) {
                     for (int i = 0; i < sbnApp.inform.length; i++) {
-                        if ((sbnWho+sbnText).contains(sbnApp.inform[i])) {
+                        if ((sbnWho).contains(sbnApp.inform[i])) {
+                            sbnWho = sbnAppNick;
+                            sbnText = sbnApp.talk[i];
+                            break;
+                        }
+                        if (sbnText.contains(sbnApp.inform[i])) {
+                            sbnWho = sbnAppNick;
                             sbnText = sbnApp.talk[i];
                             break;
                         }
                     }
                 }
-                if (sbnApp.nickName.equals("NH나무")) {
-                    utils.logW(sbnApp.nickName,sbnText);
-                    new MsgNamoo().say(utils.text2OneLine(sbnText));
-                    break;
-                }
+//                if (sbnApp.nickName.equals("NH나무")) {
+////                    utils.logW(sbnApp.nickName,sbnText);
+////                    new MsgNamoo().say(utils.text2OneLine(sbnText));
+//                    break;
+//                }
 
                 if (sbnAppNick.equals("테스리")) {
                     sayTesla();

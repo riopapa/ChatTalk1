@@ -77,7 +77,7 @@ public class ActivityAppEdit extends AppCompatActivity {
         if (app.ignores != null) {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < app.ignores.length; i++)
-                sb.append(app.ignores[i]).append("\n");
+                sb.append(app.ignores[i]).append(" ; ");
             binding.ignores.setText(sb.toString());
         }
         binding.ignores.setFocusable(true);
@@ -137,7 +137,7 @@ public class ActivityAppEdit extends AppCompatActivity {
         app.who = binding.whoSwitch.isChecked();
         app.addWho = binding.addWhoSwitch.isChecked();
         app.num = binding.numSwitch.isChecked();
-        String [] igStr = binding.ignores.getText().toString().split("\n");
+        String [] igStr = binding.ignores.getText().toString().split(";");
         for (int i = 0; i < igStr.length; i++)
             igStr[i] = igStr[i].trim();
         app.ignores = igStr;

@@ -192,36 +192,32 @@
             android:layout_height="wrap_content"
             />
     </LinearLayout>
-    <LinearLayout
+    <EditText
+        android:id="@+id/ignores"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <EditText
-            android:id="@+id/ignores"
-            android:layout_width="0dp"
-            android:layout_weight="3"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:cursorVisible="true"
-            android:focusable="false"
-            android:textColor="#000"
-            android:inputType="text|textMultiLine"
-            android:autofillHints="ignores"
-            android:text=""
-            android:textSize="15sp" />
-        <EditText
-            android:id="@+id/info_talk"
-            android:layout_width="0dp"
-            android:layout_weight="5"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:background="#90ccbbcc"
-            android:cursorVisible="true"
-            android:focusable="false"
-            android:textColor="#000"
-            android:inputType="text|textMultiLine"
-            android:autofillHints="inform ; talk"
-            android:text=""
-            android:textSize="15sp" />
-    </LinearLayout>
+        android:cursorVisible="true"
+        android:focusable="false"
+        android:background="#BCDCBE"
+        android:textColor="#000"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:inputType="text|textMultiLine"
+        android:autofillHints="ignores ; "
+        android:text=""
+        android:textSize="15sp" />
+    <EditText
+        android:id="@+id/info_talk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#90DCBADC"
+        android:cursorVisible="true"
+        android:focusable="false"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:textColor="#000"
+        android:inputType="text|textMultiLine"
+        android:autofillHints="inform ; talk"
+        android:text=""
+        android:textSize="15sp" />
 </LinearLayout>

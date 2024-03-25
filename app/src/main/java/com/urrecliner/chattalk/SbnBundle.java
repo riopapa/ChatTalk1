@@ -73,11 +73,11 @@ public class SbnBundle {
                 sbnAppType = "kk";
                 break;
 
-            case "viva.republica.toss":
-                sbnAppNick = "토스";
-                sbnAppType = "tos";
-                break;
-
+//            case "viva.republica.toss":
+//                sbnAppNick = "토스";
+//                sbnAppType = "tos";
+//                break;
+//
             case "org.telegram.messenger":
                 sbnAppNick = "텔레";
                 sbnAppType = "tG";

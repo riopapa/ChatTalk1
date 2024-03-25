@@ -5,4 +5,5 @@ public class App {
     public boolean say, log, grp, who, addWho, num;
     public String [] ignores;
     public String [] inform, talk;      // if "inform" found say "talk" only
+
 }
