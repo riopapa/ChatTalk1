@@ -38,6 +38,7 @@ import java.util.Collections;
 public class NotificationListener extends NotificationListenerService {
     final String SMS = "sms";
     final String KATALK = "kk";
+    final String TESRY = "테스리";
 
     final String TELEGRAM = "tG";
     final String APP = "app";   // general application
@@ -174,7 +175,7 @@ public class NotificationListener extends NotificationListenerService {
 //                    break;
 //                }
 
-                if (sbnAppNick.equals("테스리")) {
+                if (sbnAppNick.equals(TESRY)) {
                     sayTesla();
                     break;
                 }
@@ -294,7 +295,7 @@ public class NotificationListener extends NotificationListenerService {
             tesla_time = nowTime;
             return;
         }
-        if (kvCommon.isDup("테스리", sbnText))
+        if (kvCommon.isDup(TESRY, sbnText))
             return;
         logUpdate.addLog("[ 테스리 ]", sbnText);
         NotificationBar.update(sbnAppNick, sbnText, true);
