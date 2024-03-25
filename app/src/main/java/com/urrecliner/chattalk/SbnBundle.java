@@ -78,10 +78,6 @@ public class SbnBundle {
 //                sbnAppType = "tos";
 //                break;
 //
-            case "org.telegram.messenger":
-                sbnAppNick = "텔레";
-                sbnAppType = "tG";
-                break;
 
             case "com.samsung.android.messaging":
                 sbnAppNick = "문자";

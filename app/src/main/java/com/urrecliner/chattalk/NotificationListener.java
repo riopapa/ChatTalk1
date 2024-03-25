@@ -42,9 +42,6 @@ public class NotificationListener extends NotificationListenerService {
     final String TELEGRAM = "tG";
     final String APP = "app";   // general application
 
-    final String [] ignoreTelegram = { "항셍", "계약수량", "진입신호"};
-    final String [] ignoreTesla = { "연결 중", "연결 해제됨", "핸드폰을 키로"};
-
     static long tesla_time = 0;
 
     public static Utils utils = null;
@@ -151,22 +148,12 @@ public class NotificationListener extends NotificationListenerService {
 
             case APP:
 
-                // appTxtIgnores are mostly android
-//                if (IgnoreThis.contains(sbnText, appTxtIgnores))
-//                    break;
+                if (hasIgnoreStr())
+                    return;
                 if (kvCommon.isDup(sbnApp.nickName, sbnText))
                     break;
 
-                if (sbnApp.igStr != null) {
-                    String grpWho = sbnWho + " " + sbnText;
-                    for (int i = 0; i < sbnApp.igStr.length; i++) {
-                        if ((grpWho).contains(sbnApp.igStr[i])) {
-                            return;
-                        }
-                    }
-                }
                 sbnText = utils.text2OneLine(sbnText);
-
                 if (sbnApp.inform != null) {
                     for (int i = 0; i < sbnApp.inform.length; i++) {
                         if ((sbnWho).contains(sbnApp.inform[i])) {
@@ -192,7 +179,7 @@ public class NotificationListener extends NotificationListenerService {
                     break;
                 }
 
-                sbnText = utils.strShorten(sbnApp.nickName, utils.strShorten(sbnWho, sbnText));
+                sbnText = utils.strShorten(sbnWho, utils.strShorten(sbnApp.nickName, sbnText));
 
                 if (sbnApp.addWho)
                     sbnText = "("+sbnWho + ")" + sbnText;
@@ -220,17 +207,11 @@ public class NotificationListener extends NotificationListenerService {
 
             case TELEGRAM:
 
-                if (sbnGroup.contains("곳에서 보") || sbnText.contains("곳에서 보")) {
-                    Log.w("Tele", "곳에서 보 " + sbnGroup + " . " + sbnText);
-                    return;
-                }
                 if (kvTelegram.isDup(sbnGroup, sbnText))
                     return;
+                if (hasIgnoreStr())
+                    return;
                 sbnText = utils.text2OneLine(sbnText);
-                for (String ts : ignoreTelegram) {
-                    if (sbnText.contains(ts))
-                        return;
-                }
                 for (int i = 0; i < teleChannels.length; i++) {
                     if (sbnWho.contains(teleChannels[i])) { // 정확한 이름 다 찾지 않을려고 contains 씀
                         sbnGroup = teleGroups[i];
@@ -293,11 +274,19 @@ public class NotificationListener extends NotificationListenerService {
         }
     }
 
-    private void sayTesla() {
-        for (String s: ignoreTesla) {
-            if (sbnText.contains(s))
-                return;
+    private static boolean hasIgnoreStr() {
+        if (sbnApp.igStr == null)
+            return false;
+        String grpWho = sbnWho + sbnText;
+        for (String t: sbnApp.igStr) {
+            if (grpWho.contains(t))
+                return true;
         }
+        return false;
+    }
+
+    private void sayTesla() {
+
         if (sbnText.contains("연결됨")) {
             long nowTime = System.currentTimeMillis();
             if ((nowTime - tesla_time) > 50 * 60 * 1000)    // 50 min.

@@ -43,12 +43,10 @@ class OptionTables {
         smsNoNumbers = tableListFile.read("smsNoNum");
 
         sysIgnores = tableListFile.read("sysIg");
-//        appTxtIgnores = tableListFile.read("appTxtIg");
         tossTxtIgnores = tableListFile.read("tossTxtIg");
         if (ktTxtIgnores == null || smsWhoIgnores == null || sysIgnores == null) {
             sounds.beepOnce(Vars.soundType.ERR.ordinal());
             Toast.makeText(mContext, "\nsome tables is null\n", Toast.LENGTH_LONG).show();
-//            sounds.beepOnce(Vars.soundType.ERR.ordinal());
         }
         readReplacesFile();
         readTelegramTable();
