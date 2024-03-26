@@ -16,6 +16,8 @@ import static com.urrecliner.chattalk.Vars.smsWhoIgnores;
 import static com.urrecliner.chattalk.Vars.tableListFile;
 import static com.urrecliner.chattalk.Vars.teleChannels;
 import static com.urrecliner.chattalk.Vars.teleGroups;
+import static com.urrecliner.chattalk.Vars.whoNameFrom;
+import static com.urrecliner.chattalk.Vars.whoNameTo;
 
 import android.widget.Toast;
 
@@ -44,12 +46,13 @@ class OptionTables {
             Toast.makeText(mContext, "\nsome tables is null\n", Toast.LENGTH_LONG).show();
         }
         readReplacesFile();
-        readTelegramTable();
+        readTelegramGroup();
+        readWhoName();
         new AppsTable().get();
 
     }
 
-    private void readTelegramTable() {
+    private void readTelegramGroup() {
         /*
          * group ^ channel name
          * 부자   ^ 부자 프로젝트
@@ -67,6 +70,28 @@ class OptionTables {
             } else {
                 teleGroups[i] = strings[0].trim();
                 teleChannels[i] = strings[1].trim();
+            }
+        }
+    }
+
+    private void readWhoName() {
+        /*
+         * group ^ channel name
+         * 부자   ^ 부자 프로젝트
+         */
+        String [] lists =  tableListFile.read("whoName");
+
+        whoNameFrom = new String[lists.length];
+        whoNameTo = new String[lists.length];
+
+        for (int i = 0; i < lists.length; i++) {
+            String pLine = lists[i];
+            String [] strings = pLine.split("\\^");
+            if (strings.length < 2) {
+                new SnackBar().show("Who Name Table Error ", pLine);
+            } else {
+                whoNameFrom[i] = strings[0].trim();
+                whoNameTo[i] = strings[1].trim();
             }
         }
     }

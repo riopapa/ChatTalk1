@@ -154,7 +154,7 @@ public class ActivityAppEdit extends AppCompatActivity {
                 continue;
             igList.add(s);
         }
-        app.igStr = igList.toArray(new String[0]);
+        app.igStr = (igList.isEmpty()) ? null : igList.toArray(new String[0]);
 
         String [] infoTalkStr = binding.infoTalk.getText().toString().split("\n");
         ArrayList<String> infStr = new ArrayList<>();

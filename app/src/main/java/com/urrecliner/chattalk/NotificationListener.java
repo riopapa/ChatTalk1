@@ -17,6 +17,8 @@ import static com.urrecliner.chattalk.Vars.smsTxtIgnores;
 import static com.urrecliner.chattalk.Vars.smsWhoIgnores;
 import static com.urrecliner.chattalk.Vars.teleChannels;
 import static com.urrecliner.chattalk.Vars.teleGroups;
+import static com.urrecliner.chattalk.Vars.whoNameFrom;
+import static com.urrecliner.chattalk.Vars.whoNameTo;
 
 import android.os.VibrationEffect;
 import android.os.Vibrator;
@@ -40,7 +42,7 @@ public class NotificationListener extends NotificationListenerService {
     final String KATALK = "kk";
     final String TESRY = "테스리";
 
-    final String TELEGRAM = "tG";
+    final String TELEGRAM = "텔레";
     final String APP = "app";   // general application
 
     static long tesla_time = 0;
@@ -134,6 +136,13 @@ public class NotificationListener extends NotificationListenerService {
                     int grpIdx = Collections.binarySearch(aGroups, sbnGroup);
                     Log.w("grpIdx check " + grpIdx, "grpIdx=" + grpIdx + " group=" + sbnGroup + " who=" + sbnWho);
                     if (grpIdx >= 0) {
+                        // replace with simple name
+                        for (int w = 0; w < whoNameFrom.length; w++) {
+                            if (sbnWho.contains(whoNameFrom[w])) {
+                                sbnWho = whoNameTo[w];
+                                break;
+                            }
+                        }
                         msgKeyword.say(sbnGroup, sbnWho, sbnText, grpIdx);
                         return;
                     }
@@ -149,10 +158,10 @@ public class NotificationListener extends NotificationListenerService {
 
             case APP:
 
+                if (kvCommon.isDup(sbnApp.nickName, sbnText))
+                    return;
                 if (hasIgnoreStr())
                     return;
-                if (kvCommon.isDup(sbnApp.nickName, sbnText))
-                    break;
 
                 sbnText = utils.text2OneLine(sbnText);
                 if (sbnApp.inform != null) {
@@ -177,7 +186,11 @@ public class NotificationListener extends NotificationListenerService {
 
                 if (sbnAppNick.equals(TESRY)) {
                     sayTesla();
-                    break;
+                    return;
+                }
+                if (sbnAppNick.equals(TELEGRAM)) {
+                    sayTelegram();
+                    return;
                 }
 
                 sbnText = utils.strShorten(sbnWho, utils.strShorten(sbnApp.nickName, sbnText));
@@ -206,47 +219,9 @@ public class NotificationListener extends NotificationListenerService {
                 NotificationBar.update(sbnApp.nickName + ":"+ s, sbnText, true);
                 break;
 
-            case TELEGRAM:
-
-                if (kvTelegram.isDup(sbnGroup, sbnText))
-                    return;
-                if (hasIgnoreStr())
-                    return;
-                sbnText = utils.text2OneLine(sbnText);
-                for (int i = 0; i < teleChannels.length; i++) {
-                    if (sbnWho.contains(teleChannels[i])) { // 정확한 이름 다 찾지 않으려고 contains 씀
-                        sbnGroup = teleGroups[i];
-                        if (sbnText.length() < 15)
-                            return;
-                        if (kvTelegram.isDup(sbnGroup, sbnText))
-                            return;
-                        if (sbnWho.contains(":"))   // group : who 로 구성됨
-                            sbnWho = sbnWho.substring(sbnWho.indexOf(":") + 2).trim();
-                        if (kvTelegram.isDup(sbnWho, sbnText))
-                            return;
-                        if (msgKeyword == null)
-                            msgKeyword = new MsgKeyword("by tele");
-                        int grpIdx = Collections.binarySearch(aGroups, sbnGroup);
-                        if (grpIdx < 0)
-                            utils.logE("tele", "grpIdx " + grpIdx + " err " + sbnWho + " > " + sbnGroup
-                                    + " " + sbnText);
-                        if (sbnText.contains("종목")) {
-                            utils.logW("tel " + sbnGroup, sbnWho + "_ : " + sbnText);
-                            msgKeyword.say(sbnGroup, sbnWho, sbnText, grpIdx);
-                        }
-                        return;
-                    }
-                }
-                head = "[텔레 " + sbnGroup + "|" + sbnWho + "]";
-                logUpdate.addLog(head, sbnText);
-                NotificationBar.update(sbnGroup + "|" + sbnWho, sbnText, true);
-                sbnText = head + " 로 부터. " + sbnText;
-                sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
-                break;
-
             case SMS:
 
-                if (sbnWho.replaceAll(mContext.getString(R.string.regex_number_only), "").length() < 4 &&
+                if (sbnWho.replaceAll(mContext.getString(R.string.regex_number_only), "").length() < 6 &&
                         !sbnText.contains("스마트폰 배우고"))
                     return;
                 if (IgnoreThis.contains(sbnWho, smsWhoIgnores) || IgnoreThis.contains(sbnText, smsTxtIgnores))
@@ -273,6 +248,50 @@ public class NotificationListener extends NotificationListenerService {
                 logUpdate.addLog("[ " + sbnAppName + " ]", sbnText);
                 break;
         }
+    }
+
+    private void sayTelegram() {
+        if (kvTelegram.isDup(sbnGroup, sbnText))
+            return;
+        if (hasIgnoreStr())
+            return;
+        sbnText = utils.text2OneLine(sbnText);
+        for (int i = 0; i < teleChannels.length; i++) {
+            if (sbnWho.contains(teleChannels[i])) { // 정확한 이름 다 찾지 않으려고 contains 씀
+                if (sbnText.length() < 15)
+                    return;
+                sbnGroup = teleGroups[i];
+                if (kvTelegram.isDup(sbnGroup, sbnText))
+                    return;
+//                if (sbnWho.contains(":"))   // group : who 로 구성됨
+//                    sbnWho = sbnWho.substring(sbnWho.indexOf(":") + 2).trim();
+
+                // replace with simple name
+                for (int w = 0; w < whoNameFrom.length; w++) {
+                    if (sbnWho.contains(whoNameFrom[w])) {
+                        sbnWho = whoNameTo[w];
+                        break;
+                    }
+                }
+                if (msgKeyword == null)
+                    msgKeyword = new MsgKeyword("by tele");
+                int grpIdx = Collections.binarySearch(aGroups, sbnGroup);
+                if (grpIdx < 0)
+                    utils.logE("tele", "grpIdx " + grpIdx + " err " + sbnWho + " > " + sbnGroup
+                            + " " + sbnText);
+                if (sbnText.contains("종목")) {
+                    utils.logW("tel " + sbnGroup, sbnWho + "_ : " + sbnText);
+                    sbnText = utils.strShorten(sbnWho, utils.strShorten(sbnWho, sbnText));
+                    msgKeyword.say(sbnGroup, sbnWho, sbnText, grpIdx);
+                }
+                return;
+            }
+        }
+        head = "[텔레 " + sbnGroup + "|" + sbnWho + "]";
+        logUpdate.addLog(head, sbnText);
+        NotificationBar.update(sbnGroup + "|" + sbnWho, sbnText, true);
+        sbnText = head + " 로 부터. " + sbnText;
+        sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
     }
 
     private static boolean hasIgnoreStr() {

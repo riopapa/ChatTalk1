@@ -188,7 +188,7 @@
             android:gravity = "center"
             android:padding = "@dimen/table_padding_size"
             android:tag = "strRepl"
-            android:text = "글짜를 짧게"
+            android:text = "글짜 짧게"
             android:textSize = "@dimen/table_font_size"
             android:textStyle = "bold" />
 
@@ -202,7 +202,21 @@
             android:gravity = "center"
             android:padding = "@dimen/table_padding_size"
             android:tag = "teleGrp"
-            android:text = "텔레그램 그룹"
+            android:text = "텔레 그룹"
+            android:textSize = "@dimen/table_font_size"
+            android:textStyle = "bold" />
+
+        <TextView
+            android:id = "@+id/who_names"
+            android:layout_width = "0dp"
+            android:layout_height = "wrap_content"
+            android:layout_margin = "@dimen/button_margin_size"
+            android:layout_weight = "1"
+            android:background = "@drawable/rounded_button2"
+            android:gravity = "center"
+            android:padding = "@dimen/table_padding_size"
+            android:tag = "whoName"
+            android:text = "이름 치환"
             android:textSize = "@dimen/table_font_size"
             android:textStyle = "bold" />
 
@@ -216,7 +230,7 @@
             android:gravity = "center"
             android:padding = "@dimen/table_padding_size"
             android:tag = "appNames"
-            android:text = "App Names"
+            android:text = "Apps"
             android:textSize = "@dimen/table_font_size"
             android:textStyle = "bold" />
 

@@ -78,7 +78,7 @@ public class SbnBundle {
             case "com.samsung.android.messaging":
                 sbnAppNick = "문자";
                 sbnAppType = "sms";
-                break;
+                return false;
 
             default:
                 if (Collections.binarySearch(appIgnores, sbnAppName) >= 0)

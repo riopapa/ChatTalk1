@@ -70,6 +70,10 @@ public class Vars {
 
     static String[] teleGroups = null;
     static String[] teleChannels = null;
+
+    static String[] whoNameFrom = null;
+    static String[] whoNameTo = null;
+
     static String nowFileName;
 
     static int replGroupCnt = 0;

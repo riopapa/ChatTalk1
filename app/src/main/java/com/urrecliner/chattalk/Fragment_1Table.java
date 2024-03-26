@@ -62,6 +62,7 @@ public class Fragment_1Table extends Fragment {
         rootView.findViewById(R.id.k_who_ignores).setOnClickListener(this::edit_table);
         rootView.findViewById(R.id.k_text_ignores).setOnClickListener(this::edit_table);
         rootView.findViewById(R.id.kt_no_number).setOnClickListener(this::edit_table);
+        rootView.findViewById(R.id.who_names).setOnClickListener(this::edit_table);
         rootView.findViewById(R.id.group_telegrams).setOnClickListener(this::edit_table);
 
         rootView.findViewById(R.id.string_replace).setOnClickListener(this::edit_replace);
