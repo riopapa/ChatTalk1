@@ -70,6 +70,20 @@
                 android:textSize = "@dimen/table_font_size"
                 android:textStyle = "bold" />
 
+            <TextView
+                android:id = "@+id/sms_replace"
+                android:layout_width = "0dp"
+                android:layout_height = "wrap_content"
+                android:layout_margin = "@dimen/button_margin_size"
+                android:layout_weight = "1"
+                android:background = "@drawable/rounded_button3"
+                android:gravity = "center"
+                android:padding = "@dimen/table_padding_size"
+                android:tag = "smsRepl"
+                android:text = "글짜 짧게"
+                android:textSize = "@dimen/table_font_size"
+                android:textStyle = "bold" />
+
         </LinearLayout>
 
     </LinearLayout>

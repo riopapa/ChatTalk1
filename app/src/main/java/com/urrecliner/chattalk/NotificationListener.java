@@ -18,6 +18,8 @@ import static com.urrecliner.chattalk.Vars.sbnAppType;
 import static com.urrecliner.chattalk.Vars.sbnGroup;
 import static com.urrecliner.chattalk.Vars.sbnText;
 import static com.urrecliner.chattalk.Vars.sbnWho;
+import static com.urrecliner.chattalk.Vars.smsReplFrom;
+import static com.urrecliner.chattalk.Vars.smsReplTo;
 import static com.urrecliner.chattalk.Vars.smsTxtIgnores;
 import static com.urrecliner.chattalk.Vars.smsWhoIgnores;
 import static com.urrecliner.chattalk.Vars.teleChannels;
@@ -238,6 +240,10 @@ public class NotificationListener extends NotificationListenerService {
                 sbnWho = sbnWho.replaceAll("[\\u200C-\\u206F]", "");
                 sbnText = sbnText.replace(mContext.getString(R.string.web_sent), "")
                         .replaceAll("[\\u200C-\\u206F]", "");
+                if (smsReplFrom != null) {
+                    for (int i = 0; i < smsReplFrom.length; i++)
+                        sbnText = sbnText.replace(smsReplFrom[i], smsReplTo[i]);
+                }
                 msgSMS.say(sbnWho, utils.strShorten(sbnWho, sbnText));
                 break;
 

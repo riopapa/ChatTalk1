@@ -61,11 +61,13 @@ public class Vars {
     static String[][] aGroupWhos;     // [2] 이진홍, 김선수
     static String[][][] aGroupWhoKey1, aGroupWhoKey2, aGroupWhoSkip, aGroupWhoPrev, aGroupWhoNext;
 
-    static String[] smsNoNumbers = null;
-    static String[] ktNoNumbers = null;
-
     static String[] smsWhoIgnores = null;
     static String[] smsTxtIgnores = null;
+    static String[] smsNoNumbers = null;
+    static String[] smsReplFrom = null;
+    static String[] smsReplTo = null;
+
+    static String[] ktNoNumbers = null;
     static String[] ktTxtIgnores = null;
 
     static String[] teleGroups = null;

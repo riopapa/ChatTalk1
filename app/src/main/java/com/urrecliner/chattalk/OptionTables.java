@@ -11,6 +11,8 @@ import static com.urrecliner.chattalk.Vars.replGroupCnt;
 import static com.urrecliner.chattalk.Vars.replLong;
 import static com.urrecliner.chattalk.Vars.replShort;
 import static com.urrecliner.chattalk.Vars.smsNoNumbers;
+import static com.urrecliner.chattalk.Vars.smsReplFrom;
+import static com.urrecliner.chattalk.Vars.smsReplTo;
 import static com.urrecliner.chattalk.Vars.smsTxtIgnores;
 import static com.urrecliner.chattalk.Vars.smsWhoIgnores;
 import static com.urrecliner.chattalk.Vars.tableListFile;
@@ -40,12 +42,14 @@ class OptionTables {
         smsWhoIgnores =  tableListFile.read("smsWhoIg");
         smsTxtIgnores =  tableListFile.read("smsTxtIg");
         smsNoNumbers = tableListFile.read("smsNoNum");
+        smsNoNumbers = tableListFile.read("smsNoNum");
 
         if (ktTxtIgnores == null || smsWhoIgnores == null) {
             sounds.beepOnce(Vars.soundType.ERR.ordinal());
             Toast.makeText(mContext, "\nsome tables is null\n", Toast.LENGTH_LONG).show();
         }
-        readReplacesFile();
+        readStrReplFile();
+        readSmsReplFile();
         readTelegramGroup();
         readWhoName();
         new AppsTable().get();
@@ -96,11 +100,43 @@ class OptionTables {
         }
     }
 
-    void readReplacesFile() {
+    void readSmsReplFile() {
+        /*
+         * 0   ^  1
+         * 짧은 ^ 아주 긴 문장 ; comment
+         */
+        String[] lines = tableListFile.read("smsRepl");
+        ArrayList<String> sShort = new ArrayList<>();
+        ArrayList<String> sLong = new ArrayList<>();
+        for (String oneLine : lines) {
+            if (!oneLine.isEmpty()) {
+                String[] ones = oneLine.split("\\^");
+                if (ones.length < 2) {
+                    if (sounds == null)
+                        sounds = new Sounds();
+                    sounds.beepOnce(Vars.soundType.ERR.ordinal());
+                    Toast.makeText(mContext, "SMS Repl ^^ Error : " + oneLine, Toast.LENGTH_LONG).show();
+                } else {
+                    sShort.add(ones[0].trim());
+                    sLong.add(ones[1].trim());
+                }
+            }
+        }
+        if (!sShort.isEmpty()) {
+            smsReplFrom = new String[sShort.size()];
+            smsReplTo = new String[sShort.size()];
+            for (int i = 0; i < sShort.size(); i++) {
+                smsReplFrom[i] = sLong.get(i);
+                smsReplTo[i] = sShort.get(i);
+            }
+        }
+    }
+
+    void readStrReplFile() {
         /*
          * 0          1       2         3
-         * priority ^ group ^ repl To ^ repl from
-         * 20       ^  퍼플  ^ pp1   ^ $매수 하신분들 【 매수 】
+         * group ^ repl To ^ repl from
+         * 퍼플  ^ pp1   ^ $매수 하신분들 【 매수 】
          */
         class StrLong2Short {
             final String grpName;
@@ -125,7 +161,7 @@ class OptionTables {
                 if (sounds == null)
                     sounds = new Sounds();
                 sounds.beepOnce(Vars.soundType.ERR.ordinal());
-                Toast.makeText(mContext,"Caret missing : "+oneLine+"\nprv line : "+prvLine,
+                Toast.makeText(mContext,"StrRepl Caret missing : "+oneLine+"\nprv line : "+prvLine,
                         Toast.LENGTH_LONG).show();
                 continue;
             }
@@ -133,11 +169,11 @@ class OptionTables {
                 if (!svGroup.isEmpty())
                     strLong2Shorts.add(new StrLong2Short(svGroup, gLong, gShort));
                 svGroup = ones[0];
-                gLong = new ArrayList<>();
                 gShort = new ArrayList<>();
+                gLong = new ArrayList<>();
             }
-            gLong.add(ones[2]);
             gShort.add(ones[1]);
+            gLong.add(ones[2]);
             prvLine = oneLine;
         }
         if (!gLong.isEmpty())

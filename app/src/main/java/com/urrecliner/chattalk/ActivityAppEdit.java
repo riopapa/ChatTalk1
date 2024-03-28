@@ -177,6 +177,7 @@ public class ActivityAppEdit extends AppCompatActivity {
                 } else {
                     Toast.makeText(mContext, "inform data error line=" + i + " =>" + infoTalkStr[i],
                             Toast.LENGTH_LONG).show();
+                    return;
                 }
             }
         }
@@ -190,7 +191,7 @@ public class ActivityAppEdit extends AppCompatActivity {
         String [] repl = binding.replFromTo.getText().toString().split("\n");
         ArrayList<String> replF = new ArrayList<>();
         ArrayList<String> replT = new ArrayList<>();
-        for (int i = 0; i < infoTalkStr.length; i++) {
+        for (int i = 0; i < repl.length; i++) {
             if (!repl[i].isEmpty()) {
                 String[] t = repl[i].split(";");
                 if (t.length == 2) {
@@ -199,6 +200,7 @@ public class ActivityAppEdit extends AppCompatActivity {
                 } else {
                     Toast.makeText(mContext, "replace from to error line=" + i + " =>" + infoTalkStr[i],
                             Toast.LENGTH_LONG).show();
+                    return;
                 }
             }
         }

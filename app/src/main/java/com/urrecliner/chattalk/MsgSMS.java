@@ -41,7 +41,6 @@ public class MsgSMS {
             String head = "[SMS "+mWho + "]";
             if (utils == null)
                 utils = new Utils();
-            mText = utils.strShorten(mWho, mText);
             logUpdate.addLog(head, mText);
             mText = utils.makeEtc(mText, 150);
             NotificationBar.update("sms "+mWho, mText, true);

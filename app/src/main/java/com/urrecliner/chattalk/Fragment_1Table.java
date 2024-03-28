@@ -52,10 +52,11 @@ public class Fragment_1Table extends Fragment {
             tv_WifiState.setText(s1);
         });
 
-        rootView.findViewById(R.id.sms_with_no_number).setOnClickListener(this::edit_table);
-
         rootView.findViewById(R.id.sms_who_ignores).setOnClickListener(this::edit_table);
         rootView.findViewById(R.id.sms_text_ignores).setOnClickListener(this::edit_table);
+        rootView.findViewById(R.id.sms_with_no_number).setOnClickListener(this::edit_table);
+        rootView.findViewById(R.id.sms_replace).setOnClickListener(this::edit_table);
+
         rootView.findViewById(R.id.app_names).setOnClickListener(this::edit_table);
 
         rootView.findViewById(R.id.k_group_ignores).setOnClickListener(this::edit_table);
