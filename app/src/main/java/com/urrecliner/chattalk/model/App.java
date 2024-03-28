@@ -5,5 +5,5 @@ public class App {
     public boolean say, log, grp, who, addWho, num;
     public String [] inform, talk;      // if "inform" found say "talk" only
     public String [] igStr;
-
+    public String [] replFrom, replTo;      // if contains replFrom, replate to replTo
 }

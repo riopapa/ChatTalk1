@@ -24,12 +24,14 @@ import com.urrecliner.chattalk.model.App;
 public class ActivityAppList extends AppCompatActivity {
 
     public static RecyclerView appRecyclerView;
+    public static boolean [] fnd;
     ActivityAppListBinding binding;
     String key;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_app_list);
-
+        fnd = new boolean[apps.size()];
         binding = ActivityAppListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         super.onCreate(savedInstanceState);
@@ -70,14 +72,20 @@ public class ActivityAppList extends AppCompatActivity {
     }
     void searchApps(int startPos) {
         appPos = -1;
+        if (startPos == 0)
+            fnd = new boolean[apps.size()];
+
         String result = "";
         for (int i = startPos; i < apps.size(); i++) {
             App app = apps.get(i);
             if (app.nickName.contains(key) || app.fullName.contains(key) ||
                 app.memo.contains(key)) {
-                appPos = i;
-                result = app.nickName+" "+app.fullName + " " +app.memo;
-                break;
+                if (appPos == -1) {
+                    appPos = i;
+                    result = app.nickName + " " + app.fullName + " " + app.memo;
+                }
+                fnd[i] = true;
+                appAdapter.notifyItemChanged(i);
             }
         }
         if (appPos > 0) {

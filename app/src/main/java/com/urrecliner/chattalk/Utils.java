@@ -17,7 +17,7 @@ import java.text.Collator;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-class Utils {
+public class Utils {
 
     public Utils() {
         if (packageDirectory == null)

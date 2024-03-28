@@ -21,7 +21,7 @@ import android.util.Log;
 
 import java.util.Collections;
 
-class MsgKeyword {
+public class MsgKeyword {
 
     public MsgKeyword(String str) {
         Log.e("MsgKeyword", "new "+str);
@@ -54,6 +54,9 @@ class MsgKeyword {
                 continue;
             if (loadFunction == null)
                 loadFunction = new LoadFunction();
+            if (alertStock == null)
+                alertStock = new AlertStock();
+
             alertStock.sayNlog(group, text, aAlertLineIdx[grpIdx][gWhoIdx][i]);
             if (alertsAdapter == null)
                 alertsAdapter = new AlertsAdapter();

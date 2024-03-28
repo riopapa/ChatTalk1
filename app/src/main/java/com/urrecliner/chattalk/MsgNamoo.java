@@ -1,8 +1,6 @@
 package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.NotificationListener.logUpdate;
-import static com.urrecliner.chattalk.NotificationListener.notificationBar;
-import static com.urrecliner.chattalk.NotificationListener.notificationService;
 import static com.urrecliner.chattalk.NotificationListener.sounds;
 
 import com.urrecliner.chattalk.Sub.Numbers;
@@ -11,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-class MsgNamoo {
+public class MsgNamoo {
 
     final String naMoo = "NH나무";
 

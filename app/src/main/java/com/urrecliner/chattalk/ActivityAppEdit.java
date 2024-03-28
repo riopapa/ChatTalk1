@@ -23,9 +23,6 @@ import com.urrecliner.chattalk.databinding.ActivityAppEditBinding;
 import com.urrecliner.chattalk.model.App;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 
 public class ActivityAppEdit extends AppCompatActivity {
@@ -51,7 +48,8 @@ public class ActivityAppEdit extends AppCompatActivity {
             app.who = true;
             app.addWho = false;
             app.num = true;
-            app.inform = new String[0];
+            app.inform = null;
+            app.replFrom = null;
 
             ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData pData = clipboard.getPrimaryClip();
@@ -101,6 +99,17 @@ public class ActivityAppEdit extends AppCompatActivity {
         binding.infoTalk.setEnabled(true);
         binding.infoTalk.setClickable(true);
         binding.infoTalk.setFocusableInTouchMode(true);
+
+        if (app.replFrom != null) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < app.replFrom.length; i++)
+                sb.append(app.replFrom[i]).append(" ; ").append(app.replTo[i]).append("\n");
+            binding.replFromTo.setText(sb.toString());
+        }
+        binding.replFromTo.setFocusable(true);
+        binding.replFromTo.setEnabled(true);
+        binding.replFromTo.setClickable(true);
+        binding.replFromTo.setFocusableInTouchMode(true);
     }
 
     @Override
@@ -166,13 +175,39 @@ public class ActivityAppEdit extends AppCompatActivity {
                     infStr.add(t[0].trim());
                     talkStr.add(t[1].trim());
                 } else {
-                    Toast.makeText(mContext, "inform data error line=" + i + " data=>" + infoTalkStr[i],
+                    Toast.makeText(mContext, "inform data error line=" + i + " =>" + infoTalkStr[i],
                             Toast.LENGTH_LONG).show();
                 }
             }
         }
-        app.inform = infStr.toArray(new String[0]);
-        app.talk = talkStr.toArray(new String[0]);
+        if (!infStr.isEmpty()) {
+            app.inform = infStr.toArray(new String[0]);
+            app.talk = talkStr.toArray(new String[0]);
+        } else {
+            app.inform = null;
+        }
+
+        String [] repl = binding.replFromTo.getText().toString().split("\n");
+        ArrayList<String> replF = new ArrayList<>();
+        ArrayList<String> replT = new ArrayList<>();
+        for (int i = 0; i < infoTalkStr.length; i++) {
+            if (!repl[i].isEmpty()) {
+                String[] t = repl[i].split(";");
+                if (t.length == 2) {
+                    replF.add(t[0].trim());
+                    replT.add(t[1].trim());
+                } else {
+                    Toast.makeText(mContext, "replace from to error line=" + i + " =>" + infoTalkStr[i],
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+        if (!replF.isEmpty()) {
+            app.replFrom = replF.toArray(new String[0]);
+            app.replTo = replT.toArray(new String[0]);
+        } else
+            app.replFrom = null;
+
         if (appPos == -1)
             apps.add(app);
         else

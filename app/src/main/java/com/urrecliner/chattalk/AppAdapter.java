@@ -1,5 +1,6 @@
 package com.urrecliner.chattalk;
 
+import static com.urrecliner.chattalk.ActivityAppList.fnd;
 import static com.urrecliner.chattalk.Vars.appPos;
 import static com.urrecliner.chattalk.Vars.apps;
 import static com.urrecliner.chattalk.Vars.mActivity;
@@ -8,6 +9,7 @@ import static com.urrecliner.chattalk.Vars.mContext;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,6 +67,7 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
             colorExist = ContextCompat.getColor(mContext,R.color.appExist);
             colorNone = ContextCompat.getColor(mContext,R.color.appNone);
             NotInstalled = ContextCompat.getDrawable(mContext, R.drawable.delete);
+
         }
     }
 
@@ -83,8 +86,10 @@ public class AppAdapter extends RecyclerView.Adapter<AppAdapter.ViewHolder> {
         App al = apps.get(appPos);
 
         holder.tNickName.setText(al.nickName);
+        holder.tNickName.setBackgroundColor((fnd[position]) ? Color.CYAN: Color.LTGRAY);
         String merged = (!al.memo.isEmpty()) ? al.memo + " | "+al.fullName: " "+ al.fullName;
         holder.tFullName.setText(merged);
+        holder.tFullName.setBackgroundColor((fnd[position]) ? Color.CYAN: Color.LTGRAY);
 
         Drawable drawable = getPackageIcon(al.fullName, holder.pm);
         if (drawable == null ) {

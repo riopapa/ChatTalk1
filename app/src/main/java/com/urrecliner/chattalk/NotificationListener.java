@@ -1,12 +1,17 @@
 package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.Vars.aGroups;
+import static com.urrecliner.chattalk.Vars.appFullNames;
+import static com.urrecliner.chattalk.Vars.appIgnores;
+import static com.urrecliner.chattalk.Vars.appNameIdx;
+import static com.urrecliner.chattalk.Vars.apps;
 import static com.urrecliner.chattalk.Vars.ktGroupIgnores;
 import static com.urrecliner.chattalk.Vars.ktNoNumbers;
 import static com.urrecliner.chattalk.Vars.ktTxtIgnores;
 import static com.urrecliner.chattalk.Vars.ktWhoIgnores;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.sbnApp;
+import static com.urrecliner.chattalk.Vars.sbnAppIdx;
 import static com.urrecliner.chattalk.Vars.sbnAppName;
 import static com.urrecliner.chattalk.Vars.sbnAppNick;
 import static com.urrecliner.chattalk.Vars.sbnAppType;
@@ -20,6 +25,8 @@ import static com.urrecliner.chattalk.Vars.teleGroups;
 import static com.urrecliner.chattalk.Vars.whoNameFrom;
 import static com.urrecliner.chattalk.Vars.whoNameTo;
 
+import android.app.Notification;
+import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.os.VibratorManager;
@@ -27,6 +34,7 @@ import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
 
+import com.urrecliner.chattalk.Sub.AppsTable;
 import com.urrecliner.chattalk.Sub.Copy2Clipboard;
 import com.urrecliner.chattalk.Sub.IgnoreNumber;
 import com.urrecliner.chattalk.Sub.IgnoreThis;
@@ -58,8 +66,6 @@ public class NotificationListener extends NotificationListenerService {
     public static LoadFunction loadFunction = null;
     public static MsgKeyword msgKeyword = null;
     public static MsgSMS msgSMS = null;
-    public static SbnBundle sbnBundle;
-    public static NotificationBar notificationBar;
     public static NotificationService notificationService;
     public static StockName stockName;
     public static PhoneVibrate phoneVibrate;
@@ -88,18 +94,8 @@ public class NotificationListener extends NotificationListenerService {
             vars = new Vars(this);
         if (loadFunction == null)
             loadFunction = new LoadFunction();
-        if (utils == null)
-            utils = new Utils();
-        if (sbnBundle == null)
-            sbnBundle = new SbnBundle();
-        if (notificationBar == null)
-            notificationBar = new NotificationBar();
-        if (notificationService == null)
-            notificationService = new NotificationService();
-        if (kvCommon == null)
-            kvCommon = new KeyVal();
 
-        if (sbnBundle.bypassSbn(sbn))
+        if (isSbnNothing(sbn))
             return;
         switch (sbnAppType) {
 
@@ -178,6 +174,14 @@ public class NotificationListener extends NotificationListenerService {
                         }
                     }
                 }
+                if (sbnApp.replFrom != null) {
+                    for (int i = 0; i < sbnApp.replFrom.length; i++) {
+                        if ((sbnText).contains(sbnApp.replFrom[i])) {
+                            sbnText = sbnText.replace(sbnApp.replFrom[i],sbnApp.replTo[i]);
+                        }
+                    }
+                }
+
 //                if (sbnApp.nickName.equals("NH나무")) {
 ////                    utils.logW(sbnApp.nickName,sbnText);
 ////                    new MsgNamoo().say(utils.text2OneLine(sbnText));
@@ -193,7 +197,7 @@ public class NotificationListener extends NotificationListenerService {
                     return;
                 }
 
-                sbnText = utils.strShorten(sbnWho, utils.strShorten(sbnApp.nickName, sbnText));
+//                sbnText = utils.strShorten(sbnWho, utils.strShorten(sbnApp.nickName, sbnText));
 
                 if (sbnApp.addWho)
                     sbnText = sbnWho + "※" + sbnText;
@@ -208,10 +212,10 @@ public class NotificationListener extends NotificationListenerService {
                 }
 
                 if (sbnApp.log) {
-                    head = "[" + sbnApp.nickName;
+                    head = "<" + sbnApp.nickName;
                     head += (sbnApp.grp) ? "."+sbnGroup+"_": "";
                     head += (sbnApp.who) ? sbnWho:"";
-                    head = head + "]";
+                    head = head + ">";
                     logUpdate.addLog(head, sbnText);
                 }
                 String s = (sbnApp.grp) ? sbnGroup+"_": "";
@@ -231,9 +235,11 @@ public class NotificationListener extends NotificationListenerService {
                     return;
                 if (msgSMS == null)
                     msgSMS = new MsgSMS();
+                sbnWho = sbnWho.replaceAll("[\\u200C-\\u206F]", "");
+                sbnText = sbnText.replace(mContext.getString(R.string.web_sent), "")
+                        .replaceAll("[\\u200C-\\u206F]", "");
                 msgSMS.say(sbnWho, utils.strShorten(sbnWho, sbnText));
                 break;
-
 
             default:
 
@@ -294,7 +300,7 @@ public class NotificationListener extends NotificationListenerService {
         sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
     }
 
-    private static boolean hasIgnoreStr() {
+    private boolean hasIgnoreStr() {
         if (sbnApp.igStr == null)
             return false;
         String grpWho = sbnWho + sbnText;
@@ -320,4 +326,88 @@ public class NotificationListener extends NotificationListenerService {
         NotificationBar.update(sbnAppNick, sbnText, true);
         sounds.speakAfterBeep("테스리로 부터 " + sbnText);
     }
+
+    boolean isSbnNothing(StatusBarNotification sbn) {
+
+        sbnAppName = sbn.getPackageName();  // to LowCase
+        if (sbnAppName.isEmpty())
+            return true;
+        Notification mNotification = sbn.getNotification();
+        Bundle extras = mNotification.extras;
+        // get eText //
+        try {
+            sbnText = ""+extras.get(Notification.EXTRA_TEXT);
+            if (sbnText.isEmpty() || sbnText.equals("null"))
+                return true;
+        } catch (Exception e) {
+            return true;
+        }
+        // get eWho //
+        try {
+            sbnWho = ""+extras.get(Notification.EXTRA_TITLE);
+            if (sbnWho.equals("null"))
+                sbnWho = "";
+        } catch (Exception e) {
+            new Utils().logW("sbn WHO Error", "no Who "+ sbnAppName +" "+sbnText);
+            return true;
+        }
+        if (apps == null || appIgnores == null) {
+            new AppsTable().get();
+            Log.e("reloading", "apps is null new size=" + apps.size());
+        }
+
+        switch (sbnAppName) {
+
+            case "com.kakao.talk":
+                sbnAppNick = "카톡";
+                sbnAppType = "kk";
+                break;
+
+            case "android":
+                if (Collections.binarySearch(appIgnores, sbnAppName) >= 0)
+                    return true;
+                sbnAppIdx = Collections.binarySearch(appFullNames, sbnAppName);
+                sbnApp = apps.get(sbnAppIdx);
+                sbnAppNick = sbnApp.nickName;
+                sbnAppType = "app";
+                return false;
+
+            case "com.samsung.android.messaging":
+                sbnAppNick = "문자";
+                sbnAppType = "sms";
+                return false;
+
+            default:
+                if (Collections.binarySearch(appIgnores, sbnAppName) >= 0)
+                    return true;
+                sbnAppIdx = Collections.binarySearch(appFullNames, sbnAppName);
+                if (sbnAppIdx >= 0) {
+                    sbnAppIdx = appNameIdx.get(sbnAppIdx);
+                    sbnApp = apps.get(sbnAppIdx);
+                    sbnAppNick = sbnApp.nickName;
+                    sbnAppType = "app";
+                } else {
+                    sbnAppNick = "None";
+                    sbnAppType = "None";
+                    sbnAppIdx = -1;
+                }
+                break;
+        }
+
+        // get eGroup //
+        try {
+            sbnGroup = extras.getString(Notification.EXTRA_SUB_TEXT);
+            if (sbnGroup == null || sbnGroup.equals("null"))
+                sbnGroup = "";
+        } catch (Exception e) {
+            sbnGroup = "";
+        }
+        return false;
+    }
+
+
+
+
+
+
 }

@@ -18,7 +18,7 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-class Sounds {
+public class Sounds {
     public static boolean isTalking = false;
     static TextToSpeech mTTS = null;
     static String TTSId = "";

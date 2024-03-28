@@ -18,15 +18,13 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 
-class MsgSMS {
+public class MsgSMS {
 
     final static String trade = "체결";
     final static String jrGroup = "허찌";
     final static String nhStock = "NH투자";
     void say(String mWho, String mText) {
 
-        mWho = mWho.replaceAll("[\\u200C-\\u206F]", "");
-        mText = mText.replace(mContext.getString(R.string.web_sent), "").replaceAll("[\\u200C-\\u206F]", "");
         if (mWho.contains(nhStock)) {
             if (mText.contains(trade))
                 sayTrade(mWho, mText);
