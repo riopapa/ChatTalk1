@@ -16,8 +16,7 @@ public class TableListFile {
 
     public String[] read(String filename) {
 
-        /* read all lines, remove ; comments, delete if length < 2
-         */
+        // read all lines, remove ; comments, delete if length < 2
         List<String> lines = new ArrayList<>();
         try {
             lines = Files.readAllLines(Paths.get(
@@ -27,11 +26,11 @@ public class TableListFile {
         }
 
         for (int lnNbr = 0; lnNbr < lines.size(); ) {   // lines.size() is varying
-            String lnStr = lines.get(lnNbr);
+            String lnStr = lines.get(lnNbr).trim();
             if (lnStr.length() < 2)
                 lines.remove(lnNbr);
             else {
-                int pos = lnStr.indexOf(";");
+                int pos = lnStr.lastIndexOf(";");
                 if (pos > 0)
                     lines.set(lnNbr, lnStr.substring(0, pos).trim());
                 lnNbr++;

@@ -51,7 +51,7 @@ public class NotificationListener extends NotificationListenerService {
     final String SMS = "sms";
     final String KATALK = "kk";
     final String TESRY = "테스리";
-
+    final String ANDROID = "an";
     final String TELEGRAM = "텔레";
     final String APP = "app";   // general application
 
@@ -199,30 +199,44 @@ public class NotificationListener extends NotificationListenerService {
                     return;
                 }
 
+                utils.logW("app @","a"+sbnApp.fullName+", g"+sbnGroup+", w"+sbnWho+" t"+sbnText);
+
 //                sbnText = utils.strShorten(sbnWho, utils.strShorten(sbnApp.nickName, sbnText));
 
-                if (sbnApp.addWho)
-                    sbnText = sbnWho + "※" + sbnText;
-
                 if (sbnApp.say) {
+
                     String say = sbnApp.nickName + " ";
                     say += (sbnApp.grp) ? sbnGroup+" ": " ";
-                    say += (sbnApp.who) ? sbnWho:" ";
+                    say += sbnWho;
                     say = say + " 로부터 ";
                     say = say + ((sbnApp.num) ? sbnText : new Numbers().deduct(sbnText));
                     sounds.speakAfterBeep(utils.makeEtc(say, 200));
                 }
 
+                if (sbnApp.addWho)
+                    sbnText = sbnWho + "※" + sbnText;
+
                 if (sbnApp.log) {
                     head = "<" + sbnApp.nickName;
-                    head += (sbnApp.grp) ? "."+sbnGroup+"_": "";
-                    head += (sbnApp.who) ? sbnWho:"";
+                    head += (sbnApp.grp && !sbnGroup.isEmpty()) ? "."+sbnGroup: "";
+                    head += (sbnApp.who)? "@" + sbnWho : "";
                     head = head + ">";
                     logUpdate.addLog(head, sbnText);
                 }
-                String s = (sbnApp.grp) ? sbnGroup+"_": "";
-                s += (sbnApp.who) ? sbnWho:"";
+                String s = (sbnApp.grp && !sbnGroup.isEmpty()) ? sbnGroup+"_": "";
+                s += sbnWho;
                 NotificationBar.update(sbnApp.nickName + ":"+ s, sbnText, true);
+                break;
+
+            case ANDROID:
+
+                if (kvCommon.isDup(ANDROID, sbnText))
+                    return;
+                if (hasIgnoreStr())
+                    return;
+                head = "< an > "+sbnWho;
+                logUpdate.addLog(head, sbnWho+" / "+sbnText);
+
                 break;
 
             case SMS:
@@ -309,9 +323,12 @@ public class NotificationListener extends NotificationListenerService {
     private boolean hasIgnoreStr() {
         if (sbnApp.igStr == null)
             return false;
-        String grpWho = sbnWho + sbnText;
         for (String t: sbnApp.igStr) {
-            if (grpWho.contains(t))
+            if (sbnWho.contains(t))
+                return true;
+        }
+        for (String t: sbnApp.igStr) {
+            if (sbnText.contains(t))
                 return true;
         }
         return false;
@@ -370,12 +387,9 @@ public class NotificationListener extends NotificationListenerService {
                 break;
 
             case "android":
-                if (Collections.binarySearch(appIgnores, sbnAppName) >= 0)
-                    return true;
-                sbnAppIdx = Collections.binarySearch(appFullNames, sbnAppName);
-                sbnApp = apps.get(sbnAppIdx);
-                sbnAppNick = sbnApp.nickName;
-                sbnAppType = "app";
+                sbnApp = apps.get(2);   // FIXED TO 2  0: header, 1: 1time mail
+                sbnAppNick = ANDROID;
+                sbnAppType = ANDROID;
                 return false;
 
             case "com.samsung.android.messaging":

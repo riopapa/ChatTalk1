@@ -1,6 +1,7 @@
 package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.NotificationListener.sounds;
+import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.ktGroupIgnores;
 import static com.urrecliner.chattalk.Vars.ktWhoIgnores;
 import static com.urrecliner.chattalk.Vars.ktNoNumbers;
@@ -46,7 +47,9 @@ class OptionTables {
 
         if (ktTxtIgnores == null || smsWhoIgnores == null) {
             sounds.beepOnce(Vars.soundType.ERR.ordinal());
-            Toast.makeText(mContext, "\nsome tables is null\n", Toast.LENGTH_LONG).show();
+            String s = "ktTxtIgnores || smsWhoIgnores is null";
+            Toast.makeText(mContext, s, Toast.LENGTH_LONG).show();
+            utils.logW("readAll",s);
         }
         readStrReplFile();
         readSmsReplFile();
@@ -115,7 +118,9 @@ class OptionTables {
                     if (sounds == null)
                         sounds = new Sounds();
                     sounds.beepOnce(Vars.soundType.ERR.ordinal());
-                    Toast.makeText(mContext, "SMS Repl ^^ Error : " + oneLine, Toast.LENGTH_LONG).show();
+                    String s = "SMS Repl ^^ Error : " + oneLine;
+                    Toast.makeText(mContext, s, Toast.LENGTH_LONG).show();
+                    utils.logW("readSMS", s);
                 } else {
                     sShort.add(ones[0].trim());
                     sLong.add(ones[1].trim());
@@ -161,8 +166,10 @@ class OptionTables {
                 if (sounds == null)
                     sounds = new Sounds();
                 sounds.beepOnce(Vars.soundType.ERR.ordinal());
-                Toast.makeText(mContext,"StrRepl Caret missing : "+oneLine+"\nprv line : "+prvLine,
+                String s = "StrRepl Caret missing : "+oneLine+"\nprv line : "+prvLine;
+                Toast.makeText(mContext,s,
                         Toast.LENGTH_LONG).show();
+                utils.logW("strRead", s);
                 continue;
             }
             if (!svGroup.equals(ones[0])) {

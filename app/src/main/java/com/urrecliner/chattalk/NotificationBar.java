@@ -1,6 +1,7 @@
 package com.urrecliner.chattalk;
 
 import static com.urrecliner.chattalk.NotificationListener.sounds;
+import static com.urrecliner.chattalk.NotificationListener.utils;
 import static com.urrecliner.chattalk.Vars.HIDE_STOP;
 import static com.urrecliner.chattalk.Vars.SHOW_MESSAGE;
 import static com.urrecliner.chattalk.Vars.mActivity;
@@ -17,7 +18,11 @@ public class NotificationBar {
 
     public static void update(String who, String msg, boolean stop_icon) {
 
-        final String iMsg = (msg.length() > 400) ?msg.substring(0,400) : msg;
+        if (sounds == null)
+            sounds = new Sounds();
+        if (utils == null)
+            utils = new Utils();
+        final String iMsg = (msg.length() > 300) ?msg.substring(0, 300) : msg;
         Intent intent = new Intent(mContext, NotificationService.class);
         intent.putExtra("operation", SHOW_MESSAGE);
         intent.putExtra("who", who);
@@ -27,7 +32,7 @@ public class NotificationBar {
             if (mActivity != null)
                 mContext = mActivity.getApplicationContext();
             else
-                Log.e("Noti Bar", "// Context, Activity null //");
+                utils.logE("Noti Bar", iMsg + "// Context, Activity null //");
         }
         try {
 //            if (isMyServiceRunning(NotificationService.class))
@@ -38,7 +43,8 @@ public class NotificationBar {
             try {
                 mContext.startForegroundService(intent);
             } catch (Exception ex) {
-                Log.e("Notifi Bar","svc E r r o r \n"+ex);
+                String s = iMsg + "\nsvc E r r o r \n"+ex;
+                utils.logE("notiBar", s);
             }
         }
     }

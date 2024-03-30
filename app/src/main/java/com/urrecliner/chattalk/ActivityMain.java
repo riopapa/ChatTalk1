@@ -194,9 +194,10 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {}
         });
-        if (fragNumber == -1) {
-            fragNumber = 0; // initiated
-        }
+//        if (fragNumber == -1) {
+//            fragNumber = 0; // initiated
+//        }
+        fragNumber = 0;
         if(topTabs != null) {
             fragNumber = topTabs.getSelectedTabPosition();
             viewPager2.setCurrentItem(fragNumber);
