@@ -298,7 +298,7 @@ public class NotificationListener extends NotificationListenerService {
         head += (sbnApp.grp && !sbnGroup.isEmpty()) ? "."+sbnGroup: "$";
         head += (sbnApp.who)? "~" + sbnWho : "";
         head = head + ">";
-        logUpdate.addSave(head, sbnText);
+        logUpdate.addWork(head, sbnText);
         NotificationBar.update(head, sbnText, true);
 
     }

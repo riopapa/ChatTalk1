@@ -3,7 +3,7 @@ package com.urrecliner.chattalk;
 import static com.urrecliner.chattalk.ActivityMain.fragNumber;
 import static com.urrecliner.chattalk.Vars.aBar;
 import static com.urrecliner.chattalk.Vars.logSave;
-import static com.urrecliner.chattalk.Vars.logStock;
+import static com.urrecliner.chattalk.Vars.logWork;
 import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.sharedEditor;
@@ -40,7 +40,7 @@ import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Fragment_3Stock extends Fragment {
+public class Fragment_6Work extends Fragment {
 
     ViewGroup rootView;
     ScrollView scrollView1;
@@ -48,45 +48,45 @@ public class Fragment_3Stock extends Fragment {
     EditText etTable, etKeyword;
     ImageView ivFind, ivClear, ivNext;
     Menu mainMenu;
-    int logPos = -1;
+    int pos = -1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = (ViewGroup) inflater.inflate(
-                R.layout.frag3_stock, container, false);
-        etTable = rootView.findViewById(R.id.text_stock);
-        etKeyword = rootView.findViewById(R.id.key_stock);
-        ivFind = rootView.findViewById(R.id.find_stock);
-        ivNext = rootView.findViewById(R.id.next_stock);
-        ivClear = rootView.findViewById(R.id.clear_stock);
+                R.layout.frag6_work, container, false);
+        etTable = rootView.findViewById(R.id.text_work);
+        etKeyword = rootView.findViewById(R.id.key_work);
+        ivFind = rootView.findViewById(R.id.find_work);
+        ivNext = rootView.findViewById(R.id.next_work);
+        ivClear = rootView.findViewById(R.id.clear_work);
         setHasOptionsMenu(true);
         return rootView;
     }
 
     @Override
     public void onResume() {
-        fragNumber = 3;
+        fragNumber = 6;
         viewPager2.setCurrentItem(fragNumber);
         topTabs.getTabAt(fragNumber).select();
         aBar.setTitle(topTabs.getTabAt(fragNumber).getText().toString());
         aBar.setSubtitle(null);
 
-        logStock = logStock.replace("    ","");
-        ss = new LogSpann().make(logStock, mContext);
+        logWork = logWork.replace("    ","");
+        ss = new LogSpann().make(logWork, mContext);
         sv = ss;
         etTable.setText(ss);
         etTable.setFocusableInTouchMode(true);
         etTable.setFocusable(true);
 
         ivNext.setVisibility(View.GONE);
-        logPos = -1;
+        pos = -1;
         ivFind.setOnClickListener(v -> {
             String key = etKeyword.getText().toString();
             if (key.length() < 2)
                 return;
             int cnt = 0;
-            logPos = -1;
+            pos = -1;
             String fullText = etTable.getText().toString();
             ss = sv;
             int oEnd = fullText.indexOf(key);
@@ -94,8 +94,8 @@ public class Fragment_3Stock extends Fragment {
                 oEnd = fullText.indexOf(key, oStart);
                 if (oEnd > 0) {
                     cnt++;
-                    if (logPos < 0)
-                        logPos = oEnd;
+                    if (pos < 0)
+                        pos = oEnd;
                     ss.setSpan(new BackgroundColorSpan(0xFFFFFF00), oEnd, oEnd + key.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
             }
@@ -103,8 +103,8 @@ public class Fragment_3Stock extends Fragment {
             etTable.setText(ss);
             new SnackBar().show(key, cnt+" times Found");
             Editable etText = etTable.getText();
-            if (logPos > 0) {
-                Selection.setSelection(etText, logPos);
+            if (pos > 0) {
+                Selection.setSelection(etText, pos);
                 etTable.requestFocus();
                 ivNext.setVisibility(View.VISIBLE);
             }
@@ -116,15 +116,15 @@ public class Fragment_3Stock extends Fragment {
                 return;
             Editable etText = etTable.getText();
             String s = etText.toString();
-            logPos = s.indexOf(key, logPos+1);
-            if (logPos > 0) {
-                Selection.setSelection(etText, logPos);
+            pos = s.indexOf(key, pos +1);
+            if (pos > 0) {
+                Selection.setSelection(etText, pos);
                 etTable.requestFocus();
             }
         });
 
         ivClear.setOnClickListener(v -> etKeyword.setText(""));
-        scrollView1 = rootView.findViewById(R.id.scroll_3_stock);
+        scrollView1 = rootView.findViewById(R.id.scroll_6_work);
         new Handler(Looper.getMainLooper()).post(() -> scrollView1.smoothScrollBy(0, 90000));
         super.onResume();
 
@@ -133,7 +133,7 @@ public class Fragment_3Stock extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         mainMenu = menu;
-        inflater.inflate(R.menu.menu_3stock, menu);
+        inflater.inflate(R.menu.menu_6work, menu);
         super.onCreateOptionsMenu(menu, inflater);
         aBar.setTitle(topTabs.getTabAt(3).getText().toString());
         aBar.setSubtitle(null);
@@ -146,14 +146,14 @@ public class Fragment_3Stock extends Fragment {
             showNextQue(new LogSpann().delOneSet(etTable.getText().toString(),
                     etTable.getSelectionStart(), mContext));
 
-        } else if (item.getItemId() == R.id.action_restock) {
-            reload_stock();
+        } else if (item.getItemId() == R.id.action_rework) {
+            reload_work();
 
-        } else if (item.getItemId() == R.id.delete_1line_stock) {
+        } else if (item.getItemId() == R.id.delete_1line_work) {
             showNextQue(new LogSpann().delOneLine(etTable.getText().toString(),
                     etTable.getSelectionStart(), mContext));
 
-        } else if (item.getItemId() == R.id.copy2stock) {
+        } else if (item.getItemId() == R.id.work2save) {
             String logNow = etTable.getText().toString().trim() + "\n";
             int ps = logNow.lastIndexOf("\n", etTable.getSelectionStart() - 1);
             if (ps == -1)
@@ -173,15 +173,15 @@ public class Fragment_3Stock extends Fragment {
             sharedEditor.putString("logSave", logSave);
             sharedEditor.apply();
             copied = copied.replace("\n", " 🗼️ ");
-            Toast.makeText(mContext, "stock copied " + copied, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "work copied to save " + copied, Toast.LENGTH_SHORT).show();
 
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void showNextQue(Vars.DelItem delItem) {
-        logStock = delItem.logNow;
-        sharedEditor.putString("logStock", logStock);
+        logWork = delItem.logNow;
+        sharedEditor.putString("logWork", logWork);
         sharedEditor.apply();
         etTable.setText(delItem.ss);
 
@@ -198,13 +198,13 @@ public class Fragment_3Stock extends Fragment {
         });
     }
 
-    private void reload_stock() {
-        String [] str = new FileIO().readKR(new File(tableFolder, "logStock.txt").toString());
+    private void reload_work() {
+        String [] str = new FileIO().readKR(new File(tableFolder, "logWork.txt").toString());
         StringBuilder sb = new StringBuilder();
         for (String s: str) {
             sb.append(s).append("\n");
         }
-        logStock = sb.toString();
-        etTable.setText(new LogSpann().make(logStock, mContext));
+        logWork = sb.toString();
+        etTable.setText(new LogSpann().make(logWork, mContext));
     }
 }

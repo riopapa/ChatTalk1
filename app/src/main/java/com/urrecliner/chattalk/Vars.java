@@ -97,7 +97,7 @@ public class Vars {
     static final int STOP_SAY1 = 10011;
     static final int RELOAD_APP = 2022;
 
-    static String logQue = "", logSave = "", logStock = "";
+    static String logQue = "", logSave = "", logStock = "", logWork = "";
     static ActionBar aBar = null;
     static AudioFocusRequest mFocusGain = null;
 

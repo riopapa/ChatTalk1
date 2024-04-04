@@ -6,6 +6,7 @@ import static com.urrecliner.chattalk.Vars.logSave;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.sharedEditor;
 import static com.urrecliner.chattalk.Vars.topTabs;
+import static com.urrecliner.chattalk.Vars.viewPager2;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -57,6 +58,7 @@ public class Fragment_2Saved extends Fragment {
     @Override
     public void onResume() {
         fragNumber = 2;
+        viewPager2.setCurrentItem(fragNumber);
         topTabs.getTabAt(fragNumber).select();
         aBar.setTitle(topTabs.getTabAt(fragNumber).getText().toString());
         aBar.setSubtitle(null);

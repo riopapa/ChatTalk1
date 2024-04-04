@@ -7,6 +7,7 @@ import static com.urrecliner.chattalk.Vars.chatGroup;
 import static com.urrecliner.chattalk.Vars.mActivity;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.topTabs;
+import static com.urrecliner.chattalk.Vars.viewPager2;
 
 import android.app.Activity;
 import android.content.Context;
@@ -76,6 +77,7 @@ public class Fragment_5Chat extends Fragment {
         if (utils == null)
             utils = new Utils();
         fragNumber = 5;
+        viewPager2.setCurrentItem(fragNumber);
         topTabs.getTabAt(fragNumber).select();
 
         etChat.setFocusableInTouchMode(true);

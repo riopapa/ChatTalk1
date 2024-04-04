@@ -165,12 +165,13 @@ public class ActivityMain extends AppCompatActivity {
 //        if (topTabs == null) {
             topTabs = findViewById(R.id.tab_layout);
             topTabs.removeAllTabs();
-            topTabs.addTab(topTabs.newTab().setText("Logs"));
+            topTabs.addTab(topTabs.newTab().setText("Log"));
             topTabs.addTab(topTabs.newTab().setText("Table"));
             topTabs.addTab(topTabs.newTab().setText("Save"));
-            topTabs.addTab(topTabs.newTab().setText("Stocks"));
-            topTabs.addTab(topTabs.newTab().setText("Alerts"));
-            topTabs.addTab(topTabs.newTab().setText("Chats"));
+            topTabs.addTab(topTabs.newTab().setText("Stock"));
+            topTabs.addTab(topTabs.newTab().setText("Alert"));
+            topTabs.addTab(topTabs.newTab().setText("Chat"));
+            topTabs.addTab(topTabs.newTab().setText("Work"));
             topTabs.setTabGravity(TabLayout.GRAVITY_FILL);
 //        }
 //        if (viewPager2 == null) {

@@ -3,23 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/reload_all_tables"
+        android:id="@+id/work2save"
+        android:orderInCategory="100"
+        android:icon="@drawable/copy"
+        app:showAsAction="always"
+        android:title="@string/todo" />
+
+    <item
+        android:id="@+id/action_rework"
         android:orderInCategory="100"
         android:icon="@drawable/upload_file"
         app:showAsAction="always"
         android:title="@string/todo" />
 
     <item
-        android:id="@+id/clear_matched_number"
+        android:id="@+id/delete_1line_work"
         android:orderInCategory="100"
-        android:icon="@drawable/clear"
+        android:icon="@drawable/line_remove1"
         app:showAsAction="always"
         android:title="@string/todo" />
 
     <item
-        android:id="@+id/log2save"
+        android:id="@+id/delete_item_work"
         android:orderInCategory="100"
-        android:icon="@drawable/save"
+        android:icon="@drawable/line_remove3"
         app:showAsAction="always"
         android:title="@string/todo" />
 

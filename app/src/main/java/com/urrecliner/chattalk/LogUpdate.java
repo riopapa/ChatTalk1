@@ -4,6 +4,7 @@ import static android.content.Context.MODE_PRIVATE;
 import static com.urrecliner.chattalk.Vars.logQue;
 import static com.urrecliner.chattalk.Vars.logSave;
 import static com.urrecliner.chattalk.Vars.logStock;
+import static com.urrecliner.chattalk.Vars.logWork;
 import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.packageDirectory;
 import static com.urrecliner.chattalk.Vars.sharePref;
@@ -29,6 +30,7 @@ public class LogUpdate {
         logQue = sharePref.getString("logQue", "");
         logStock = sharePref.getString("logStock", "");
         logSave = sharePref.getString("logSave", "");
+        logWork = sharePref.getString("logWork", "");
     }
 
     final SimpleDateFormat TIME_INFO = new SimpleDateFormat("MM-dd HH:mm ", Locale.KOREA);
@@ -50,17 +52,17 @@ public class LogUpdate {
         }
     }
 
-    void addSave(String header, String text) {
-        logSave += "\n" + TIME_INFO.format(new Date()) + header + "\n" + text+"\n";
-        if (logSave.length() > 24000) {
+    void addWork(String header, String text) {
+        logWork += "\n" + TIME_INFO.format(new Date()) + header + "\n" + text+"\n";
+        if (logWork.length() > 24000) {
             Thread logThread = new Thread(() -> {
-                logSave = squeezeLog(logSave, "logSave");
-                sharedEditor.putString("logSave", logSave);
+                logWork = squeezeLog(logWork, "logWork");
+                sharedEditor.putString("logWork", logWork);
                 sharedEditor.apply();
             });
             logThread.start();
         } else {
-            sharedEditor.putString("logSave", logSave);
+            sharedEditor.putString("logWork", logWork);
             sharedEditor.apply();
         }
     }

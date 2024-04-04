@@ -7,8 +7,8 @@ import static com.urrecliner.chattalk.Vars.alertPos;
 import static com.urrecliner.chattalk.Vars.alertsAdapter;
 import static com.urrecliner.chattalk.Vars.todayFolder;
 import static com.urrecliner.chattalk.Vars.topTabs;
+import static com.urrecliner.chattalk.Vars.viewPager2;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -45,6 +45,7 @@ public class Fragment_4Alert extends Fragment {
     public void onResume() {
         super.onResume();
         fragNumber = 4;
+        viewPager2.setCurrentItem(fragNumber);
         topTabs.getTabAt(fragNumber).select();
         aBar.setTitle(topTabs.getTabAt(fragNumber).getText().toString());
         aBar.setSubtitle(null);
@@ -98,7 +99,7 @@ public class Fragment_4Alert extends Fragment {
             }
             new AlertSave("Clear Matches");
             alertsAdapter.notifyDataSetChanged();
-        } else if (item.getItemId() == R.id.copy2log) {
+        } else if (item.getItemId() == R.id.log2save) {
             new AlertSave("Copy");
             alertsAdapter.notifyDataSetChanged();
         }

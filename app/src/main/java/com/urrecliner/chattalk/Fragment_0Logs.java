@@ -11,6 +11,7 @@ import static com.urrecliner.chattalk.Vars.sharedEditor;
 import static com.urrecliner.chattalk.Vars.tableFolder;
 import static com.urrecliner.chattalk.Vars.topTabs;
 import static com.urrecliner.chattalk.ActivityMain.fragNumber;
+import static com.urrecliner.chattalk.Vars.viewPager2;
 
 import android.os.Bundle;
 import android.os.Environment;
@@ -54,7 +55,7 @@ public class Fragment_0Logs extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         rootView = (ViewGroup) inflater.inflate(
-                R.layout.frag0_que, container, false);
+                R.layout.frag0_log, container, false);
         etTable = rootView.findViewById(R.id.text_que);
         etKeyword = rootView.findViewById(R.id.key_que);
         ivFind = rootView.findViewById(R.id.find_que);
@@ -66,6 +67,8 @@ public class Fragment_0Logs extends Fragment {
 
     @Override
     public void onResume() {
+        fragNumber = 0;
+        viewPager2.setCurrentItem(fragNumber);
         topTabs.getTabAt(fragNumber).select();
         aBar.setTitle(topTabs.getTabAt(fragNumber).getText().toString());
         aBar.setSubtitle(null);
@@ -158,7 +161,7 @@ public class Fragment_0Logs extends Fragment {
             showNextQue(new LogSpann().delOneLine(etTable.getText().toString(),
                     etTable.getSelectionStart(), mContext));
 
-        } else if (item.getItemId() == R.id.copy2log) {
+        } else if (item.getItemId() == R.id.log2save) {
             String logNow = etTable.getText().toString().trim() + "\n";
             int ps = logNow.lastIndexOf("\n", etTable.getSelectionStart() - 1);
             if (ps == -1)

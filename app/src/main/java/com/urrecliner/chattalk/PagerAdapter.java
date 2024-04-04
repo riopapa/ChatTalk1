@@ -28,12 +28,14 @@ public PagerAdapter(FragmentActivity fm) {
                 return new Fragment_4Alert();
             case 5:
                 return new Fragment_5Chat();
+            case 6:
+                return new Fragment_6Work();
         }
         return new Fragment_0Logs();
     }
 
     @Override
     public int getItemCount() {
-        return 6;
+        return 7;
     }
 }

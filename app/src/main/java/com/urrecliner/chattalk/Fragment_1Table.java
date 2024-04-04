@@ -5,6 +5,7 @@ import static com.urrecliner.chattalk.Vars.mContext;
 import static com.urrecliner.chattalk.Vars.nowFileName;
 import static com.urrecliner.chattalk.Vars.topTabs;
 import static com.urrecliner.chattalk.ActivityMain.fragNumber;
+import static com.urrecliner.chattalk.Vars.viewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -40,6 +41,7 @@ public class Fragment_1Table extends Fragment {
     public void onResume() {
         super.onResume();
         fragNumber = 1;
+        viewPager2.setCurrentItem(fragNumber);
         topTabs.getTabAt(fragNumber).select();
         aBar.setTitle(topTabs.getTabAt(fragNumber).getText().toString());
         aBar.setSubtitle(null);
