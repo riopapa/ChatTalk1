@@ -162,7 +162,7 @@ public class ActivityMain extends AppCompatActivity {
 
     private void establishTabs() {
 
-        if (topTabs == null) {
+//        if (topTabs == null) {
             topTabs = findViewById(R.id.tab_layout);
             topTabs.removeAllTabs();
             topTabs.addTab(topTabs.newTab().setText("Logs"));
@@ -172,13 +172,13 @@ public class ActivityMain extends AppCompatActivity {
             topTabs.addTab(topTabs.newTab().setText("Alerts"));
             topTabs.addTab(topTabs.newTab().setText("Chats"));
             topTabs.setTabGravity(TabLayout.GRAVITY_FILL);
-        }
-        if (viewPager2 == null) {
+//        }
+//        if (viewPager2 == null) {
             viewPager2 = findViewById(R.id.pager2);
             FragmentStateAdapter pagerAdapter = new PagerAdapter(this);
             viewPager2.setAdapter(pagerAdapter);
             viewPager2.setPageTransformer(new ZoomOutPageTransformer());
-        }
+//        }
 //        viewPager2.setCurrentItem(0);
         topTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

@@ -22,7 +22,7 @@ public class NotificationBar {
             sounds = new Sounds();
         if (utils == null)
             utils = new Utils();
-        final String iMsg = (msg.length() > 300) ?msg.substring(0, 300) : msg;
+        final String iMsg = (msg.length() > 250) ? msg.substring(0, 250)+".." : msg;
         Intent intent = new Intent(mContext, NotificationService.class);
         intent.putExtra("operation", SHOW_MESSAGE);
         intent.putExtra("who", who);

@@ -50,6 +50,21 @@ public class LogUpdate {
         }
     }
 
+    void addSave(String header, String text) {
+        logSave += "\n" + TIME_INFO.format(new Date()) + header + "\n" + text+"\n";
+        if (logSave.length() > 24000) {
+            Thread logThread = new Thread(() -> {
+                logSave = squeezeLog(logSave, "logSave");
+                sharedEditor.putString("logSave", logSave);
+                sharedEditor.apply();
+            });
+            logThread.start();
+        } else {
+            sharedEditor.putString("logSave", logSave);
+            sharedEditor.apply();
+        }
+    }
+
     void addStock(String header, String text) {
         new ReadyToday();
         logStock += "\n" + TIME_INFO.format(new Date()) + header + "\n" + text+"\n";

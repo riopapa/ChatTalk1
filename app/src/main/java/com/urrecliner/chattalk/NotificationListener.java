@@ -190,6 +190,10 @@ public class NotificationListener extends NotificationListenerService {
 //                    break;
 //                }
 
+                if (sbnAppNick.equals("팀즈") || sbnAppNick.equals("아웃록")) {
+                    saySave();
+                    return;
+                }
                 if (sbnAppNick.equals(TESRY)) {
                     sayTesla();
                     return;
@@ -199,13 +203,8 @@ public class NotificationListener extends NotificationListenerService {
                     return;
                 }
 
-                utils.logW("app @","a"+sbnApp.fullName+", g"+sbnGroup+", w"+sbnWho+" t"+sbnText);
-
-//                sbnText = utils.strShorten(sbnWho, utils.strShorten(sbnApp.nickName, sbnText));
-
                 if (sbnApp.say) {
-
-                    String say = sbnApp.nickName + " ";
+                    String say = sbnAppNick + " ";
                     say += (sbnApp.grp) ? sbnGroup+" ": " ";
                     say += sbnWho;
                     say = say + " 로부터 ";
@@ -217,7 +216,7 @@ public class NotificationListener extends NotificationListenerService {
                     sbnText = sbnWho + "※" + sbnText;
 
                 if (sbnApp.log) {
-                    head = "<" + sbnApp.nickName;
+                    head = "<" + sbnAppNick;
                     head += (sbnApp.grp && !sbnGroup.isEmpty()) ? "."+sbnGroup: "";
                     head += (sbnApp.who)? "@" + sbnWho : "";
                     head = head + ">";
@@ -225,7 +224,7 @@ public class NotificationListener extends NotificationListenerService {
                 }
                 String s = (sbnApp.grp && !sbnGroup.isEmpty()) ? sbnGroup+"_": "";
                 s += sbnWho;
-                NotificationBar.update(sbnApp.nickName + ":"+ s, sbnText, true);
+                NotificationBar.update(sbnAppNick + ":"+ s, sbnText, true);
                 break;
 
             case ANDROID:
@@ -236,7 +235,6 @@ public class NotificationListener extends NotificationListenerService {
                     return;
                 head = "< an > "+sbnWho;
                 logUpdate.addLog(head, sbnWho+" / "+sbnText);
-
                 break;
 
             case SMS:
@@ -274,6 +272,35 @@ public class NotificationListener extends NotificationListenerService {
                 logUpdate.addLog("[ " + sbnAppName + " ]", sbnText);
                 break;
         }
+    }
+
+    private void saySave() {
+        if (hasIgnoreStr())
+            return;
+        if (sbnApp.addWho) {
+            sbnText = sbnWho + "※" + sbnText;
+            sbnWho = "";
+        }
+        for (int i = 0; i < sbnApp.replFrom.length; i++) {
+            if ((sbnText).contains(sbnApp.replFrom[i])) {
+                sbnText = sbnText.replace(sbnApp.replFrom[i],sbnApp.replTo[i]);
+            }
+        }
+
+        String say = sbnApp.nickName + " ";
+        say += (sbnApp.grp) ? sbnGroup+" ": " ";
+        say += sbnWho;
+        say = say + " 로부터 ";
+        say = say + ((sbnApp.num) ? sbnText : new Numbers().deduct(sbnText));
+        sounds.speakAfterBeep(utils.makeEtc(say, 300));
+
+        head = "<" + sbnAppNick;
+        head += (sbnApp.grp && !sbnGroup.isEmpty()) ? "."+sbnGroup: "$";
+        head += (sbnApp.who)? "~" + sbnWho : "";
+        head = head + ">";
+        logUpdate.addSave(head, sbnText);
+        NotificationBar.update(head, sbnText, true);
+
     }
 
     private void sayTelegram() {

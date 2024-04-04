@@ -149,7 +149,7 @@ public class NotificationService extends Service {
         PendingIntent pendingUp = PendingIntent.getService(mContext, RELOAD_APP, upIntent,
                 PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(pendingUp);
-        mRemoteViews.setOnClickPendingIntent(R.id.line_lower,
+        mRemoteViews.setOnClickPendingIntent(R.id.line_upper,
                 PendingIntent.getActivity(mContext, 0, upIntent,
                         PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));
 
@@ -162,21 +162,12 @@ public class NotificationService extends Service {
                 PendingIntent.getActivity(mContext, 0, lowIntent,
                         PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT));
 
-        Intent reloadI = new Intent(this, NotificationService.class);
-        reloadI.putExtra("operation", RELOAD_APP);
-        PendingIntent oneP = PendingIntent.getService(mContext, RELOAD_APP, reloadI,
-                PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
-        mBuilder.setContentIntent(oneP);
-        mRemoteViews.setOnClickPendingIntent(R.id.line_upper, oneP);
-
         Intent sIntent = new Intent(this, NotificationService.class);
         sIntent.putExtra("operation", STOP_SAY1);
         PendingIntent stopSay1Pi = PendingIntent.getService(mContext, STOP_SAY1, sIntent,
             PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(stopSay1Pi);
         mRemoteViews.setOnClickPendingIntent(R.id.stop_now1, stopSay1Pi);
-
-
     }
 
     private void updateRemoteViews() {
