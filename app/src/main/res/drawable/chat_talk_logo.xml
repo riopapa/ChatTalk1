@@ -4,16 +4,16 @@
         android:viewportWidth="24"
         android:width="48dp"
         xmlns:android="http://schemas.android.com/apk/res/android">
-    <path android:strokeColor="#782B13"
+    <path android:strokeColor="#482881"
           android:strokeLineJoin="round"
           android:strokeWidth="1.5"
-          android:fillColor="#D87759"
+          android:fillColor="#82A8C6"
           android:strokeLineCap="round"
           android:pathData="
           M2,2L18,2L18,11L5,11L2,14z
           M5,7L14,6
            "/>
-    <path android:strokeColor="#55B1BC"
+    <path android:strokeColor="#692F73"
           android:strokeLineJoin="round"
           android:strokeWidth="1"
           android:fillColor="#247781"
