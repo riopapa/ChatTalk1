@@ -52,7 +52,7 @@ public class MsgSMS {
             if (IgnoreNumber.in(smsNoNumbers, mWho))
                 mText = new Numbers().deduct(mText);
             if (isWorking())
-                mText = utils.makeEtc(mText, 50);
+                mText = utils.makeEtc(mText, 20);
             sounds.speakAfterBeep(head+" 으로 부터 "+ mText);
         }
     }
@@ -83,7 +83,7 @@ public class MsgSMS {
                             new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date()));
                     sayMsg = stockName + samPam;
                     if (isWorking())
-                        sayMsg = utils.makeEtc(sayMsg, 50);
+                        sayMsg = utils.makeEtc(sayMsg, 20);
                     sounds.speakAfterBeep(new Numbers().deduct(sayMsg));
                 }
             } catch (Exception e) {
@@ -103,6 +103,6 @@ public class MsgSMS {
             utils = new Utils();
         if (IgnoreNumber.in(smsNoNumbers, mWho))
             mText = new Numbers().deduct(mText);
-        sounds.speakAfterBeep(head + utils.makeEtc(mText, isWorking()? 50: 120));
+        sounds.speakAfterBeep(head + utils.makeEtc(mText, isWorking()? 20: 120));
     }
 }

@@ -70,8 +70,8 @@ public class Vars {
     static String[] ktNoNumbers = null;
     static String[] ktTxtIgnores = null;
 
-    static String[] teleGroups = null;
-    static String[] teleLongGroups = null;
+    static String[] shortGroupNames = null;
+    static String[] longGroupNames = null;
 
     static String[] whoNameFrom = null;
     static String[] whoNameTo = null;

@@ -49,7 +49,7 @@ public class MsgNamoo {
         } else {
             logUpdate.addStock("[NH나무App]", text);
             if (isWorking())
-                text = utils.makeEtc(text, 50);
+                text = utils.makeEtc(text, 20);
             sounds.speakAfterBeep("나무 증권 " + new Numbers().deduct(text));
         }
     }

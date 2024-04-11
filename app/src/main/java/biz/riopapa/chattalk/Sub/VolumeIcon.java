@@ -24,7 +24,7 @@ public class VolumeIcon {
         Paint linePaint = new Paint();
         linePaint.setStyle(Paint.Style.FILL_AND_STROKE);
         linePaint.setTextAlign(Paint.Align.LEFT);
-        linePaint.setColor(0xFFDD0000);
+        linePaint.setColor(0xFFDD2022);
         linePaint.setStrokeWidth(12);
         int rVol = audioManager.getStreamVolume(AudioManager.STREAM_RING);
         int mVol = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);

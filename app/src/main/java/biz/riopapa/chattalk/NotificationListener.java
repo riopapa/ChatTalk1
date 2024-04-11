@@ -22,8 +22,8 @@ import static biz.riopapa.chattalk.Vars.smsReplFrom;
 import static biz.riopapa.chattalk.Vars.smsReplTo;
 import static biz.riopapa.chattalk.Vars.smsTxtIgnores;
 import static biz.riopapa.chattalk.Vars.smsWhoIgnores;
-import static biz.riopapa.chattalk.Vars.teleLongGroups;
-import static biz.riopapa.chattalk.Vars.teleGroups;
+import static biz.riopapa.chattalk.Vars.longGroupNames;
+import static biz.riopapa.chattalk.Vars.shortGroupNames;
 import static biz.riopapa.chattalk.Vars.whoNameFrom;
 import static biz.riopapa.chattalk.Vars.whoNameTo;
 
@@ -124,7 +124,7 @@ public class NotificationListener extends NotificationListenerService {
                     if (IgnoreNumber.in(ktNoNumbers, sbnWho))
                         sbnText = new Numbers().deduct(sbnText);
                     sounds.speakKakao(" 카톡 왔음 " + sbnWho + " 님이 " +
-                            utils.replaceKKHH(utils.makeEtc(sbnText, isWorking()? 50 :150)));
+                            utils.replaceKKHH(utils.makeEtc(sbnText, isWorking()? 20 :150)));
                 } else {    // with group name
                     if (IgnoreThis.contains(sbnGroup, ktGroupIgnores))
                         return;
@@ -158,7 +158,7 @@ public class NotificationListener extends NotificationListenerService {
                     if (IgnoreNumber.in(ktNoNumbers, sbnGroup))
                         sbnText = new Numbers().deduct(sbnText);
                     sounds.speakKakao(" 카톡 왔음 " + sbnGroup + " 의 " + sbnWho + " 님이 " +
-                            utils.replaceKKHH(utils.makeEtc(sbnText, isWorking()? 50:150)));
+                            utils.replaceKKHH(utils.makeEtc(sbnText, isWorking()? 20:150)));
                 }
                 break;
 
@@ -217,7 +217,7 @@ public class NotificationListener extends NotificationListenerService {
                     say += (sbnApp.who) ? sbnWho: "";
                     say = say + " 로부터 ";
                     say = say + ((sbnApp.num) ? sbnText : new Numbers().deduct(sbnText));
-                    sounds.speakAfterBeep(utils.makeEtc(say, isWorking()? 50: 200));
+                    sounds.speakAfterBeep(utils.makeEtc(say, isWorking()? 20: 200));
                 }
 
                 if (sbnApp.addWho)
@@ -309,8 +309,8 @@ public class NotificationListener extends NotificationListenerService {
 
         if (kvTelegram.isDup(sbnGroup, sbnText))
             return;
-        for (int i = 0; i < teleLongGroups.length; i++) {
-            if (sbnWho.contains(teleLongGroups[i])) { // 정확한 이름 다 찾지 않으려고 contains 씀
+        for (int i = 0; i < longGroupNames.length; i++) {
+            if (sbnWho.contains(longGroupNames[i])) { // 정확한 이름 다 찾지 않으려고 contains 씀
                 if (sbnText.length() < 15)
                     return;
                 if (sbnText.contains("종목")) {
@@ -321,7 +321,7 @@ public class NotificationListener extends NotificationListenerService {
                 String []grpWho = sbnWho.split(":");
                 if (grpWho.length > 1) {
 //                    sbnGroup = grpWho[0].trim();
-                    sbnGroup = teleGroups[i];
+                    sbnGroup = shortGroupNames[i];
                     sbnWho = grpWho[1].trim();
                     for (int w = 0; w < whoNameFrom.length; w++) {
                         if (sbnWho.contains(whoNameFrom[w])) {
@@ -350,7 +350,7 @@ public class NotificationListener extends NotificationListenerService {
         logUpdate.addLog(head, sbnText);
         NotificationBar.update(sbnGroup + "|" + sbnWho, sbnText, true);
         sbnText = head + " 로 부터. " + sbnText;
-        sounds.speakAfterBeep(utils.makeEtc(sbnText, isWorking()? 50:150));
+        sounds.speakAfterBeep(utils.makeEtc(sbnText, isWorking()? 20:150));
     }
 
     private boolean hasIgnoreStr() {
@@ -457,7 +457,7 @@ public class NotificationListener extends NotificationListenerService {
     }
 
     public static boolean isWorking() {
-        return audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) < 5;
+        return audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) < 6;
     }
 
 }
