@@ -28,6 +28,8 @@ import static biz.riopapa.chattalk.Vars.whoNameFrom;
 import static biz.riopapa.chattalk.Vars.whoNameTo;
 
 import android.app.Notification;
+import android.content.Context;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
@@ -74,12 +76,13 @@ public class NotificationListener extends NotificationListenerService {
     public static VibratorManager vibManager;
     public static Vibrator vibrator = null;
     public static VibrationEffect vibEffect = null;
-//    public static final long[] vibPattern = {0, 20, 200, 300, 300, 400, 400, 500, 550, 10, 20, 200, 300, 300};
 
     public static Sounds sounds;
     public static LogUpdate logUpdate;
     public static AlertStock alertStock;
     String head = "";
+
+    public static AudioManager audioManager = null;
 
     @Override
     public void onCreate() {
@@ -95,6 +98,8 @@ public class NotificationListener extends NotificationListenerService {
             vars = new Vars(this);
         if (loadFunction == null)
             loadFunction = new LoadFunction();
+        if (audioManager == null)
+            audioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
 
         if (isSbnNothing(sbn))
             return;
@@ -118,7 +123,8 @@ public class NotificationListener extends NotificationListenerService {
                     logUpdate.addLog(head, sbnText);
                     if (IgnoreNumber.in(ktNoNumbers, sbnWho))
                         sbnText = new Numbers().deduct(sbnText);
-                    sounds.speakKakao(" 카톡 왔음 " + sbnWho + " 님이 " + utils.replaceKKHH(utils.makeEtc(sbnText, 150)));
+                    sounds.speakKakao(" 카톡 왔음 " + sbnWho + " 님이 " +
+                            utils.replaceKKHH(utils.makeEtc(sbnText, isWorking()? 50 :150)));
                 } else {    // with group name
                     if (IgnoreThis.contains(sbnGroup, ktGroupIgnores))
                         return;
@@ -136,12 +142,12 @@ public class NotificationListener extends NotificationListenerService {
                         if (sbnText.length() < 15)
                             return;
                         // replace with simple name
-                        for (int w = 0; w < whoNameFrom.length; w++) {
-                            if (sbnWho.contains(whoNameFrom[w])) {
-                                sbnWho = whoNameTo[w];
-                                break;
-                            }
-                        }
+//                        for (int w = 0; w < whoNameFrom.length; w++) {
+//                            if (sbnWho.contains(whoNameFrom[w])) {
+//                                sbnWho = whoNameTo[w];
+//                                break;
+//                            }
+//                        }
                         msgKeyword.say(sbnGroup, sbnWho, sbnText, grpIdx);
                         return;
                     }
@@ -151,7 +157,8 @@ public class NotificationListener extends NotificationListenerService {
                     logUpdate.addLog(head, sbnText);
                     if (IgnoreNumber.in(ktNoNumbers, sbnGroup))
                         sbnText = new Numbers().deduct(sbnText);
-                    sounds.speakKakao(" 카톡 왔음 " + sbnGroup + " 의 " + sbnWho + " 님이 " + utils.replaceKKHH(utils.makeEtc(sbnText, 150)));
+                    sounds.speakKakao(" 카톡 왔음 " + sbnGroup + " 의 " + sbnWho + " 님이 " +
+                            utils.replaceKKHH(utils.makeEtc(sbnText, isWorking()? 50:150)));
                 }
                 break;
 
@@ -210,7 +217,7 @@ public class NotificationListener extends NotificationListenerService {
                     say += (sbnApp.who) ? sbnWho: "";
                     say = say + " 로부터 ";
                     say = say + ((sbnApp.num) ? sbnText : new Numbers().deduct(sbnText));
-                    sounds.speakAfterBeep(utils.makeEtc(say, 200));
+                    sounds.speakAfterBeep(utils.makeEtc(say, isWorking()? 50: 200));
                 }
 
                 if (sbnApp.addWho)
@@ -333,8 +340,8 @@ public class NotificationListener extends NotificationListenerService {
                     utils.logE("tele", "grpIdx " + grpIdx + " err " + sbnGroup + " > " + sbnWho
                             + " > " + sbnText);
 
-                utils.logW("tel " + sbnGroup, sbnWho + "_ : " + sbnText);
-                sbnText = utils.strShorten(sbnWho, utils.strShorten(sbnWho, sbnText));
+//                utils.logW("tel " + sbnGroup, sbnWho + " : " + sbnText);
+                sbnText = utils.strShorten(sbnWho, sbnText);
                 msgKeyword.say(sbnGroup, sbnWho, sbnText, grpIdx);
                 return;
             }
@@ -343,7 +350,7 @@ public class NotificationListener extends NotificationListenerService {
         logUpdate.addLog(head, sbnText);
         NotificationBar.update(sbnGroup + "|" + sbnWho, sbnText, true);
         sbnText = head + " 로 부터. " + sbnText;
-        sounds.speakAfterBeep(utils.makeEtc(sbnText, 150));
+        sounds.speakAfterBeep(utils.makeEtc(sbnText, isWorking()? 50:150));
     }
 
     private boolean hasIgnoreStr() {
@@ -449,9 +456,8 @@ public class NotificationListener extends NotificationListenerService {
         return false;
     }
 
-
-
-
-
+    public static boolean isWorking() {
+        return audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) < 5;
+    }
 
 }

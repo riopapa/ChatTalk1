@@ -159,7 +159,7 @@ public class Sounds {
     void beepOnce(int soundNbr) {
 
         final MediaPlayer mPlayer = MediaPlayer.create(mContext, beepRawIds[soundNbr]);
-        mPlayer.setVolume(1f, 1f);
+//        mPlayer.setVolume(1f, 1f);
         mPlayer.start();
         mPlayer.setOnCompletionListener(mp -> {
             if (mPlayer.isPlaying())

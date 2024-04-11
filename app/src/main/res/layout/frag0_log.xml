@@ -13,7 +13,17 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/clear_que"
+            android:id="@+id/volumes"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:layout_weight="3"
+            android:background="#00000000"
+            android:contentDescription="@string/search"
+            android:src="@drawable/clear_text" />
+
+        <ImageButton
+            android:id="@+id/clear_log"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="4dp"
@@ -23,7 +33,7 @@
             android:src="@drawable/clear_text" />
 
         <EditText
-            android:id="@+id/key_que"
+            android:id="@+id/key_log"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -32,7 +42,7 @@
             android:autofillHints="Enter Text to search" />
 
         <ImageButton
-            android:id="@+id/find_que"
+            android:id="@+id/find_log"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="4dp"
@@ -42,7 +52,7 @@
             android:src="@drawable/search" />
 
         <ImageButton
-            android:id="@+id/next_que"
+            android:id="@+id/next_log"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="4dp"
@@ -54,7 +64,7 @@
     </LinearLayout>
 
     <ScrollView
-        android:id="@+id/scroll_1_que"
+        android:id="@+id/scroll_1_log"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fastScrollEnabled="true"
@@ -63,7 +73,7 @@
         style="@style/up_down_scroll_thumb"
         >
         <EditText
-            android:id="@+id/text_que"
+            android:id="@+id/text_log"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"

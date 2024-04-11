@@ -104,6 +104,7 @@ public class AlertStock {
         sharedEditor.putInt(keyVal, al.matched);
         sharedEditor.apply();
     }
+
     boolean isSilentNow() {
         AudioManager mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
         return (mAudioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT ||

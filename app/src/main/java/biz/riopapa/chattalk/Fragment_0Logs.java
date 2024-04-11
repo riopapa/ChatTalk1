@@ -38,6 +38,7 @@ import androidx.fragment.app.Fragment;
 
 import biz.riopapa.chattalk.Sub.LogSpann;
 import biz.riopapa.chattalk.Sub.SnackBar;
+import biz.riopapa.chattalk.Sub.VolumeIcon;
 
 import java.io.File;
 
@@ -47,7 +48,7 @@ public class Fragment_0Logs extends Fragment {
     ScrollView scrollView1;
     SpannableString ss, sv;
     EditText etTable, etKeyword;
-    ImageView ivFind, ivClear, ivNext;
+    ImageView ivFind, ivClear, ivNext, ivVolume;
     Menu mainMenu;
     int logPos = -1;
 
@@ -56,11 +57,12 @@ public class Fragment_0Logs extends Fragment {
                              Bundle savedInstanceState) {
         rootView = (ViewGroup) inflater.inflate(
                 R.layout.frag0_log, container, false);
-        etTable = rootView.findViewById(R.id.text_que);
-        etKeyword = rootView.findViewById(R.id.key_que);
-        ivFind = rootView.findViewById(R.id.find_que);
-        ivNext = rootView.findViewById(R.id.next_que);
-        ivClear = rootView.findViewById(R.id.clear_que);
+        etTable = rootView.findViewById(R.id.text_log);
+        etKeyword = rootView.findViewById(R.id.key_log);
+        ivFind = rootView.findViewById(R.id.find_log);
+        ivNext = rootView.findViewById(R.id.next_log);
+        ivClear = rootView.findViewById(R.id.clear_log);
+        ivVolume = rootView.findViewById(R.id.volumes);
         setHasOptionsMenu(true);
         return rootView;
     }
@@ -124,9 +126,11 @@ public class Fragment_0Logs extends Fragment {
         });
 
         ivClear.setOnClickListener(v -> etKeyword.setText(""));
-        scrollView1 = rootView.findViewById(R.id.scroll_1_que);
+        scrollView1 = rootView.findViewById(R.id.scroll_1_log);
         new Handler(Looper.getMainLooper()).post(() -> scrollView1.smoothScrollBy(0, 90000));
         super.onResume();
+
+        ivVolume.setImageBitmap(VolumeIcon.draw());
 
     }
 

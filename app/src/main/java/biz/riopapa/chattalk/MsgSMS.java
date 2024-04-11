@@ -1,5 +1,6 @@
 package biz.riopapa.chattalk;
 
+import static biz.riopapa.chattalk.NotificationListener.isWorking;
 import static biz.riopapa.chattalk.NotificationListener.logUpdate;
 import static biz.riopapa.chattalk.NotificationListener.msgKeyword;
 import static biz.riopapa.chattalk.NotificationListener.sounds;
@@ -9,6 +10,9 @@ import static biz.riopapa.chattalk.Vars.lastChar;
 import static biz.riopapa.chattalk.Vars.mContext;
 import static biz.riopapa.chattalk.Vars.sbnGroup;
 import static biz.riopapa.chattalk.Vars.smsNoNumbers;
+
+import android.content.Context;
+import android.media.AudioManager;
 
 import biz.riopapa.chattalk.Sub.IgnoreNumber;
 import biz.riopapa.chattalk.Sub.Numbers;
@@ -23,6 +27,7 @@ public class MsgSMS {
     final static String trade = "체결";
     final static String jrGroup = "허찌";
     final static String nhStock = "NH투자";
+
     void say(String mWho, String mText) {
 
         if (mWho.contains(nhStock)) {
@@ -46,6 +51,8 @@ public class MsgSMS {
             NotificationBar.update("sms "+mWho, mText, true);
             if (IgnoreNumber.in(smsNoNumbers, mWho))
                 mText = new Numbers().deduct(mText);
+            if (isWorking())
+                mText = utils.makeEtc(mText, 50);
             sounds.speakAfterBeep(head+" 으로 부터 "+ mText);
         }
     }
@@ -75,6 +82,8 @@ public class MsgSMS {
                             mText.replace(stockName, new StringBuffer(stockName).insert(1, ".").toString()), samPam,
                             new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date()));
                     sayMsg = stockName + samPam;
+                    if (isWorking())
+                        sayMsg = utils.makeEtc(sayMsg, 50);
                     sounds.speakAfterBeep(new Numbers().deduct(sayMsg));
                 }
             } catch (Exception e) {
@@ -94,6 +103,6 @@ public class MsgSMS {
             utils = new Utils();
         if (IgnoreNumber.in(smsNoNumbers, mWho))
             mText = new Numbers().deduct(mText);
-        sounds.speakAfterBeep(head + utils.makeEtc(mText, 120));
+        sounds.speakAfterBeep(head + utils.makeEtc(mText, isWorking()? 50: 120));
     }
 }

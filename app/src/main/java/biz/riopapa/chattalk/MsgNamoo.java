@@ -1,7 +1,9 @@
 package biz.riopapa.chattalk;
 
+import static biz.riopapa.chattalk.NotificationListener.isWorking;
 import static biz.riopapa.chattalk.NotificationListener.logUpdate;
 import static biz.riopapa.chattalk.NotificationListener.sounds;
+import static biz.riopapa.chattalk.NotificationListener.utils;
 
 import biz.riopapa.chattalk.Sub.Numbers;
 
@@ -46,6 +48,8 @@ public class MsgNamoo {
 
         } else {
             logUpdate.addStock("[NH나무App]", text);
+            if (isWorking())
+                text = utils.makeEtc(text, 50);
             sounds.speakAfterBeep("나무 증권 " + new Numbers().deduct(text));
         }
     }
