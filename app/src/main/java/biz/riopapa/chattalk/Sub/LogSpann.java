@@ -96,17 +96,16 @@ public class LogSpann {
         }
         ps = logNow.lastIndexOf("\n", ps - 1);
         if (ps < 2)
-            ps = 0;
-        if (ps > 0 && logNow.charAt(ps - 1) == '\n')
+            ps = 1;
+        if (logNow.charAt(ps - 1) == '\n')
             logNow = logNow.substring(0, ps - 1) + logNow.substring(pf);
         else
             logNow = logNow.substring(0, ps) + logNow.substring(pf);
+        // positioned 2 lines deleted and now to skip if \n
         if (logNow.charAt(0) == '\n')
             logNow = logNow.substring(1);
         if (logNow.charAt(0) == '\n')
             logNow = logNow.substring(1);
-        SpannableString ss = make(logNow, context);
-        logNow = ss.toString();
         if (ps >= logNow.length())
             ps = logNow.length() - 2;
         ps = logNow.lastIndexOf("\n", ps - 2) + 1;
@@ -115,6 +114,7 @@ public class LogSpann {
             ps = logNow.lastIndexOf("\n") - 1;
         if (pf > logNow.length() || pf == -1)
             pf = logNow.length();
+        SpannableString ss = make(logNow, context);
         ss.setSpan(new StyleSpan(Typeface.ITALIC), ps, pf, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ss.setSpan(new UnderlineSpan(), ps, pf,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return new Vars.DelItem(logNow, ps, pf, ss);
@@ -129,10 +129,12 @@ public class LogSpann {
             pf = logNow.length() - 2;
         logNow = logNow.substring(0, ps) + logNow.substring(pf);
         SpannableString ss = make(logNow, context);
-        logNow = ss.toString();
         ps = logNow.lastIndexOf("\n", ps - 1) + 1;
         pf = logNow.indexOf("\n", ps) - 1;
-
+        if (pf < ps) {
+            ps--;
+            pf = ps + 1;
+        }
         ss.setSpan(new StyleSpan(Typeface.ITALIC), ps, pf, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ss.setSpan(new UnderlineSpan(), ps, pf,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return new Vars.DelItem(logNow, ps, pf, ss);

@@ -4,18 +4,18 @@
         android:viewportWidth="24"
         android:width="48dp"
         xmlns:android="http://schemas.android.com/apk/res/android">
-    <path android:strokeColor="#80672D1B"
+    <path android:strokeColor="#F0672D1B"
           android:strokeLineJoin="round"
           android:strokeWidth="1.5"
           android:strokeLineCap="round"
           android:pathData="M1.6,1.6l12.8,0l0,7.2l-10.4,0l-2.4,2.4zM4,5.6l7.2,-0.8 "/>
-    <path android:strokeColor="#366D73"
+    <path android:strokeColor="#F0366D73"
           android:strokeLineJoin="round"
           android:strokeWidth="1.5"
           android:strokeLineCap="round"
           android:pathData="M7.8,9.6l8.8,-1.6l-0.8,8l-8,-4zM8.6,13.6l0,4l1.6,0l1.6,-3.2 " />
-    <path android:fillColor="#40330000" android:pathData="M7,19a8.4,8.4 0 1,1 0.24,0.24zm12,-12l-12,12"
-          android:strokeColor="#FF0000"
+    <path android:fillColor="#70330000" android:pathData="M7,19a8.4,8.4 0 1,1 0.24,0.24zm12,-12l-12,12"
+          android:strokeColor="#C0FF0000"
           android:strokeWidth="2" />
 
 </vector>

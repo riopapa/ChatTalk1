@@ -7,6 +7,7 @@ import static biz.riopapa.chattalk.NotificationListener.kvStock;
 import static biz.riopapa.chattalk.NotificationListener.kvTelegram;
 import static biz.riopapa.chattalk.Vars.logQue;
 import static biz.riopapa.chattalk.Vars.logStock;
+import static biz.riopapa.chattalk.Vars.logWork;
 import static biz.riopapa.chattalk.Vars.packageDirectory;
 import static biz.riopapa.chattalk.Vars.sharedEditor;
 import static biz.riopapa.chattalk.Vars.tableFolder;
@@ -44,9 +45,11 @@ public class ReadyToday {
             String new_day = "\n" + new SimpleDateFormat("MM-dd (EEE) HH:mm ", Locale.KOREA).format(new Date())
                     + " NEW DAY " + " **/\nNew Day" + "\n";
             logQue += new_day;
+            logWork += new_day;
             sharedEditor.apply();
             FileIO.writeFile(tableFolder, "logStock.txt", logStock);
             FileIO.writeFile(tableFolder, "logQue.txt", logQue);
+            FileIO.writeFile(tableFolder, "logWork.txt", logWork);
             StringBuilder sb = new StringBuilder();
             sb.append("\n\nkvCommon =\n").append(kvCommon.toString());
             sb.append("\n\nkvSMS =\n").append(kvSMS.toString());

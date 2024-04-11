@@ -1,4 +1,6 @@
-package biz.riopapa.chattalk;
+package biz.riopapa.chattalk.Sub;
+
+import static biz.riopapa.chattalk.Sub.WifiName.wifiName;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -7,17 +9,13 @@ import android.net.NetworkCapabilities;
 
 import androidx.annotation.NonNull;
 
-import biz.riopapa.chattalk.Sub.ToastText;
-import biz.riopapa.chattalk.Sub.WifiName;
-
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class WifiMonitor {
 
-    public static String wifiName = "wiFi";
     static ConnectivityManager cM = null;
-    static void init (Context context) {
+    public WifiMonitor (Context context) {
         if (cM == null)
             cM = context.getSystemService(ConnectivityManager.class);
         cM.registerDefaultNetworkCallback(new ConnectivityManager.NetworkCallback() {
@@ -43,15 +41,15 @@ public class WifiMonitor {
             }
 
             private void showWifiName() {
-                String wiFi = new WifiName().get(context);
-                if (wiFi != null && !wiFi.equals(wifiName)) {
-                    wifiName = wiFi;
-                    new ToastText().show(wifiName + "에 연결됨");
-                }
+//                String wiFi = new WifiName().get(context);
+//                if (wiFi != null && !wiFi.equals(wifiName)) {
+//                    wifiName = wiFi;
+//                    new ToastText().show(wifiName + "에 연결됨");
+//                }
             }
             @Override
             public void onLost(@NonNull Network network) {
-                new ToastText().show(wifiName+" 연결 끊어짐");
+                new ToastText().show("Wifi Off "+wifiName);
                 wifiName = "wiFi";
                 super.onLost(network);
             }

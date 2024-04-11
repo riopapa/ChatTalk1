@@ -32,6 +32,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import com.google.android.material.tabs.TabLayout;
 import biz.riopapa.chattalk.Sub.Permission;
 import biz.riopapa.chattalk.Sub.SnackBar;
+import biz.riopapa.chattalk.Sub.WifiMonitor;
 import biz.riopapa.chattalk.alerts.AlertTableIO;
 
 import java.io.File;
@@ -98,6 +99,8 @@ public class ActivityMain extends AppCompatActivity {
 //            pContext.startForegroundService(mBackgroundServiceIntent);
             mContext.startService(mBackgroundServiceIntent);
         }
+
+        new WifiMonitor(this);
     }
 
     @Override
@@ -140,8 +143,6 @@ public class ActivityMain extends AppCompatActivity {
             aBar.setIcon(R.drawable.chat_talk_logo);
         }
         establishTabs();
-
-        WifiMonitor.init(this);
 
         Intent updateIntent = new Intent(this, NotificationService.class);
         this.startForegroundService(updateIntent);

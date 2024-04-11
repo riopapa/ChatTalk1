@@ -28,6 +28,8 @@ public class ActivityAppEdit extends AppCompatActivity {
 
     App app;
     ActivityAppEditBinding binding;
+    final String deli = "\\^";
+    final String deliStr = " ^ ";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -78,7 +80,7 @@ public class ActivityAppEdit extends AppCompatActivity {
             StringBuilder sb = new StringBuilder();
             for (String key : app.igStr) {
                 if (!key.isEmpty())
-                    sb.append(key).append(" ; ");
+                    sb.append(key).append(deliStr);
             }
             binding.ignores.setText(sb.toString());
         }
@@ -91,7 +93,7 @@ public class ActivityAppEdit extends AppCompatActivity {
         if (app.inform != null) {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < app.inform.length; i++)
-                sb.append(app.inform[i]).append(" ; ").append(app.talk[i]).append("\n");
+                sb.append(app.inform[i]).append(deliStr).append(app.talk[i]).append("\n\n");
             binding.infoTalk.setText(sb.toString());
         }
         binding.infoTalk.setFocusable(true);
@@ -102,7 +104,7 @@ public class ActivityAppEdit extends AppCompatActivity {
         if (app.replFrom != null) {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < app.replFrom.length; i++)
-                sb.append(app.replFrom[i]).append(" ; ").append(app.replTo[i]).append("\n");
+                sb.append(app.replFrom[i]).append(deliStr).append(app.replTo[i]).append("\n\n");
             binding.replFromTo.setText(sb.toString());
         }
         binding.replFromTo.setFocusable(true);
@@ -152,7 +154,7 @@ public class ActivityAppEdit extends AppCompatActivity {
         app.addWho = binding.addWhoSwitch.isChecked();
         app.num = binding.numSwitch.isChecked();
         String ignoreStr = binding.ignores.getText().toString();
-        String [] ss = ignoreStr.split(";");
+        String [] ss = ignoreStr.split(deli);
         for (int i = 0; i < ss.length; i++)
             ss[i] = ss[i].trim();
 //        Arrays.sort(ss);
@@ -169,7 +171,7 @@ public class ActivityAppEdit extends AppCompatActivity {
         ArrayList<String> talkStr = new ArrayList<>();
         for (int i = 0; i < infoTalkStr.length; i++) {
             if (!infoTalkStr[i].isEmpty()) {
-                String[] t = infoTalkStr[i].split(";");
+                String[] t = infoTalkStr[i].split(deli);
                 if (t.length == 2) {
                     infStr.add(t[0].trim());
                     talkStr.add(t[1].trim());
@@ -192,7 +194,7 @@ public class ActivityAppEdit extends AppCompatActivity {
         ArrayList<String> replT = new ArrayList<>();
         for (int i = 0; i < repl.length; i++) {
             if (!repl[i].isEmpty()) {
-                String[] t = repl[i].split(";");
+                String[] t = repl[i].split(deli);
                 if (t.length == 2) {
                     replF.add(t[0].trim());
                     replT.add(t[1].trim());

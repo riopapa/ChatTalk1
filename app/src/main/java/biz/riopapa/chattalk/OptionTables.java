@@ -17,7 +17,7 @@ import static biz.riopapa.chattalk.Vars.smsReplTo;
 import static biz.riopapa.chattalk.Vars.smsTxtIgnores;
 import static biz.riopapa.chattalk.Vars.smsWhoIgnores;
 import static biz.riopapa.chattalk.Vars.tableListFile;
-import static biz.riopapa.chattalk.Vars.teleChannels;
+import static biz.riopapa.chattalk.Vars.teleLongGroups;
 import static biz.riopapa.chattalk.Vars.teleGroups;
 import static biz.riopapa.chattalk.Vars.whoNameFrom;
 import static biz.riopapa.chattalk.Vars.whoNameTo;
@@ -67,7 +67,7 @@ class OptionTables {
         String [] lists =  tableListFile.read("teleGrp");
 
         teleGroups = new String[lists.length];
-        teleChannels = new String[lists.length];
+        teleLongGroups = new String[lists.length];
 
         for (int i = 0; i < lists.length; i++) {
             String pLine = lists[i];
@@ -76,7 +76,7 @@ class OptionTables {
                 new SnackBar().show("Telegram Table Error ", pLine);
             } else {
                 teleGroups[i] = strings[0].trim();
-                teleChannels[i] = strings[1].trim();
+                teleLongGroups[i] = strings[1].trim();
             }
         }
     }

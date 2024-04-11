@@ -45,8 +45,8 @@
     <color name="tabSelected">#0D2367</color>
 
     <color name="tabBackText">#FF17335E</color>
-    <color name="tabBackSelected">#8017335E</color>
-    <color name="tabBackUnselected">#808BCA9F</color>
+    <color name="tabBackSelected">#80284571</color>
+    <color name="tabBackUnselected">#80ACE3BD</color>
 
     <color name="keyMatchedBack">#60CFAE1D</color>
     <color name="keyMatchedWord">#8FB68F</color>

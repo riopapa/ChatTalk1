@@ -49,10 +49,10 @@ public class Fragment_1Table extends Fragment {
         TextView tv_WifiState = rootView.findViewById(R.id.tv_wifi_state);
         String s = "Wifi : " + WifiName.get(mContext);
         tv_WifiState.setText(s);
-        tv_WifiState.setOnClickListener(v -> {
-            String s1 = "Wifi : " + WifiName.get(mContext);
-            tv_WifiState.setText(s1);
-        });
+//        tv_WifiState.setOnClickListener(v -> {
+//            String s1 = "Wifi : " + WifiName.get(mContext);
+//            tv_WifiState.setText(s1);
+//        });
 
         rootView.findViewById(R.id.sms_who_ignores).setOnClickListener(this::edit_table);
         rootView.findViewById(R.id.sms_text_ignores).setOnClickListener(this::edit_table);

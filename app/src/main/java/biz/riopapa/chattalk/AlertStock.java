@@ -76,7 +76,7 @@ public class AlertStock {
             if (isSilentNow()) {
                 if (phoneVibrate == null)
                     phoneVibrate = new PhoneVibrate();
-                phoneVibrate.vib();
+                phoneVibrate.vib(1);
             }
             new AlertToast().show(mContext, mActivity, title);
             new NotifyStock().send(mContext, title, sParse[0], netStr);

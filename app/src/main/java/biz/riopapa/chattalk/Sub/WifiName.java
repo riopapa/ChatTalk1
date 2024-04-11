@@ -7,6 +7,8 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
 public class WifiName {
+    public static String wifiName = "wiFi";
+
     public static String get(Context wContext) {
         ConnectivityManager conManager = (ConnectivityManager) wContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkCapabilities capabilities = conManager.getNetworkCapabilities(conManager.getActiveNetwork());
@@ -15,9 +17,10 @@ public class WifiName {
                 // or TRANSPORT_CELLULAR
                 final WifiManager wifiManager = (WifiManager) wContext.getSystemService(Context.WIFI_SERVICE);
                 final WifiInfo connectionInfo = wifiManager.getConnectionInfo();
-                return (connectionInfo == null) ? null :  connectionInfo.getSSID();
+                wifiName = (connectionInfo == null) ? null :  connectionInfo.getSSID();
             }
-        }
-        return null; // Wi-Fi adapter is OFF
+        } else
+            wifiName = "Off";
+        return wifiName;
     }
 }

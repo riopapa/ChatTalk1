@@ -71,7 +71,7 @@ public class Vars {
     static String[] ktTxtIgnores = null;
 
     static String[] teleGroups = null;
-    static String[] teleChannels = null;
+    static String[] teleLongGroups = null;
 
     static String[] whoNameFrom = null;
     static String[] whoNameTo = null;

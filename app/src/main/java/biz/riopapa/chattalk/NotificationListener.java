@@ -22,7 +22,7 @@ import static biz.riopapa.chattalk.Vars.smsReplFrom;
 import static biz.riopapa.chattalk.Vars.smsReplTo;
 import static biz.riopapa.chattalk.Vars.smsTxtIgnores;
 import static biz.riopapa.chattalk.Vars.smsWhoIgnores;
-import static biz.riopapa.chattalk.Vars.teleChannels;
+import static biz.riopapa.chattalk.Vars.teleLongGroups;
 import static biz.riopapa.chattalk.Vars.teleGroups;
 import static biz.riopapa.chattalk.Vars.whoNameFrom;
 import static biz.riopapa.chattalk.Vars.whoNameTo;
@@ -75,7 +75,6 @@ public class NotificationListener extends NotificationListenerService {
     public static Vibrator vibrator = null;
     public static VibrationEffect vibEffect = null;
 //    public static final long[] vibPattern = {0, 20, 200, 300, 300, 400, 400, 500, 550, 10, 20, 200, 300, 300};
-    public static final long[] vibPattern = {0, 20, 200, 300, 300, 400};
 
     public static Sounds sounds;
     public static LogUpdate logUpdate;
@@ -132,8 +131,10 @@ public class NotificationListener extends NotificationListenerService {
                         msgKeyword = new MsgKeyword("by ka");
 
                     int grpIdx = Collections.binarySearch(aGroups, sbnGroup);
-                    Log.w("grpIdx check " + grpIdx, "grpIdx=" + grpIdx + " group=" + sbnGroup + " who=" + sbnWho);
+//                    Log.w("grpIdx check " + grpIdx, "grpIdx=" + grpIdx + " group=" + sbnGroup + " who=" + sbnWho);
                     if (grpIdx >= 0) {
+                        if (sbnText.length() < 15)
+                            return;
                         // replace with simple name
                         for (int w = 0; w < whoNameFrom.length; w++) {
                             if (sbnWho.contains(whoNameFrom[w])) {
@@ -158,7 +159,7 @@ public class NotificationListener extends NotificationListenerService {
 
                 if (kvCommon.isDup(sbnApp.nickName, sbnText))
                     return;
-                if (hasIgnoreStr())
+                if (sbnApp.igStr != null && hasIgnoreStr())
                     return;
 
                 sbnText = utils.text2OneLine(sbnText);
@@ -184,14 +185,14 @@ public class NotificationListener extends NotificationListenerService {
                     }
                 }
 
-//                if (sbnApp.nickName.equals("NH나무")) {
-////                    utils.logW(sbnApp.nickName,sbnText);
-////                    new MsgNamoo().say(utils.text2OneLine(sbnText));
-//                    break;
-//                }
+                if (sbnApp.nickName.equals("NH나무")) {
+                    utils.logW(sbnApp.nickName,sbnText);
+                    new MsgNamoo().say(utils.text2OneLine(sbnText));
+                    break;
+                }
 
-                if (sbnAppNick.equals("팀즈") || sbnAppNick.equals("아웃록")) {
-                    saySave();
+                if (sbnAppNick.equals("팀즈") || sbnAppNick.equals("아룩")) {
+                    sayWork();
                     return;
                 }
                 if (sbnAppNick.equals(TESRY)) {
@@ -206,7 +207,7 @@ public class NotificationListener extends NotificationListenerService {
                 if (sbnApp.say) {
                     String say = sbnAppNick + " ";
                     say += (sbnApp.grp) ? sbnGroup+" ": " ";
-                    say += sbnWho;
+                    say += (sbnApp.who) ? sbnWho: "";
                     say = say + " 로부터 ";
                     say = say + ((sbnApp.num) ? sbnText : new Numbers().deduct(sbnText));
                     sounds.speakAfterBeep(utils.makeEtc(say, 200));
@@ -215,16 +216,13 @@ public class NotificationListener extends NotificationListenerService {
                 if (sbnApp.addWho)
                     sbnText = sbnWho + "※" + sbnText;
 
+                head = sbnAppNick;
+                head += (sbnApp.grp && !sbnGroup.isEmpty()) ? sbnGroup+".": "";
+                head += (sbnApp.who)? "@" + sbnWho : "";
                 if (sbnApp.log) {
-                    head = "<" + sbnAppNick;
-                    head += (sbnApp.grp && !sbnGroup.isEmpty()) ? "."+sbnGroup: "";
-                    head += (sbnApp.who)? "@" + sbnWho : "";
-                    head = head + ">";
                     logUpdate.addLog(head, sbnText);
                 }
-                String s = (sbnApp.grp && !sbnGroup.isEmpty()) ? sbnGroup+"_": "";
-                s += sbnWho;
-                NotificationBar.update(sbnAppNick + ":"+ s, sbnText, true);
+                NotificationBar.update(head, sbnText, true);
                 break;
 
             case ANDROID:
@@ -274,69 +272,70 @@ public class NotificationListener extends NotificationListenerService {
         }
     }
 
-    private void saySave() {
-        if (hasIgnoreStr())
-            return;
+    private void sayWork() {
+
+        utils.logW("work", "grp="+sbnGroup+", who="+sbnWho+", txt="+sbnText);
         if (sbnApp.addWho) {
             sbnText = sbnWho + "※" + sbnText;
             sbnWho = "";
         }
-        for (int i = 0; i < sbnApp.replFrom.length; i++) {
-            if ((sbnText).contains(sbnApp.replFrom[i])) {
-                sbnText = sbnText.replace(sbnApp.replFrom[i],sbnApp.replTo[i]);
+        if (sbnApp.replFrom != null) {
+            for (int i = 0; i < sbnApp.replFrom.length; i++) {
+                if ((sbnText).contains(sbnApp.replFrom[i]))
+                    sbnText = sbnText.replace(sbnApp.replFrom[i], sbnApp.replTo[i]);
+                if ((sbnWho).contains(sbnApp.replFrom[i]))
+                    sbnWho = sbnText.replace(sbnApp.replFrom[i], sbnApp.replTo[i]);
             }
         }
 
-        String say = sbnApp.nickName + " ";
-        say += (sbnApp.grp) ? sbnGroup+" ": " ";
-        say += sbnWho;
-        say = say + " 로부터 ";
-        say = say + ((sbnApp.num) ? sbnText : new Numbers().deduct(sbnText));
-        sounds.speakAfterBeep(utils.makeEtc(say, 300));
+        head = sbnAppNick + ((sbnApp.grp && !sbnGroup.isEmpty()) ? "."+sbnGroup: " ")
+                + ((sbnApp.who)? "." + sbnWho : "");
+        String say = head + " 로부터 " + sbnText;
+        sounds.speakAfterBeep(utils.makeEtc(say, 100));
 
-        head = "<" + sbnAppNick;
-        head += (sbnApp.grp && !sbnGroup.isEmpty()) ? "."+sbnGroup: "$";
-        head += (sbnApp.who)? "~" + sbnWho : "";
-        head = head + ">";
         logUpdate.addWork(head, sbnText);
         NotificationBar.update(head, sbnText, true);
 
     }
 
     private void sayTelegram() {
+
         if (kvTelegram.isDup(sbnGroup, sbnText))
             return;
-        if (hasIgnoreStr())
-            return;
-        sbnText = utils.text2OneLine(sbnText);
-        for (int i = 0; i < teleChannels.length; i++) {
-            if (sbnWho.contains(teleChannels[i])) { // 정확한 이름 다 찾지 않으려고 contains 씀
+        for (int i = 0; i < teleLongGroups.length; i++) {
+            if (sbnWho.contains(teleLongGroups[i])) { // 정확한 이름 다 찾지 않으려고 contains 씀
                 if (sbnText.length() < 15)
                     return;
-                sbnGroup = teleGroups[i];
-                if (kvTelegram.isDup(sbnGroup, sbnText))
-                    return;
-//                if (sbnWho.contains(":"))   // group : who 로 구성됨
-//                    sbnWho = sbnWho.substring(sbnWho.indexOf(":") + 2).trim();
-
-                // replace with simple name
-                for (int w = 0; w < whoNameFrom.length; w++) {
-                    if (sbnWho.contains(whoNameFrom[w])) {
-                        sbnWho = whoNameTo[w];
-                        break;
+                if (sbnText.contains("종목")) {
+                    if (sbnText.contains("매수"))
+                        utils.logW(sbnGroup, "grp " + sbnGroup + " who " + sbnWho + " > "
+                                + sbnText);
+                }
+                String []grpWho = sbnWho.split(":");
+                if (grpWho.length > 1) {
+//                    sbnGroup = grpWho[0].trim();
+                    sbnGroup = teleGroups[i];
+                    sbnWho = grpWho[1].trim();
+                    for (int w = 0; w < whoNameFrom.length; w++) {
+                        if (sbnWho.contains(whoNameFrom[w])) {
+                            sbnWho = whoNameTo[w];
+                            break;
+                        }
                     }
                 }
+                if (kvTelegram.isDup(sbnGroup, sbnText))
+                    return;
+                sbnText = utils.text2OneLine(sbnText);
                 if (msgKeyword == null)
                     msgKeyword = new MsgKeyword("by tele");
                 int grpIdx = Collections.binarySearch(aGroups, sbnGroup);
                 if (grpIdx < 0)
-                    utils.logE("tele", "grpIdx " + grpIdx + " err " + sbnWho + " > " + sbnGroup
-                            + " " + sbnText);
-                if (sbnText.contains("종목")) {
-                    utils.logW("tel " + sbnGroup, sbnWho + "_ : " + sbnText);
-                    sbnText = utils.strShorten(sbnWho, utils.strShorten(sbnWho, sbnText));
-                    msgKeyword.say(sbnGroup, sbnWho, sbnText, grpIdx);
-                }
+                    utils.logE("tele", "grpIdx " + grpIdx + " err " + sbnGroup + " > " + sbnWho
+                            + " > " + sbnText);
+
+                utils.logW("tel " + sbnGroup, sbnWho + "_ : " + sbnText);
+                sbnText = utils.strShorten(sbnWho, utils.strShorten(sbnWho, sbnText));
+                msgKeyword.say(sbnGroup, sbnWho, sbnText, grpIdx);
                 return;
             }
         }
@@ -344,12 +343,10 @@ public class NotificationListener extends NotificationListenerService {
         logUpdate.addLog(head, sbnText);
         NotificationBar.update(sbnGroup + "|" + sbnWho, sbnText, true);
         sbnText = head + " 로 부터. " + sbnText;
-        sounds.speakAfterBeep(utils.makeEtc(sbnText, 200));
+        sounds.speakAfterBeep(utils.makeEtc(sbnText, 150));
     }
 
     private boolean hasIgnoreStr() {
-        if (sbnApp.igStr == null)
-            return false;
         for (String t: sbnApp.igStr) {
             if (sbnWho.contains(t))
                 return true;

@@ -99,11 +99,11 @@ public class LogUpdate {
             row++;
 
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < row; i++)
-            sb.append(sLog[i].trim()).append("\n");
-        FileIO.append2File(new File(packageDirectory, queName+".txt"), "\n- backUp -\n", sb+"\n");
-
-        sb = new StringBuilder();
+//        for (int i = 0; i < row; i++)
+//            sb.append(sLog[i].trim()).append("\n");
+//        FileIO.append2File(new File(packageDirectory, queName+".txt"), "\n- backUp -\n", sb+"\n");
+//
+//        sb = new StringBuilder();
         for (; row < sLen * 3/4; row++) {   // without blank line
             String s = sLog[row].trim();
             if (!s.isEmpty()) {

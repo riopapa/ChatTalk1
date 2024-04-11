@@ -4,9 +4,13 @@ import static biz.riopapa.chattalk.Vars.aBar;
 import static biz.riopapa.chattalk.Vars.appAdapter;
 import static biz.riopapa.chattalk.Vars.appPos;
 import static biz.riopapa.chattalk.Vars.apps;
+import static biz.riopapa.chattalk.Vars.mContext;
+import static biz.riopapa.chattalk.Vars.sharePref;
+import static biz.riopapa.chattalk.Vars.sharedEditor;
 import static biz.riopapa.chattalk.Vars.todayFolder;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -55,10 +59,15 @@ public class ActivityAppList extends AppCompatActivity {
         appRecyclerView.setAdapter(appAdapter);
         if (todayFolder == null)
             new ReadyToday();
-
+        SharedPreferences shPref = mContext.getSharedPreferences("searchKey", MODE_PRIVATE);
+        SharedPreferences.Editor shEditor = shPref.edit();
+        key = shPref.getString("key","");
+        binding.searchKey.setText(key);
         binding.search.setOnClickListener(v -> {
             key = binding.searchKey.getText().toString();
             if (key.length() > 1) {
+                shEditor.putString("key", key);
+                shEditor.apply();
                 searchApps(0);
             }
         });
@@ -70,6 +79,7 @@ public class ActivityAppList extends AppCompatActivity {
         });
 
     }
+
     void searchApps(int startPos) {
         appPos = -1;
         if (startPos == 0)
