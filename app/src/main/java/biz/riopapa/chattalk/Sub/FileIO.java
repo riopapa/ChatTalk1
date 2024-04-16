@@ -120,7 +120,7 @@ public class FileIO {
             }
             in.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("readFile","IOException "+e);
         }
         return sb.toString();
     }
@@ -132,7 +132,7 @@ public class FileIO {
         try {
             bufferedReader = new BufferedReader(new InputStreamReader(Files.newInputStream(Paths.get(filename)), code), BUFFER_SIZE);
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("readKR","Exception "+e);
         }
 
         List<String> lines = new ArrayList<>();
@@ -152,28 +152,27 @@ public class FileIO {
         }
         return lines.toArray(new String[0]);
     }
-
-    public static String readKRFile(String filename) {
-
-        String [] lines = readKR(filename);
-        StringBuilder sb = new StringBuilder();
-        for (String s: lines) {
-            sb.append(s);
-        }
-        return sb.toString();
-    }
-
-
-    public static void writeKR(File file, String textLine) {
-        try {
-            FileOutputStream fileOutputStream = new FileOutputStream(file);
-            OutputStreamWriter OutputStreamWriter =
-                    new OutputStreamWriter(fileOutputStream, "EUC-KR");
-            BufferedWriter bufferedWriter = new BufferedWriter(OutputStreamWriter);
-            bufferedWriter.write(textLine);
-            bufferedWriter.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//
+//    public static String readKRFile(String filename) {
+//
+//        String [] lines = readKR(filename);
+//        StringBuilder sb = new StringBuilder();
+//        for (String s: lines) {
+//            sb.append(s);
+//        }
+//        return sb.toString();
+//    }
+//
+//    public static void writeKR(File file, String textLine) {
+//        try {
+//            FileOutputStream fileOutputStream = new FileOutputStream(file);
+//            OutputStreamWriter OutputStreamWriter =
+//                    new OutputStreamWriter(fileOutputStream, "EUC-KR");
+//            BufferedWriter bufferedWriter = new BufferedWriter(OutputStreamWriter);
+//            bufferedWriter.write(textLine);
+//            bufferedWriter.close();
+//        } catch (Exception e) {
+//            Log.e("writeKR","IOException "+e);
+//        }
+//    }
 }

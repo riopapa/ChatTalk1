@@ -152,7 +152,8 @@ public class Sounds {
         int idx = text.indexOf("http");
         if (idx > 0)
             text = text.substring(0, idx) + " 링크 있음";
-        final String match = "[^\uAC00-\uD7A3\u3131-\u314E\\da-zA-Z.,\\-]";     // 가~힣 ㄱ~ㅎ
+//        final String match = "[^\uAC00-\uD7A3\u3131-\u314E\\da-zA-Z.,\\-]";     // 가~힣 ㄱ~ㅎ
+        final String match = "[^가-힣\\da-zA-Z.,\\-]";
         return text.replaceAll(match, " ");
     }
 

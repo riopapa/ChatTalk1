@@ -32,7 +32,7 @@ import java.util.Locale;
 public class AlertStock {
     public void sayNlog(String iGroup, String iText, int aIdx) {
 
-        String key12, sTalk, who;
+        String sTalk, who;
 
         if (utils == null)
             utils = new Utils();
@@ -46,13 +46,12 @@ public class AlertStock {
         who = al.who;
         sTalk = al.talk;
         String percent = (!iText.contains("매수") && (iText.contains("매도") || iText.contains("익절")))? "1.9" :sTalk;
-        key12 = " {" + k1 + "." + k2 + "}";
         if (stockName == null)
             stockName = new StockName();
         String [] sParse = stockName.get(al.prev, al.next, iText);
         sParse[1] = utils.strShorten(iGroup, utils.removeSpecialChars(sParse[1]));
+        String key12 = " {" + k1 + "." + k2 + "}";
 
-        String keyStr = key12+sTalk;
         if (!sTalk.isEmpty()) {
             String [] joins;
             String won = "";
@@ -91,8 +90,9 @@ public class AlertStock {
             NotificationBar.update(title, shortParse1, false);
         }
         save(al, mContext);
+
         String timeStamp = new SimpleDateFormat("yy-MM-dd HH:mm", Locale.KOREA).format(new Date());
-        FileIO.uploadStock(iGroup, who, percent, sParse[0], sParse[1], keyStr, timeStamp);
+        FileIO.uploadStock(iGroup, who, percent, sParse[0], sParse[1], key12+sTalk, timeStamp);
 
     }
 

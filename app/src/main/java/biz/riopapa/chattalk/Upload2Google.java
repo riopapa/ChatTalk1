@@ -40,7 +40,7 @@ public class Upload2Google {
         uploadStock();
     }
     static void uploadStock() {
-        if (sheetQues.size() == 0 || nowUploading ) //  || WifiMonitor.wifiName.equals(none))
+        if (sheetQues.isEmpty() || nowUploading ) //  || WifiMonitor.wifiName.equals(none))
             return;
         nowUploading = true;
         SheetQue que = sheetQues.get(0);
