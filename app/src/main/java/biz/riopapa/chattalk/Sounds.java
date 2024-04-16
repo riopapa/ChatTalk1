@@ -156,7 +156,7 @@ public class Sounds {
         return text.replaceAll(match, " ");
     }
 
-    void beepOnce(int soundNbr) {
+    public void beepOnce(int soundNbr) {
 
         final MediaPlayer mPlayer = MediaPlayer.create(mContext, beepRawIds[soundNbr]);
 //        mPlayer.setVolume(1f, 1f);

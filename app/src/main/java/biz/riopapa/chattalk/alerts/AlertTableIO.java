@@ -7,21 +7,19 @@ import static biz.riopapa.chattalk.Vars.downloadFolder;
 import static biz.riopapa.chattalk.Vars.mContext;
 import static biz.riopapa.chattalk.Vars.tableFolder;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import biz.riopapa.chattalk.AlertTable;
-import biz.riopapa.chattalk.FileIO;
+
+import biz.riopapa.chattalk.Sub.FileIO;
 import biz.riopapa.chattalk.model.AlertLine;
 
 import java.io.File;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class AlertTableIO {
 
@@ -60,24 +58,5 @@ public class AlertTableIO {
             }
         }
     }
-
-//    public ArrayList<AlertLine> put() {
-//        if (tableFolder ==  null) {
-//            downloadFolder = new File(Environment.getExternalStorageDirectory(), "download");
-//            tableFolder = new File(downloadFolder, "_ChatTalk");
-//        }
-//
-//        ArrayList<AlertLine> list;
-//        Gson gson = new Gson();
-//        String json = FileIO.readFile(tableFolder, "alertTable.json");
-//        if (json.isEmpty()) {
-//            list = new ArrayList<>();
-//        } else {
-//            Type type = new TypeToken<List<AlertLine>>() {
-//            }.getType();
-//            list = gson.fromJson(json, type);
-//        }
-//        return list;
-//    }
 
 }

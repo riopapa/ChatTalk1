@@ -1,4 +1,4 @@
-package biz.riopapa.chattalk;
+package biz.riopapa.chattalk.fragments;
 
 import static biz.riopapa.chattalk.ActivityMain.fragNumber;
 import static biz.riopapa.chattalk.Vars.aBar;
@@ -33,8 +33,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import biz.riopapa.chattalk.Sub.FileIO;
+import biz.riopapa.chattalk.R;
 import biz.riopapa.chattalk.Sub.LogSpann;
 import biz.riopapa.chattalk.Sub.SnackBar;
+import biz.riopapa.chattalk.Vars;
 
 import java.io.File;
 import java.util.Timer;

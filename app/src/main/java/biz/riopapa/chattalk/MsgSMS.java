@@ -7,13 +7,10 @@ import static biz.riopapa.chattalk.NotificationListener.sounds;
 import static biz.riopapa.chattalk.NotificationListener.utils;
 import static biz.riopapa.chattalk.Vars.aGroups;
 import static biz.riopapa.chattalk.Vars.lastChar;
-import static biz.riopapa.chattalk.Vars.mContext;
 import static biz.riopapa.chattalk.Vars.sbnGroup;
 import static biz.riopapa.chattalk.Vars.smsNoNumbers;
 
-import android.content.Context;
-import android.media.AudioManager;
-
+import biz.riopapa.chattalk.Sub.FileIO;
 import biz.riopapa.chattalk.Sub.IgnoreNumber;
 import biz.riopapa.chattalk.Sub.Numbers;
 

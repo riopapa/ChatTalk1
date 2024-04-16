@@ -35,7 +35,7 @@ public class Upload2Google {
         sheetQues = new ArrayList<>();
     }
 
-    static void add2Que(String group, String timeStamp, String who, String percent, String talk, String statement, String key12) {
+    public static void add2Que(String group, String timeStamp, String who, String percent, String talk, String statement, String key12) {
         sheetQues.add(new SheetQue(group, timeStamp, who, percent, talk, statement, key12));
         uploadStock();
     }

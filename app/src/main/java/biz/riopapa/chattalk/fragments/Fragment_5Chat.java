@@ -1,4 +1,4 @@
-package biz.riopapa.chattalk;
+package biz.riopapa.chattalk.fragments;
 
 import static biz.riopapa.chattalk.ActivityMain.fragNumber;
 import static biz.riopapa.chattalk.NotificationListener.utils;
@@ -20,7 +20,6 @@ import android.text.Selection;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.BackgroundColorSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,7 +35,10 @@ import androidx.fragment.app.Fragment;
 import java.io.File;
 import java.util.Arrays;
 
+import biz.riopapa.chattalk.R;
+import biz.riopapa.chattalk.SelectChats;
 import biz.riopapa.chattalk.Sub.SnackBar;
+import biz.riopapa.chattalk.Utils;
 
 public class Fragment_5Chat extends Fragment {
 

@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import biz.riopapa.chattalk.alerts.AlertSave;
+import biz.riopapa.chattalk.alerts.AlertTable;
 import biz.riopapa.chattalk.model.AlertLine;
 
 import java.text.SimpleDateFormat;

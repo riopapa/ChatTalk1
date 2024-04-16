@@ -120,23 +120,26 @@ public class LogSpann {
         return new Vars.DelItem(logNow, ps, pf, ss);
     }
 
-    public Vars.DelItem delOneLine(String logNow, int ps, Context context) {
-        ps = logNow.lastIndexOf("\n", ps -1);
+    public Vars.DelItem delOneLine(String logStr, int ps, Context context) {
+        ps = logStr.lastIndexOf("\n", ps -1);
         if (ps == -1)
             ps = 0;
-        int pf = logNow.indexOf("\n", ps+1);
+        int pf = logStr.indexOf("\n", ps+1);
         if (pf == -1)
-            pf = logNow.length() - 2;
-        logNow = logNow.substring(0, ps) + logNow.substring(pf);
-        SpannableString ss = make(logNow, context);
-        ps = logNow.lastIndexOf("\n", ps - 1) + 1;
-        pf = logNow.indexOf("\n", ps) - 1;
-        if (pf < ps) {
-            ps--;
-            pf = ps + 1;
+            pf = logStr.length();
+        logStr = logStr.substring(0, ps) + logStr.substring(pf);
+        SpannableString ss = make(logStr, context);
+        if (ps > 1) {
+            ps = logStr.lastIndexOf("\n", ps - 1) + 1;
+            pf = logStr.indexOf("\n", ps) - 1;
+            if (pf < ps) {
+                if (ps > 0)
+                    ps--;
+                pf = ps + 1;
+            }
         }
         ss.setSpan(new StyleSpan(Typeface.ITALIC), ps, pf, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         ss.setSpan(new UnderlineSpan(), ps, pf,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        return new Vars.DelItem(logNow, ps, pf, ss);
+        return new Vars.DelItem(logStr, ps, pf, ss);
     }
 }

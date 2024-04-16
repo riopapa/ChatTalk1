@@ -16,6 +16,7 @@ import static biz.riopapa.chattalk.Vars.timeEnd;
 import static biz.riopapa.chattalk.Vars.toDay;
 import static biz.riopapa.chattalk.Vars.todayFolder;
 
+import biz.riopapa.chattalk.Sub.FileIO;
 import biz.riopapa.chattalk.Sub.KeyVal;
 
 import java.io.File;

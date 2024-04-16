@@ -26,6 +26,8 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
 
+import biz.riopapa.chattalk.Sub.FileIO;
+
 public class ActivityStringReplace extends AppCompatActivity {
 
     final String dummyHead = "- [ ";

@@ -17,6 +17,8 @@ import java.text.Collator;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
+import biz.riopapa.chattalk.Sub.FileIO;
+
 public class Utils {
 
     public Utils() {
@@ -36,7 +38,7 @@ public class Utils {
         FileIO.append2Today("zLog"+toDay+tag+".txt", logText);
     }
 
-    void logE(String tag, String text) {
+    public void logE(String tag, String text) {
         StackTraceElement[] traces = Thread.currentThread().getStackTrace();
         String logText  =(traces.length>6) ? excludeName(traces[6].getMethodName()):"";
         logText += excludeName(traces[5].getMethodName()) + excludeName(traces[4].getMethodName()) + excludeName(traceClassName(traces[3].getClassName()))+"> "+traces[3].getMethodName() + "#" + traces[3].getLineNumber() + " {"+ tag + "} " + text;

@@ -1,6 +1,5 @@
-package biz.riopapa.chattalk;
+package biz.riopapa.chattalk.alerts;
 
-import static android.content.Context.CLIPBOARD_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 import static biz.riopapa.chattalk.NotificationListener.logUpdate;
 import static biz.riopapa.chattalk.NotificationListener.phoneVibrate;
@@ -11,17 +10,19 @@ import static biz.riopapa.chattalk.Vars.alertLines;
 import static biz.riopapa.chattalk.Vars.mActivity;
 import static biz.riopapa.chattalk.Vars.mContext;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.util.Log;
 
+import biz.riopapa.chattalk.Sub.FileIO;
+import biz.riopapa.chattalk.NotificationBar;
+import biz.riopapa.chattalk.NotifyStock;
+import biz.riopapa.chattalk.Sounds;
 import biz.riopapa.chattalk.Sub.Copy2Clipboard;
 import biz.riopapa.chattalk.Sub.PhoneVibrate;
-import biz.riopapa.chattalk.alerts.AlertToast;
-import biz.riopapa.chattalk.alerts.StockName;
+import biz.riopapa.chattalk.Utils;
+import biz.riopapa.chattalk.Vars;
 import biz.riopapa.chattalk.model.AlertLine;
 
 import java.text.SimpleDateFormat;
@@ -29,7 +30,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class AlertStock {
-    void sayNlog(String iGroup, String iText, int aIdx) {
+    public void sayNlog(String iGroup, String iText, int aIdx) {
 
         String key12, sTalk, who;
 

@@ -1,4 +1,4 @@
-package biz.riopapa.chattalk;
+package biz.riopapa.chattalk.fragments;
 
 import static biz.riopapa.chattalk.ActivityMain.fragNumber;
 import static biz.riopapa.chattalk.Vars.aBar;
@@ -22,6 +22,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import biz.riopapa.chattalk.AlertsAdapter;
+import biz.riopapa.chattalk.OptionTables;
+import biz.riopapa.chattalk.R;
+import biz.riopapa.chattalk.ReadyToday;
+import biz.riopapa.chattalk.alerts.AlertSave;
 import biz.riopapa.chattalk.model.AlertLine;
 import biz.riopapa.chattalk.alerts.AlertTableIO;
 

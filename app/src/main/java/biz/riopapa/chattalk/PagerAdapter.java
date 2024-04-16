@@ -5,6 +5,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import biz.riopapa.chattalk.fragments.Fragment_0Logs;
+import biz.riopapa.chattalk.fragments.Fragment_1Table;
+import biz.riopapa.chattalk.fragments.Fragment_2Saved;
+import biz.riopapa.chattalk.fragments.Fragment_3Stock;
+import biz.riopapa.chattalk.fragments.Fragment_4Alert;
+import biz.riopapa.chattalk.fragments.Fragment_5Chat;
+import biz.riopapa.chattalk.fragments.Fragment_6Work;
+
 public class PagerAdapter extends FragmentStateAdapter {
 
 public PagerAdapter(FragmentActivity fm) {

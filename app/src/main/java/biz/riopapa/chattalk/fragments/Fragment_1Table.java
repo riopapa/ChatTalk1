@@ -1,4 +1,4 @@
-package biz.riopapa.chattalk;
+package biz.riopapa.chattalk.fragments;
 
 import static biz.riopapa.chattalk.Vars.aBar;
 import static biz.riopapa.chattalk.Vars.mContext;
@@ -20,6 +20,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import biz.riopapa.chattalk.ActivityAppList;
+import biz.riopapa.chattalk.ActivityEditText;
+import biz.riopapa.chattalk.ActivityStringReplace;
+import biz.riopapa.chattalk.OptionTables;
+import biz.riopapa.chattalk.R;
 import biz.riopapa.chattalk.alerts.AlertTableIO;
 import biz.riopapa.chattalk.Sub.SnackBar;
 import biz.riopapa.chattalk.Sub.WifiName;

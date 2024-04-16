@@ -24,6 +24,8 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import biz.riopapa.chattalk.Sub.FileIO;
+
 public class ActivityEditText extends AppCompatActivity {
 
     int pos = -1;

@@ -67,7 +67,7 @@ public class LogUpdate {
         }
     }
 
-    void addStock(String header, String text) {
+    public void addStock(String header, String text) {
         new ReadyToday();
         logStock += "\n" + TIME_INFO.format(new Date()) + header + "\n" + text+"\n";
         if (logStock.length() > 12000) {
@@ -86,7 +86,7 @@ public class LogUpdate {
     /*
         Remove upper lines, then 3/4 is without \n
      */
-    String squeezeLog(String logStr, String queName) {
+    public String squeezeLog(String logStr, String queName) {
         logStr = logStr.replace("    ","")
                         .replace("\n\n","\n");
         String [] sLog = logStr.split("\n");

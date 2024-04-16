@@ -1,4 +1,4 @@
-package biz.riopapa.chattalk;
+package biz.riopapa.chattalk.Sub;
 
 import static biz.riopapa.chattalk.Vars.packageDirectory;
 import static biz.riopapa.chattalk.Vars.toDay;
@@ -7,7 +7,10 @@ import static biz.riopapa.chattalk.Vars.todayFolder;
 import android.os.Environment;
 import android.util.Log;
 
+import biz.riopapa.chattalk.ReadyToday;
 import biz.riopapa.chattalk.Sub.SnackBar;
+import biz.riopapa.chattalk.Upload2Google;
+import biz.riopapa.chattalk.Utils;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -29,7 +32,7 @@ import java.util.Locale;
 
 public class FileIO {
 
-    static void readyPackageFolder() {
+    public static void readyPackageFolder() {
         if (packageDirectory == null)
             packageDirectory = new File(Environment.getExternalStorageDirectory(), "_ChatTalkLog");
 
@@ -43,14 +46,14 @@ public class FileIO {
         }
     }
 
-    static void uploadStock(String group, String who, String percent, String talk,
-                            String text, String key12, String timeStamp) {
+    public static void uploadStock(String group, String who, String percent, String talk,
+                                   String text, String key12, String timeStamp) {
         if (text.length() > 120)
             text = text.substring(0, 120);
         Upload2Google.add2Que(group, timeStamp, who, percent, talk, text, key12);
     }
 
-    static void append2Today(String filename, String textLine) {
+    public static void append2Today(String filename, String textLine) {
         if (todayFolder == null) {
             todayFolder = new File(packageDirectory, toDay);
         }
@@ -60,7 +63,7 @@ public class FileIO {
         append2File(file, timeInfo, textLine);
     }
 
-    static void append2File(File file, String timeInfo, String textLine) {
+    public static void append2File(File file, String timeInfo, String textLine) {
         new ReadyToday();
         BufferedWriter bw = null;
         FileWriter fw = null;

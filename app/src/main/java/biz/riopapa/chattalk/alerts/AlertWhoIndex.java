@@ -1,4 +1,4 @@
-package biz.riopapa.chattalk;
+package biz.riopapa.chattalk.alerts;
 
 import static biz.riopapa.chattalk.Vars.aGSkip1;
 import static biz.riopapa.chattalk.Vars.aGSkip2;
@@ -8,7 +8,7 @@ import static biz.riopapa.chattalk.Vars.aGroupWhos;
 
 public class AlertWhoIndex {
 
-    int get(int gIdx, String iWho, String iText) {
+    public int get(int gIdx, String iWho, String iText) {
         if (iText.contains(aGSkip1[gIdx]) || iText.contains(aGSkip2[gIdx])
            || iText.contains(aGSkip3[gIdx]) || iText.contains(aGSkip4[gIdx]))
             return -1;

@@ -11,7 +11,7 @@ import android.os.Environment;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import biz.riopapa.chattalk.FileIO;
+
 import biz.riopapa.chattalk.TableListFile;
 import biz.riopapa.chattalk.model.App;
 

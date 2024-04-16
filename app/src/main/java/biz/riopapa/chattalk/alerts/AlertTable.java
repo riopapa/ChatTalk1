@@ -1,6 +1,5 @@
-package biz.riopapa.chattalk;
+package biz.riopapa.chattalk.alerts;
 
-import static android.content.Context.MODE_PRIVATE;
 import static biz.riopapa.chattalk.Vars.aAlertLineIdx;
 import static biz.riopapa.chattalk.Vars.aGSkip1;
 import static biz.riopapa.chattalk.Vars.aGSkip2;
@@ -16,16 +15,12 @@ import static biz.riopapa.chattalk.Vars.aGroupWhos;
 import static biz.riopapa.chattalk.Vars.aGroups;
 import static biz.riopapa.chattalk.Vars.aGroupsPass;
 import static biz.riopapa.chattalk.Vars.alertLines;
-import static biz.riopapa.chattalk.Vars.mContext;
-
-import android.content.SharedPreferences;
-import android.util.Log;
-
-import biz.riopapa.chattalk.model.AlertLine;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import biz.riopapa.chattalk.model.AlertLine;
 
 public class AlertTable {
 
@@ -54,12 +49,12 @@ public class AlertTable {
         for (AlertLine al: alertLines) {
             if (!svGroup.equals(al.group)) {
                 aGroups.add(al.group);
-                aGroupsPass.add(al.more.length() > 0);
+                aGroupsPass.add(!al.more.isEmpty());
                 String key;
-                key = al.key1; if (key.equals("")) key = "NotFnd"; gSkip1.add(key);
-                key = al.key2; if (key.equals("")) key = "NotFnd"; gSkip2.add(key);
-                key = al.talk; if (key.equals("")) key = "NotFnd"; gSkip3.add(key);
-                key = al.skip; if (key.equals("")) key = "NotFnd"; gSkip4.add(key);
+                key = al.key1; if (key.isEmpty()) key = "NotFnd"; gSkip1.add(key);
+                key = al.key2; if (key.isEmpty()) key = "NotFnd"; gSkip2.add(key);
+                key = al.talk; if (key.isEmpty()) key = "NotFnd"; gSkip3.add(key);
+                key = al.skip; if (key.isEmpty()) key = "NotFnd"; gSkip4.add(key);
                 svGroup = al.group;
             }
         }
@@ -110,7 +105,7 @@ public class AlertTable {
         for (int i = 0; i < alertSize; i++) {
             AlertLine al = alertLines.get(i);
             if (al.matched == -1) {    // this means group
-                if (chkKey1.size()> 0) {
+                if (!chkKey1.isEmpty()) {
                     makeAGroupWho();
                     svIdx = i;
                     gIdx++;
@@ -120,7 +115,7 @@ public class AlertTable {
                 gwIdx = 0;
             } else {
                 if (!svWho.equals(al.who)) {
-                    if (chkKey1.size()> 0) {
+                    if (!chkKey1.isEmpty()) {
                         makeAGroupWho();
                         gwIdx++;
                     }
@@ -130,27 +125,11 @@ public class AlertTable {
                 }
                 chkKey1.add(al.key1);
                 chkKey2.add(al.key2);
-                chkSkip.add(al.skip.equals("") ? "N0sKi" : al.skip);
+                chkSkip.add(al.skip.isEmpty() ? "N0sKi" : al.skip);
                 prvKey.add(al.prev);
                 nxtKey.add(al.next);
             }
         }
-
-//        Log.w("Alert","Table Dump");
-//        for (int aG = 0; aG < aGroups.size(); aG++) {
-//            Log.w("aGroups", aG+" "+aGroups.get(aG) + " "+ aGroupsPass.get(aG));
-//            Log.w("aGSkip", aG+" "+aGSkip1[aG]+" "+aGSkip2[aG]+" "+aGSkip3[aG]+" "+aGSkip4[aG]);
-//            for (int w = 0; w < aGroupWhos[aG].length; w++) {
-//                Log.w("aGroupWho", aG+"    "+w+" "+aGroupWhos[aG][w]);
-//                for (int k = 0; k < aGroupWhoKey1[aG][w].length; k++) {
-//                    Log.w("aGroupWhoKey", "               "+k+") k="+aGroupWhoKey1[aG][w][k]
-//                            +" "+aGroupWhoKey2[aG][w][k]+" s="+aGroupWhoSkip[aG][w][k]
-//                            +" p="+aGroupWhoPrev[aG][w][k]+" n="+aGroupWhoNext[aG][w][k]);
-//                }
-//            }
-//        }
-//        Log.w("Alert","Table Dump Done");
-
     }
 
     static void makeAGroupWho() {

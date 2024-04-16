@@ -17,8 +17,8 @@ import static biz.riopapa.chattalk.Vars.smsReplTo;
 import static biz.riopapa.chattalk.Vars.smsTxtIgnores;
 import static biz.riopapa.chattalk.Vars.smsWhoIgnores;
 import static biz.riopapa.chattalk.Vars.tableListFile;
-import static biz.riopapa.chattalk.Vars.longGroupNames;
-import static biz.riopapa.chattalk.Vars.shortGroupNames;
+import static biz.riopapa.chattalk.Vars.longWhoNames;
+import static biz.riopapa.chattalk.Vars.shortWhoNames;
 import static biz.riopapa.chattalk.Vars.whoNameFrom;
 import static biz.riopapa.chattalk.Vars.whoNameTo;
 
@@ -29,9 +29,9 @@ import biz.riopapa.chattalk.Sub.SnackBar;
 
 import java.util.ArrayList;
 
-class OptionTables {
+public class OptionTables {
 
-    void readAll() {
+    public void readAll() {
 
         if (tableListFile == null)
             tableListFile = new TableListFile();
@@ -60,14 +60,14 @@ class OptionTables {
     }
 
     private void readTelegramGroup() {
-        /*
+        /* teleGrp.txt
          * group ^ channel name
-         * 부자   ^ 부자 프로젝트
+         * 텔단타 ^ 오늘의단타
          */
         String [] lists =  tableListFile.read("teleGrp");
 
-        shortGroupNames = new String[lists.length];
-        longGroupNames = new String[lists.length];
+        shortWhoNames = new String[lists.length];
+        longWhoNames = new String[lists.length];
 
         for (int i = 0; i < lists.length; i++) {
             String pLine = lists[i];
@@ -75,8 +75,8 @@ class OptionTables {
             if (strings.length < 2) {
                 new SnackBar().show("Telegram Table Error ", pLine);
             } else {
-                shortGroupNames[i] = strings[0].trim();
-                longGroupNames[i] = strings[1].trim();
+                shortWhoNames[i] = strings[0].trim();
+                longWhoNames[i] = strings[1].trim();
             }
         }
     }
@@ -97,8 +97,8 @@ class OptionTables {
             if (strings.length < 2) {
                 new SnackBar().show("Who Name Table Error ", pLine);
             } else {
-                whoNameFrom[i] = strings[0].trim();
-                whoNameTo[i] = strings[1].trim();
+                whoNameTo[i] = strings[0].trim();
+                whoNameFrom[i] = strings[1].trim();
             }
         }
     }

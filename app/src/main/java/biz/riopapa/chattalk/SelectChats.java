@@ -22,6 +22,7 @@ import android.text.style.BackgroundColorSpan;
 import android.text.style.UnderlineSpan;
 import android.widget.Toast;
 
+import biz.riopapa.chattalk.Sub.FileIO;
 import biz.riopapa.chattalk.model.AlertLine;
 import biz.riopapa.chattalk.alerts.StockName;
 
@@ -38,7 +39,7 @@ public class SelectChats {
     boolean upload;
     ArrayList<String> msgLines;
 
-    SpannableString generate(File chatFile, boolean upload) {
+    public SpannableString generate(File chatFile, boolean upload) {
         this.upload = upload;
         String[] chatLines = tableListFile.readRaw(chatFile);
         if (chatLines == null)

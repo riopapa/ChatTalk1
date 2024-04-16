@@ -10,7 +10,6 @@ import static biz.riopapa.chattalk.Vars.aGroupSaid;
 import static biz.riopapa.chattalk.Vars.aGroupWhoKey1;
 import static biz.riopapa.chattalk.Vars.aGroupWhoKey2;
 import static biz.riopapa.chattalk.Vars.aGroupWhoSkip;
-import static biz.riopapa.chattalk.Vars.aGroups;
 import static biz.riopapa.chattalk.Vars.aGroupsPass;
 import static biz.riopapa.chattalk.Vars.alertWhoIndex;
 import static biz.riopapa.chattalk.Vars.alertsAdapter;
@@ -19,7 +18,7 @@ import static biz.riopapa.chattalk.Vars.timeEnd;
 
 import android.util.Log;
 
-import java.util.Collections;
+import biz.riopapa.chattalk.alerts.AlertStock;
 
 public class MsgKeyword {
 

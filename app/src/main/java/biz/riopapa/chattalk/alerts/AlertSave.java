@@ -1,4 +1,4 @@
-package biz.riopapa.chattalk;
+package biz.riopapa.chattalk.alerts;
 
 import static android.content.Context.MODE_PRIVATE;
 import static biz.riopapa.chattalk.Vars.alertLines;
@@ -9,6 +9,9 @@ import static biz.riopapa.chattalk.Vars.todayFolder;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+
+import biz.riopapa.chattalk.Sub.FileIO;
+import biz.riopapa.chattalk.ReadyToday;
 import biz.riopapa.chattalk.Sub.SnackBar;
 import biz.riopapa.chattalk.model.AlertLine;
 

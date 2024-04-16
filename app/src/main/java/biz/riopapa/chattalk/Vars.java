@@ -21,6 +21,9 @@ import androidx.appcompat.app.ActionBar;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
+
+import biz.riopapa.chattalk.Sub.FileIO;
+import biz.riopapa.chattalk.alerts.AlertWhoIndex;
 import biz.riopapa.chattalk.model.AlertLine;
 import biz.riopapa.chattalk.alerts.AlertTableIO;
 import biz.riopapa.chattalk.model.App;
@@ -31,10 +34,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Vars {
-    static File packageDirectory = null;
+    public static File packageDirectory = null;
     public static File tableFolder = null;
     public static File downloadFolder = null;
-    static File todayFolder = null;
+    public static File todayFolder = null;
 
     public static String toDay = "To";
     public static long timeBegin = 0, timeEnd = 0;
@@ -42,24 +45,24 @@ public class Vars {
     public static ArrayList<String> appIgnores;
     public static ArrayList<String> appFullNames;
     public static ArrayList<Integer> appNameIdx;
-    static String sbnGroup, sbnWho, sbnText, sbnAppName, sbnAppType, sbnAppNick;
-    static int sbnAppIdx;
+    public static String sbnGroup, sbnWho, sbnText, sbnAppName, sbnAppType, sbnAppNick;
+    public static int sbnAppIdx;
 
-    static App sbnApp;
+    public static App sbnApp;
 
-    static TableListFile tableListFile = null;
+    public static TableListFile tableListFile = null;
 
-    static String[] ktGroupIgnores = null;
-    static String[] ktWhoIgnores = null;
+    public static String[] ktGroupIgnores = null;
+    public static String[] ktWhoIgnores = null;
 
-    static String[] aGroupSaid = null;
-    static int [][][] aAlertLineIdx;
+    public static String[] aGroupSaid = null;
+    public static int [][][] aAlertLineIdx;
 
-    static List<String> aGroups;    // {고선, 텔레, 힐}
-    static List<Boolean> aGroupsPass;
-    static String[] aGSkip1, aGSkip2, aGSkip3, aGSkip4;
-    static String[][] aGroupWhos;     // [2] 이진홍, 김선수
-    static String[][][] aGroupWhoKey1, aGroupWhoKey2, aGroupWhoSkip, aGroupWhoPrev, aGroupWhoNext;
+    public static List<String> aGroups;    // {고선, 텔레, 힐}
+    public static List<Boolean> aGroupsPass;
+    public static String[] aGSkip1, aGSkip2, aGSkip3, aGSkip4;
+    public static String[][] aGroupWhos;     // [2] 이진홍, 김선수
+    public static String[][][] aGroupWhoKey1, aGroupWhoKey2, aGroupWhoSkip, aGroupWhoPrev, aGroupWhoNext;
 
     static String[] smsWhoIgnores = null;
     static String[] smsTxtIgnores = null;
@@ -70,20 +73,20 @@ public class Vars {
     static String[] ktNoNumbers = null;
     static String[] ktTxtIgnores = null;
 
-    static String[] shortGroupNames = null;
-    static String[] longGroupNames = null;
+    static String[] shortWhoNames = null;
+    static String[] longWhoNames = null;
 
     static String[] whoNameFrom = null;
     static String[] whoNameTo = null;
 
-    static String nowFileName;
+    public static String nowFileName;
 
     static int replGroupCnt = 0;
     static String [] replGroup;
     static String [][] replLong, replShort;
 
     public static SharedPreferences sharePref;
-    static SharedPreferences.Editor sharedEditor;
+    public static SharedPreferences.Editor sharedEditor;
 
     @SuppressLint("StaticFieldLeak")
     public static Context mContext = null;
@@ -97,8 +100,8 @@ public class Vars {
     static final int STOP_SAY1 = 10011;
     static final int RELOAD_APP = 2022;
 
-    static String logQue = "", logSave = "", logStock = "", logWork = "";
-    static ActionBar aBar = null;
+    public static String logQue = "", logSave = "", logStock = "", logWork = "";
+    public static ActionBar aBar = null;
     static AudioFocusRequest mFocusGain = null;
 
     /* module list */
@@ -114,18 +117,19 @@ public class Vars {
     public static ArrayList<App> apps;
     public static AppAdapter appAdapter;
 
-    static String chatGroup;
-    static final String lastChar = "힝";
+    public static String chatGroup;
+    public static final String lastChar = "힝";
     public static int alertPos = -1, appPos = -1;  // updated or duplicated recycler position
 
-    enum soundType { PRE, POST, ERR, HI_TESLA, ONLY, STOCK, INFO, KAKAO}
-    static final int[] beepRawIds = { R.raw.pre, R.raw.post, R.raw.err,
+    public enum soundType { PRE, POST, ERR, HI_TESLA, ONLY, STOCK, INFO, KAKAO}
+    public static final int[] beepRawIds = { R.raw.pre, R.raw.post, R.raw.err,
             R.raw.hi_tesla, R.raw.only, R.raw.stock_check, R.raw.inform, R.raw.kakao_talk};
 
     public static class DelItem {
-        String logNow;
-        int ps, pf;
-        SpannableString ss;
+        public String logNow;
+        public int ps;
+        public int pf;
+        public SpannableString ss;
         public DelItem(String logNow, int ps, int pf, SpannableString ss) {
             this.logNow = logNow;
             this.ps = ps; this.pf = pf;
