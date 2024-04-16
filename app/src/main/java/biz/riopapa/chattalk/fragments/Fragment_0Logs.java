@@ -149,11 +149,11 @@ public class Fragment_0Logs extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        if (item.getItemId() == R.id.delete_one_set) {
+        if (item.getItemId() == R.id.del_log_one_set) {
             showNextQue(new LogSpann().delOneSet(etTable.getText().toString(),
                     etTable.getSelectionStart(), mContext));
 
-        } else if (item.getItemId() == R.id.delete_many) {
+        } else if (item.getItemId() == R.id.de_log_many) {
             int currPos = etTable.getSelectionStart();
             int logLen = logQue.length();
             logQue = logUpdate.squeezeLog(logQue,"logQue");
@@ -164,7 +164,7 @@ public class Fragment_0Logs extends Fragment {
             Selection.setSelection(ss, currPos, currPos + 1);
             etTable.requestFocus();
 
-        } else if (item.getItemId() == R.id.delete_1_line) {
+        } else if (item.getItemId() == R.id.del_log_1_line) {
             showNextQue(new LogSpann().delOneLine(etTable.getText().toString(),
                     etTable.getSelectionStart(), mContext));
 
@@ -212,19 +212,19 @@ public class Fragment_0Logs extends Fragment {
 //            }, 50);
         });
     }
-
-    private void reload_loqQue() {
-        if (tableFolder ==  null) {
-            downloadFolder = new File(Environment.getExternalStorageDirectory(), "download");
-            tableFolder = new File(downloadFolder, "_ChatTalk");
-        }
-        String [] que = new FileIO().readKR(new File(tableFolder, "logQue.txt").toString());
-        StringBuilder sb = new StringBuilder();
-        for (String s: que) {
-            sb.append(s).append("\n");
-        }
-        logQue = sb.toString();
-        etTable.setText(new LogSpann().make(logQue, mContext));
-    }
+//
+//    private void reload_loqQue() {
+//        if (tableFolder ==  null) {
+//            downloadFolder = new File(Environment.getExternalStorageDirectory(), "download");
+//            tableFolder = new File(downloadFolder, "_ChatTalk");
+//        }
+//        String [] que = new FileIO().readKR(new File(tableFolder, "logQue.txt").toString());
+//        StringBuilder sb = new StringBuilder();
+//        for (String s: que) {
+//            sb.append(s).append("\n");
+//        }
+//        logQue = sb.toString();
+//        etTable.setText(new LogSpann().make(logQue, mContext));
+//    }
 
 }

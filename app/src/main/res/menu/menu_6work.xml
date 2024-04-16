@@ -10,21 +10,20 @@
         android:title="@string/todo" />
 
     <item
-        android:id="@+id/action_rework"
+        android:id="@+id/del_work_many"
         android:orderInCategory="100"
-        android:icon="@drawable/upload_file"
+        android:icon="@drawable/line_remove_many"
         app:showAsAction="always"
         android:title="@string/todo" />
-
     <item
-        android:id="@+id/delete_1line_work"
+        android:id="@+id/del_work_1line"
         android:orderInCategory="100"
         android:icon="@drawable/line_remove1"
         app:showAsAction="always"
         android:title="@string/todo" />
 
     <item
-        android:id="@+id/delete_item_work"
+        android:id="@+id/del_work_item"
         android:orderInCategory="100"
         android:icon="@drawable/line_remove3"
         app:showAsAction="always"

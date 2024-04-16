@@ -1,7 +1,9 @@
 package biz.riopapa.chattalk.fragments;
 
 import static biz.riopapa.chattalk.ActivityMain.fragNumber;
+import static biz.riopapa.chattalk.NotificationListener.logUpdate;
 import static biz.riopapa.chattalk.Vars.aBar;
+import static biz.riopapa.chattalk.Vars.logQue;
 import static biz.riopapa.chattalk.Vars.logSave;
 import static biz.riopapa.chattalk.Vars.logWork;
 import static biz.riopapa.chattalk.Vars.mActivity;
@@ -145,14 +147,11 @@ public class Fragment_6Work extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        if (item.getItemId() == R.id.delete_item_work) {
+        if (item.getItemId() == R.id.del_work_item) {
             showNextQue(new LogSpann().delOneSet(etTable.getText().toString(),
                     etTable.getSelectionStart(), mContext));
 
-        } else if (item.getItemId() == R.id.action_rework) {
-            reload_work();
-
-        } else if (item.getItemId() == R.id.delete_1line_work) {
+        } else if (item.getItemId() == R.id.del_work_1line) {
             showNextQue(new LogSpann().delOneLine(etTable.getText().toString(),
                     etTable.getSelectionStart(), mContext));
 
@@ -178,6 +177,16 @@ public class Fragment_6Work extends Fragment {
             copied = copied.replace("\n", " 🗼️ ");
             Toast.makeText(mContext, "work copied to save " + copied, Toast.LENGTH_SHORT).show();
 
+        } else if (item.getItemId() == R.id.del_work_many) {
+            int currPos = etTable.getSelectionStart();
+            int logLen = logWork.length();
+            logWork = logUpdate.squeezeLog(logWork, "logWork");
+            if (currPos > 0)
+                currPos += logWork.length() - logLen;
+            ss = new LogSpann().make(logWork, mContext);
+            etTable.setText(ss);
+            Selection.setSelection(ss, currPos, currPos + 1);
+            etTable.requestFocus();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -201,13 +210,4 @@ public class Fragment_6Work extends Fragment {
         });
     }
 
-    private void reload_work() {
-        String [] str = new FileIO().readKR(new File(tableFolder, "logWork.txt").toString());
-        StringBuilder sb = new StringBuilder();
-        for (String s: str) {
-            sb.append(s).append("\n");
-        }
-        logWork = sb.toString();
-        etTable.setText(new LogSpann().make(logWork, mContext));
-    }
 }

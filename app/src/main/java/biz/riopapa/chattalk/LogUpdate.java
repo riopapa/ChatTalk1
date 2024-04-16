@@ -99,11 +99,6 @@ public class LogUpdate {
             row++;
 
         StringBuilder sb = new StringBuilder();
-//        for (int i = 0; i < row; i++)
-//            sb.append(sLog[i].trim()).append("\n");
-//        FileIO.append2File(new File(packageDirectory, queName+".txt"), "\n- backUp -\n", sb+"\n");
-//
-//        sb = new StringBuilder();
         for (; row < sLen * 3/4; row++) {   // without blank line
             String s = sLog[row].trim();
             if (!s.isEmpty()) {
@@ -112,10 +107,14 @@ public class LogUpdate {
                 sb.append(s).append("\n");
             }
         }
-        sb.append("- sqz -\n");
+        String s = sLog[row].trim();
+        if (!StringUtils.isNumeric("" + s.charAt(0))) {
+            sb.append(s).append("\n\n");
+            row++;
+        }
 
         for (; row < sLen; row++) { // with blank line
-            String s = sLog[row].trim();
+            s = sLog[row].trim();
             if (!s.isEmpty()) {
                 if (StringUtils.isNumeric("" + s.charAt(0)))
                     sb.append("\n");
