@@ -3,13 +3,11 @@ package biz.riopapa.chattalk.fragments;
 import static biz.riopapa.chattalk.ActivityMain.fragNumber;
 import static biz.riopapa.chattalk.NotificationListener.logUpdate;
 import static biz.riopapa.chattalk.Vars.aBar;
-import static biz.riopapa.chattalk.Vars.logQue;
 import static biz.riopapa.chattalk.Vars.logSave;
 import static biz.riopapa.chattalk.Vars.logWork;
 import static biz.riopapa.chattalk.Vars.mActivity;
 import static biz.riopapa.chattalk.Vars.mContext;
 import static biz.riopapa.chattalk.Vars.sharedEditor;
-import static biz.riopapa.chattalk.Vars.tableFolder;
 import static biz.riopapa.chattalk.Vars.topTabs;
 import static biz.riopapa.chattalk.Vars.viewPager2;
 
@@ -35,15 +33,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import biz.riopapa.chattalk.Sub.FileIO;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import biz.riopapa.chattalk.R;
 import biz.riopapa.chattalk.Sub.LogSpann;
 import biz.riopapa.chattalk.Sub.SnackBar;
 import biz.riopapa.chattalk.Vars;
-
-import java.io.File;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Fragment_6Work extends Fragment {
 
@@ -140,7 +136,7 @@ public class Fragment_6Work extends Fragment {
         mainMenu = menu;
         inflater.inflate(R.menu.menu_6work, menu);
         super.onCreateOptionsMenu(menu, inflater);
-        aBar.setTitle(topTabs.getTabAt(3).getText().toString());
+        aBar.setTitle(topTabs.getTabAt(fragNumber).getText().toString());
         aBar.setSubtitle(null);
     }
 
