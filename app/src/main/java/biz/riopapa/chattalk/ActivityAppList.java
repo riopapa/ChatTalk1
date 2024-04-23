@@ -77,7 +77,10 @@ public class ActivityAppList extends AppCompatActivity {
                 searchApps(appPos+2);
             }
         });
-
+        binding.clearSearch.setOnClickListener(v -> {
+            key = "";
+            binding.searchKey.setText(key);
+        });
     }
 
     void searchApps(int startPos) {

@@ -15,12 +15,23 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+    <ImageButton
+        android:id="@+id/clear_search"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="0dp"
+        android:layout_weight="2"
+        android:background="#00000000"
+        android:contentDescription="@string/search"
+        android:src="@drawable/clear_text" />
+
         <EditText
             android:id="@+id/search_key"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_weight="8"
+            android:layout_margin="0dp"
+            android:layout_weight="10"
             android:inputType="text"
             android:hint="@string/enter_search_key"
             android:autofillHints="Enter Text to search" />
@@ -29,8 +40,8 @@
             android:id="@+id/search"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_margin="4dp"
-            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:layout_weight="2"
             android:background="#00000000"
             android:contentDescription="@string/search"
             android:src="@drawable/search" />
@@ -40,7 +51,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="4dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:background="#00000000"
             android:contentDescription="@string/search"
             android:src="@drawable/arrow_right" />

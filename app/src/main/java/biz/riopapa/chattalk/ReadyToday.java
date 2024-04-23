@@ -43,10 +43,9 @@ public class ReadyToday {
         if (!todayFolder.exists()) {
             if (todayFolder.mkdirs())
                 new Utils().deleteOldFiles();
-            String new_day = "\n" + new SimpleDateFormat("MM-dd (EEE) HH:mm ", Locale.KOREA).format(new Date())
-                    + " NEW DAY " + " **/\nNew Day" + "\n";
-            logQue += new_day;
-            logWork += new_day;
+//            String new_day = "\n" + new SimpleDateFormat("MM-dd (EEE) HH:mm ", Locale.KOREA).format(new Date())
+//                    + " NEW DAY " + " **/\nNew Day" + "\n";
+//            logQue += new_day;
             sharedEditor.apply();
             FileIO.writeFile(tableFolder, "logStock.txt", logStock);
             FileIO.writeFile(tableFolder, "logQue.txt", logQue);
